@@ -1,0 +1,11 @@
+theme: jekyll-theme-minimal
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  
+title: Think Machine Advisor
+description: Fading Suns character sheet generator UI based on Java. 
+author: 
+  name: Jorge Hortelano
+  email: softwaremagico@gmail.com
