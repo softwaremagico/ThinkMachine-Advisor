@@ -1,0 +1,7 @@
+<resources>
+  <string name="app_name">Think Machine: Advisor</string>
+
+  <string name="tab_text_1">Create</string>
+  <string name="tab_text_2">Random</string>
+  <string name="tab_text_3">Export</string>
+</resources>
