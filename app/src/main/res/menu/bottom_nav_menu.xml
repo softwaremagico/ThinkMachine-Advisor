@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_create"
+        android:icon="@drawable/ic_character"
+        android:title="@string/creation" />
+
+    <item
+        android:id="@+id/navigation_random"
+        android:icon="@drawable/ic_random"
+        android:title="@string/random" />
+
+    <item
+        android:id="@+id/navigation_export"
+        android:icon="@drawable/ic_export_pdf"
+        android:title="@string/export" />
+
+</menu>

@@ -4,4 +4,8 @@
   <string name="tab_text_1">Create</string>
   <string name="tab_text_2">Random</string>
   <string name="tab_text_3">Export</string>
+
+  <string name="creation">Create</string>
+  <string name="random">Random</string>
+  <string name="export">Export</string>
 </resources>

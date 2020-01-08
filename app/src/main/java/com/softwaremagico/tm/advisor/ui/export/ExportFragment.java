@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.main;
+package com.softwaremagico.tm.advisor.ui.export;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,23 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.main.PageViewModel;
 
-public class SpeedDialFragment extends Fragment {
+public class ExportFragment extends Fragment {
 
-  private static final String TAG = "SpeedDial";
+  private static final String TAG = "Export";
 
   private PageViewModel pageViewModel;
 
-  public SpeedDialFragment() {
+  public ExportFragment() {
     // Required empty public constructor
   }
 
   /**
-   * @return A new instance of fragment SpeedDialFragment.
+   * @return A new instance of fragment ExportFragment.
    */
-  public static SpeedDialFragment newInstance() {
-    return new SpeedDialFragment();
+  public static ExportFragment newInstance() {
+    return new ExportFragment();
   }
 
   @Override

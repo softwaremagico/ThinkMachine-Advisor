@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_create">
+
+    <fragment
+        android:id="@+id/navigation_create"
+        android:name="com.softwaremagico.tm.advisor.ui.creation.CreateFragment"
+        android:label="@string/creation"
+        tools:layout="@layout/creation_main" />
+
+    <fragment
+        android:id="@+id/navigation_random"
+        android:name="com.softwaremagico.tm.advisor.ui.random.RandomFragment"
+        android:label="@string/random"
+        tools:layout="@layout/fragment_random" />
+
+    <fragment
+        android:id="@+id/navigation_export"
+        android:name="com.softwaremagico.tm.advisor.ui.export.ExportFragment"
+        android:label="@string/export"
+        tools:layout="@layout/fragment_export" />
+</navigation>

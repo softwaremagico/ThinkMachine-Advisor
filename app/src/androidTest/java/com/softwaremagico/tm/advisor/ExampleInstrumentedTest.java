@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     // Context of the app under test.
     Context appContext = InstrumentationRegistry.getTargetContext();
 
-    assertEquals("com.softwaremagico.tm.viewpager", appContext.getPackageName());
+    assertEquals("com.softwaremagico.tm.advisor", appContext.getPackageName());
   }
 }

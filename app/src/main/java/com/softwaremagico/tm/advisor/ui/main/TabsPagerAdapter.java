@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.random.RandomFragment;
+import com.softwaremagico.tm.advisor.ui.creation.CreateFragment;
+import com.softwaremagico.tm.advisor.ui.export.ExportFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -28,9 +31,9 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
   public Fragment getItem(int position) {
     switch (position) {
       case 0:
-        return SpeedDialFragment.newInstance();
+        return ExportFragment.newInstance();
       case 1:
-        return RecentsFragment.newInstance();
+        return RandomFragment.newInstance();
       case 2:
         return CreateFragment.newInstance();
       default:

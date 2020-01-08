@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.main;
+package com.softwaremagico.tm.advisor.ui.random;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,23 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.main.PageViewModel;
 
-public class RecentsFragment extends Fragment {
+public class RandomFragment extends Fragment {
 
-  private static final String TAG = "Recents";
+  private static final String TAG = "Random";
 
   private PageViewModel pageViewModel;
 
-  public RecentsFragment() {
+  public RandomFragment() {
     // Required empty public constructor
   }
 
   /**
-   * @return A new instance of fragment RecentsFragment.
+   * @return A new instance of fragment RandomFragment.
    */
-  public static RecentsFragment newInstance() {
-    return new RecentsFragment();
+  public static RandomFragment newInstance() {
+    return new RandomFragment();
   }
 
   @Override

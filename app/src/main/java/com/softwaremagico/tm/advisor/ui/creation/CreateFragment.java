@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.main;
+package com.softwaremagico.tm.advisor.ui.creation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.main.PageViewModel;
 
 public class CreateFragment extends Fragment {
 
