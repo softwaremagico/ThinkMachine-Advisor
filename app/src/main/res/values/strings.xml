@@ -1,11 +1,6 @@
 <resources>
-  <string name="app_name">Think Machine: Advisor</string>
-
-  <string name="tab_text_1">Create</string>
-  <string name="tab_text_2">Random</string>
-  <string name="tab_text_3">Export</string>
-
-  <string name="creation">Create</string>
-  <string name="random">Random</string>
-  <string name="export">Export</string>
+    <string name="app_name">Think Machine Advisor</string>
+    <string name="tab_info">Information</string>
+    <string name="tab_char">Characteristics</string>
+    <string name="tab_skills">Skills</string>
 </resources>
