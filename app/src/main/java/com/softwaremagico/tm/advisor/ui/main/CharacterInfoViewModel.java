@@ -1,5 +1,6 @@
 package com.softwaremagico.tm.advisor.ui.main;
 
+import android.content.res.AssetManager;
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
@@ -16,10 +17,10 @@ import java.util.stream.Collectors;
 
 public class CharacterInfoViewModel extends ViewModel {
 
-    public List<String> getAvailableFactions(){
+
+    public List<String> getAvailableFactions() {
         try {
-            Log.e(this.getClass().getName(), "#######################################33");
-            return FactionsFactory.getInstance().getElements(Locale.getDefault().getLanguage(), "Fading Suns").stream().map(Object::toString)
+            return FactionsFactory.getInstance().getElements(Locale.getDefault().getLanguage(), "Fading Suns Revised Edition").stream().map(Object::toString)
                     .collect(Collectors.toList());
         } catch (InvalidXmlElementException e) {
             Log.wtf(this.getClass().getName(), e);

@@ -18,10 +18,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.character.factions.FactionsFactory;
 import com.softwaremagico.tm.log.MachineLog;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class CharacterInfoFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
+
 
     private CharacterInfoViewModel mViewModel;
 
@@ -40,8 +45,7 @@ public class CharacterInfoFragment extends Fragment {
 
        Spinner factionsSelector = (Spinner)root.findViewById(R.id.characterFaction);
        mViewModel = ViewModelProviders.of(this).get(CharacterInfoViewModel.class);
-       Log.e(this.getClass().getName(), "#######################################33 " + mViewModel);
-       MachineLog.severe(this.getClass().getName(), "%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+
        factionsSelector.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailableFactions()));
 
         return root;
