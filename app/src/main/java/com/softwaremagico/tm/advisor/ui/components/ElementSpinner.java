@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.factions.Faction;
@@ -34,8 +35,8 @@ public class ElementSpinner extends LinearLayout {
         tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
     }
 
-    public void setAdapter(ElementAdapter<Faction> infoFaction) {
-        Spinner factionsSelector = (Spinner) findViewById(R.id.spinner);
-        factionsSelector.setAdapter(infoFaction);
+    public  <T extends Element<?>> void setAdapter(ElementAdapter<T> adapter) {
+        Spinner selector = (Spinner) findViewById(R.id.spinner);
+        selector.setAdapter(adapter);
     }
 }
