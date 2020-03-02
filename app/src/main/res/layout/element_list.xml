@@ -4,24 +4,11 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/selected_item_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-
-        />
-
-    <TextView
         android:id="@+id/selected_item"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/selected_item_tag"
         android:singleLine="true"
-		android:ellipsize="marquee"/>
+		android:ellipsize="marquee"
+        />
 
 </RelativeLayout>

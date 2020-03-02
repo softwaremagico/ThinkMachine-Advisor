@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.components;
+package com.softwaremagico.tm.advisor.ui.translation;
 
 import com.softwaremagico.tm.language.ITranslator;
 import com.softwaremagico.tm.language.LanguagePool;

@@ -1,6 +1,6 @@
 package com.softwaremagico.tm.advisor.ui.main;
 
-import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -9,24 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
+import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
+import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
+import com.softwaremagico.tm.advisor.ui.components.TranslatedTextView;
 import com.softwaremagico.tm.character.factions.Faction;
-import com.softwaremagico.tm.character.factions.FactionsFactory;
-import com.softwaremagico.tm.language.ITranslator;
-import com.softwaremagico.tm.language.LanguagePool;
-import com.softwaremagico.tm.log.MachineLog;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 public class CharacterInfoFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -46,12 +39,12 @@ public class CharacterInfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.character_info_fragment, container, false);
+        mViewModel = new ViewModelProvider(this).get(CharacterInfoViewModel.class);
 
-        Spinner factionsSelector = (Spinner) root.findViewById(R.id.characterFaction);
-        mViewModel = ViewModelProviders.of(this).get(CharacterInfoViewModel.class);
+        TranslatedEditText nameTextEditor = (TranslatedEditText) root.findViewById(R.id.characterName);
 
-        factionsSelector.setAdapter(new ElementAdapter<Faction>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailableFactions(), "faction"));
-        factionsSelector.setPrompt("Cosa cosit");
+        ElementSpinner factionsSelector = (ElementSpinner) root.findViewById(R.id.characterFaction);
+        factionsSelector.setAdapter(new ElementAdapter<Faction>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailableFactions()));
 
         return root;
     }
@@ -60,7 +53,6 @@ public class CharacterInfoFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(CharacterInfoViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 
