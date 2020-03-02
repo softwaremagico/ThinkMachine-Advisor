@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.FactionsFactory;
@@ -18,10 +19,9 @@ import java.util.stream.Collectors;
 public class CharacterInfoViewModel extends ViewModel {
 
 
-    public List<String> getAvailableFactions() {
+    public List<Faction> getAvailableFactions() {
         try {
-            return FactionsFactory.getInstance().getElements(Locale.getDefault().getLanguage(), "Fading Suns Revised Edition").stream().map(Object::toString)
-                    .collect(Collectors.toList());
+            return FactionsFactory.getInstance().getElements(Locale.getDefault().getLanguage(), "Fading Suns Revised Edition");
         } catch (InvalidXmlElementException e) {
             Log.wtf(this.getClass().getName(), e);
             MachineLog.errorMessage(this.getClass().getName(), e);

@@ -18,7 +18,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
+import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.FactionsFactory;
+import com.softwaremagico.tm.language.ITranslator;
+import com.softwaremagico.tm.language.LanguagePool;
 import com.softwaremagico.tm.log.MachineLog;
 
 import java.io.IOException;
@@ -43,10 +47,11 @@ public class CharacterInfoFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.character_info_fragment, container, false);
 
-       Spinner factionsSelector = (Spinner)root.findViewById(R.id.characterFaction);
-       mViewModel = ViewModelProviders.of(this).get(CharacterInfoViewModel.class);
+        Spinner factionsSelector = (Spinner) root.findViewById(R.id.characterFaction);
+        mViewModel = ViewModelProviders.of(this).get(CharacterInfoViewModel.class);
 
-       factionsSelector.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailableFactions()));
+        factionsSelector.setAdapter(new ElementAdapter<Faction>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailableFactions(), "faction"));
+        factionsSelector.setPrompt("Cosa cosit");
 
         return root;
     }
@@ -57,5 +62,7 @@ public class CharacterInfoFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(CharacterInfoViewModel.class);
         // TODO: Use the ViewModel
     }
+
+
 
 }
