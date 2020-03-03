@@ -12,8 +12,14 @@
         tools:layout="@layout/character_info_fragment" />
 
     <fragment
-        android:id="@+id/navigation_cosa"
+        android:id="@+id/navigation_random"
         android:name="com.softwaremagico.tm.advisor.ui.main.info.CharacterInfoFragment"
         android:label="Label 2"
+        tools:layout="@layout/character_info_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_sheet"
+        android:name="com.softwaremagico.tm.advisor.ui.main.info.CharacterInfoFragment"
+        android:label="Label 3"
         tools:layout="@layout/character_info_fragment" />
 </navigation>
