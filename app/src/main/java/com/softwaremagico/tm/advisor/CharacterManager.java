@@ -1,6 +1,6 @@
 package com.softwaremagico.tm.advisor;
 
-import com.softwaremagico.tm.advisor.ui.configuration.ModuleManager;
+import com.softwaremagico.tm.advisor.configuration.ModuleManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 
 import java.util.ArrayList;

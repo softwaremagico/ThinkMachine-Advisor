@@ -1,18 +1,15 @@
 package com.softwaremagico.tm.advisor.ui.main.info;
 
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
@@ -26,8 +23,6 @@ import com.softwaremagico.tm.character.races.Race;
 
 public class CharacterInfoFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
-
-
     private CharacterInfoViewModel mViewModel;
 
     public static CharacterInfoFragment newInstance(int index) {
@@ -45,20 +40,14 @@ public class CharacterInfoFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(CharacterInfoViewModel.class);
 
         TranslatedEditText nameTextEditor = (TranslatedEditText) root.findViewById(R.id.character_name);
+
         TranslatedEditText ageTextEditor = (TranslatedEditText) root.findViewById(R.id.character_age);
         ageTextEditor.setAsNumberEditor();
-
 
         createRaceSpinner(root);
         createFactionSpinner(root);
 
         return root;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(CharacterInfoViewModel.class);
     }
 
     private void createRaceSpinner(View root) {

@@ -1,13 +1,11 @@
 package com.softwaremagico.tm.advisor.ui.main.info;
 
-import android.content.res.AssetManager;
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.InvalidXmlElementException;
-import com.softwaremagico.tm.advisor.ui.configuration.ModuleManager;
+import com.softwaremagico.tm.advisor.configuration.ModuleManager;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.FactionsFactory;
 import com.softwaremagico.tm.character.races.Race;
@@ -17,7 +15,6 @@ import com.softwaremagico.tm.log.MachineLog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class CharacterInfoViewModel extends ViewModel {
 
