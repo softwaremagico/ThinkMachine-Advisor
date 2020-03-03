@@ -2,7 +2,9 @@ package com.softwaremagico.tm.advisor.ui.components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.InputType;
 import android.util.AttributeSet;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,5 +29,10 @@ public class TranslatedEditText extends LinearLayout {
                 R.styleable.TranslatedText, 0, 0);
         String tag = attributes.getString(R.styleable.TranslatedText_translation);
         tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
+    }
+
+    public void setAsNumberEditor(){
+        EditText tagText = (EditText) findViewById(R.id.input);
+        tagText.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 }

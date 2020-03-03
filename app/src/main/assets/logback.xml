@@ -13,6 +13,20 @@
         </encoder>
     </appender>
 
+    <logger name="com.softwaremagico.tm.log.MachineLog" additivity="false" level="INFO">
+        <appender-ref ref="LOGCAT"/>
+    </logger>
+    <logger name="com.softwaremagico.tm.log.RandomGenerationLog" additivity="false" level="ERROR">
+        <appender-ref ref="LOGCAT"/>
+    </logger>
+    <logger name="com.softwaremagico.tm.log.CostCalculatorLog" additivity="false" level="INFO">
+        <appender-ref ref="LOGCAT"/>
+    </logger>
+    <logger name="com.softwaremagico.tm.advisor.log.AdvisorLog" additivity="false" level="INFO">
+        <appender-ref ref="LOGCAT"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+
     <root level="DEBUG">
         <appender-ref ref="FILE" />
         <appender-ref ref="LOGCAT" />

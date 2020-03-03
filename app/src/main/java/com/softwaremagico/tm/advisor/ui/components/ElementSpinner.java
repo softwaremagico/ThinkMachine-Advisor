@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,4 +40,10 @@ public class ElementSpinner extends LinearLayout {
         Spinner selector = (Spinner) findViewById(R.id.spinner);
         selector.setAdapter(adapter);
     }
+
+    public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener onItemSelectedListener) {
+        Spinner selector = (Spinner) findViewById(R.id.spinner);
+        selector.setOnItemSelectedListener(onItemSelectedListener);
+    }
+
 }

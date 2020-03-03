@@ -12,15 +12,23 @@
         android:orientation="vertical">
 
         <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
-            android:id="@+id/characterName"
+            android:id="@+id/character_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             custom:translation="infoName"
             />
 
+        <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
+            android:id="@+id/character_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            custom:translation="infoAge"
+            />
+
         <com.softwaremagico.tm.advisor.ui.components.ElementSpinner
-            android:id="@+id/characterRace"
+            android:id="@+id/character_race"
             android:layout_width="409dp"
             android:ems="10"
             android:layout_height="wrap_content"
@@ -28,7 +36,7 @@
             />
 
         <com.softwaremagico.tm.advisor.ui.components.ElementSpinner
-            android:id="@+id/characterFaction"
+            android:id="@+id/character_faction"
             android:layout_width="409dp"
             android:ems="10"
             android:layout_height="wrap_content"
