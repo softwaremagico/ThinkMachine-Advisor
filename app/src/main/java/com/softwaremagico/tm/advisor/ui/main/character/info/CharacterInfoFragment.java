@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.main.info;
+package com.softwaremagico.tm.advisor.ui.main.character.info;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

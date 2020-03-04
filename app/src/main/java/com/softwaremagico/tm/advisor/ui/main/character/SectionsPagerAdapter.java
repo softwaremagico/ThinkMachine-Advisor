@@ -1,13 +1,16 @@
-package com.softwaremagico.tm.advisor.ui.main;
+package com.softwaremagico.tm.advisor.ui.main.character;
 
 import android.content.Context;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.ui.main.info.CharacterInfoFragment;
+import com.softwaremagico.tm.advisor.ui.main.PlaceholderFragment;
+import com.softwaremagico.tm.advisor.ui.main.character.info.CharacterInfoFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

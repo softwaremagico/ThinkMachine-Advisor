@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.main;
+package com.softwaremagico.tm.advisor.ui.main.character;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,7 +21,7 @@ public class CharacterFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.character_info_fragment,container, false);
+        View view = inflater.inflate(R.layout.character_creation_fragment,container, false);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getContext(), getActivity().getSupportFragmentManager());
         ViewPager viewPager = view.findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);

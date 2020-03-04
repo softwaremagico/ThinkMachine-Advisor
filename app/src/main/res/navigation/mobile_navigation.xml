@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.softwaremagico.tm.advisor.ui.main.info.CharacterInfoFragment"
+        android:name="com.softwaremagico.tm.advisor.ui.main.character.CharacterFragment"
         android:label="Label 1"
-        tools:layout="@layout/character_info_fragment" />
+        tools:layout="@layout/character_creation_fragment" />
 
     <fragment
         android:id="@+id/navigation_random"
-        android:name="com.softwaremagico.tm.advisor.ui.main.info.CharacterInfoFragment"
+        android:name="com.softwaremagico.tm.advisor.ui.main.character.CharacterFragment"
         android:label="Label 2"
-        tools:layout="@layout/character_info_fragment" />
+        tools:layout="@layout/character_creation_fragment" />
 
     <fragment
         android:id="@+id/navigation_sheet"
-        android:name="com.softwaremagico.tm.advisor.ui.main.info.CharacterInfoFragment"
+        android:name="com.softwaremagico.tm.advisor.ui.main.character.CharacterFragment"
         android:label="Label 3"
-        tools:layout="@layout/character_info_fragment" />
+        tools:layout="@layout/character_creation_fragment" />
 </navigation>
