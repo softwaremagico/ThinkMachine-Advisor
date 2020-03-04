@@ -3,23 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:startDestination="@+id/navigation_home">
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.softwaremagico.tm.advisor.ui.main.character.CharacterFragment"
-        android:label="Label 1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:layout="@layout/character_creation_fragment" />
 
     <fragment
         android:id="@+id/navigation_random"
         android:name="com.softwaremagico.tm.advisor.ui.main.character.CharacterFragment"
-        android:label="Label 2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:layout="@layout/character_creation_fragment" />
 
     <fragment
         android:id="@+id/navigation_sheet"
         android:name="com.softwaremagico.tm.advisor.ui.main.character.CharacterFragment"
-        android:label="Label 3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:layout="@layout/character_creation_fragment" />
 </navigation>
