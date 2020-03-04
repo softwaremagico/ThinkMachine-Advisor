@@ -3,4 +3,7 @@
     <string name="tab_info">Information</string>
     <string name="tab_char">Characteristics</string>
     <string name="tab_skills">Skills</string>
+    <string name="tab_visualization_txt">Text</string>
+    <string name="tab_visualization_pdf">PDF</string>
+    <string name="tab_visualization_pdf_small">PDF (Small)</string>
 </resources>

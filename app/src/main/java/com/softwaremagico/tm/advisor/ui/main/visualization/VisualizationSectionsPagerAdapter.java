@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.main.character;
+package com.softwaremagico.tm.advisor.ui.main.visualization;
 
 import android.content.Context;
 
@@ -10,19 +10,18 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.main.PlaceholderFragment;
-import com.softwaremagico.tm.advisor.ui.main.character.info.CharacterInfoFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class VisualizationSectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[] {R.string.tab_info, R.string.tab_char, R.string.tab_skills};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_visualization_txt, R.string.tab_visualization_pdf, R.string.tab_visualization_pdf_small};
     private final Context mContext;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public VisualizationSectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
@@ -31,8 +30,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        if(position==0){
-            return CharacterInfoFragment.newInstance(position+1);
+        if (position == 0) {
+            return TextVisualizationFragment.newInstance(position + 1);
         }
 
         return PlaceholderFragment.newInstance(position + 1);
