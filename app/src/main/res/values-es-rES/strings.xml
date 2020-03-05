@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_info">Información</string>
+    <string name="tab_char">Características</string>
+    <string name="tab_skills">Habilidades</string>
+    <string name="tab_visualization_pdf">PDF</string>
+    <string name="tab_visualization_pdf_small">PDF (Reducido)</string>
+    <string name="navigation_character">Personaje</string>
+    <string name="navigation_visualization">Visualización</string>
+    <string name="tab_visualization_txt">Texto</string>
+</resources>

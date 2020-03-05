@@ -11,7 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.softwaremagico.tm.advisor.R;
 
-public class CharacterCreationFragment extends Fragment {
+public class TabCharacterCreationFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

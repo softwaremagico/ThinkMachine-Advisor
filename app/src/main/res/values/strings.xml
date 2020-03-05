@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">Think Machine Advisor</string>
+    <string name="app_name" translatable="false">Think Machine: Advisor</string>
     <string name="tab_info">Information</string>
     <string name="tab_char">Characteristics</string>
     <string name="tab_skills">Skills</string>
     <string name="tab_visualization_txt">Text</string>
     <string name="tab_visualization_pdf">PDF</string>
     <string name="tab_visualization_pdf_small">PDF (Small)</string>
+    <string name="navigation_character">Character</string>
+    <string name="navigation_visualization">Visualization</string>
 </resources>

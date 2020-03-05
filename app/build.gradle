@@ -45,5 +45,6 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.30'
     implementation 'androidx.navigation:navigation-fragment:2.2.1'
     implementation 'androidx.navigation:navigation-ui:2.2.1'
+    implementation 'com.github.barteksc:android-pdf-viewer:2.7.0'
 
 }

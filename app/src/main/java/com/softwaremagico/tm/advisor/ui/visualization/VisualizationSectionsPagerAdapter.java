@@ -33,6 +33,9 @@ public class VisualizationSectionsPagerAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return TextVisualizationFragment.newInstance(position + 1);
         }
+        if (position == 1) {
+            return PdfVisualizationFragment.newInstance(position + 1);
+        }
 
         return PlaceholderFragment.newInstance(position + 1);
     }
