@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.main.character;
+package com.softwaremagico.tm.advisor.ui.visualization;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.softwaremagico.tm.advisor.R;
 
-public class CharacterCreationFragment extends Fragment {
+public class SheetVisualizationFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,8 +21,8 @@ public class CharacterCreationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.character_creation_fragment, container, false);
-        CharacterSectionsPagerAdapter characterSectionsPagerAdapter = new CharacterSectionsPagerAdapter(getContext(), getChildFragmentManager());
+        View view = inflater.inflate(R.layout.character_visualization_fragment, container, false);
+        VisualizationSectionsPagerAdapter characterSectionsPagerAdapter = new VisualizationSectionsPagerAdapter(getContext(), getChildFragmentManager());
         ViewPager viewPager = view.findViewById(R.id.view_pager);
         viewPager.setAdapter(characterSectionsPagerAdapter);
         TabLayout tabs = view.findViewById(R.id.tabs);

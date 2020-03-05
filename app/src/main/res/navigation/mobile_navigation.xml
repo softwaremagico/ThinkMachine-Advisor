@@ -9,14 +9,14 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.softwaremagico.tm.advisor.ui.main.character.CharacterCreationFragment"
+        android:name="com.softwaremagico.tm.advisor.ui.character.CharacterCreationFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/character_creation_fragment" />
 
     <fragment
         android:id="@+id/navigation_sheet"
-        android:name="com.softwaremagico.tm.advisor.ui.main.visualization.SheetVisualizationFragment"
+        android:name="com.softwaremagico.tm.advisor.ui.visualization.SheetVisualizationFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/character_visualization_fragment" />

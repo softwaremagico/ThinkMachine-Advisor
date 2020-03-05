@@ -8,19 +8,18 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 
-public class ElementSpinner extends LinearLayout {
+public class EnumSpinner extends LinearLayout {
 
-    public ElementSpinner(Context context, AttributeSet attrs) {
+    public EnumSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.element_spinner, this);
+        inflate(context, R.layout.enum_spinner, this);
         initComponents(attrs);
     }
 
@@ -32,7 +31,7 @@ public class ElementSpinner extends LinearLayout {
         tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
     }
 
-    public <T extends Element<?>> void setAdapter(ElementAdapter<T> adapter) {
+    public <T extends Enum<?>> void setAdapter(EnumAdapter<T> adapter) {
         Spinner selector = (Spinner) findViewById(R.id.spinner);
         selector.setAdapter(adapter);
     }
@@ -42,9 +41,9 @@ public class ElementSpinner extends LinearLayout {
         selector.setOnItemSelectedListener(onItemSelectedListener);
     }
 
-    public <T extends Element<?>> void setSelection(T selected) {
+    public <T extends Enum<?>> void setSelection(T selected) {
         Spinner selector = (Spinner) findViewById(R.id.spinner);
-        selector.setSelection(((ElementAdapter<T>) selector.getAdapter()).indexOf(selected));
+        selector.setSelection(((EnumAdapter<T>) selector.getAdapter()).indexOf(selected));
     }
 
 

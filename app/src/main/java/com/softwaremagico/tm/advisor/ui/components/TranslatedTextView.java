@@ -13,8 +13,8 @@ public class TranslatedTextView extends androidx.appcompat.widget.AppCompatTextV
         super(context, attrs);
 
         TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.TranslatedText, 0, 0);
-        String tag = a.getString(R.styleable.TranslatedText_translation);
+                R.styleable.translated_text, 0, 0);
+        String tag = a.getString(R.styleable.translated_text_translation);
         this.setHint(ThinkMachineTranslator.getTranslatedText(tag) + " ");
         a.recycle();
     }

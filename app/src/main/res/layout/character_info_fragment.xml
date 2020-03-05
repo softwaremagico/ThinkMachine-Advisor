@@ -4,7 +4,7 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.character.info.CharacterInfoFragment">
+    tools:context=".ui.character.info.CharacterInfoFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,6 +20,22 @@
             />
 
         <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
+            android:id="@+id/character_surname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            custom:translation="infoSurname"
+            />
+
+        <com.softwaremagico.tm.advisor.ui.components.EnumSpinner
+            android:id="@+id/character_gender"
+            android:ems="10"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            custom:translation="infoGender"
+            />
+
+        <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
             android:id="@+id/character_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,17 +45,17 @@
 
         <com.softwaremagico.tm.advisor.ui.components.ElementSpinner
             android:id="@+id/character_race"
-            android:layout_width="409dp"
             android:ems="10"
             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             custom:translation="infoRace"
             />
 
         <com.softwaremagico.tm.advisor.ui.components.ElementSpinner
             android:id="@+id/character_faction"
-            android:layout_width="409dp"
             android:ems="10"
             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             custom:translation="infoFaction"
             />
 

@@ -3,6 +3,7 @@ package com.softwaremagico.tm.advisor.ui.components;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,8 +27,8 @@ public class TranslatedEditText extends LinearLayout {
     private void initComponents(AttributeSet attrs) {
         TextView tagText = (TextView) findViewById(R.id.translated_tag);
         TypedArray attributes = getContext().obtainStyledAttributes(attrs,
-                R.styleable.TranslatedText, 0, 0);
-        String tag = attributes.getString(R.styleable.TranslatedText_translation);
+                R.styleable.translated_text, 0, 0);
+        String tag = attributes.getString(R.styleable.translated_text_translation);
         tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
     }
 
@@ -35,4 +36,22 @@ public class TranslatedEditText extends LinearLayout {
         EditText tagText = (EditText) findViewById(R.id.input);
         tagText.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
+
+    public void setText(String text){
+        EditText tagText = (EditText) findViewById(R.id.input);
+        tagText.setText(text);
+    }
+
+    public String getText(){
+        EditText tagText = (EditText) findViewById(R.id.input);
+        return tagText.getText().toString();
+    }
+
+    public void addTextChangedListener(TextWatcher watcher){
+        EditText tagText = (EditText) findViewById(R.id.input);
+        tagText.addTextChangedListener(watcher);
+    }
+
+
+
 }
