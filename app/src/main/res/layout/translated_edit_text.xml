@@ -17,7 +17,7 @@
 
     <EditText
         android:id="@+id/input"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/translated_tag"
         android:singleLine="true"

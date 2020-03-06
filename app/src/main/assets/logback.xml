@@ -26,8 +26,11 @@
         <appender-ref ref="LOGCAT"/>
         <appender-ref ref="FILE"/>
     </logger>
+    <logger name="com.softwaremagico.tm.log.ConfigurationLog" additivity="false" level="OFF">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="FILE" />
         <appender-ref ref="LOGCAT" />
     </root>
