@@ -15,14 +15,14 @@ import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
-import com.softwaremagico.tm.pdf.complete.CharacterSheet;
 import com.softwaremagico.tm.pdf.complete.EmptyPdfBodyException;
+import com.softwaremagico.tm.pdf.small.SmallCharacterSheet;
 
-public class PdfVisualizationFragment extends Fragment {
+public class SmallPdfVisualizationFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public static PdfVisualizationFragment newInstance(int index) {
-        PdfVisualizationFragment fragment = new PdfVisualizationFragment();
+    public static SmallPdfVisualizationFragment newInstance(int index) {
+        SmallPdfVisualizationFragment fragment = new SmallPdfVisualizationFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -32,10 +32,10 @@ public class PdfVisualizationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.visualization_pdf_fragment, container, false);
+        View root = inflater.inflate(R.layout.visualization_small_pdf_fragment, container, false);
 
         PDFView pdfViewer = (PDFView) root.findViewById(R.id.pdf_viewer);
-        final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
+        final SmallCharacterSheet characterSheet = new SmallCharacterSheet(CharacterManager.getSelectedCharacter());
         try {
             pdfViewer.fromBytes(characterSheet.generate()).load();
         } catch (EmptyPdfBodyException e) {
