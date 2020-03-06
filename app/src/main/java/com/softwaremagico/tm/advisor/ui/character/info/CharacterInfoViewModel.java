@@ -1,7 +1,5 @@
 package com.softwaremagico.tm.advisor.ui.character.info;
 
-import android.util.Log;
-
 import androidx.lifecycle.ViewModel;
 
 import com.softwaremagico.tm.InvalidXmlElementException;
@@ -9,6 +7,8 @@ import com.softwaremagico.tm.advisor.configuration.ModuleManager;
 import com.softwaremagico.tm.character.Gender;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.FactionsFactory;
+import com.softwaremagico.tm.character.planets.Planet;
+import com.softwaremagico.tm.character.planets.PlanetFactory;
 import com.softwaremagico.tm.character.races.Race;
 import com.softwaremagico.tm.character.races.RaceFactory;
 import com.softwaremagico.tm.log.MachineLog;
@@ -26,7 +26,15 @@ public class CharacterInfoViewModel extends ViewModel {
         try {
             return FactionsFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
         } catch (InvalidXmlElementException e) {
-            Log.wtf(this.getClass().getName(), e);
+            MachineLog.errorMessage(this.getClass().getName(), e);
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Planet> getAvailablePlanets() {
+        try {
+            return PlanetFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+        } catch (InvalidXmlElementException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }
         return new ArrayList<>();
@@ -36,7 +44,6 @@ public class CharacterInfoViewModel extends ViewModel {
         try {
             return RaceFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
         } catch (InvalidXmlElementException e) {
-            Log.wtf(this.getClass().getName(), e);
             MachineLog.errorMessage(this.getClass().getName(), e);
         }
         return new ArrayList<>();

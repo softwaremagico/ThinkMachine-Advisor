@@ -59,6 +59,14 @@
             custom:translation="infoFaction"
             />
 
+        <com.softwaremagico.tm.advisor.ui.components.ElementSpinner
+            android:id="@+id/character_planet"
+            android:ems="10"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            custom:translation="infoPlanet"
+            />
+
 
     </LinearLayout>
 

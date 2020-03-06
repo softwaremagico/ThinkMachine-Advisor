@@ -24,6 +24,7 @@ import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
 import com.softwaremagico.tm.character.Gender;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
+import com.softwaremagico.tm.character.planets.Planet;
 import com.softwaremagico.tm.character.races.InvalidRaceException;
 import com.softwaremagico.tm.character.races.Race;
 
@@ -51,6 +52,7 @@ public class CharacterInfoFragment extends Fragment {
         createAgeText(root);
         createRaceSpinner(root);
         createFactionSpinner(root);
+        createPlanetSpinner(root);
 
         return root;
     }
@@ -187,6 +189,23 @@ public class CharacterInfoFragment extends Fragment {
                 } catch (InvalidFactionException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+        });
+    }
+
+    private void createPlanetSpinner(View root) {
+        ElementSpinner planetSelector = (ElementSpinner) root.findViewById(R.id.character_planet);
+        planetSelector.setAdapter(new ElementAdapter<Planet>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailablePlanets()));
+        planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
+        planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    CharacterManager.getSelectedCharacter().getInfo().setPlanet(mViewModel.getAvailablePlanets().get(position));
             }
 
             @Override
