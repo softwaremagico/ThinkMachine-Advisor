@@ -58,7 +58,7 @@ public class CharacterInfoFragment extends Fragment {
     }
 
     private void createNameText(View root) {
-        TranslatedEditText nameTextEditor = (TranslatedEditText) root.findViewById(R.id.character_name);
+        final TranslatedEditText nameTextEditor = (TranslatedEditText) root.findViewById(R.id.character_name);
         nameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getNameRepresentation());
         nameTextEditor.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,7 +81,7 @@ public class CharacterInfoFragment extends Fragment {
     }
 
     private void createSurnameText(View root) {
-        TranslatedEditText surnameTextEditor = (TranslatedEditText) root.findViewById(R.id.character_surname);
+        final TranslatedEditText surnameTextEditor = (TranslatedEditText) root.findViewById(R.id.character_surname);
         if (CharacterManager.getSelectedCharacter().getInfo().getSurname() != null) {
             surnameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getSurname().getName());
         }
@@ -106,7 +106,7 @@ public class CharacterInfoFragment extends Fragment {
     }
 
     private void createGenderSpinner(View root) {
-        EnumSpinner genderSelector = (EnumSpinner) root.findViewById(R.id.character_gender);
+        final EnumSpinner genderSelector = (EnumSpinner) root.findViewById(R.id.character_gender);
         genderSelector.setAdapter(new EnumAdapter<Gender>(getActivity(), android.R.layout.simple_spinner_item, mViewModel.getAvailableGenders()));
         genderSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getGender());
         genderSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -122,7 +122,7 @@ public class CharacterInfoFragment extends Fragment {
     }
 
     private void createAgeText(View root) {
-        TranslatedEditText ageTextEditor = (TranslatedEditText) root.findViewById(R.id.character_age);
+        final TranslatedEditText ageTextEditor = (TranslatedEditText) root.findViewById(R.id.character_age);
         ageTextEditor.setAsNumberEditor();
         if (CharacterManager.getSelectedCharacter().getInfo().getAge() != null) {
             ageTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getAge().toString());
@@ -161,6 +161,12 @@ public class CharacterInfoFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 try {
                     CharacterManager.getSelectedCharacter().setRace(mViewModel.getAvailableRaces().get(position));
+//                    Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.characteristics_frame);
+//                    System.out.println("111111111111111" + currentFragment);
+//                    if (currentFragment instanceof CharacteristicsFragment) {
+//                        System.out.println("222222");
+//                        ((CharacteristicsFragment) currentFragment).updateCharacteristicsLimits();
+//                    }
                 } catch (InvalidRaceException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
@@ -205,7 +211,7 @@ public class CharacterInfoFragment extends Fragment {
         planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    CharacterManager.getSelectedCharacter().getInfo().setPlanet(mViewModel.getAvailablePlanets().get(position));
+                CharacterManager.getSelectedCharacter().getInfo().setPlanet(mViewModel.getAvailablePlanets().get(position));
             }
 
             @Override

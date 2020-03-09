@@ -9,8 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.ui.main.PlaceholderFragment;
+import com.softwaremagico.tm.advisor.ui.character.characteristics.CharacteristicsFragment;
 import com.softwaremagico.tm.advisor.ui.character.info.CharacterInfoFragment;
+import com.softwaremagico.tm.advisor.ui.main.PlaceholderFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -33,6 +34,10 @@ public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
         if (position == 0) {
             return CharacterInfoFragment.newInstance(position + 1);
+        }
+
+        if (position == 1) {
+            return CharacteristicsFragment.newInstance(position + 1);
         }
 
         return PlaceholderFragment.newInstance(position + 1);

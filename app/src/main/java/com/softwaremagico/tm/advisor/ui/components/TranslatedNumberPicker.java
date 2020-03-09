@@ -2,25 +2,23 @@ package com.softwaremagico.tm.advisor.ui.components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 
-public class TranslatedEditText extends LinearLayout {
+public class TranslatedNumberPicker extends LinearLayout {
 
-    public TranslatedEditText(Context context, AttributeSet attrs) {
+    public TranslatedNumberPicker(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.translated_edit_text, this);
+        inflate(context, R.layout.translated_number_picker, this);
         initComponents(attrs);
     }
 
@@ -32,31 +30,30 @@ public class TranslatedEditText extends LinearLayout {
         tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
     }
 
-    public void setAsNumberEditor(){
-        EditText tagText = (EditText) findViewById(R.id.input);
-        tagText.setInputType(InputType.TYPE_CLASS_NUMBER);
-    }
-
     public void setLabel(String text){
         TextView tagText = (TextView) findViewById(R.id.translated_tag);
         tagText.setText(text);
     }
 
-    public void setText(String text){
-        EditText tagText = (EditText) findViewById(R.id.input);
-        tagText.setText(text);
+    public void setValue(int value){
+        NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
+        picker.setValue(value);
     }
 
-    public String getText(){
-        EditText tagText = (EditText) findViewById(R.id.input);
-        return tagText.getText().toString();
+    public int getValue(){
+        NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
+        return picker.getValue();
     }
 
-    public void addTextChangedListener(TextWatcher watcher){
-        EditText tagText = (EditText) findViewById(R.id.input);
-        tagText.addTextChangedListener(watcher);
+    public void addValueChangeListener(NumberPicker.OnValueChangeListener listener) {
+        NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
+        picker.setOnValueChangedListener(listener);
     }
 
-
+    public void setLimits(int minimum, int maximum){
+        NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
+        picker.setMaxValue(maximum);
+        picker.setMinValue(minimum);
+    }
 
 }

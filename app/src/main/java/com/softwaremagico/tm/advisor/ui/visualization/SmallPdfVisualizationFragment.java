@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.util.FitPolicy;
 import com.itextpdf.text.DocumentException;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.CharacterManager;
@@ -37,7 +38,7 @@ public class SmallPdfVisualizationFragment extends Fragment {
         PDFView pdfViewer = (PDFView) root.findViewById(R.id.pdf_viewer);
         final SmallCharacterSheet characterSheet = new SmallCharacterSheet(CharacterManager.getSelectedCharacter());
         try {
-            pdfViewer.fromBytes(characterSheet.generate()).load();
+            pdfViewer.fromBytes(characterSheet.generate()).pageFitPolicy(FitPolicy.HEIGHT).load();
         } catch (EmptyPdfBodyException e) {
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         } catch (DocumentException e) {

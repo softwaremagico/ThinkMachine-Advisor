@@ -3,7 +3,6 @@ package com.softwaremagico.tm.advisor.ui.character.info;
 import androidx.lifecycle.ViewModel;
 
 import com.softwaremagico.tm.InvalidXmlElementException;
-import com.softwaremagico.tm.advisor.configuration.ModuleManager;
 import com.softwaremagico.tm.character.Gender;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.FactionsFactory;
@@ -11,6 +10,7 @@ import com.softwaremagico.tm.character.planets.Planet;
 import com.softwaremagico.tm.character.planets.PlanetFactory;
 import com.softwaremagico.tm.character.races.Race;
 import com.softwaremagico.tm.character.races.RaceFactory;
+import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.log.MachineLog;
 
 import java.util.ArrayList;
