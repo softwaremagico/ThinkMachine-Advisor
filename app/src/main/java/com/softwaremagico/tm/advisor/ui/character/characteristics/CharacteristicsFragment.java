@@ -63,9 +63,17 @@ public class CharacteristicsFragment extends Fragment {
 
     public void updateCharacteristicsLimits() {
         if (CharacterManager.getSelectedCharacter().getRace() != null) {
-            for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicsNumberPicker : translatedNumberPickers.entrySet()) {
-                characteristicsNumberPicker.getValue().setLimits(CharacterManager.getSelectedCharacter().getStartingValue(characteristicsNumberPicker.getKey()),
-                        CharacterManager.getSelectedCharacter().getRace().getParameter(characteristicsNumberPicker.getKey()).getMaximumInitialValue());
+            for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristics : translatedNumberPickers.entrySet()) {
+                characteristics.getValue().setLimits(CharacterManager.getSelectedCharacter().getStartingValue(characteristics.getKey()),
+                        CharacterManager.getSelectedCharacter().getRace().getParameter(characteristics.getKey()).getMaximumInitialValue());
+            }
+        }
+    }
+
+    public void refreshCharacteristicValue() {
+        if (CharacterManager.getSelectedCharacter().getRace() != null) {
+            for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristics : translatedNumberPickers.entrySet()) {
+                characteristics.getValue().setValue(CharacterManager.getSelectedCharacter().getValue(characteristics.getKey()));
             }
         }
     }

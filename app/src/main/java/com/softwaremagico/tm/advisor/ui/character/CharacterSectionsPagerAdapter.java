@@ -1,6 +1,8 @@
 package com.softwaremagico.tm.advisor.ui.character;
 
 import android.content.Context;
+import android.util.SparseArray;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -22,10 +24,28 @@ public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_info, R.string.tab_char, R.string.tab_skills};
     private final Context mContext;
+    private SparseArray<Fragment> fragments = new SparseArray<>();
 
     public CharacterSectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        Fragment fragment = (Fragment) super.instantiateItem(container, position);
+        fragments.put(position, fragment);
+        return fragment;
+    }
+
+    public Fragment getRegisteredFragment(int position) {
+        return fragments.get(position);
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        fragments.remove(position);
+        super.destroyItem(container, position, object);
     }
 
     @Override

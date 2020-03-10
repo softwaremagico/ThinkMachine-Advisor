@@ -161,12 +161,6 @@ public class CharacterInfoFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 try {
                     CharacterManager.getSelectedCharacter().setRace(mViewModel.getAvailableRaces().get(position));
-//                    Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.characteristics_frame);
-//                    System.out.println("111111111111111" + currentFragment);
-//                    if (currentFragment instanceof CharacteristicsFragment) {
-//                        System.out.println("222222");
-//                        ((CharacteristicsFragment) currentFragment).updateCharacteristicsLimits();
-//                    }
                 } catch (InvalidRaceException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }

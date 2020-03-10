@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.character.characteristics.CharacteristicsFragment;
 
 public class TabCharacterCreationFragment extends Fragment {
 
@@ -25,6 +26,27 @@ public class TabCharacterCreationFragment extends Fragment {
         CharacterSectionsPagerAdapter characterSectionsPagerAdapter = new CharacterSectionsPagerAdapter(getContext(), getChildFragmentManager());
         ViewPager viewPager = view.findViewById(R.id.view_pager);
         viewPager.setAdapter(characterSectionsPagerAdapter);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Fragment selectedFragment = ((CharacterSectionsPagerAdapter) viewPager.getAdapter()).getRegisteredFragment(position);
+                if (selectedFragment != null && selectedFragment instanceof CharacteristicsFragment) {
+                    ((CharacteristicsFragment) selectedFragment).updateCharacteristicsLimits();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         TabLayout tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         return view;
