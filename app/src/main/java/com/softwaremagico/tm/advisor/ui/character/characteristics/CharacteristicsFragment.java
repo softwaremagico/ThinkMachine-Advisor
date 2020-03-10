@@ -1,11 +1,13 @@
 package com.softwaremagico.tm.advisor.ui.character.characteristics;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +46,25 @@ public class CharacteristicsFragment extends Fragment {
         LinearLayout linearLayout = root.findViewById(R.id.characteristics_container);
 
         for (final CharacteristicType type : CharacteristicType.values()) {
+            if(type == CharacteristicType.OTHERS){
+                continue;
+            }
+            TextView textView = new TextView(getContext(), null);
+            textView.setText(ThinkMachineTranslator.getTranslatedText(type.name().toLowerCase()+"Characteristics"));
+            textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            //textView.setPadding(20, 20, 20, 20);
+
+            //Create a separation line.
+            View space = new View(getContext(), null);
+            ViewGroup.LayoutParams params = linearLayout.getLayoutParams();
+            space.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,1));
+            space.setBackgroundColor(Color.parseColor("#ff000000"));
+
+            if (linearLayout != null) {
+                linearLayout.addView(textView);
+                linearLayout.addView(space);
+            }
+
             for (CharacteristicDefinition characteristicDefinition : CharacteristicsDefinitionFactory.getInstance().getAll(type, Locale.getDefault().getLanguage(),
                     ModuleManager.DEFAULT_MODULE)) {
                 createCharacteristicsEditText(root, linearLayout, characteristicDefinition);
@@ -55,11 +76,6 @@ public class CharacteristicsFragment extends Fragment {
         return root;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateCharacteristicsLimits();
-    }
 
     public void updateCharacteristicsLimits() {
         if (CharacterManager.getSelectedCharacter().getRace() != null) {
@@ -83,8 +99,7 @@ public class CharacteristicsFragment extends Fragment {
         translatedNumberPickers.put(characteristicDefinition.getCharacteristicName(), characteristicsNumberPicker);
         characteristicsNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText(characteristicDefinition.getId()));
         characteristicsNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        characteristicsNumberPicker.setPadding(20, 20, 20, 20);
-
+        //characteristicsNumberPicker.setPadding(20, 20, 20, 20);
 
         // Add EditText to LinearLayout
         if (linearLayout != null) {
