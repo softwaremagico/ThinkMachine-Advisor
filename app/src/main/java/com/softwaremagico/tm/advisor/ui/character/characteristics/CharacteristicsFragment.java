@@ -79,17 +79,17 @@ public class CharacteristicsFragment extends Fragment {
 
     public void updateCharacteristicsLimits() {
         if (CharacterManager.getSelectedCharacter().getRace() != null) {
-            for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristics : translatedNumberPickers.entrySet()) {
-                characteristics.getValue().setLimits(CharacterManager.getSelectedCharacter().getStartingValue(characteristics.getKey()),
-                        CharacterManager.getSelectedCharacter().getRace().getParameter(characteristics.getKey()).getMaximumInitialValue());
+            for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
+                characteristicComponent.getValue().setLimits(CharacterManager.getSelectedCharacter().getStartingValue(characteristicComponent.getKey()),
+                        CharacterManager.getSelectedCharacter().getRace().getParameter(characteristicComponent.getKey()).getMaximumInitialValue());
             }
         }
     }
 
     public void refreshCharacteristicValue() {
         if (CharacterManager.getSelectedCharacter().getRace() != null) {
-            for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristics : translatedNumberPickers.entrySet()) {
-                characteristics.getValue().setValue(CharacterManager.getSelectedCharacter().getValue(characteristics.getKey()));
+            for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
+                characteristicComponent.getValue().setValue(CharacterManager.getSelectedCharacter().getValue(characteristicComponent.getKey()));
             }
         }
     }

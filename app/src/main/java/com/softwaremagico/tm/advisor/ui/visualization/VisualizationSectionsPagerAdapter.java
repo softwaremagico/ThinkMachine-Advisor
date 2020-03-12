@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.ui.main.PlaceholderFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -40,7 +39,7 @@ public class VisualizationSectionsPagerAdapter extends FragmentPagerAdapter {
             return SmallPdfVisualizationFragment.newInstance(position + 1);
         }
 
-        return PlaceholderFragment.newInstance(position + 1);
+        return null;
     }
 
     @Nullable

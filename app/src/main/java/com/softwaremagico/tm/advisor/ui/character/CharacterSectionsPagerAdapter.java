@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.character.characteristics.CharacteristicsFragment;
 import com.softwaremagico.tm.advisor.ui.character.info.CharacterInfoFragment;
-import com.softwaremagico.tm.advisor.ui.main.PlaceholderFragment;
+import com.softwaremagico.tm.advisor.ui.character.skills.SkillsFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -60,7 +60,11 @@ public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
             return CharacteristicsFragment.newInstance(position + 1);
         }
 
-        return PlaceholderFragment.newInstance(position + 1);
+        if (position == 2) {
+            return SkillsFragment.newInstance(position + 1);
+        }
+
+        return null;
     }
 
     @Nullable
