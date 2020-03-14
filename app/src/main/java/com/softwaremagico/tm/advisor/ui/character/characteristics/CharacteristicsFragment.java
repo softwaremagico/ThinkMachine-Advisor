@@ -86,7 +86,7 @@ public class CharacteristicsFragment extends Fragment {
         }
     }
 
-    public void refreshCharacteristicValue() {
+    public void refreshCharacteristicValues() {
         if (CharacterManager.getSelectedCharacter().getRace() != null) {
             for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
                 characteristicComponent.getValue().setValue(CharacterManager.getSelectedCharacter().getValue(characteristicComponent.getKey()));

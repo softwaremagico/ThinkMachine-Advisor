@@ -110,7 +110,7 @@ public class SkillsFragment extends Fragment {
             linearLayout.addView(skillNumberPicker);
         }
 
-        skillNumberPicker.setValue(CharacterManager.getSelectedCharacter().getSkillAssignedRanks(skill));
+        skillNumberPicker.setValue(CharacterManager.getSelectedCharacter().getSkillAssignedRanks(skill).intValue());
 
         skillNumberPicker.addValueChangeListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -137,7 +137,7 @@ public class SkillsFragment extends Fragment {
         }
     }
 
-    public void refreshCharacteristicValue() {
+    public void refreshSkillsValues() {
         if (CharacterManager.getSelectedCharacter().getRace() != null) {
             for (Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
                 skillComponent.getValue().setValue(CharacterManager.getSelectedCharacter().getSkillAssignedRanks(skillComponent.getKey()));

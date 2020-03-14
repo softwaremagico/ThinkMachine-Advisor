@@ -27,33 +27,46 @@ public class TranslatedNumberPicker extends LinearLayout {
         TypedArray attributes = getContext().obtainStyledAttributes(attrs,
                 R.styleable.translated_text, 0, 0);
         String tag = attributes.getString(R.styleable.translated_text_translation);
-        tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
+        if (tag != null) {
+            tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
+        }
     }
 
-    public void setLabel(String text){
+    public void setLabel(String text) {
         TextView tagText = (TextView) findViewById(R.id.translated_tag);
-        tagText.setText(text);
+        if (tagText != null) {
+            tagText.setText(text);
+        }
     }
 
-    public void setValue(int value){
+    public void setValue(int value) {
         NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
-        picker.setValue(value);
+        if (picker != null) {
+            picker.setValue(value);
+        }
     }
 
-    public int getValue(){
+    public int getValue() {
         NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
+        if (picker == null) {
+            return -1;
+        }
         return picker.getValue();
     }
 
     public void addValueChangeListener(NumberPicker.OnValueChangeListener listener) {
         NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
-        picker.setOnValueChangedListener(listener);
+        if (picker != null) {
+            picker.setOnValueChangedListener(listener);
+        }
     }
 
-    public void setLimits(int minimum, int maximum){
+    public void setLimits(int minimum, int maximum) {
         NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
-        picker.setMaxValue(maximum);
-        picker.setMinValue(minimum);
+        if (picker != null) {
+            picker.setMaxValue(maximum);
+            picker.setMinValue(minimum);
+        }
     }
 
 }
