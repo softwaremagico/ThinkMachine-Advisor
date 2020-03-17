@@ -21,6 +21,7 @@ import com.softwaremagico.tm.character.characteristics.CharacteristicDefinition;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.characteristics.CharacteristicType;
 import com.softwaremagico.tm.character.characteristics.CharacteristicsDefinitionFactory;
+import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 
 import java.util.HashMap;
@@ -46,18 +47,18 @@ public class CharacteristicsFragment extends Fragment {
         LinearLayout linearLayout = root.findViewById(R.id.characteristics_container);
 
         for (final CharacteristicType type : CharacteristicType.values()) {
-            if(type == CharacteristicType.OTHERS){
+            if (type == CharacteristicType.OTHERS) {
                 continue;
             }
             TextView textView = new TextView(getContext(), null);
-            textView.setText(ThinkMachineTranslator.getTranslatedText(type.name().toLowerCase()+"Characteristics"));
+            textView.setText(ThinkMachineTranslator.getTranslatedText(type.name().toLowerCase() + "Characteristics"));
             textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             //textView.setPadding(20, 20, 20, 20);
 
             //Create a separation line.
             View space = new View(getContext(), null);
             ViewGroup.LayoutParams params = linearLayout.getLayoutParams();
-            space.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,1));
+            space.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
             space.setBackgroundColor(Color.parseColor("#ff000000"));
 
             if (linearLayout != null) {
@@ -81,7 +82,8 @@ public class CharacteristicsFragment extends Fragment {
         if (CharacterManager.getSelectedCharacter().getRace() != null) {
             for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
                 characteristicComponent.getValue().setLimits(CharacterManager.getSelectedCharacter().getStartingValue(characteristicComponent.getKey()),
-                        CharacterManager.getSelectedCharacter().getRace().getParameter(characteristicComponent.getKey()).getMaximumInitialValue());
+                        FreeStyleCharacterCreation.getMaxInitialCharacteristicsValues(characteristicComponent.getKey(),
+                                CharacterManager.getSelectedCharacter().getInfo().getAge(), CharacterManager.getSelectedCharacter().getRace()));
             }
         }
     }

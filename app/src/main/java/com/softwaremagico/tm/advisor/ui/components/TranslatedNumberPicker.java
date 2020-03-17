@@ -42,7 +42,11 @@ public class TranslatedNumberPicker extends LinearLayout {
     public void setValue(int value) {
         NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
         if (picker != null) {
-            picker.setValue(value);
+            if (picker.getMaxValue() < value) {
+                picker.setValue(picker.getMaxValue());
+            } else {
+                picker.setValue(value);
+            }
         }
     }
 
