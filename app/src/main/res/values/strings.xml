@@ -8,4 +8,5 @@
     <string name="tab_visualization_pdf_small">PDF (Small)</string>
     <string name="navigation_character">Character</string>
     <string name="navigation_visualization">Visualization</string>
+    <string name="share">Share</string>
 </resources>
