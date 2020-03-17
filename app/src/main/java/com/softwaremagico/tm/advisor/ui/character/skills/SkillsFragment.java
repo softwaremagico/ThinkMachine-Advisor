@@ -128,10 +128,11 @@ public class SkillsFragment extends Fragment {
     public void updateSkillsLimits() {
         if (CharacterManager.getSelectedCharacter().getRace() != null) {
             for (Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
-                if(skillComponent.getKey().getSkillDefinition().isNatural()){
-                    skillComponent.getValue().setLimits(FreeStyleCharacterCreation.MIN_INITIAL_NATURAL_SKILL_VALUE, FreeStyleCharacterCreation.MAX_INITIAL_SKILL_VALUE);
-                }else {
-                    skillComponent.getValue().setLimits(0, FreeStyleCharacterCreation.MAX_INITIAL_SKILL_VALUE);
+                if (skillComponent.getKey().getSkillDefinition().isNatural()) {
+                    skillComponent.getValue().setLimits(FreeStyleCharacterCreation.getMinInitialNaturalSkillsValues(CharacterManager.getSelectedCharacter().getInfo().getAge()),
+                            FreeStyleCharacterCreation.getMaxInitialSkillsValues(CharacterManager.getSelectedCharacter().getInfo().getAge()));
+                } else {
+                    skillComponent.getValue().setLimits(0, FreeStyleCharacterCreation.getMaxInitialSkillsValues(CharacterManager.getSelectedCharacter().getInfo().getAge()));
                 }
             }
         }
