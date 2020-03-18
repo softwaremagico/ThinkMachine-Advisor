@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.visualization.CompletePdfVisualizationFragment">
 
     <LinearLayout
@@ -24,6 +25,9 @@
         android:layout_margin="@dimen/fab_margin"
         android:backgroundTint="@color/colorPrimary"
         android:tint="@color/colorContrast"
-        android:src="@drawable/ic_random_icon" />
+        android:src="@drawable/ic_share_icon"
+        app:fabSize="auto"
+        app:maxImageSize="32dp"
+        android:scaleType="center" />
 
 </FrameLayout>
