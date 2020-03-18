@@ -13,14 +13,14 @@ import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
+import com.softwaremagico.tm.pdf.complete.CharacterSheet;
 import com.softwaremagico.tm.pdf.complete.EmptyPdfBodyException;
-import com.softwaremagico.tm.pdf.small.SmallCharacterSheet;
 
-public class SmallPdfVisualizationFragment extends PdfVisualizationFragment {
+public class CompletePdfVisualizationFragment extends PdfVisualizationFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public static SmallPdfVisualizationFragment newInstance(int index) {
-        SmallPdfVisualizationFragment fragment = new SmallPdfVisualizationFragment();
+    public static CompletePdfVisualizationFragment newInstance(int index) {
+        CompletePdfVisualizationFragment fragment = new CompletePdfVisualizationFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -34,7 +34,7 @@ public class SmallPdfVisualizationFragment extends PdfVisualizationFragment {
 
     @Override
     protected byte[] generatePdf() {
-        final SmallCharacterSheet characterSheet = new SmallCharacterSheet(CharacterManager.getSelectedCharacter());
+        final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
         try {
             return (characterSheet.generate());
         } catch (EmptyPdfBodyException e) {
