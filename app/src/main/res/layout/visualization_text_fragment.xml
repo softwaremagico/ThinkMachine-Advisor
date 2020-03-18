@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.visualization.TextVisualizationFragment">
 
     <LinearLayout
@@ -18,8 +19,19 @@
             android:scrollbars="vertical"
             android:maxLines="7"
             android:text="Character TXT representation" />
-
-
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@color/colorPrimary"
+        android:tint="@color/colorContrast"
+        android:src="@drawable/ic_share_icon"
+        app:fabSize="auto"
+        app:maxImageSize="32dp"
+        android:scaleType="center" />
 
 </FrameLayout>
