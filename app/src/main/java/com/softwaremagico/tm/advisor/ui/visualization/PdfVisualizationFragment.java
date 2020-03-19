@@ -64,10 +64,10 @@ public abstract class PdfVisualizationFragment extends Fragment {
         characterSheetAsPdf = new File(imagePath, CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
                 CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet.pdf" :
                 "pdf_sheet.pdf");
-        Uri contentUri = FileProvider.getUriForFile(getContext(), "com.softwaremagico.tm.advisor.ui.fileprovider", characterSheetAsPdf);
+        Uri contentUri = FileProvider.getUriForFile(getContext(), "com.softwaremagico.tm.advisor", characterSheetAsPdf);
 
         if (contentUri != null) {
-            //getContext().grantUriPermission("com.softwaremagico.tm.advisor.ui.fileprovider", contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            //getContext().grantUriPermission("com.softwaremagico.tm.advisor", contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
             characterSheetAsPdf.getParentFile().mkdirs();
             characterSheet.createFile(characterSheetAsPdf.getAbsolutePath());

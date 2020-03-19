@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Think Machine: Advisor</string>
     <string name="tab_info">Information</string>
     <string name="tab_char">Characteristics</string>
     <string name="tab_skills">Skills</string>
