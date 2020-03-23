@@ -1,6 +1,26 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            Properties keystoreProps = new Properties()
+            keystoreProps.load(new FileInputStream(file('../../../Documentos/Android Keys/keystore.config')))
+
+            keyAlias keystoreProps['keyAlias']
+            keyPassword keystoreProps['keyPassword']
+            storePassword keystoreProps['storePassword']
+            storeFile file('../../../Documentos/Android Keys/AndroidKeyStore.jks')
+        }
+        beta {
+            Properties keystoreProps = new Properties()
+            keystoreProps.load(new FileInputStream(file('../../../Documentos/Android Keys/keystore.config')))
+
+            keyAlias keystoreProps['keyAlias']
+            keyPassword keystoreProps['keyPassword']
+            storePassword keystoreProps['storePassword']
+            storeFile file('../../../Documentos/Android Keys/AndroidKeyStore.jks')
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -8,27 +28,41 @@ android {
         applicationId "com.softwaremagico.tm.advisor"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 1
-        versionName "0.1.0"
+        versionCode 2
+        versionName "0.0.1"
+        setProperty("archivesBaseName", applicationId + "-v" + versionCode)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    repositories {
-        mavenLocal()
+        signingConfig signingConfigs.beta
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "Think Machine: Advisor"
+        }
+
+        beta {
+            minifyEnabled false
+            applicationIdSuffix ".beta"
+            versionNameSuffix "-beta"
+            resValue "string", "app_name", "Think Machine: Advisor (Beta)"
+            repositories {
+                mavenLocal()
+            }
+        }
+
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "Advisor_${variant.buildType.name}_${defaultConfig.versionName}.apk"
+            }
         }
     }
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-
 }
 
 dependencies {
