@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.character.characteristics.CharacteristicsFragment;
 import com.softwaremagico.tm.advisor.ui.character.info.CharacterInfoFragment;
 import com.softwaremagico.tm.advisor.ui.character.skills.SkillsFragment;
+import com.softwaremagico.tm.advisor.ui.character.traits.TraitsFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -22,33 +24,35 @@ import com.softwaremagico.tm.advisor.ui.character.skills.SkillsFragment;
 public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_info, R.string.tab_char, R.string.tab_skills};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_character_info, R.string.tab_character_characteristics, R.string.tab_character_skills, R.string.tab_character_traits};
     private final Context mContext;
     private SparseArray<Fragment> fragments = new SparseArray<>();
 
-    public CharacterSectionsPagerAdapter(Context context, FragmentManager fm) {
+    CharacterSectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    @NonNull
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         Fragment fragment = (Fragment) super.instantiateItem(container, position);
         fragments.put(position, fragment);
         return fragment;
     }
 
-    public Fragment getRegisteredFragment(int position) {
+    Fragment getRegisteredFragment(int position) {
         return fragments.get(position);
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         fragments.remove(position);
         super.destroyItem(container, position, object);
     }
 
     @Override
+    @NonNull
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
@@ -64,7 +68,11 @@ public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
             return SkillsFragment.newInstance(position + 1);
         }
 
-        return null;
+        if (position == 3) {
+            return TraitsFragment.newInstance(position + 1);
+        }
+
+        return CharacterInfoFragment.newInstance(position + 1);
     }
 
     @Nullable

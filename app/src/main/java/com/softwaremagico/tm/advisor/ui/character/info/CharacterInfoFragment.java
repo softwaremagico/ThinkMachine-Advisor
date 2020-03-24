@@ -10,25 +10,21 @@ import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
+import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
-import com.softwaremagico.tm.character.Gender;
-import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
-import com.softwaremagico.tm.character.planets.Planet;
 import com.softwaremagico.tm.character.races.InvalidRaceException;
-import com.softwaremagico.tm.character.races.Race;
 
-public class CharacterInfoFragment extends Fragment {
+public class CharacterInfoFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private CharacterInfoViewModel mViewModel;
 
@@ -58,7 +54,7 @@ public class CharacterInfoFragment extends Fragment {
     }
 
     private void createNameText(View root) {
-        final TranslatedEditText nameTextEditor = (TranslatedEditText) root.findViewById(R.id.character_name);
+        final TranslatedEditText nameTextEditor = root.findViewById(R.id.character_name);
         nameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getNameRepresentation());
         nameTextEditor.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,7 +77,7 @@ public class CharacterInfoFragment extends Fragment {
     }
 
     private void createSurnameText(View root) {
-        final TranslatedEditText surnameTextEditor = (TranslatedEditText) root.findViewById(R.id.character_surname);
+        final TranslatedEditText surnameTextEditor = root.findViewById(R.id.character_surname);
         if (CharacterManager.getSelectedCharacter().getInfo().getSurname() != null) {
             surnameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getSurname().getName());
         }
@@ -106,8 +102,8 @@ public class CharacterInfoFragment extends Fragment {
     }
 
     private void createGenderSpinner(View root) {
-        final EnumSpinner genderSelector = (EnumSpinner) root.findViewById(R.id.character_gender);
-        genderSelector.setAdapter(new EnumAdapter<Gender>(getActivity(), android.R.layout.simple_spinner_item, mViewModel.getAvailableGenders()));
+        final EnumSpinner genderSelector = root.findViewById(R.id.character_gender);
+        genderSelector.setAdapter(new EnumAdapter<>(getActivity(), android.R.layout.simple_spinner_item, mViewModel.getAvailableGenders()));
         genderSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getGender());
         genderSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -122,7 +118,7 @@ public class CharacterInfoFragment extends Fragment {
     }
 
     private void createAgeText(View root) {
-        final TranslatedEditText ageTextEditor = (TranslatedEditText) root.findViewById(R.id.character_age);
+        final TranslatedEditText ageTextEditor = root.findViewById(R.id.character_age);
         ageTextEditor.setAsNumberEditor();
         if (CharacterManager.getSelectedCharacter().getInfo().getAge() != null) {
             ageTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getAge().toString());
@@ -145,7 +141,7 @@ public class CharacterInfoFragment extends Fragment {
                 try {
                     CharacterManager.getSelectedCharacter().getInfo().setAge(Integer.parseInt(ageTextEditor.getText()));
                 } catch (NumberFormatException e) {
-
+                    AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
             }
         });
@@ -153,8 +149,8 @@ public class CharacterInfoFragment extends Fragment {
     }
 
     private void createRaceSpinner(View root) {
-        ElementSpinner raceSelector = (ElementSpinner) root.findViewById(R.id.character_race);
-        raceSelector.setAdapter(new ElementAdapter<Race>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailableRaces()));
+        ElementSpinner raceSelector = root.findViewById(R.id.character_race);
+        raceSelector.setAdapter(new ElementAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailableRaces()));
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -178,8 +174,8 @@ public class CharacterInfoFragment extends Fragment {
     }
 
     private void createFactionSpinner(View root) {
-        ElementSpinner factionsSelector = (ElementSpinner) root.findViewById(R.id.character_faction);
-        factionsSelector.setAdapter(new ElementAdapter<Faction>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailableFactions()));
+        ElementSpinner factionsSelector = root.findViewById(R.id.character_faction);
+        factionsSelector.setAdapter(new ElementAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailableFactions()));
         factionsSelector.setSelection(CharacterManager.getSelectedCharacter().getFaction());
         factionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -199,8 +195,8 @@ public class CharacterInfoFragment extends Fragment {
     }
 
     private void createPlanetSpinner(View root) {
-        ElementSpinner planetSelector = (ElementSpinner) root.findViewById(R.id.character_planet);
-        planetSelector.setAdapter(new ElementAdapter<Planet>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailablePlanets()));
+        ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
+        planetSelector.setAdapter(new ElementAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailablePlanets()));
         planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
         planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
