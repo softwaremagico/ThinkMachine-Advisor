@@ -1,3 +1,15 @@
+/*
+ *  Copyright (C) 2020 Softwaremagico
+ *
+ *  This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero  <softwaremagico@gmail.com> Valencia (Spain).
+ *
+ *  This program is free software; you can redistribute it and/or modify it under  the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+ */
+
 package com.softwaremagico.tm.advisor.ui.components;
 
 import android.content.Context;
@@ -23,7 +35,7 @@ public class TranslatedNumberPicker extends LinearLayout {
     }
 
     private void initComponents(AttributeSet attrs) {
-        TextView tagText = (TextView) findViewById(R.id.translated_tag);
+        TextView tagText = findViewById(R.id.translated_tag);
         TypedArray attributes = getContext().obtainStyledAttributes(attrs,
                 R.styleable.translated_text, 0, 0);
         String tag = attributes.getString(R.styleable.translated_text_translation);
@@ -33,14 +45,22 @@ public class TranslatedNumberPicker extends LinearLayout {
     }
 
     public void setLabel(String text) {
-        TextView tagText = (TextView) findViewById(R.id.translated_tag);
+        TextView tagText = findViewById(R.id.translated_tag);
         if (tagText != null) {
             tagText.setText(text);
         }
     }
 
+    public int getValue() {
+        NumberPicker picker = findViewById(R.id.picker);
+        if (picker == null) {
+            return -1;
+        }
+        return picker.getValue();
+    }
+
     public void setValue(int value) {
-        NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
+        NumberPicker picker = findViewById(R.id.picker);
         if (picker != null) {
             if (picker.getMaxValue() < value) {
                 picker.setValue(picker.getMaxValue());
@@ -50,23 +70,15 @@ public class TranslatedNumberPicker extends LinearLayout {
         }
     }
 
-    public int getValue() {
-        NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
-        if (picker == null) {
-            return -1;
-        }
-        return picker.getValue();
-    }
-
     public void addValueChangeListener(NumberPicker.OnValueChangeListener listener) {
-        NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
+        NumberPicker picker = findViewById(R.id.picker);
         if (picker != null) {
             picker.setOnValueChangedListener(listener);
         }
     }
 
     public void setLimits(int minimum, int maximum) {
-        NumberPicker picker = (NumberPicker) findViewById(R.id.picker);
+        NumberPicker picker = findViewById(R.id.picker);
         if (picker != null) {
             picker.setMaxValue(maximum);
             picker.setMinValue(minimum);
