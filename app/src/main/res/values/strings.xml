@@ -11,6 +11,7 @@
   -->
 
 <resources>
+    <string name="app_name" translatable="false">Think Machine: Advisor</string>
     <string name="tab_character_info">Information</string>
     <string name="tab_character_characteristics">Characteristics</string>
     <string name="tab_character_skills">Skills</string>

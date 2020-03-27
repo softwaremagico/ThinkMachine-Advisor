@@ -29,8 +29,8 @@ import java.util.List;
 public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
     private List<T> elements;
 
-    public ElementAdapter(@NonNull Context context, int resource, @NonNull List<T> objects) {
-        super(context, resource, objects);
+    public ElementAdapter(@NonNull Context context, @NonNull List<T> objects) {
+        super(context, android.R.layout.simple_spinner_dropdown_item, objects);
         this.elements = objects;
     }
 

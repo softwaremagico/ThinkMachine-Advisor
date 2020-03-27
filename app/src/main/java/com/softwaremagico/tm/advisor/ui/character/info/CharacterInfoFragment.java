@@ -162,7 +162,7 @@ public class CharacterInfoFragment extends CustomFragment {
 
     private void createRaceSpinner(View root) {
         ElementSpinner raceSelector = root.findViewById(R.id.character_race);
-        raceSelector.setAdapter(new ElementAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailableRaces()));
+        raceSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableRaces()));
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -187,7 +187,7 @@ public class CharacterInfoFragment extends CustomFragment {
 
     private void createFactionSpinner(View root) {
         ElementSpinner factionsSelector = root.findViewById(R.id.character_faction);
-        factionsSelector.setAdapter(new ElementAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailableFactions()));
+        factionsSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableFactions()));
         factionsSelector.setSelection(CharacterManager.getSelectedCharacter().getFaction());
         factionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -208,7 +208,7 @@ public class CharacterInfoFragment extends CustomFragment {
 
     private void createPlanetSpinner(View root) {
         ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
-        planetSelector.setAdapter(new ElementAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mViewModel.getAvailablePlanets()));
+        planetSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailablePlanets()));
         planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
         planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
