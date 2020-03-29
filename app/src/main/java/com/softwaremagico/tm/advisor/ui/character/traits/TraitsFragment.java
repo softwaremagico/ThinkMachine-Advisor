@@ -16,13 +16,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
+import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.skills.AvailableSkill;
@@ -46,8 +46,14 @@ public class TraitsFragment extends CustomFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.character_traits_fragment, container, false);
-        LinearLayout linearLayout = root.findViewById(R.id.traits_container);
-        addSection(ThinkMachineTranslator.getTranslatedText("traits"), linearLayout);
+        IncrementalElementsLayout blessingsLayout = root.findViewById(R.id.blessings_container);
+
+        addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), blessingsLayout);
+
+        IncrementalElementsLayout benefices = root.findViewById(R.id.benefices_container);
+        addSection(ThinkMachineTranslator.getTranslatedText("beneficesTable"), benefices);
+
+
 
         return root;
     }

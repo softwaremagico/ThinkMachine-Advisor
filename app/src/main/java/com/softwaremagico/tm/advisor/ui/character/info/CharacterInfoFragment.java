@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
@@ -33,8 +34,11 @@ import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
+import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
+import com.softwaremagico.tm.character.planets.Planet;
 import com.softwaremagico.tm.character.races.InvalidRaceException;
+import com.softwaremagico.tm.character.races.Race;
 
 public class CharacterInfoFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -162,13 +166,17 @@ public class CharacterInfoFragment extends CustomFragment {
 
     private void createRaceSpinner(View root) {
         ElementSpinner raceSelector = root.findViewById(R.id.character_race);
-        raceSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableRaces()));
+        raceSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableRaces(), false, Race.class));
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 try {
-                    CharacterManager.getSelectedCharacter().setRace(mViewModel.getAvailableRaces().get(position));
+                    if (mViewModel.getAvailableRaces().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                        CharacterManager.getSelectedCharacter().setRace(null);
+                    } else {
+                        CharacterManager.getSelectedCharacter().setRace(mViewModel.getAvailableRaces().get(position));
+                    }
                 } catch (InvalidRaceException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
@@ -187,13 +195,17 @@ public class CharacterInfoFragment extends CustomFragment {
 
     private void createFactionSpinner(View root) {
         ElementSpinner factionsSelector = root.findViewById(R.id.character_faction);
-        factionsSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableFactions()));
+        factionsSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableFactions(), false, Faction.class));
         factionsSelector.setSelection(CharacterManager.getSelectedCharacter().getFaction());
         factionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 try {
-                    CharacterManager.getSelectedCharacter().setFaction(mViewModel.getAvailableFactions().get(position));
+                    if (mViewModel.getAvailableFactions().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                        CharacterManager.getSelectedCharacter().setFaction(null);
+                    } else {
+                        CharacterManager.getSelectedCharacter().setFaction(mViewModel.getAvailableFactions().get(position));
+                    }
                 } catch (InvalidFactionException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
@@ -208,12 +220,16 @@ public class CharacterInfoFragment extends CustomFragment {
 
     private void createPlanetSpinner(View root) {
         ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
-        planetSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailablePlanets()));
+        planetSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailablePlanets(), false, Planet.class));
         planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
         planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                CharacterManager.getSelectedCharacter().getInfo().setPlanet(mViewModel.getAvailablePlanets().get(position));
+                if (mViewModel.getAvailablePlanets().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                    CharacterManager.getSelectedCharacter().getInfo().setPlanet(null);
+                } else {
+                    CharacterManager.getSelectedCharacter().getInfo().setPlanet(mViewModel.getAvailablePlanets().get(position));
+                }
             }
 
             @Override

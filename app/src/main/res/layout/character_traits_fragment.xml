@@ -19,12 +19,26 @@
     tools:context=".ui.character.traits.TraitsFragment">
 
     <LinearLayout
-        android:id="@+id/traits_container"
+        android:id="@+id/parent_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:scrollbars="vertical">
+        android:layout_height="wrap_content">
+
+        <com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout
+            android:id="@+id/blessings_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:scrollbars="vertical" />
+
+        <com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout
+            android:id="@+id/benefices_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:scrollbars="vertical" />
 
     </LinearLayout>
+
 
 </ScrollView>

@@ -39,7 +39,7 @@ android {
     defaultConfig {
         applicationId "com.softwaremagico.tm.advisor"
         minSdkVersion 24
-        targetSdkVersion 29
+        targetSdkVersion 27
         versionCode 2
         versionName "0.0.1"
         setProperty("archivesBaseName", applicationId + "-v" + versionCode)

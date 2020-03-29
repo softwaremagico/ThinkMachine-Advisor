@@ -23,15 +23,31 @@ import androidx.annotation.NonNull;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.log.AdvisorLog;
 
 import java.util.List;
 
 public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
     private List<T> elements;
 
-    public ElementAdapter(@NonNull Context context, @NonNull List<T> objects) {
+    public ElementAdapter(@NonNull Context context, @NonNull List<T> objects, boolean nullAllowed, Class<T> clazz) {
         super(context, android.R.layout.simple_spinner_dropdown_item, objects);
         this.elements = objects;
+        if (nullAllowed) {
+            addNullValue(clazz);
+        }
+    }
+
+    private void addNullValue(Class<T> clazz) {
+        try {
+            //Create null instance.
+            T instance = clazz.newInstance();
+            insert(instance, 0);
+        } catch (IllegalAccessException | InstantiationException e) {
+            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        }
+
+
     }
 
     @Override
@@ -72,7 +88,7 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
         return listItem;
     }
 
-    public int indexOf(T element){
+    public int indexOf(T element) {
         return elements.indexOf(element);
     }
 
