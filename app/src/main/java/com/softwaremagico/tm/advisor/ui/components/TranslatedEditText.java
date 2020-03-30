@@ -18,20 +18,19 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 
-public class TranslatedEditText extends LinearLayout {
+public class TranslatedEditText extends Component {
 
     public TranslatedEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    @Override
+    protected void init(Context context, AttributeSet attrs) {
         inflate(context, R.layout.translated_edit_text, this);
         initComponents(attrs);
     }

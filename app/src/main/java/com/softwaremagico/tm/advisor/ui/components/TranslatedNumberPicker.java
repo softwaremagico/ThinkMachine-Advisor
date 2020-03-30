@@ -15,21 +15,20 @@ package com.softwaremagico.tm.advisor.ui.components;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 
-public class TranslatedNumberPicker extends LinearLayout {
+public class TranslatedNumberPicker extends Component {
 
     public TranslatedNumberPicker(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    @Override
+    protected void init(Context context, AttributeSet attrs) {
         inflate(context, R.layout.translated_number_picker, this);
         initComponents(attrs);
     }

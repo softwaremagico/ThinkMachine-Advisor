@@ -16,7 +16,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -24,14 +23,18 @@ import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 
-public class ElementSpinner extends LinearLayout {
+public class ElementSpinner extends Component {
+
+    public ElementSpinner(Context context) {
+        this(context, null);
+    }
 
     public ElementSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    @Override
+    protected void init(Context context, AttributeSet attrs) {
         inflate(context, R.layout.element_spinner, this);
         initComponents(attrs);
     }
@@ -57,6 +60,15 @@ public class ElementSpinner extends LinearLayout {
     public <T extends Element<?>> void setSelection(T selected) {
         Spinner selector = findViewById(R.id.spinner);
         selector.setSelection(((ElementAdapter<T>) selector.getAdapter()).indexOf(selected));
+    }
+
+    public <T extends Element<?>> T getSelection() {
+        Spinner selector = findViewById(R.id.spinner);
+        T selectedItem = (T) selector.getSelectedItem();
+        if (Element.isNull(selectedItem)) {
+            return null;
+        }
+        return selectedItem;
     }
 
 

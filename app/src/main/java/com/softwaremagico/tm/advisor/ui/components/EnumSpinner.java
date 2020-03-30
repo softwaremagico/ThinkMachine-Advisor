@@ -16,21 +16,20 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 
-public class EnumSpinner extends LinearLayout {
+public class EnumSpinner extends Component {
 
     public EnumSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    @Override
+    protected void init(Context context, AttributeSet attrs) {
         inflate(context, R.layout.enum_spinner, this);
         initComponents(attrs);
     }

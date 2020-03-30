@@ -14,13 +14,77 @@ package com.softwaremagico.tm.advisor.ui.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
-public class IncrementalElementsLayout extends LinearLayout {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class IncrementalElementsLayout extends LinearLayout {
+    private List<ElementSpinner> elements;
+
+    public IncrementalElementsLayout(Context context) {
+        this(context, null);
+    }
 
     public IncrementalElementsLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        elements = new ArrayList<>();
+        setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT));
+        setOrientation(LinearLayout.VERTICAL);
+        updateContent();
     }
+
+    private void updateContent() {
+        int i = 0;
+        while (i < elements.size()) {
+            //Not the last spinner.
+            if (i < elements.size() - 1) {
+                if (elements.get(i).getSelection() == null) {
+                    removeView(elements.get(i));
+                    elements.remove(i);
+                }
+            } else {
+                //Last must be an empty one.
+                if (elements.get(i).getSelection() != null) {
+                    addElementSpinner(createElementSpinner());
+                }
+            }
+            i++;
+        }
+    }
+
+    public List<ElementSpinner> getElements() {
+        return elements;
+    }
+
+    private void addElementSpinner(ElementSpinner spinner) {
+        setElementSpinnerProperties(spinner);
+        super.addView(spinner);
+        elements.add(spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                updateContent();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                updateContent();
+            }
+        });
+    }
+
+    private void setElementSpinnerProperties(ElementSpinner spinner) {
+        spinner.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT));
+    }
+
+    public abstract ElementSpinner createElementSpinner();
 }
