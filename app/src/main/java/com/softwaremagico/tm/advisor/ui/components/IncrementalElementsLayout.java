@@ -41,6 +41,10 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
     }
 
     private void updateContent() {
+        if(elements.isEmpty()){
+            addElementSpinner(createElementSpinner());
+            return;
+        }
         int i = 0;
         while (i < elements.size()) {
             //Not the last spinner.

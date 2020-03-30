@@ -44,7 +44,9 @@ public class ElementSpinner extends Component {
         TypedArray attributes = getContext().obtainStyledAttributes(attrs,
                 R.styleable.translated_text, 0, 0);
         String tag = attributes.getString(R.styleable.translated_text_translation);
-        tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
+        if(tag!=null) {
+            tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
+        }
     }
 
     public <T extends Element<?>> void setAdapter(ElementAdapter<T> adapter) {
