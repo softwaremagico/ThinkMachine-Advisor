@@ -32,7 +32,7 @@ public class TraitsViewModel extends ViewModel {
     public List<Blessing> getAvailableBlessings() {
         try {
             return BlessingFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
-        } catch (InvalidXmlElementException e) {
+        } catch (InvalidXmlElementException | NullPointerException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }
         return new ArrayList<>();
@@ -41,7 +41,7 @@ public class TraitsViewModel extends ViewModel {
     public List<AvailableBenefice> getAvailableBenefices() {
         try {
             return new ArrayList<>(AvailableBeneficeFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE));
-        } catch (InvalidXmlElementException e) {
+        } catch (InvalidXmlElementException | NullPointerException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }
         return new ArrayList<>();
