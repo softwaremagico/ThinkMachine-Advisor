@@ -57,14 +57,18 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
             listItem = LayoutInflater.from(getContext()).inflate(R.layout.element_list, parent, false);
         }
 
-        Element element = elements.get(position);
+        T element = elements.get(position);
 
         if (element != null) {
             TextView name = listItem.findViewById(R.id.selected_item);
-            name.setText(element.getName());
+            name.setText(getElementRepresentation(element));
         }
 
         return listItem;
+    }
+
+    public String getElementRepresentation(T element){
+        return element.getName();
     }
 
     /*
@@ -78,11 +82,11 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
             listItem = LayoutInflater.from(getContext()).inflate(R.layout.element_list, parent, false);
         }
 
-        Element element = elements.get(position);
+        T element = elements.get(position);
 
         if (element != null) {
             TextView elementName = listItem.findViewById(R.id.selected_item);
-            elementName.setText(element.getName());
+            elementName.setText(getElementRepresentation(element));
         }
 
         return listItem;

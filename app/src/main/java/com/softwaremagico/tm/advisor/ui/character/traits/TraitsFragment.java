@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
@@ -92,7 +93,6 @@ public class TraitsFragment extends CustomFragment {
                     setBlessings(getElements());
                 }
 
-
                 @Override
                 public void onNothingSelected(AdapterView<?> parentView) {
                     setBlessings(getElements());
@@ -123,7 +123,19 @@ public class TraitsFragment extends CustomFragment {
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner beneficesSelector = new ElementSpinner(getContext());
-            beneficesSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableBenefices(), true, AvailableBenefice.class));
+            beneficesSelector.setAdapter(new ElementAdapter<AvailableBenefice>(getActivity(), mViewModel.getAvailableBenefices(), true, AvailableBenefice.class) {
+
+                @Override
+                public String getElementRepresentation(AvailableBenefice element) {
+                    if(element.getId().equals(Element.DEFAULT_NULL_ID)){
+                        return "";
+                    }
+                    if (element.getSpecialization() == null) {
+                        return element.getName() + " (" + element.getCost() + ")";
+                    }
+                    return element.getName() + " [" + element.getSpecialization().getName() + "]" + " (" + element.getCost() + ")";
+                }
+            });
             beneficesSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
