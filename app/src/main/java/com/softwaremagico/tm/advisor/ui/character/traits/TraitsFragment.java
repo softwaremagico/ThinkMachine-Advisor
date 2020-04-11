@@ -86,7 +86,15 @@ public class TraitsFragment extends CustomFragment {
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner blessingSelector = new ElementSpinner(getContext());
-            blessingSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableBlessings(), true, Blessing.class));
+            blessingSelector.setAdapter(new ElementAdapter<Blessing>(getActivity(), mViewModel.getAvailableBlessings(), true, Blessing.class) {
+                @Override
+                public String getElementRepresentation(Blessing element) {
+                    if (element.getId().equals(Element.DEFAULT_NULL_ID)) {
+                        return "";
+                    }
+                    return element.getName() + " (" + element.getCost() + ")";
+                }
+            });
             blessingSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -127,7 +135,7 @@ public class TraitsFragment extends CustomFragment {
 
                 @Override
                 public String getElementRepresentation(AvailableBenefice element) {
-                    if(element.getId().equals(Element.DEFAULT_NULL_ID)){
+                    if (element.getId().equals(Element.DEFAULT_NULL_ID)) {
                         return "";
                     }
                     if (element.getSpecialization() == null) {
