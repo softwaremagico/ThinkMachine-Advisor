@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.character.characteristics.CharacteristicsFragment;
+import com.softwaremagico.tm.advisor.ui.character.equipment.EquipmentFragment;
 import com.softwaremagico.tm.advisor.ui.character.info.CharacterInfoFragment;
 import com.softwaremagico.tm.advisor.ui.character.skills.SkillsFragment;
 import com.softwaremagico.tm.advisor.ui.character.traits.TraitsFragment;
@@ -36,12 +37,12 @@ import com.softwaremagico.tm.advisor.ui.character.traits.TraitsFragment;
 public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_character_info, R.string.tab_character_characteristics, R.string.tab_character_skills, R.string.tab_character_traits};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_character_info, R.string.tab_character_characteristics, R.string.tab_character_skills, R.string.tab_character_traits, R.string.tab_character_equipment};
     private final Context mContext;
     private SparseArray<Fragment> fragments = new SparseArray<>();
 
     CharacterSectionsPagerAdapter(Context context, FragmentManager fm) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mContext = context;
     }
 
@@ -84,7 +85,11 @@ public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
             return TraitsFragment.newInstance(position + 1);
         }
 
-        return CharacterInfoFragment.newInstance(position + 1);
+        if (position == 4) {
+            return EquipmentFragment.newInstance(position + 1);
+        }
+
+        return null;
     }
 
     @Nullable

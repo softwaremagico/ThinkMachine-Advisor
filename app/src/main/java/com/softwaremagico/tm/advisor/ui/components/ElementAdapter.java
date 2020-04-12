@@ -68,6 +68,9 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
     }
 
     public String getElementRepresentation(T element){
+        if (element.getId().equals(Element.DEFAULT_NULL_ID)) {
+            return "";
+        }
         return element.getName();
     }
 

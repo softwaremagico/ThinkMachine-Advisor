@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
@@ -86,15 +87,7 @@ public class TraitsFragment extends CustomFragment {
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner blessingSelector = new ElementSpinner(getContext());
-            blessingSelector.setAdapter(new ElementAdapter<Blessing>(getActivity(), mViewModel.getAvailableBlessings(), true, Blessing.class) {
-                @Override
-                public String getElementRepresentation(Blessing element) {
-                    if (element.getId().equals(Element.DEFAULT_NULL_ID)) {
-                        return "";
-                    }
-                    return element.getName() + " (" + element.getCost() + ")";
-                }
-            });
+            blessingSelector.setAdapter(new ElementAdapter<Blessing>(getActivity(), mViewModel.getAvailableBlessings(), true, Blessing.class));
             blessingSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -117,7 +110,9 @@ public class TraitsFragment extends CustomFragment {
             try {
                 CharacterManager.getSelectedCharacter().setBlessings(blessings);
             } catch (TooManyBlessingsException e) {
-
+                Snackbar snackbar = Snackbar
+                        .make(this, R.string.message_too_many_blessings, Snackbar.LENGTH_SHORT);
+                snackbar.show();
             }
         }
     }
@@ -167,7 +162,9 @@ public class TraitsFragment extends CustomFragment {
             try {
                 CharacterManager.getSelectedCharacter().setBenefices(benefices);
             } catch (InvalidBeneficeException e) {
-
+                Snackbar snackbar = Snackbar
+                        .make(this, R.string.message_invalid_benefice, Snackbar.LENGTH_SHORT);
+                snackbar.show();
             }
         }
     }

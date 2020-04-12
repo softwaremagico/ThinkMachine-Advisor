@@ -15,6 +15,8 @@
     <string name="tab_character_info">Information</string>
     <string name="tab_character_characteristics">Characteristics</string>
     <string name="tab_character_skills">Skills</string>
+    <string name="tab_character_traits">Traits</string>
+    <string name="tab_character_equipment">Equipment</string>
     <string name="tab_visualization_txt">Text</string>
     <string name="tab_visualization_pdf">PDF</string>
     <string name="tab_visualization_pdf_small">PDF (Small)</string>
@@ -22,5 +24,7 @@
     <string name="navigation_visualization">Visualization</string>
     <string name="share">Share</string>
     <string name="share_body">Character \'${CHARACTER_NAME}\' sheet page.</string>
-    <string name="tab_character_traits">Traits</string>
+    <string name="message_too_many_blessings">Exceding the maximum number of blessings</string>
+    <string name="message_invalid_benefice">Invalid benefice</string>
+    <string name="message_invalid_shield_armour_combination">Invalid combination of armor with energy shield</string>
 </resources>

@@ -22,4 +22,8 @@
     <string name="share">Compartir</string>
     <string name="share_body">Hoja de personaje para \'${CHARACTER_NAME}\'.</string>
     <string name="tab_character_traits">Rasgos</string>
+    <string name="tab_character_equipment">Equipo</string>
+    <string name="message_too_many_blessings">Máximo número de bendiciones excedido</string>
+    <string name="message_invalid_benefice">Beneficio invalido</string>
+    <string name="message_invalid_shield_armour_combination">Combinación inválida de armadura y escudo energético</string>
 </resources>

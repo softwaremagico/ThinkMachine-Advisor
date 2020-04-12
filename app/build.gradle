@@ -49,8 +49,8 @@ android {
         applicationId "com.softwaremagico.tm.advisor"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 3
-        versionName "0.0.2"
+        versionCode 4
+        versionName "0.0.3"
         setProperty("archivesBaseName", applicationId + "-v" + versionCode)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -68,7 +68,6 @@ android {
 
         beta {
             minifyEnabled false
-            applicationIdSuffix ".beta"
             versionNameSuffix "-beta"
             signingConfig signingConfigs.beta
             repositories {
@@ -78,18 +77,11 @@ android {
 
         alpha {
             minifyEnabled false
-            applicationIdSuffix ".alpha"
             versionNameSuffix "-alpha"
             repositories {
                 mavenLocal()
             }
             signingConfig signingConfigs.alpha
-        }
-
-        applicationVariants.all { variant ->
-            variant.outputs.all {
-                outputFileName = "${applicationId}-${defaultConfig.versionName}.apk"
-            }
         }
     }
 
