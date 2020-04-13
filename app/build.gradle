@@ -83,6 +83,13 @@ android {
             }
             signingConfig signingConfigs.alpha
         }
+
+        debug {
+            minifyEnabled false
+            repositories {
+                mavenLocal()
+            }
+        }
     }
 
     compileOptions {
