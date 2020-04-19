@@ -157,7 +157,7 @@ public class CharacterInfoFragment extends CustomFragment {
                 try {
                     CharacterManager.getSelectedCharacter().getInfo().setAge(Integer.parseInt(ageTextEditor.getText()));
                 } catch (NumberFormatException e) {
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
+                    //No age set.
                 }
             }
         });

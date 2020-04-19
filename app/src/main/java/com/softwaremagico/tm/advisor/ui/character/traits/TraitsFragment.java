@@ -33,6 +33,7 @@ import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
+import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.benefices.InvalidBeneficeException;
 import com.softwaremagico.tm.character.blessings.Blessing;
@@ -64,14 +65,14 @@ public class TraitsFragment extends CustomFragment {
         mViewModel = new ViewModelProvider(this).get(TraitsViewModel.class);
         LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
 
-//        addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), rootLayout);
-//        final IncrementalElementsLayout blessingsLayout = new BlessingLayout(getContext());
-//        rootLayout.addView(blessingsLayout);
-//
-//
-//        addSection(ThinkMachineTranslator.getTranslatedText("beneficesTable"), rootLayout);
-//        IncrementalElementsLayout beneficesLayout = new BeneficesLayout(getContext());
-//        rootLayout.addView(beneficesLayout);
+        addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), rootLayout);
+        final IncrementalElementsLayout blessingsLayout = new BlessingLayout(getContext());
+        rootLayout.addView(blessingsLayout);
+
+
+        addSection(ThinkMachineTranslator.getTranslatedText("beneficesTable"), rootLayout);
+        IncrementalElementsLayout beneficesLayout = new BeneficesLayout(getContext());
+        rootLayout.addView(beneficesLayout);
 
         return rootView;
     }

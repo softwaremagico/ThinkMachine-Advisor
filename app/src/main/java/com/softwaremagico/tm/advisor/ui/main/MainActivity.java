@@ -21,19 +21,28 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.log.AdvisorLog;
+import com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer;
+import com.softwaremagico.tm.file.modules.ModuleManager;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
+        try {
+            ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+        } catch (InvalidXmlElementException e) {
+            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        }
         super.onCreate(savedInstanceState);
-//        setTheme(R.style.AppTheme);
-//        try {
-//            ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
-//        } catch (InvalidXmlElementException e) {
-//            AdvisorLog.errorMessage(this.getClass().getName(), e);
-//        }
+
+        setTheme(R.style.AppTheme);
+
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
