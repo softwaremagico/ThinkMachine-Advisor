@@ -82,32 +82,36 @@ public class TraitsFragment extends CustomFragment {
 
         public BlessingLayout(Context context, boolean nullAllowed) {
             super(context, nullAllowed);
+
+            setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    setBlessings(getElements());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    setBlessings(getElements());
+                }
+            });
         }
 
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner blessingSelector = new ElementSpinner(getContext());
             blessingSelector.setAdapter(new ElementAdapter<Blessing>(getActivity(), mViewModel.getAvailableBlessings(), isNullAllowed(), Blessing.class));
-            blessingSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    setBlessings(getElements());
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    setBlessings(getElements());
-                }
-            });
             return blessingSelector;
         }
 
         private void setBlessings(List<ElementSpinner> spinners) {
             List<Blessing> blessings = new ArrayList<>();
             for (ElementSpinner spinner : spinners) {
-                blessings.add(spinner.getSelection());
+                if (spinner.getSelection() != null) {
+                    blessings.add(spinner.getSelection());
+                }
             }
             try {
+                System.out.println("############# " + blessings);
                 CharacterManager.getSelectedCharacter().setBlessings(blessings);
             } catch (TooManyBlessingsException e) {
                 Snackbar snackbar = Snackbar
@@ -121,6 +125,18 @@ public class TraitsFragment extends CustomFragment {
 
         public BeneficesLayout(Context context, boolean nullAllowed) {
             super(context, nullAllowed);
+
+            setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    setBenefice(getElements());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    setBenefice(getElements());
+                }
+            });
         }
 
         @Override
@@ -139,25 +155,15 @@ public class TraitsFragment extends CustomFragment {
                     return element.getName() + " [" + element.getSpecialization().getName() + "]" + " (" + element.getCost() + ")";
                 }
             });
-            beneficesSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    setBenefice(getElements());
-                }
-
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    setBenefice(getElements());
-                }
-            });
             return beneficesSelector;
         }
 
         private void setBenefice(List<ElementSpinner> spinners) {
             List<AvailableBenefice> benefices = new ArrayList<>();
             for (ElementSpinner spinner : spinners) {
-                benefices.add(spinner.getSelection());
+                if (spinner.getSelection() != null) {
+                    benefices.add(spinner.getSelection());
+                }
             }
             try {
                 CharacterManager.getSelectedCharacter().setBenefices(benefices);

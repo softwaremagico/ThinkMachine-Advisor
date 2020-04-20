@@ -21,15 +21,20 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class IncrementalElementsLayout extends LinearLayout {
     private List<ElementSpinner> elements;
     private boolean enabled = true;
     private final boolean nullAllowed;
+    private Set<AdapterView.OnItemSelectedListener> listeners;
+
 
     public IncrementalElementsLayout(Context context, boolean nullAllowed) {
         this(context, null, nullAllowed);
+        listeners = new HashSet<>();
     }
 
     public IncrementalElementsLayout(Context context, @Nullable AttributeSet attrs, boolean nullAllowed) {
@@ -82,11 +87,17 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 updateContent();
+                for (AdapterView.OnItemSelectedListener listener : listeners) {
+                    listener.onItemSelected(parent, view, position, id);
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 updateContent();
+                for (AdapterView.OnItemSelectedListener listener : listeners) {
+                    listener.onNothingSelected(parent);
+                }
             }
         });
         enabled = true;
@@ -102,5 +113,9 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
 
     protected boolean isNullAllowed() {
         return nullAllowed;
+    }
+
+    public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener listener) {
+        listeners.add(listener);
     }
 }

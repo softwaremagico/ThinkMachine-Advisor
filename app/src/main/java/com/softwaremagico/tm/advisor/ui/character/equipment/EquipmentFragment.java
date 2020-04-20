@@ -85,30 +85,33 @@ public class EquipmentFragment extends CustomFragment {
 
         public ShieldLayout(Context context, boolean nullsAllowed) {
             super(context, nullsAllowed);
+
+            setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    setShield(getElements());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    setShield(getElements());
+                }
+            });
         }
 
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner shieldSelector = new ElementSpinner(getContext());
             shieldSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableShields(), isNullAllowed(), Shield.class));
-            shieldSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    setShield(getElements());
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    setShield(getElements());
-                }
-            });
             return shieldSelector;
         }
 
         private void setShield(List<ElementSpinner> spinners) {
             List<Shield> shields = new ArrayList<>();
             for (ElementSpinner spinner : spinners) {
-                shields.add(spinner.getSelection());
+                if (spinner.getSelection() != null) {
+                    shields.add(spinner.getSelection());
+                }
             }
             if (!shields.isEmpty()) {
                 try {
@@ -133,30 +136,33 @@ public class EquipmentFragment extends CustomFragment {
 
         public ArmourLayout(Context context, boolean nullsAllowed) {
             super(context, nullsAllowed);
+
+            setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    setArmour(getElements());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    setArmour(getElements());
+                }
+            });
         }
 
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner armourSelector = new ElementSpinner(getContext());
             armourSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableArmours(), isNullAllowed(), Armour.class));
-            armourSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    setArmour(getElements());
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    setArmour(getElements());
-                }
-            });
             return armourSelector;
         }
 
         private void setArmour(List<ElementSpinner> spinners) {
             List<Armour> armours = new ArrayList<>();
             for (ElementSpinner spinner : spinners) {
-                armours.add(spinner.getSelection());
+                if (spinner.getSelection() != null) {
+                    armours.add(spinner.getSelection());
+                }
             }
             if (!armours.isEmpty()) {
                 try {
@@ -180,30 +186,33 @@ public class EquipmentFragment extends CustomFragment {
 
         public WeaponsLayout(Context context, boolean nullsAllowed) {
             super(context, nullsAllowed);
+
+            setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    setWeapons(getElements());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    setWeapons(getElements());
+                }
+            });
         }
 
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner weaponSelector = new ElementSpinner(getContext());
             weaponSelector.setAdapter(new ElementAdapter<Weapon>(getActivity(), mViewModel.getAvailableWeapons(), isNullAllowed(), Weapon.class));
-            weaponSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    setWeapons(getElements());
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    setWeapons(getElements());
-                }
-            });
             return weaponSelector;
         }
 
         private void setWeapons(List<ElementSpinner> spinners) {
             List<Weapon> weapons = new ArrayList<>();
             for (ElementSpinner spinner : spinners) {
-                weapons.add(spinner.getSelection());
+                if (spinner.getSelection() != null) {
+                    weapons.add(spinner.getSelection());
+                }
             }
             CharacterManager.getSelectedCharacter().setWeapons(weapons);
         }
