@@ -25,13 +25,16 @@ import java.util.List;
 
 public abstract class IncrementalElementsLayout extends LinearLayout {
     private List<ElementSpinner> elements;
+    private boolean enabled = true;
+    private final boolean nullAllowed;
 
-    public IncrementalElementsLayout(Context context) {
-        this(context, null);
+    public IncrementalElementsLayout(Context context, boolean nullAllowed) {
+        this(context, null, nullAllowed);
     }
 
-    public IncrementalElementsLayout(Context context, @Nullable AttributeSet attrs) {
+    public IncrementalElementsLayout(Context context, @Nullable AttributeSet attrs, boolean nullAllowed) {
         super(context, attrs);
+        this.nullAllowed = nullAllowed;
         elements = new ArrayList<>();
         setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -41,7 +44,10 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
     }
 
     private void updateContent() {
-        if(elements.isEmpty()){
+        if (!enabled) {
+            return;
+        }
+        if (elements.isEmpty()) {
             addElementSpinner(createElementSpinner());
             return;
         }
@@ -55,7 +61,7 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
                 }
             } else {
                 //Last must be an empty one.
-                if (elements.get(i).getSelection() != null) {
+                if (nullAllowed && elements.get(i).getSelection() != null) {
                     addElementSpinner(createElementSpinner());
                 }
             }
@@ -68,8 +74,9 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
     }
 
     private void addElementSpinner(ElementSpinner spinner) {
-        setElementSpinnerProperties(spinner);
         super.addView(spinner);
+        enabled = false;
+        setElementSpinnerProperties(spinner);
         elements.add(spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -82,6 +89,7 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
                 updateContent();
             }
         });
+        enabled = true;
     }
 
     private void setElementSpinnerProperties(ElementSpinner spinner) {
@@ -91,4 +99,8 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
     }
 
     public abstract ElementSpinner createElementSpinner();
+
+    protected boolean isNullAllowed() {
+        return nullAllowed;
+    }
 }

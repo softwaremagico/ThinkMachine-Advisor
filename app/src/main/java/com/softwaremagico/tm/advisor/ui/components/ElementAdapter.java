@@ -32,10 +32,10 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
 
     public ElementAdapter(@NonNull Context context, @NonNull List<T> objects, boolean nullAllowed, Class<T> clazz) {
         super(context, android.R.layout.simple_spinner_dropdown_item, objects);
-        this.elements = objects;
         if (nullAllowed) {
             addNullValue(clazz);
         }
+        this.elements = objects;
     }
 
     private void addNullValue(Class<T> clazz) {
@@ -46,8 +46,6 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
         } catch (IllegalAccessException | InstantiationException e) {
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }
-
-
     }
 
     @Override

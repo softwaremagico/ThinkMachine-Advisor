@@ -66,12 +66,12 @@ public class TraitsFragment extends CustomFragment {
         LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
 
         addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), rootLayout);
-        final IncrementalElementsLayout blessingsLayout = new BlessingLayout(getContext());
+        final IncrementalElementsLayout blessingsLayout = new BlessingLayout(getContext(), true);
         rootLayout.addView(blessingsLayout);
 
 
         addSection(ThinkMachineTranslator.getTranslatedText("beneficesTable"), rootLayout);
-        IncrementalElementsLayout beneficesLayout = new BeneficesLayout(getContext());
+        IncrementalElementsLayout beneficesLayout = new BeneficesLayout(getContext(), true);
         rootLayout.addView(beneficesLayout);
 
         return rootView;
@@ -80,14 +80,14 @@ public class TraitsFragment extends CustomFragment {
 
     class BlessingLayout extends IncrementalElementsLayout {
 
-        public BlessingLayout(Context context) {
-            super(context);
+        public BlessingLayout(Context context, boolean nullAllowed) {
+            super(context, nullAllowed);
         }
 
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner blessingSelector = new ElementSpinner(getContext());
-            blessingSelector.setAdapter(new ElementAdapter<Blessing>(getActivity(), mViewModel.getAvailableBlessings(), true, Blessing.class));
+            blessingSelector.setAdapter(new ElementAdapter<Blessing>(getActivity(), mViewModel.getAvailableBlessings(), isNullAllowed(), Blessing.class));
             blessingSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -119,14 +119,14 @@ public class TraitsFragment extends CustomFragment {
 
     class BeneficesLayout extends IncrementalElementsLayout {
 
-        public BeneficesLayout(Context context) {
-            super(context);
+        public BeneficesLayout(Context context, boolean nullAllowed) {
+            super(context, nullAllowed);
         }
 
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner beneficesSelector = new ElementSpinner(getContext());
-            beneficesSelector.setAdapter(new ElementAdapter<AvailableBenefice>(getActivity(), mViewModel.getAvailableBenefices(), true, AvailableBenefice.class) {
+            beneficesSelector.setAdapter(new ElementAdapter<AvailableBenefice>(getActivity(), mViewModel.getAvailableBenefices(), isNullAllowed(), AvailableBenefice.class) {
 
                 @Override
                 public String getElementRepresentation(AvailableBenefice element) {

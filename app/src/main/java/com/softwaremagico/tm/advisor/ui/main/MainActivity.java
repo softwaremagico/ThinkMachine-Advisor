@@ -34,11 +34,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
-        try {
-            ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
-        } catch (InvalidXmlElementException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        }
+        //Preload all data in a seconday thread.
+        new Thread(() -> {
+            try {
+                ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+            } catch (
+                    InvalidXmlElementException e) {
+                AdvisorLog.errorMessage(this.getClass().getName(), e);
+            }
+        }).run();
+
         super.onCreate(savedInstanceState);
 
         setTheme(R.style.AppTheme);

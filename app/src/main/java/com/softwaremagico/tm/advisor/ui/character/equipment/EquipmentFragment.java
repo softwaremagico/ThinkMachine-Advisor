@@ -67,15 +67,15 @@ public class EquipmentFragment extends CustomFragment {
         LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
 
         addSection(ThinkMachineTranslator.getTranslatedText("weapons"), rootLayout);
-        final IncrementalElementsLayout weaponsLayout = new WeaponsLayout(getContext());
+        final IncrementalElementsLayout weaponsLayout = new WeaponsLayout(getContext(), true);
         rootLayout.addView(weaponsLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("armor"), rootLayout);
-        final IncrementalElementsLayout armoursLayout = new ArmourLayout(getContext());
+        final IncrementalElementsLayout armoursLayout = new ArmourLayout(getContext(), true);
         rootLayout.addView(armoursLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("shield"), rootLayout);
-        final IncrementalElementsLayout shieldsLayout = new ShieldLayout(getContext());
+        final IncrementalElementsLayout shieldsLayout = new ShieldLayout(getContext(), true);
         rootLayout.addView(shieldsLayout);
 
         return rootView;
@@ -83,14 +83,14 @@ public class EquipmentFragment extends CustomFragment {
 
     class ShieldLayout extends IncrementalElementsLayout {
 
-        public ShieldLayout(Context context) {
-            super(context);
+        public ShieldLayout(Context context, boolean nullsAllowed) {
+            super(context, nullsAllowed);
         }
 
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner shieldSelector = new ElementSpinner(getContext());
-            shieldSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableShields(), false, Shield.class));
+            shieldSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableShields(), isNullAllowed(), Shield.class));
             shieldSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -131,14 +131,14 @@ public class EquipmentFragment extends CustomFragment {
 
     class ArmourLayout extends IncrementalElementsLayout {
 
-        public ArmourLayout(Context context) {
-            super(context);
+        public ArmourLayout(Context context, boolean nullsAllowed) {
+            super(context, nullsAllowed);
         }
 
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner armourSelector = new ElementSpinner(getContext());
-            armourSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableArmours(), false, Armour.class));
+            armourSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableArmours(), isNullAllowed(), Armour.class));
             armourSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -178,14 +178,14 @@ public class EquipmentFragment extends CustomFragment {
 
     class WeaponsLayout extends IncrementalElementsLayout {
 
-        public WeaponsLayout(Context context) {
-            super(context);
+        public WeaponsLayout(Context context, boolean nullsAllowed) {
+            super(context, nullsAllowed);
         }
 
         @Override
         public ElementSpinner createElementSpinner() {
             ElementSpinner weaponSelector = new ElementSpinner(getContext());
-            weaponSelector.setAdapter(new ElementAdapter<Weapon>(getActivity(), mViewModel.getAvailableWeapons(), true, Weapon.class));
+            weaponSelector.setAdapter(new ElementAdapter<Weapon>(getActivity(), mViewModel.getAvailableWeapons(), isNullAllowed(), Weapon.class));
             weaponSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {

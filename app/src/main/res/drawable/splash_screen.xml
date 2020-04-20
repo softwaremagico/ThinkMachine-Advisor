@@ -16,6 +16,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_launcher"/>
+            android:src="@drawable/think_machine_logo_fenix"/>
     </item>
 </layer-list>
