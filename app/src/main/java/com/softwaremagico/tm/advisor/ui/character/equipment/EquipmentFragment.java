@@ -89,21 +89,19 @@ public class EquipmentFragment extends CustomFragment {
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    setShield(getElements());
+                    setShield(getElementSpinners());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-                    setShield(getElements());
+                    setShield(getElementSpinners());
                 }
             });
         }
 
         @Override
-        public ElementSpinner createElementSpinner() {
-            ElementSpinner shieldSelector = new ElementSpinner(getContext());
-            shieldSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableShields(), isNullAllowed(), Shield.class));
-            return shieldSelector;
+        protected ElementAdapter createElementAdapter() {
+            return new ElementAdapter<>(getActivity(), mViewModel.getAvailableShields(), isNullAllowed(), Shield.class);
         }
 
         private void setShield(List<ElementSpinner> spinners) {
@@ -140,21 +138,19 @@ public class EquipmentFragment extends CustomFragment {
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    setArmour(getElements());
+                    setArmour(getElementSpinners());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-                    setArmour(getElements());
+                    setArmour(getElementSpinners());
                 }
             });
         }
 
         @Override
-        public ElementSpinner createElementSpinner() {
-            ElementSpinner armourSelector = new ElementSpinner(getContext());
-            armourSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableArmours(), isNullAllowed(), Armour.class));
-            return armourSelector;
+        protected ElementAdapter createElementAdapter() {
+            return new ElementAdapter<>(getActivity(), mViewModel.getAvailableArmours(), isNullAllowed(), Armour.class);
         }
 
         private void setArmour(List<ElementSpinner> spinners) {
@@ -190,21 +186,19 @@ public class EquipmentFragment extends CustomFragment {
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    setWeapons(getElements());
+                    setWeapons(getElementSpinners());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-                    setWeapons(getElements());
+                    setWeapons(getElementSpinners());
                 }
             });
         }
 
         @Override
-        public ElementSpinner createElementSpinner() {
-            ElementSpinner weaponSelector = new ElementSpinner(getContext());
-            weaponSelector.setAdapter(new ElementAdapter<Weapon>(getActivity(), mViewModel.getAvailableWeapons(), isNullAllowed(), Weapon.class));
-            return weaponSelector;
+        protected ElementAdapter createElementAdapter() {
+            return new ElementAdapter<Weapon>(getActivity(), mViewModel.getAvailableWeapons(), isNullAllowed(), Weapon.class);
         }
 
         private void setWeapons(List<ElementSpinner> spinners) {

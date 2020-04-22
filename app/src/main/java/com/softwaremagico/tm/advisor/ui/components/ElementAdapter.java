@@ -25,17 +25,18 @@ import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
-    private List<T> elements;
+    private final List<T> elements;
 
     public ElementAdapter(@NonNull Context context, @NonNull List<T> objects, boolean nullAllowed, Class<T> clazz) {
         super(context, android.R.layout.simple_spinner_dropdown_item, objects);
+        this.elements = new ArrayList<>(objects);
         if (nullAllowed) {
             addNullValue(clazz);
         }
-        this.elements = objects;
     }
 
     private void addNullValue(Class<T> clazz) {
@@ -43,6 +44,7 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
             //Create null instance.
             T instance = clazz.newInstance();
             insert(instance, 0);
+            elements.add(0, instance);
         } catch (IllegalAccessException | InstantiationException e) {
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }

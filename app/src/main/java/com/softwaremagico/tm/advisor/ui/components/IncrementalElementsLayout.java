@@ -20,13 +20,17 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
+import com.softwaremagico.tm.Element;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class IncrementalElementsLayout extends LinearLayout {
-    private List<ElementSpinner> elements;
+public abstract class IncrementalElementsLayout<T extends Element<?>> extends LinearLayout {
+    private ElementAdapter<T> elementAdapter;
+    private List<ElementSpinner> elementSpinners;
     private boolean enabled = true;
     private final boolean nullAllowed;
     private Set<AdapterView.OnItemSelectedListener> listeners;
@@ -40,7 +44,7 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
     public IncrementalElementsLayout(Context context, @Nullable AttributeSet attrs, boolean nullAllowed) {
         super(context, attrs);
         this.nullAllowed = nullAllowed;
-        elements = new ArrayList<>();
+        elementSpinners = new ArrayList<>();
         setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
@@ -52,21 +56,21 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
         if (!enabled) {
             return;
         }
-        if (elements.isEmpty()) {
+        if (elementSpinners.isEmpty()) {
             addElementSpinner(createElementSpinner());
             return;
         }
         int i = 0;
-        while (i < elements.size()) {
+        while (i < elementSpinners.size()) {
             //Not the last spinner.
-            if (i < elements.size() - 1) {
-                if (elements.get(i).getSelection() == null) {
-                    removeView(elements.get(i));
-                    elements.remove(i);
+            if (i < elementSpinners.size() - 1) {
+                if (elementSpinners.get(i).getSelection() == null) {
+                    removeView(elementSpinners.get(i));
+                    elementSpinners.remove(i);
                 }
             } else {
                 //Last must be an empty one.
-                if (nullAllowed && elements.get(i).getSelection() != null) {
+                if (nullAllowed && elementSpinners.get(i).getSelection() != null) {
                     addElementSpinner(createElementSpinner());
                 }
             }
@@ -74,15 +78,35 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
         }
     }
 
-    public List<ElementSpinner> getElements() {
-        return elements;
+    private void clear() {
+        removeAllViewsInLayout();
+        elementSpinners.clear();
+    }
+
+    public void setElements(Collection<T> elements) {
+        enabled = false;
+        clear();
+        for (T element : elements) {
+            ElementSpinner spinner = createElementSpinner();
+            spinner.setSelection(element);
+            addElementSpinner(spinner);
+        }
+        //Last must be an empty one.
+        if (nullAllowed) {
+            addElementSpinner(createElementSpinner());
+        }
+        enabled = true;
+    }
+
+    public List<ElementSpinner> getElementSpinners() {
+        return elementSpinners;
     }
 
     private void addElementSpinner(ElementSpinner spinner) {
         super.addView(spinner);
         enabled = false;
         setElementSpinnerProperties(spinner);
-        elements.add(spinner);
+        elementSpinners.add(spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -109,7 +133,20 @@ public abstract class IncrementalElementsLayout extends LinearLayout {
                 LayoutParams.WRAP_CONTENT));
     }
 
-    public abstract ElementSpinner createElementSpinner();
+    public ElementSpinner createElementSpinner() {
+        ElementSpinner blessingSelector = new ElementSpinner(getContext());
+        blessingSelector.setAdapter(getElementAdapter());
+        return blessingSelector;
+    }
+
+    protected abstract ElementAdapter<T> createElementAdapter();
+
+    protected ElementAdapter<T> getElementAdapter() {
+        if (elementAdapter == null) {
+            elementAdapter = createElementAdapter();
+        }
+        return elementAdapter;
+    }
 
     protected boolean isNullAllowed() {
         return nullAllowed;

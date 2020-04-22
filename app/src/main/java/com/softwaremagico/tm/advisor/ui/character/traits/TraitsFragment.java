@@ -67,11 +67,12 @@ public class TraitsFragment extends CustomFragment {
 
         addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), rootLayout);
         final IncrementalElementsLayout blessingsLayout = new BlessingLayout(getContext(), true);
+        blessingsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedBlessings());
         rootLayout.addView(blessingsLayout);
-
 
         addSection(ThinkMachineTranslator.getTranslatedText("beneficesTable"), rootLayout);
         IncrementalElementsLayout beneficesLayout = new BeneficesLayout(getContext(), true);
+        beneficesLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedBenefices());
         rootLayout.addView(beneficesLayout);
 
         return rootView;
@@ -86,21 +87,28 @@ public class TraitsFragment extends CustomFragment {
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    setBlessings(getElements());
+                    setBlessings(getElementSpinners());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-                    setBlessings(getElements());
+                    setBlessings(getElementSpinners());
                 }
             });
         }
 
         @Override
-        public ElementSpinner createElementSpinner() {
-            ElementSpinner blessingSelector = new ElementSpinner(getContext());
-            blessingSelector.setAdapter(new ElementAdapter<Blessing>(getActivity(), mViewModel.getAvailableBlessings(), isNullAllowed(), Blessing.class));
-            return blessingSelector;
+        protected ElementAdapter createElementAdapter() {
+            return new ElementAdapter<Blessing>(getActivity(), mViewModel.getAvailableBlessings(), isNullAllowed(), Blessing.class) {
+
+                @Override
+                public String getElementRepresentation(Blessing element) {
+                    if (element.getId().equals(Element.DEFAULT_NULL_ID)) {
+                        return "";
+                    }
+                    return element.getName() + " (" + element.getCost() + ")";
+                }
+            };
         }
 
         private void setBlessings(List<ElementSpinner> spinners) {
@@ -111,7 +119,6 @@ public class TraitsFragment extends CustomFragment {
                 }
             }
             try {
-                System.out.println("############# " + blessings);
                 CharacterManager.getSelectedCharacter().setBlessings(blessings);
             } catch (TooManyBlessingsException e) {
                 Snackbar snackbar = Snackbar
@@ -129,20 +136,19 @@ public class TraitsFragment extends CustomFragment {
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    setBenefice(getElements());
+                    setBenefice(getElementSpinners());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-                    setBenefice(getElements());
+                    setBenefice(getElementSpinners());
                 }
             });
         }
 
         @Override
-        public ElementSpinner createElementSpinner() {
-            ElementSpinner beneficesSelector = new ElementSpinner(getContext());
-            beneficesSelector.setAdapter(new ElementAdapter<AvailableBenefice>(getActivity(), mViewModel.getAvailableBenefices(), isNullAllowed(), AvailableBenefice.class) {
+        protected ElementAdapter createElementAdapter() {
+            return new ElementAdapter<AvailableBenefice>(getActivity(), mViewModel.getAvailableBenefices(), isNullAllowed(), AvailableBenefice.class) {
 
                 @Override
                 public String getElementRepresentation(AvailableBenefice element) {
@@ -154,8 +160,7 @@ public class TraitsFragment extends CustomFragment {
                     }
                     return element.getName() + " [" + element.getSpecialization().getName() + "]" + " (" + element.getCost() + ")";
                 }
-            });
-            return beneficesSelector;
+            };
         }
 
         private void setBenefice(List<ElementSpinner> spinners) {
