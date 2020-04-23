@@ -80,9 +80,10 @@ public class TraitsFragment extends CustomFragment {
 
 
     class BlessingLayout extends IncrementalElementsLayout {
+        private final static int MAX_BENEFICES = 7;
 
         public BlessingLayout(Context context, boolean nullAllowed) {
-            super(context, nullAllowed);
+            super(context, nullAllowed, MAX_BENEFICES);
 
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override

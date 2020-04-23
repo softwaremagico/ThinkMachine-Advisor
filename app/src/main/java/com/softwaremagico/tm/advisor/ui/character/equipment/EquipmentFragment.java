@@ -85,9 +85,10 @@ public class EquipmentFragment extends CustomFragment {
     }
 
     class ShieldLayout extends IncrementalElementsLayout {
+        private final static int MAX_ITEMS = 1;
 
         public ShieldLayout(Context context, boolean nullsAllowed) {
-            super(context, nullsAllowed);
+            super(context, nullsAllowed, MAX_ITEMS);
 
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -134,9 +135,10 @@ public class EquipmentFragment extends CustomFragment {
 
 
     class ArmourLayout extends IncrementalElementsLayout {
+        private final static int MAX_ITEMS = 1;
 
         public ArmourLayout(Context context, boolean nullsAllowed) {
-            super(context, nullsAllowed);
+            super(context, nullsAllowed, MAX_ITEMS);
 
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override

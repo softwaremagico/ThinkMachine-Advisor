@@ -34,17 +34,23 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
     private boolean enabled = true;
     private final boolean nullAllowed;
     private Set<AdapterView.OnItemSelectedListener> listeners;
+    private final int maxElements;
+
+    public IncrementalElementsLayout(Context context, boolean nullAllowed, int maxElements) {
+        this(context, null, nullAllowed, maxElements);
+    }
 
 
     public IncrementalElementsLayout(Context context, boolean nullAllowed) {
-        this(context, null, nullAllowed);
-        listeners = new HashSet<>();
+        this(context, null, nullAllowed, 100);
     }
 
-    public IncrementalElementsLayout(Context context, @Nullable AttributeSet attrs, boolean nullAllowed) {
+    public IncrementalElementsLayout(Context context, @Nullable AttributeSet attrs, boolean nullAllowed, int maxElements) {
         super(context, attrs);
         this.nullAllowed = nullAllowed;
+        this.maxElements = maxElements;
         elementSpinners = new ArrayList<>();
+        listeners = new HashSet<>();
         setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
@@ -109,6 +115,9 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
     }
 
     private void addElementSpinner(ElementSpinner spinner) {
+        if (elementSpinners.size() >= maxElements) {
+            return;
+        }
         super.addView(spinner);
         enabled = false;
         setElementSpinnerProperties(spinner);
