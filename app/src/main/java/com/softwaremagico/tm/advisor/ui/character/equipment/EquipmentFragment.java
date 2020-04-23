@@ -68,14 +68,17 @@ public class EquipmentFragment extends CustomFragment {
 
         addSection(ThinkMachineTranslator.getTranslatedText("weapons"), rootLayout);
         final IncrementalElementsLayout weaponsLayout = new WeaponsLayout(getContext(), true);
+        weaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
         rootLayout.addView(weaponsLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("armor"), rootLayout);
         final IncrementalElementsLayout armoursLayout = new ArmourLayout(getContext(), true);
+        armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedArmour());
         rootLayout.addView(armoursLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("shield"), rootLayout);
         final IncrementalElementsLayout shieldsLayout = new ShieldLayout(getContext(), true);
+        armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedShield());
         rootLayout.addView(shieldsLayout);
 
         return rootView;

@@ -83,6 +83,12 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         elementSpinners.clear();
     }
 
+    public void setElement(T element) {
+        List<T> elements = new ArrayList<>();
+        elements.add(element);
+        setElements(elements);
+    }
+
     public void setElements(Collection<T> elements) {
         enabled = false;
         clear();
