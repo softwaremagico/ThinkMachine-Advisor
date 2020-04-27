@@ -23,6 +23,7 @@
         android:ellipsize="marquee"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:fontFamily="@font/label"
         />
 
     <Spinner
@@ -31,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/translated_tag"
         android:singleLine="true"
+        android:fontFamily="@font/selection"
         />
 
 </RelativeLayout>

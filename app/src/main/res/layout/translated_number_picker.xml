@@ -32,6 +32,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:text="left"
+        android:fontFamily="@font/label"
         />
 
     <NumberPicker
@@ -42,6 +43,7 @@
         android:layout_alignLeft="@id/strut"
         android:singleLine="true"
         android:text="right"
+        android:fontFamily="@font/selection"
         />
 
 </RelativeLayout>
