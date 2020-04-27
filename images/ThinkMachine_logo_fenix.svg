@@ -9,13 +9,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="1024mm"
-   height="500mm"
-   viewBox="0 0 3628.3465 1771.6535"
+   width="979.34302mm"
+   height="439.00266mm"
+   viewBox="0 0 3701.4539 1659.2226"
    id="svg2"
    version="1.1"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="ThinkMachine_logo_fenix.svg">
+   sodipodi:docname="ThinkMachine_logo_fenix.svg"
+   inkscape:export-filename="./ThinkMachine_logo_fenix.png"
+   inkscape:export-xdpi="10"
+   inkscape:export-ydpi="10">
   <defs
      id="defs4">
     <filter
@@ -119,9 +122,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.04"
-     inkscape:cx="-2271.1684"
-     inkscape:cy="-1317.3359"
+     inkscape:zoom="0.11313708"
+     inkscape:cx="-3614.9006"
+     inkscape:cy="739.48104"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -136,9 +139,10 @@
      fit-margin-bottom="0"
      units="mm"
      showguides="true"
-     inkscape:guide-bbox="true">
+     inkscape:guide-bbox="true"
+     scale-x="3">
     <sodipodi:guide
-       position="-2852.3347,792.97272"
+       position="-3211.0351,577.50393"
        orientation="1,0"
        id="guide839"
        inkscape:locked="false" />
@@ -159,19 +163,19 @@
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(731.41591,820.58525)">
+     transform="translate(562.8609,858.39819)">
     <rect
        id="rect25"
-       width="3630.7432"
-       height="1776.829"
-       x="-730.79877"
-       y="-820.27795"
-       style="fill:#6200ee;fill-opacity:1;stroke-width:2.57096219" />
+       width="3701.4539"
+       height="1659.2227"
+       x="-562.8609"
+       y="-858.39819"
+       style="fill:#6200ee;fill-opacity:1;stroke-width:2.508497" />
     <g
-       id="g853"
-       transform="translate(0,123.64013)">
+       id="g42"
+       transform="translate(3.7352361e-5,11.520413)">
       <g
-         transform="translate(-0.15491015)"
+         transform="translate(204.95384,22.32863)"
          id="g844">
         <path
            style="fill:#ffffff;fill-opacity:1;stroke-width:1.18281364"
@@ -198,15 +202,15 @@
            id="path4790" />
       </g>
       <text
-         id="text843"
-         y="654.71631"
-         x="-559.83649"
-         style="font-style:normal;font-weight:normal;font-size:37.5px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
+         id="text33"
+         y="619.57446"
+         x="-108.81397"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:375px;font-family:'Roman Antique';-inkscape-font-specification:'Roman Antique';fill:#ffffff;fill-opacity:1;stroke-width:0.9375"
-           y="654.71631"
-           x="-559.83649"
-           id="tspan841"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:320px;font-family:'Roman Antique';-inkscape-font-specification:'Roman Antique';fill:#ffffff"
+           y="619.57446"
+           x="-108.81397"
+           id="tspan31"
            sodipodi:role="line">Think Machine: Advisor</tspan></text>
     </g>
   </g>
