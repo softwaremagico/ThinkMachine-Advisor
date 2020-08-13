@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright (C) 2020 Softwaremagico
+  ~
+  ~  This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero  <softwaremagico@gmail.com> Valencia (Spain).
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under  the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/settings_save"
+        android:icon="@drawable/ic_character_save"
+        android:title="@string/settings_save"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/settings_load"
+        android:icon="@drawable/ic_character_load"
+        android:title="@string/settings_load"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/settings_import_file"
+        android:icon="@drawable/ic_character_icon"
+        android:title="@string/settings_import"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/settings_export_file"
+        android:icon="@drawable/ic_character_icon"
+        android:title="@string/settings_export"
+        app:showAsAction="never" />
+</menu>

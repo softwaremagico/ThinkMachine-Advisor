@@ -27,4 +27,8 @@
     <string name="message_too_many_blessings">Exceding the maximum number of blessings</string>
     <string name="message_invalid_benefice">Invalid benefice</string>
     <string name="message_invalid_shield_armour_combination">Invalid combination of armor with energy shield</string>
+    <string name="settings_load">Load</string>
+    <string name="settings_save">Save</string>
+    <string name="settings_import">Import</string>
+    <string name="settings_export">Export</string>
 </resources>
