@@ -31,4 +31,6 @@
     <string name="settings_save">Save</string>
     <string name="settings_import">Import</string>
     <string name="settings_export">Export</string>
+    <string name="message_character_saved_successfully">Character saved!</string>
+    <string name="message_character_saved_error">Character save error!</string>
 </resources>

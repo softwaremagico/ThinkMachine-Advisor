@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,9 +26,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.softwaremagico.tm.InvalidXmlElementException;
+import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
+import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
 import com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 
@@ -65,23 +69,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem){
-        switch(menuItem.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        View parentLayout = findViewById(android.R.id.content);
+        switch (menuItem.getItemId()) {
             case R.id.settings_load:
                 Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.settings_save:
-                Toast.makeText(this, "Saving", Toast.LENGTH_SHORT).show();
+                if (saveCurrentCharacter()) {
+                    Snackbar
+                            .make(parentLayout, R.string.message_character_saved_successfully, Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar
+                            .make(parentLayout, R.string.message_character_saved_error, Snackbar.LENGTH_SHORT).show();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    private boolean saveCurrentCharacter() {
+        CharacterHandler.getInstance().save(getApplicationContext(), CharacterManager.getSelectedCharacter());
+        return false;
     }
 
 }
