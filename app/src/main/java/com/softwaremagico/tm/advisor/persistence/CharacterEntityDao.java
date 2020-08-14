@@ -20,6 +20,9 @@ import java.util.List;
 @Dao
 public abstract class CharacterEntityDao extends BaseEntityDao<CharacterEntity> {
 
+    @Query("SELECT COUNT(*) FROM " + CharacterEntity.CHARACTER_PLAYER_TABLE)
+    public abstract long getRowCount();
+
     @Query("SELECT * FROM " + CharacterEntity.CHARACTER_PLAYER_TABLE)
     public abstract List<CharacterEntity> getAll();
 

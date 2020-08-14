@@ -45,7 +45,7 @@ public class CharacterHandler {
             entities.get(characterPlayer).setCharacterPlayer(characterPlayer);
             AppDatabase.getInstance(context).getCharacterEntityDao().update(entities.get(characterPlayer));
         } else {
-            AppDatabase.getInstance(context).getCharacterEntityDao().insert(new CharacterEntity(CharacterManager.getSelectedCharacter()));
+            AppDatabase.getInstance(context).getCharacterEntityDao().persist(new CharacterEntity(CharacterManager.getSelectedCharacter()));
         }
     }
 

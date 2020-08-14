@@ -28,10 +28,15 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract long actualInsert(T t);
 
-    public long insert(T t) {
+    public long persist(T t) {
+        if (t.getId() == 0) {
+            update(t);
+        }
         t.setCreationTime(new Timestamp(new Date().getTime()));
         t.setUpdateTime(new Timestamp(new Date().getTime()));
-        return actualInsert(t);
+        long id = actualInsert(t);
+        t.setId(id);
+        return id;
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

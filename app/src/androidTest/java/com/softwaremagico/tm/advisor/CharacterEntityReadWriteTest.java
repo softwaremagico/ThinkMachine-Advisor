@@ -58,13 +58,22 @@ public class CharacterEntityReadWriteTest {
         final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(characterPlayer, 0, DifficultLevelPreferences.HARD);
         randomizeCharacter.createCharacter();
 
+        Assert.assertEquals(0, characterEntityDao.getRowCount());
+
         CharacterEntity characterEntity =  new CharacterEntity(characterPlayer);
         Assert.assertNotNull(characterEntity.getJson());
-        long id = characterEntityDao.insert(characterEntity);
+        long id = characterEntityDao.persist(characterEntity);
+        Assert.assertEquals(1, id);
+        Assert.assertEquals(1, characterEntityDao.getRowCount());
         CharacterEntity storedCharacterEntity = characterEntityDao.get(id);
         Assert.assertNotNull(storedCharacterEntity);
         Assert.assertEquals(storedCharacterEntity.getCreationTime(), characterEntity.getCreationTime());
         Assert.assertEquals(storedCharacterEntity.getJson(), characterEntity.getJson());
+        Assert.assertEquals(storedCharacterEntity.getCharacterPlayer().getComparationId(), characterEntity.getCharacterPlayer().getComparationId());
+
+        //Check that if we insert a second time, only one is inserted.
+        characterEntityDao.persist(characterEntity);
+        Assert.assertEquals(1, characterEntityDao.getRowCount());
     }
 
 }
