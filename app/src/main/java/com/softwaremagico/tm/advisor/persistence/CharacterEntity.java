@@ -14,25 +14,32 @@ package com.softwaremagico.tm.advisor.persistence;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.json.CharacterJsonManager;
+import com.softwaremagico.tm.json.InvalidJsonException;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity(tableName = CharacterEntity.CHARACTER_PLAYER_TABLE)
-public class CharacterEntity {
+public class CharacterEntity extends BaseEntity {
     public final static String CHARACTER_PLAYER_TABLE = "character_player";
 
-    @PrimaryKey(autoGenerate = true)
-    public int uid;
+    @ColumnInfo(name = "name")
+    public String name;
 
-    @ColumnInfo(name = "first_name")
-    public String firstName;
+    @ColumnInfo(name = "race")
+    public String race;
 
-    @ColumnInfo(name = "last_name")
-    public String lastName;
+    @ColumnInfo(name = "faction")
+    public String faction;
+
+    @ColumnInfo(name = "character_as_json")
+    public String json;
 
     public CharacterEntity() {
-
+        creationTime = new Timestamp(new Date().getTime());
     }
 
     public CharacterEntity(CharacterPlayer characterPlayer) {
@@ -41,7 +48,51 @@ public class CharacterEntity {
     }
 
     public void setCharacterPlayer(CharacterPlayer characterPlayer) {
+        updateTime = new Timestamp(new Date().getTime());
+        setJson(CharacterJsonManager.toJson(characterPlayer));
+        setName(characterPlayer.getInfo().getNameRepresentation());
+        setRace(characterPlayer.getRace().getNameRepresentation());
+        setFaction(characterPlayer.getFaction().getNameRepresentation());
+    }
 
+    public CharacterPlayer getCharacterPlayer() {
+        try {
+            return CharacterJsonManager.fromJson(getJson());
+        } catch (InvalidJsonException e) {
+            return null;
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public void setRace(String race) {
+        this.race = race;
+    }
+
+    public String getFaction() {
+        return faction;
+    }
+
+    public void setFaction(String faction) {
+        this.faction = faction;
+    }
+
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
     }
 
 }

@@ -12,21 +12,26 @@
 
 package com.softwaremagico.tm.advisor.persistence;
 
-import androidx.room.Dao;
-import androidx.room.Query;
+import androidx.room.TypeConverter;
 
-import java.util.List;
+import java.sql.Timestamp;
 
-@Dao
-public abstract class CharacterEntityDao extends BaseEntityDao<CharacterEntity> {
+public class TimestampConverter {
 
-    @Query("SELECT * FROM " + CharacterEntity.CHARACTER_PLAYER_TABLE)
-    public abstract List<CharacterEntity> getAll();
+    @TypeConverter
+    public static Timestamp toDate(Long timestamp) {
+        if (timestamp == null) {
+            return null;
+        }
+        return new Timestamp(timestamp);
+    }
 
-    @Query("SELECT * FROM " + CharacterEntity.CHARACTER_PLAYER_TABLE + " WHERE id IN (:ids)")
-    public abstract List<CharacterEntity> loadAllByIds(long[] ids);
+    @TypeConverter
+    public static Long toLong(Timestamp timestamp) {
+        if (timestamp == null) {
+            return null;
+        }
 
-    @Query("SELECT * FROM " + CharacterEntity.CHARACTER_PLAYER_TABLE + " WHERE id=:id")
-    public abstract CharacterEntity get(long id);
-
+        return timestamp.getTime();
+    }
 }
