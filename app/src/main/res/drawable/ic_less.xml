@@ -1,0 +1,18 @@
+<!--
+  ~  Copyright (C) 2020 Softwaremagico
+  ~
+  ~  This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero  <softwaremagico@gmail.com> Valencia (Spain).
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under  the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+  -->
+
+<vector android:autoMirrored="true" android:height="33.866665dp"
+    android:viewportHeight="33.866665" android:viewportWidth="33.866665"
+    android:width="33.866665dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#000000"
+        android:pathData="m8.9059,20.7168 l-0.9489,-0.9905 4.7554,-4.7457 4.7554,-4.7457 4.7554,4.7457 4.7554,4.7457 -0.9489,0.9905 -0.9489,0.9905 -3.8065,-3.7947 -3.8065,-3.7947 -3.8065,3.7947 -3.8065,3.7947z" android:strokeWidth="0.35277775"/>
+</vector>

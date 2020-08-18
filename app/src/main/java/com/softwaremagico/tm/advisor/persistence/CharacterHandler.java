@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CharacterHandler {
-    private Map<CharacterPlayer, CharacterEntity> entities;
+    private Map<CharacterPlayer, CharacterEntity> entities = new HashMap<>();
 
     private static volatile CharacterHandler INSTANCE;
 
@@ -37,7 +37,6 @@ public class CharacterHandler {
     }
 
     private void CharacterHander() {
-        entities = new HashMap<>();
     }
 
     public void save(Context context, CharacterPlayer characterPlayer) {

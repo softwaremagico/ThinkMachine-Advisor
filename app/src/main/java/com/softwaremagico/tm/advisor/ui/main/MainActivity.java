@@ -12,12 +12,20 @@
 
 package com.softwaremagico.tm.advisor.ui.main;
 
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -34,10 +42,14 @@ import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
 import com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer;
 import com.softwaremagico.tm.file.modules.ModuleManager;
+import com.softwaremagico.tm.log.MachineLog;
 
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    private ViewGroup linearLayoutDetails;
+    private ImageView imageViewExpand;
+    private static final int DURATION = 250;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +78,38 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        //Load popup
+        imageViewExpand = (ImageView) findViewById(R.id.imageViewExpand);
+        linearLayoutDetails = (ViewGroup) findViewById(R.id.linearLayoutDetails);
+
+
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+/*        Toolbar toolbarCard = findViewById(R.id.toolbarCard);
+        toolbarCard.setTitle("Title");
+        toolbarCard.setSubtitle("Subtitle");
+        toolbarCard.inflateMenu(R.menu.character_selector_menu);
+        toolbarCard.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_option1:
+                        Snackbar
+                                .make(linearLayoutDetails, "option1", Snackbar.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_option2:
+                        Snackbar
+                                .make(linearLayoutDetails, "option2", Snackbar.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_option3:
+                        Snackbar
+                                .make(linearLayoutDetails, "option3", Snackbar.LENGTH_SHORT).show();
+                        break;
+                }
+                return true;
+            }
+        });*/
     }
 
     @Override
@@ -80,24 +124,73 @@ public class MainActivity extends AppCompatActivity {
         View parentLayout = findViewById(android.R.id.content);
         switch (menuItem.getItemId()) {
             case R.id.settings_load:
-                Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show();
+                loadCharacterList(parentLayout);
                 return true;
             case R.id.settings_save:
-                if (saveCurrentCharacter()) {
-                    Snackbar
-                            .make(parentLayout, R.string.message_character_saved_successfully, Snackbar.LENGTH_SHORT).show();
-                } else {
-                    Snackbar
-                            .make(parentLayout, R.string.message_character_saved_error, Snackbar.LENGTH_SHORT).show();
-                }
+                saveCurrentCharacter(parentLayout);
                 return true;
         }
         return super.onOptionsItemSelected(menuItem);
     }
 
-    private boolean saveCurrentCharacter() {
-        CharacterHandler.getInstance().save(getApplicationContext(), CharacterManager.getSelectedCharacter());
-        return false;
+    private void saveCurrentCharacter(View parentLayout) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    CharacterHandler.getInstance().save(getApplicationContext(), CharacterManager.getSelectedCharacter());
+                    Snackbar
+                            .make(parentLayout, R.string.message_character_saved_successfully, Snackbar.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Snackbar
+                            .make(parentLayout, R.string.message_character_saved_error, Snackbar.LENGTH_SHORT).show();
+                    MachineLog.errorMessage(this.getClass().getName(), e);
+                }
+            }
+        });
+    }
+
+    private void loadCharacterList(View anchorView) {
+        View popupView = getLayoutInflater().inflate(R.layout.characters_selector, null);
+
+        PopupWindow popupWindow = new PopupWindow(popupView,
+                WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+        // If the PopupWindow should be focusable
+        popupWindow.setFocusable(true);
+
+        // If you need the PopupWindow to dismiss when when touched outside
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+
+        int location[] = new int[2];
+
+        // Get the View's(the one that was clicked in the Fragment) location
+        anchorView.getLocationOnScreen(location);
+
+        // Using location, the PopupWindow will be displayed right under anchorView
+        popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY,
+                location[0], location[1] + anchorView.getHeight());
+
+    }
+
+    public void toggleDetails(View view) {
+        if (linearLayoutDetails.getVisibility() == View.GONE) {
+            ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
+            imageViewExpand.setImageResource(R.drawable.ic_more);
+            rotate(-180.0f);
+        } else {
+            ExpandAndCollapseViewUtil.collapse(linearLayoutDetails, DURATION);
+            imageViewExpand.setImageResource(R.drawable.ic_less);
+            rotate(180.0f);
+        }
+    }
+
+    private void rotate(float angle) {
+        Animation animation = new RotateAnimation(0.0f, angle, Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+        animation.setFillAfter(true);
+        animation.setDuration(DURATION);
+        imageViewExpand.startAnimation(animation);
     }
 
 }

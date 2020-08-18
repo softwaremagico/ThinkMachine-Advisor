@@ -35,4 +35,18 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="ToolbarCard" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/colorContrast</item>
+    </style>
+
+    <style name="Card.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="Card.Subtitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>
