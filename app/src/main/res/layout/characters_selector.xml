@@ -1,90 +1,111 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:padding="50dp"
-    tools:context="com.softwaremagico.tm.advisor.ui.main.MainActivity">
+    android:orientation="vertical">
 
-    <Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+    <Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
+        android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card"
-        android:layout_width="350sp"
-        android:layout_height="200sp"
-        card_view:cardBackgroundColor="@android:color/white"
-        card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="4dp"
-        card_view:cardUseCompatPadding="true">
 
-        <RelativeLayout
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:scrollbars="none">
+
+        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
-
-            <ImageView
-                android:id="@+id/faction_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="16dp" />
+            card_view:cardBackgroundColor="@android:color/white"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="4dp"
+            card_view:cardUseCompatPadding="true">
 
             <LinearLayout
+                android:id="@+id/linearLayoutCardContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="toggleDetails"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="0dp"
+                <Toolbar
+                    android:id="@+id/toolbarCard"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Hola"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:background="@android:color/white"
+                    app:popupTheme="@style/Theme.AppCompat.Light"
+                    app:subtitleTextAppearance="@style/Card.Subtitle"
+                    app:theme="@style/ToolbarCard"
+                    app:titleTextAppearance="@style/Card.Title" />
 
                 <ImageView
-                    android:id="@+id/imageViewExpand"
+                    android:id="@+id/imageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="Hola holita"
-                    android:src="@drawable/ic_more" />
-            </LinearLayout>
+                    android:layout_marginTop="8dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Image.."
+                    android:src="@drawable/ic_launcher" />
 
-
-            <LinearLayout
-                android:id="@+id/linearLayoutDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="8dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/textViewInfo"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Long text here..."
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </RelativeLayout>
+                    android:onClick="toggleDetails"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-    </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Details..."
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:id="@+id/imageViewExpand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="Content description...zz"
+                        android:src="@drawable/ic_more" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="8dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/textViewInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Very long description..."
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </ScrollView>
 
 
 </LinearLayout>

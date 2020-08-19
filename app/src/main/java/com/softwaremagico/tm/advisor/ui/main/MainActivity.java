@@ -20,11 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,9 +43,6 @@ import com.softwaremagico.tm.log.MachineLog;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private ViewGroup linearLayoutDetails;
-    private ImageView imageViewExpand;
-    private static final int DURATION = 250;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,38 +71,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-        //Load popup
-        imageViewExpand = (ImageView) findViewById(R.id.imageViewExpand);
-        linearLayoutDetails = (ViewGroup) findViewById(R.id.linearLayoutDetails);
-
-
-        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-/*        Toolbar toolbarCard = findViewById(R.id.toolbarCard);
-        toolbarCard.setTitle("Title");
-        toolbarCard.setSubtitle("Subtitle");
-        toolbarCard.inflateMenu(R.menu.character_selector_menu);
-        toolbarCard.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_option1:
-                        Snackbar
-                                .make(linearLayoutDetails, "option1", Snackbar.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_option2:
-                        Snackbar
-                                .make(linearLayoutDetails, "option2", Snackbar.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_option3:
-                        Snackbar
-                                .make(linearLayoutDetails, "option3", Snackbar.LENGTH_SHORT).show();
-                        break;
-                }
-                return true;
-            }
-        });*/
     }
 
     @Override
@@ -168,29 +129,8 @@ public class MainActivity extends AppCompatActivity {
         anchorView.getLocationOnScreen(location);
 
         // Using location, the PopupWindow will be displayed right under anchorView
-        popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY,
-                location[0], location[1] + anchorView.getHeight());
+        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
 
-    }
-
-    public void toggleDetails(View view) {
-        if (linearLayoutDetails.getVisibility() == View.GONE) {
-            ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
-            imageViewExpand.setImageResource(R.drawable.ic_more);
-            rotate(-180.0f);
-        } else {
-            ExpandAndCollapseViewUtil.collapse(linearLayoutDetails, DURATION);
-            imageViewExpand.setImageResource(R.drawable.ic_less);
-            rotate(180.0f);
-        }
-    }
-
-    private void rotate(float angle) {
-        Animation animation = new RotateAnimation(0.0f, angle, Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f);
-        animation.setFillAfter(true);
-        animation.setDuration(DURATION);
-        imageViewExpand.startAnimation(animation);
     }
 
 }

@@ -119,9 +119,8 @@ public class EquipmentFragment extends CustomFragment {
                 try {
                     CharacterManager.getSelectedCharacter().setShield(shields.get(0));
                 } catch (InvalidShieldException e) {
-                    Snackbar snackbar = Snackbar
-                            .make(this, R.string.message_invalid_shield_armour_combination, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
+                   Snackbar
+                            .make(this, R.string.message_invalid_shield_armour_combination, Snackbar.LENGTH_SHORT).show();
                 }
             } else {
                 try {

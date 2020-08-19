@@ -28,6 +28,9 @@
     <logger name="com.softwaremagico.tm.log.MachineLog" additivity="false" level="DEBUG">
         <appender-ref ref="LOGCAT"/>
     </logger>
+    <logger name="com.softwaremagico.tm.log.MachineXmlReaderLog" additivity="false" level="INFO">
+        <appender-ref ref="LOGCAT"/>
+    </logger>
     <logger name="com.softwaremagico.tm.log.RandomGenerationLog" additivity="false" level="DEBUG">
         <appender-ref ref="LOGCAT"/>
     </logger>
