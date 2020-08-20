@@ -20,17 +20,18 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 
-public class LoadCharacter extends CustomFragment {
+public class LoadCharacter extends DialogFragment {
     private ViewGroup linearLayoutDetails;
     private ImageView imageViewExpand;
     private static final int DURATION = 250;
@@ -38,10 +39,17 @@ public class LoadCharacter extends CustomFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.characters_selector, container, false);
-        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        linearLayoutDetails = (ViewGroup) rootView.findViewById(R.id.linearLayoutDetails);
+        imageViewExpand = (ImageView) rootView.findViewById(R.id.imageViewExpand);
+
+        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.selector_toolbar);
+
+        LinearLayout description =(LinearLayout)rootView.findViewById(R.id.description_layout);
+        description.setOnClickListener(view -> toggleDetails(view));
+
         //setSupportActionBar(toolbar);
 
         Toolbar toolbarCard = (Toolbar) rootView.findViewById(R.id.toolbarCard);

@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:minWidth="1000dp"
+    tools:context="com.softwaremagico.tm.advisor.ui.main.LoadCharacter">
 
     <Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/selector_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -20,6 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
         android:scrollbars="none">
 
         <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -35,6 +39,7 @@
                 android:id="@+id/linearLayoutCardContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <Toolbar
@@ -42,6 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
+                    android:titleTextColor="@color/colorPrimaryDark"
                     app:popupTheme="@style/Theme.AppCompat.Light"
                     app:subtitleTextAppearance="@style/Card.Subtitle"
                     app:theme="@style/ToolbarCard"
@@ -57,9 +63,9 @@
                     android:src="@drawable/ic_launcher" />
 
                 <LinearLayout
+                    android:id="@+id/description_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="toggleDetails"
                     android:orientation="horizontal"
                     android:padding="8dp">
 
