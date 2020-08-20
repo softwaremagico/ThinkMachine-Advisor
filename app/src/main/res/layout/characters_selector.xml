@@ -5,14 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:minWidth="1000dp"
+    android:minHeight="300dp"
     tools:context="com.softwaremagico.tm.advisor.ui.main.LoadCharacter">
 
     <Toolbar
         android:id="@+id/selector_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:titleTextColor="@android:color/white"
+        app:popupTheme="@style/Theme.AppCompat.Light"
+        android:background="@color/colorPrimaryDark"
         android:elevation="4dp"
+        android:text="Menu..."
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
@@ -31,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             card_view:cardBackgroundColor="@android:color/white"
-            card_view:cardCornerRadius="4dp"
+            card_view:cardCornerRadius="8dp"
             card_view:cardElevation="4dp"
             card_view:cardUseCompatPadding="true">
 
@@ -113,5 +117,18 @@
 
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <Button android:id="@+id/load_button"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Load"/>
+        <Button android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Cancel"/>
+    </LinearLayout>
 
 </LinearLayout>
