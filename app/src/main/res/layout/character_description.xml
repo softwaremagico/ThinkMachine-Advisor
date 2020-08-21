@@ -1,23 +1,35 @@
+<!--
+  ~  Copyright (C) 2020 Softwaremagico
+  ~
+  ~  This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero  <softwaremagico@gmail.com> Valencia (Spain).
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under  the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:minWidth="1000dp"
     android:minHeight="300dp"
+    android:orientation="vertical"
     tools:context="com.softwaremagico.tm.advisor.ui.main.LoadCharacter">
 
     <Toolbar
         android:id="@+id/selector_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:titleTextColor="@android:color/white"
-        app:popupTheme="@style/Theme.AppCompat.Light"
         android:background="@color/colorPrimaryDark"
         android:elevation="4dp"
-        android:text="Menu..."
         android:minHeight="?attr/actionBarSize"
+        android:text="Menu..."
+        android:titleTextColor="@android:color/white"
+        app:popupTheme="@style/Theme.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
 
@@ -25,9 +37,9 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:layout_weight="1"
         android:orientation="horizontal"
+        android:padding="16dp"
         android:scrollbars="none">
 
         <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -47,24 +59,45 @@
                 android:orientation="vertical">
 
                 <Toolbar
-                    android:id="@+id/toolbarCard"
+                    android:id="@+id/character_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
+                    android:subtitle="Faction"
+                    android:title="Character"
                     android:titleTextColor="@color/colorPrimaryDark"
                     app:popupTheme="@style/Theme.AppCompat.Light"
                     app:subtitleTextAppearance="@style/Card.Subtitle"
                     app:theme="@style/ToolbarCard"
                     app:titleTextAppearance="@style/Card.Title" />
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/brief_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="Image.."
-                    android:src="@drawable/ic_launcher" />
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="Image.."
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur semper purus quis viverra."
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/description_layout"
@@ -88,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:contentDescription="Content description...zz"
+                        android:contentDescription=""
                         android:src="@drawable/ic_more" />
                 </LinearLayout>
 
@@ -105,7 +138,7 @@
                         android:id="@+id/textViewInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Very long description..."
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur semper purus quis viverra. Donec sagittis eleifend nulla in commodo. Etiam a justo fringilla, aliquam tellus eget, pellentesque ex. Pellentesque sit amet posuere justo. In nec diam id nulla bibendum efficitur ac a nibh."
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -119,18 +152,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <Button android:id="@+id/load_button"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/load_button"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="2"
-            android:text="Load"/>
-        <Button android:id="@+id/cancel_button"
+            android:text="Load" />
+
+        <Button
+            android:id="@+id/cancel_button"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="Cancel"/>
+            android:text="Cancel" />
     </LinearLayout>
 
 </LinearLayout>

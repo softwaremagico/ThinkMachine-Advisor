@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 /*    private void loadCharacterList(View anchorView) {
-        View popupView = getLayoutInflater().inflate(R.layout.characters_selector, null);
+        View popupView = getLayoutInflater().inflate(R.layout.character_description, null);
 
         PopupWindow popupWindow = new PopupWindow(popupView,
                 WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);

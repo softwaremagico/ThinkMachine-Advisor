@@ -42,18 +42,18 @@ public class LoadCharacter extends DialogFragment {
                              @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View rootView = inflater.inflate(R.layout.characters_selector, container, false);
-        linearLayoutDetails = (ViewGroup) rootView.findViewById(R.id.linearLayoutDetails);
-        imageViewExpand = (ImageView) rootView.findViewById(R.id.imageViewExpand);
+        View rootView = inflater.inflate(R.layout.character_description, container, false);
+        linearLayoutDetails = rootView.findViewById(R.id.linearLayoutDetails);
+        imageViewExpand = rootView.findViewById(R.id.imageViewExpand);
 
-        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.selector_toolbar);
+        Toolbar toolbar = rootView.findViewById(R.id.selector_toolbar);
 
-        LinearLayout description =(LinearLayout)rootView.findViewById(R.id.description_layout);
+        LinearLayout description = rootView.findViewById(R.id.description_layout);
         description.setOnClickListener(view -> toggleDetails(view));
 
         //setSupportActionBar(toolbar);
 
-        Toolbar toolbarCard = (Toolbar) rootView.findViewById(R.id.toolbarCard);
+        Toolbar toolbarCard = rootView.findViewById(R.id.character_description);
         toolbarCard.setTitle("Title");
         toolbarCard.setSubtitle("Subtitle");
         //toolbarCard.inflateMenu(R.menu.menu_card);
@@ -79,7 +79,7 @@ public class LoadCharacter extends DialogFragment {
             }
         });
 
-        Button cancelButton = (Button) rootView.findViewById(R.id.cancel_button);
+        Button cancelButton = rootView.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
