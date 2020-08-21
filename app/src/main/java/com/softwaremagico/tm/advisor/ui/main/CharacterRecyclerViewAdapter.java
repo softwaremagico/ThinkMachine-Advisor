@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
+import com.softwaremagico.tm.txt.CharacterSheet;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -62,6 +63,8 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         CharacterEntity characterEntity = dataset.get(position);
         holder.description.setTitle(characterEntity.getCharacterPlayer().getCompleteNameRepresentation());
         holder.description.setSubtitle(formatTimestamp(characterEntity.getUpdateTime()));
+        final CharacterSheet characterSheet = new CharacterSheet(characterEntity.getCharacterPlayer());
+        holder.completeDescription.setText(characterSheet.toString());
     }
 
     @Override
@@ -70,7 +73,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
     }
 
     public interface MyClickListener {
-        public void onItemClick(int position, View v);
+        void onItemClick(int position, View v);
     }
 
     private String formatTimestamp(Timestamp timestamp) {
@@ -88,29 +91,26 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         private static final int DURATION = 250;
 
         Toolbar description;
-        TextView updatedAt;
+        TextView completeDescription;
         TextView race;
         TextView faction;
 
         public CharacterEntityViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            description = (Toolbar) itemView.findViewById(R.id.character_description);
+            description = itemView.findViewById(R.id.character_description);
 
             //Card description
             linearLayoutDetails = itemView.findViewById(R.id.linearLayoutDetails);
             imageViewExpand = itemView.findViewById(R.id.imageViewExpand);
 
-            //Toolbar toolbar = itemView.findViewById(R.id.selector_toolbar);
-
             LinearLayout description = itemView.findViewById(R.id.description_layout);
             description.setOnClickListener(view -> toggleDetails(view));
 
+            //Toolbar toolbar = itemView.findViewById(R.id.selector_toolbar);
             //setSupportActionBar(toolbar);
 
             Toolbar toolbarCard = itemView.findViewById(R.id.character_description);
-            toolbarCard.setTitle("Title");
-            toolbarCard.setSubtitle("Subtitle");
             //toolbarCard.inflateMenu(R.menu.menu_card);
             toolbarCard.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
@@ -148,6 +148,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         }
 
         public void toggleDetails(View view) {
+            TextView details = view.findViewById(R.id.character_description_skills);
             if (linearLayoutDetails.getVisibility() == View.GONE) {
                 ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
                 imageViewExpand.setImageResource(R.drawable.ic_more);
