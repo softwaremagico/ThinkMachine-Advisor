@@ -14,99 +14,87 @@ package com.softwaremagico.tm.advisor.ui.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
+import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.RandomizeCharacter;
+import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
+import com.softwaremagico.tm.file.PathManager;
+import com.softwaremagico.tm.random.exceptions.DuplicatedPreferenceException;
+import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
+import com.softwaremagico.tm.random.selectors.DifficultLevelPreferences;
+
+import java.util.ArrayList;
 
 public class LoadCharacter extends DialogFragment {
-    private ViewGroup linearLayoutDetails;
-    private ImageView imageViewExpand;
-    private static final int DURATION = 250;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private static String LOG_TAG = "CardViewActivity";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View rootView = inflater.inflate(R.layout.character_description, container, false);
-        linearLayoutDetails = rootView.findViewById(R.id.linearLayoutDetails);
-        imageViewExpand = rootView.findViewById(R.id.imageViewExpand);
+        View rootView = inflater.inflate(R.layout.character_loader, container, false);
 
-        Toolbar toolbar = rootView.findViewById(R.id.selector_toolbar);
+        //RECYCLER
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.character_recycler_loader);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-        LinearLayout description = rootView.findViewById(R.id.description_layout);
-        description.setOnClickListener(view -> toggleDetails(view));
-
-        //setSupportActionBar(toolbar);
-
-        Toolbar toolbarCard = rootView.findViewById(R.id.character_description);
-        toolbarCard.setTitle("Title");
-        toolbarCard.setSubtitle("Subtitle");
-        //toolbarCard.inflateMenu(R.menu.menu_card);
-        Fragment parent = this;
-        toolbarCard.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_option1:
-                       Snackbar
-                                .make(rootView, "Text1", Snackbar.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_option2:
-                        Snackbar
-                                .make(rootView, "Text2", Snackbar.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_option3:
-                        Snackbar
-                                .make(rootView, "Text3", Snackbar.LENGTH_SHORT).show();
-                        break;
-                }
-                return true;
-            }
-        });
-
-        Button cancelButton = rootView.findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        //ADAPTER
+        mAdapter = new CharacterRecyclerViewAdapter(getDataSet());
+        mRecyclerView.setAdapter(mAdapter);
 
         return rootView;
     }
 
-    public void toggleDetails(View view) {
-        if (linearLayoutDetails.getVisibility() == View.GONE) {
-            ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
-            imageViewExpand.setImageResource(R.drawable.ic_more);
-            rotate(-180.0f);
-        } else {
-            ExpandAndCollapseViewUtil.collapse(linearLayoutDetails, DURATION);
-            imageViewExpand.setImageResource(R.drawable.ic_less);
-            rotate(180.0f);
-        }
-    }
 
-    private void rotate(float angle) {
-        Animation animation = new RotateAnimation(0.0f, angle, Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f);
-        animation.setFillAfter(true);
-        animation.setDuration(DURATION);
-        imageViewExpand.startAnimation(animation);
+
+/*    @Override
+    public void onResume() {
+        super.onResume();
+        ((CharacterRecyclerViewAdapter) mAdapter).setOnItemClickListener(new CharacterRecyclerViewAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.i(LOG_TAG, " Clicked on Item " + position);
+            }
+        });
+    }*/
+
+    private ArrayList<CharacterEntity> getDataSet() {
+        ArrayList results = new ArrayList<CharacterEntity>();
+        for (int index = 0; index < 5; index++) {
+            try {
+                final CharacterPlayer characterPlayer = new CharacterPlayer("en", PathManager.DEFAULT_MODULE_FOLDER);
+                final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(characterPlayer, 0, DifficultLevelPreferences.HARD);
+                randomizeCharacter.createCharacter();
+                CharacterEntity characterEntity = new CharacterEntity(characterPlayer);
+                results.add(index, characterEntity);
+            } catch (DuplicatedPreferenceException e) {
+                e.printStackTrace();
+            } catch (TooManyBlessingsException e) {
+                e.printStackTrace();
+            } catch (InvalidXmlElementException e) {
+                e.printStackTrace();
+            } catch (InvalidRandomElementSelectedException e) {
+                e.printStackTrace();
+            }
+        }
+        return results;
     }
 }
