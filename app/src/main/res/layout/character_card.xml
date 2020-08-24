@@ -108,7 +108,7 @@
                 android:id="@+id/character_description_skills"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur semper purus quis viverra. Donec sagittis eleifend nulla in commodo. Etiam a justo fringilla, aliquam tellus eget, pellentesque ex. Pellentesque sit amet posuere justo. In nec diam id nulla bibendum efficitur ac a nibh."
+                android:text="@string/loading"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
         </LinearLayout>

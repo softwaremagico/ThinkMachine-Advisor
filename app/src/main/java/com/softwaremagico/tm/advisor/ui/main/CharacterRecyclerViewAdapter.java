@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
+import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.txt.CharacterSheet;
 
 import java.sql.Timestamp;
@@ -61,10 +62,12 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(CharacterEntityViewHolder holder, int position) {
         CharacterEntity characterEntity = dataset.get(position);
+        holder.characterEntity = characterEntity;
         holder.description.setTitle(characterEntity.getCharacterPlayer().getCompleteNameRepresentation());
         holder.description.setSubtitle(formatTimestamp(characterEntity.getUpdateTime()));
-        final CharacterSheet characterSheet = new CharacterSheet(characterEntity.getCharacterPlayer());
-        holder.completeDescription.setText(characterSheet.toString());
+/*        final CharacterSheet characterSheet = new CharacterSheet(characterEntity.getCharacterPlayer());
+        CharacterJsonManager.toJson(characterEntity.getCharacterPlayer());
+        holder.completeDescription.setText(characterSheet.toString());*/
     }
 
     @Override
@@ -90,6 +93,8 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         private ImageView imageViewExpand;
         private static final int DURATION = 250;
 
+        CharacterEntity characterEntity;
+        View itemView;
         Toolbar description;
         TextView completeDescription;
         TextView race;
@@ -97,8 +102,10 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
         public CharacterEntityViewHolder(View itemView) {
             super(itemView);
+            this.itemView = itemView;
             itemView.setOnClickListener(this);
             description = itemView.findViewById(R.id.character_description);
+            completeDescription = itemView.findViewById(R.id.character_description_skills);
 
             //Card description
             linearLayoutDetails = itemView.findViewById(R.id.linearLayoutDetails);
@@ -148,8 +155,14 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         }
 
         public void toggleDetails(View view) {
-            TextView details = view.findViewById(R.id.character_description_skills);
+            TextView completeDescription = itemView.findViewById(R.id.character_description_skills);
             if (linearLayoutDetails.getVisibility() == View.GONE) {
+                //No sheet set yet, default text loading...
+                if (completeDescription.getText().length() < 50) {
+                    final CharacterSheet characterSheet = new CharacterSheet(characterEntity.getCharacterPlayer());
+                    CharacterJsonManager.toJson(characterEntity.getCharacterPlayer());
+                    completeDescription.setText(characterSheet.toString());
+                }
                 ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
                 imageViewExpand.setImageResource(R.drawable.ic_more);
                 rotate(-180.0f);

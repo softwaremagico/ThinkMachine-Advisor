@@ -32,4 +32,5 @@
     <string name="settings_export">Exportar</string>
     <string name="message_character_saved_successfully">¡Personaje guardado!</string>
     <string name="message_character_saved_error">¡Error guardando el personaje!</string>
+    <string name="loading">Cargando...</string>
 </resources>
