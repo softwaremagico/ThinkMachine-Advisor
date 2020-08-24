@@ -12,7 +12,6 @@
 
 package com.softwaremagico.tm.advisor.ui.main;
 
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,19 +23,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.core.DateUtils;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.txt.CharacterSheet;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class CharacterRecyclerViewAdapter extends RecyclerView
         .Adapter<CharacterRecyclerViewAdapter.CharacterEntityViewHolder> {
@@ -55,19 +53,14 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
      * @return
      */
     @Override
-    public CharacterEntityViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CharacterEntityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new CharacterEntityViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.character_card, parent, false));
     }
 
     @Override
     public void onBindViewHolder(CharacterEntityViewHolder holder, int position) {
         CharacterEntity characterEntity = dataset.get(position);
-        holder.characterEntity = characterEntity;
-        holder.description.setTitle(characterEntity.getCharacterPlayer().getCompleteNameRepresentation());
-        holder.description.setSubtitle(formatTimestamp(characterEntity.getUpdateTime()));
-/*        final CharacterSheet characterSheet = new CharacterSheet(characterEntity.getCharacterPlayer());
-        CharacterJsonManager.toJson(characterEntity.getCharacterPlayer());
-        holder.completeDescription.setText(characterSheet.toString());*/
+        holder.update(characterEntity);
     }
 
     @Override
@@ -77,12 +70,6 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
     public interface MyClickListener {
         void onItemClick(int position, View v);
-    }
-
-    private String formatTimestamp(Timestamp timestamp) {
-        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(timestamp.getTime());
-        return DateFormat.format("yyyy-MM-dd hh:mm:ss", cal).toString();
     }
 
 
@@ -147,6 +134,12 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                     //itemView.dismiss();
                 }
             });*/
+        }
+
+        public void update(CharacterEntity characterEntity) {
+            this.characterEntity = characterEntity;
+            description.setTitle(characterEntity.getCharacterPlayer().getCompleteNameRepresentation());
+            description.setSubtitle(DateUtils.formatTimestamp(characterEntity.getUpdateTime()));
         }
 
         @Override
