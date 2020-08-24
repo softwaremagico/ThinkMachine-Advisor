@@ -51,7 +51,7 @@ public class LoadCharacter extends DialogFragment {
         View rootView = inflater.inflate(R.layout.character_loader, container, false);
 
         //RECYCLER
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.character_recycler_loader);
+        mRecyclerView = rootView.findViewById(R.id.character_recycler_loader);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
@@ -78,7 +78,7 @@ public class LoadCharacter extends DialogFragment {
 
     private ArrayList<CharacterEntity> getDataSet() {
         ArrayList results = new ArrayList<CharacterEntity>();
-        for (int index = 0; index < 5; index++) {
+        for (int index = 0; index < 1; index++) {
             try {
                 final CharacterPlayer characterPlayer = new CharacterPlayer("en", PathManager.DEFAULT_MODULE_FOLDER);
                 final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(characterPlayer, 0, DifficultLevelPreferences.HARD);
