@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,6 +59,15 @@ public class LoadCharacter extends DialogFragment {
         //ADAPTER
         mAdapter = new CharacterRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
+
+        //LOAD/CANCEL buttons
+        Button cancelButton = rootView.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
         return rootView;
     }
