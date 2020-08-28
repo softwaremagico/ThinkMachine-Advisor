@@ -66,22 +66,19 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         CharacterEntity characterEntity = dataset.get(position);
         holder.update(characterEntity);
 
-        // Here I am just highlighting the background
-        ((CardView)holder.itemView).setCardElevation(selectedPosition == position ? 30 : 4);
+        // Here the selection style.
+        ((CardView) holder.itemView).setCardElevation(selectedPosition == position ? 30 : 4);
         holder.itemView.setBackgroundResource(selectedPosition == position ? R.color.colorSelected : Color.TRANSPARENT);
-//        if (selectedPosition == position) {
-//            @SuppressLint("ObjectAnimatorBinding") ObjectAnimator animator = ObjectAnimator.ofFloat(holder.itemView, "cardElevation", 2, 80);
-//            // if needed set duration, interpolator, or what you want on the animator
-//            animator.start();
-//        } else{
-//
-//        }
 
     }
 
     @Override
     public int getItemCount() {
         return dataset.size();
+    }
+
+    public CharacterEntity getSelectedItem() {
+        return selectedPosition == RecyclerView.NO_POSITION ? null : dataset.get(selectedPosition);
     }
 
     public interface MyClickListener {

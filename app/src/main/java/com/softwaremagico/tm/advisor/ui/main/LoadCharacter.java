@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.softwaremagico.tm.InvalidXmlElementException;
+import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
 import com.softwaremagico.tm.character.CharacterPlayer;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 public class LoadCharacter extends DialogFragment {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private CharacterRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
 
@@ -69,22 +70,18 @@ public class LoadCharacter extends DialogFragment {
             }
         });
 
-        return rootView;
-    }
-
-
-
-/*    @Override
-    public void onResume() {
-        super.onResume();
-        ((CharacterRecyclerViewAdapter) mAdapter).setOnItemClickListener(new CharacterRecyclerViewAdapter
-                .MyClickListener() {
+        Button loadButton = rootView.findViewById(R.id.load_button);
+        loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(int position, View v) {
-                Log.i(LOG_TAG, " Clicked on Item " + position);
+            public void onClick(View v) {
+                CharacterEntity selectedCharacter = mAdapter.getSelectedItem();
+                CharacterManager.setSelectedCharacter(selectedCharacter.getCharacterPlayer());
+                dismiss();
             }
         });
-    }*/
+
+        return rootView;
+    }
 
     private ArrayList<CharacterEntity> getDataSet() {
         ArrayList results = new ArrayList<CharacterEntity>();

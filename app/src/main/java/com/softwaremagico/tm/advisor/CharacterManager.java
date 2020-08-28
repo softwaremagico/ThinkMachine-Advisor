@@ -16,12 +16,29 @@ import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class CharacterManager {
     private static List<CharacterPlayer> characters = new ArrayList<>();
     private static CharacterPlayer selectedCharacter;
+    private static Set<CharacterSelectedListener> characterSelectedListener = new HashSet<>();
+
+    public interface CharacterSelectedListener {
+        void selected(CharacterPlayer characterPlayer);
+    }
+
+    private static void launchSelectedCharacterListeners(CharacterPlayer characterPlayer) {
+        for (CharacterSelectedListener listener : characterSelectedListener) {
+            listener.selected(characterPlayer);
+        }
+    }
+
+    public static void addSelectedCharacterListener(CharacterSelectedListener listener) {
+        characterSelectedListener.add(listener);
+    }
 
     public static CharacterPlayer getSelectedCharacter() {
         if (characters.isEmpty()) {
@@ -30,10 +47,19 @@ public class CharacterManager {
         return selectedCharacter;
     }
 
+    public static void setSelectedCharacter(CharacterPlayer characterPlayer) {
+        if (!characters.contains(characterPlayer)) {
+            characters.add(characterPlayer);
+        }
+        selectedCharacter = characterPlayer;
+        launchSelectedCharacterListeners(characterPlayer);
+    }
+
     public static void addNewCharacter() {
         CharacterPlayer characterPlayer = new CharacterPlayer(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
         characters.add(characterPlayer);
         selectedCharacter = characterPlayer;
+        //launchSelectedCharacterListeners(characterPlayer);
     }
 
 }
