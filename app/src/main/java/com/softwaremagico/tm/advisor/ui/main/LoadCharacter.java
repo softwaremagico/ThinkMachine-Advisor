@@ -88,7 +88,7 @@ public class LoadCharacter extends DialogFragment {
 
     private ArrayList<CharacterEntity> getDataSet() {
         ArrayList results = new ArrayList<CharacterEntity>();
-        for (int index = 0; index < 1; index++) {
+        for (int index = 0; index < 3; index++) {
             try {
                 final CharacterPlayer characterPlayer = new CharacterPlayer("en", PathManager.DEFAULT_MODULE_FOLDER);
                 final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(characterPlayer, 0, DifficultLevelPreferences.HARD);

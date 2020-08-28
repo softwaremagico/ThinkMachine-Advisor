@@ -12,6 +12,7 @@
 
 package com.softwaremagico.tm.advisor.ui.main;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -40,6 +42,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         .Adapter<CharacterRecyclerViewAdapter.CharacterEntityViewHolder> {
 
     private List<CharacterEntity> dataset;
+    private int selectedPosition = RecyclerView.NO_POSITION;
 
     public CharacterRecyclerViewAdapter(ArrayList<CharacterEntity> data) {
         this.dataset = data;
@@ -59,8 +62,21 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(CharacterEntityViewHolder holder, int position) {
+        holder.itemView.setSelected(selectedPosition == position);
         CharacterEntity characterEntity = dataset.get(position);
         holder.update(characterEntity);
+
+        // Here I am just highlighting the background
+        ((CardView)holder.itemView).setCardElevation(selectedPosition == position ? 30 : 4);
+        holder.itemView.setBackgroundResource(selectedPosition == position ? R.color.colorSelected : Color.TRANSPARENT);
+//        if (selectedPosition == position) {
+//            @SuppressLint("ObjectAnimatorBinding") ObjectAnimator animator = ObjectAnimator.ofFloat(holder.itemView, "cardElevation", 2, 80);
+//            // if needed set duration, interpolator, or what you want on the animator
+//            animator.start();
+//        } else{
+//
+//        }
+
     }
 
     @Override
@@ -73,7 +89,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
     }
 
 
-    static class CharacterEntityViewHolder extends RecyclerView.ViewHolder
+    class CharacterEntityViewHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
         private ViewGroup linearLayoutDetails;
@@ -126,14 +142,6 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                     return true;
                 }
             });
-
-/*            Button cancelButton = itemView.findViewById(R.id.cancel_button);
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //itemView.dismiss();
-                }
-            });*/
         }
 
         public void update(CharacterEntity characterEntity) {
@@ -143,8 +151,14 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         }
 
         @Override
-        public void onClick(View v) {
-            // myClickListener.onItemClick(getAdapterPosition(), v);
+        public void onClick(View view) {
+            // Below line is just like a safety check, because sometimes holder could be null,
+            // in that case, getAdapterPosition() will return RecyclerView.NO_POSITION
+            if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
+            notifyItemChanged(selectedPosition);
+            selectedPosition = getLayoutPosition();
+            itemView.setSelected(selectedPosition == getLayoutPosition());
+            notifyItemChanged(selectedPosition);
         }
 
         public void toggleDetails(View view) {
