@@ -15,10 +15,10 @@
     android:id="@+id/character_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="0dp"
     card_view:cardBackgroundColor="@android:color/white"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="4dp"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -63,8 +63,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur semper purus quis viverra."
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textColor="@android:color/black" />
         </LinearLayout>
 
 
@@ -81,7 +80,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Details..."
+                android:text="@string/character_card_details"
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
 

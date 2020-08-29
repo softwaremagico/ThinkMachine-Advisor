@@ -93,12 +93,12 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         private ImageView imageViewExpand;
         private static final int DURATION = 250;
 
-        CharacterEntity characterEntity;
-        View itemView;
-        Toolbar description;
-        TextView completeDescription;
-        TextView race;
-        TextView faction;
+        private CharacterEntity characterEntity;
+        private View itemView;
+        private Toolbar description;
+        private TextView completeDescription;
+        private TextView race;
+        private TextView faction;
 
         public CharacterEntityViewHolder(View itemView) {
             super(itemView);
