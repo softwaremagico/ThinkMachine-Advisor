@@ -47,6 +47,7 @@ public class ElementSpinner extends Component {
         if(tag!=null) {
             tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
         }
+        tagText.setTextAppearance(R.style.CharacterInfo);
     }
 
     public <T extends Element<?>> void setAdapter(ElementAdapter<T> adapter) {

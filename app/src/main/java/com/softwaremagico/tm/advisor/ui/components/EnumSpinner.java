@@ -40,6 +40,7 @@ public class EnumSpinner extends Component {
                 R.styleable.translated_text, 0, 0);
         String tag = attributes.getString(R.styleable.translated_text_translation);
         tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
+        tagText.setTextAppearance(R.style.CharacterInfo);
     }
 
     public <T extends Enum<?>> void setAdapter(EnumAdapter<T> adapter) {

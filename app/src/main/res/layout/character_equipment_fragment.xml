@@ -20,6 +20,7 @@
 
     <LinearLayout
         android:id="@+id/root_container"
+        style="@style/TextSubtitleLayout"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:scrollbars="vertical"

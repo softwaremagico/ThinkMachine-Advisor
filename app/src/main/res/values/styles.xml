@@ -49,4 +49,16 @@
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="TextSubtitleLayout">
+        <item name="android:padding">15sp</item>
+    </style>
+    <style name="TextSubtitle" parent="@android:style/Widget.TextView">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CharacterInfo" parent="@android:style/Widget.TextView">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

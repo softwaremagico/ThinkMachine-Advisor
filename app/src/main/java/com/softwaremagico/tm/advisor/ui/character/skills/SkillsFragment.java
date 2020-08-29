@@ -83,7 +83,7 @@ public class SkillsFragment extends CustomFragment {
         translatedNumberPickers.put(skill, skillNumberPicker);
         skillNumberPicker.setLabel(skill.getCompleteName());
         skillNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        //skillNumberPicker.setPadding(20, 20, 20, 20);
+        skillNumberPicker.setPadding(20, 20, 20, 20);
 
         // Add EditText to LinearLayout
         if (linearLayout != null) {

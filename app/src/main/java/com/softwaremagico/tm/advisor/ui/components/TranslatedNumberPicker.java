@@ -41,6 +41,7 @@ public class TranslatedNumberPicker extends Component {
         if (tag != null) {
             tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
         }
+        tagText.setTextAppearance(R.style.CharacterInfo);
     }
 
     public void setLabel(String text) {
