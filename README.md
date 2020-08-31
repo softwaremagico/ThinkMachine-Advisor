@@ -8,3 +8,7 @@ The app will be available on Google Play soon, and this site is only for hosting
 
 0.1 Basic Character Sheet generation
 
+0.2 Character management: load, save, import, export. 
+
+
+

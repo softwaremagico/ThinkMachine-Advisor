@@ -14,17 +14,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_option1"
-        android:title="option1"
+        android:id="@+id/character_copy"
+        android:title="@string/character_copy"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_option2"
-        android:title="option2"
+        android:id="@+id/character_delete"
+        android:title="@string/character_delete"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_option3"
-        android:title="/option3"
-        app:showAsAction="never" />
 </menu>

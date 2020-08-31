@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
+import com.softwaremagico.tm.advisor.log.AdvisorLog;
+
 import java.lang.reflect.Method;
 
 public class ExpandAndCollapseViewUtil {
@@ -41,7 +43,7 @@ public class ExpandAndCollapseViewUtil {
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
             );
         } catch (Exception e) {
-            Log.e("slideAnimation", e.getMessage(), e);
+            AdvisorLog.errorMessage(ExpandAndCollapseViewUtil.class.getName(), e);
         }
 
         final int initialHeight = v.getMeasuredHeight();

@@ -36,16 +36,20 @@ import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.txt.CharacterSheet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CharacterRecyclerViewAdapter extends RecyclerView
         .Adapter<CharacterRecyclerViewAdapter.CharacterEntityViewHolder> {
 
     private List<CharacterEntity> dataset;
     private int selectedPosition = RecyclerView.NO_POSITION;
+    private Map<CharacterEntity, String> charactersDescriptions;
 
     public CharacterRecyclerViewAdapter(ArrayList<CharacterEntity> data) {
         this.dataset = data;
+        charactersDescriptions = new HashMap<>();
     }
 
     /**
@@ -63,13 +67,11 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(CharacterEntityViewHolder holder, int position) {
         holder.itemView.setSelected(selectedPosition == position);
-        CharacterEntity characterEntity = dataset.get(position);
-        holder.update(characterEntity);
+        holder.update(dataset.get(position));
 
         // Here the selection style.
         ((CardView) holder.itemView).setCardElevation(selectedPosition == position ? 30 : 4);
         holder.itemView.setBackgroundResource(selectedPosition == position ? R.color.colorSelected : Color.TRANSPARENT);
-
     }
 
     @Override
@@ -81,11 +83,6 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         return selectedPosition == RecyclerView.NO_POSITION ? null : dataset.get(selectedPosition);
     }
 
-    public interface MyClickListener {
-        void onItemClick(int position, View v);
-    }
-
-
     class CharacterEntityViewHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
@@ -95,7 +92,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
         private CharacterEntity characterEntity;
         private View itemView;
-        private Toolbar description;
+        private Toolbar characterTitle;
         private TextView completeDescription;
         private TextView race;
         private TextView faction;
@@ -104,36 +101,32 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             super(itemView);
             this.itemView = itemView;
             itemView.setOnClickListener(this);
-            description = itemView.findViewById(R.id.character_description);
             completeDescription = itemView.findViewById(R.id.character_description_skills);
 
             //Card description
             linearLayoutDetails = itemView.findViewById(R.id.linearLayoutDetails);
             imageViewExpand = itemView.findViewById(R.id.imageViewExpand);
+            imageViewExpand.setImageResource(R.drawable.ic_more);
 
-            LinearLayout description = itemView.findViewById(R.id.description_layout);
-            description.setOnClickListener(view -> toggleDetails(view));
+            LinearLayout descriptionContent = itemView.findViewById(R.id.description_layout);
+            descriptionContent.setOnClickListener(view -> toggleDetails(view));
 
             //Toolbar toolbar = itemView.findViewById(R.id.selector_toolbar);
             //setSupportActionBar(toolbar);
 
-            Toolbar toolbarCard = itemView.findViewById(R.id.character_description);
+            characterTitle = itemView.findViewById(R.id.character_title);
             //toolbarCard.inflateMenu(R.menu.menu_card);
-            toolbarCard.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            characterTitle.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
-                        case R.id.action_option1:
+                        case R.id.character_copy:
                             Snackbar
-                                    .make(itemView, "Text1", Snackbar.LENGTH_SHORT).show();
+                                    .make(itemView, "Copy", Snackbar.LENGTH_SHORT).show();
                             break;
-                        case R.id.action_option2:
+                        case R.id.character_delete:
                             Snackbar
-                                    .make(itemView, "Text2", Snackbar.LENGTH_SHORT).show();
-                            break;
-                        case R.id.action_option3:
-                            Snackbar
-                                    .make(itemView, "Text3", Snackbar.LENGTH_SHORT).show();
+                                    .make(itemView, "Delete", Snackbar.LENGTH_SHORT).show();
                             break;
                     }
                     return true;
@@ -143,8 +136,8 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
         public void update(CharacterEntity characterEntity) {
             this.characterEntity = characterEntity;
-            description.setTitle(characterEntity.getCharacterPlayer().getCompleteNameRepresentation());
-            description.setSubtitle(DateUtils.formatTimestamp(characterEntity.getUpdateTime()));
+            characterTitle.setTitle(characterEntity.getCharacterPlayer().getCompleteNameRepresentation());
+            characterTitle.setSubtitle(DateUtils.formatTimestamp(characterEntity.getUpdateTime()));
         }
 
         @Override
@@ -154,19 +147,13 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
             notifyItemChanged(selectedPosition);
             selectedPosition = getLayoutPosition();
-            itemView.setSelected(selectedPosition == getLayoutPosition());
             notifyItemChanged(selectedPosition);
         }
 
         public void toggleDetails(View view) {
-            TextView completeDescription = itemView.findViewById(R.id.character_description_skills);
+            completeDescription = itemView.findViewById(R.id.character_description_skills);
             if (linearLayoutDetails.getVisibility() == View.GONE) {
-                //No sheet set yet, default text loading...
-                if (completeDescription.getText().length() < 50) {
-                    final CharacterSheet characterSheet = new CharacterSheet(characterEntity.getCharacterPlayer());
-                    CharacterJsonManager.toJson(characterEntity.getCharacterPlayer());
-                    completeDescription.setText(characterSheet.toString());
-                }
+                completeDescription.setText(getExtendedDescription(characterEntity));
                 ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
                 imageViewExpand.setImageResource(R.drawable.ic_more);
                 rotate(-180.0f);
@@ -175,6 +162,15 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                 imageViewExpand.setImageResource(R.drawable.ic_less);
                 rotate(180.0f);
             }
+        }
+
+        private String getExtendedDescription(CharacterEntity characterEntity) {
+            if (charactersDescriptions.get(characterEntity) == null) {
+                final CharacterSheet characterSheet = new CharacterSheet(characterEntity.getCharacterPlayer());
+                CharacterJsonManager.toJson(characterEntity.getCharacterPlayer());
+                charactersDescriptions.put(characterEntity, characterSheet.toString());
+            }
+            return charactersDescriptions.get(characterEntity);
         }
 
         private void rotate(float angle) {

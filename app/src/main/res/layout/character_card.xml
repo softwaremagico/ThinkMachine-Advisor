@@ -29,7 +29,7 @@
         android:orientation="vertical">
 
         <Toolbar
-            android:id="@+id/character_description"
+            android:id="@+id/character_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:subtitle="Faction"
@@ -89,8 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:contentDescription=""
-                android:src="@drawable/ic_more" />
+                android:contentDescription="" />
         </LinearLayout>
 
 
