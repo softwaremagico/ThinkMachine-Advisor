@@ -24,38 +24,38 @@ import java.lang.reflect.Method;
 
 public class ExpandAndCollapseViewUtil {
 
-    public static void expand(final ViewGroup v, int duration) {
-        slide(v, duration, true);
+    public static void expand(final ViewGroup viewGroup, int duration) {
+        slide(viewGroup, duration, true);
     }
 
-    public static void collapse(final ViewGroup v, int duration) {
-        slide(v, duration, false);
+    public static void collapse(final ViewGroup viewGroup, int duration) {
+        slide(viewGroup, duration, false);
     }
 
-    private static void slide(final ViewGroup v, int duration, final boolean expand) {
+    private static void slide(final ViewGroup viewGroup, int duration, final boolean expand) {
         try {
             //onmeasure method is protected
-            Method m = v.getClass().getDeclaredMethod("onMeasure", int.class, int.class);
-            m.setAccessible(true);
-            m.invoke(
-                    v,
-                    View.MeasureSpec.makeMeasureSpec(((View) v.getParent()).getMeasuredWidth(), View.MeasureSpec.AT_MOST),
+            Method onMeasureMethod = viewGroup.getClass().getDeclaredMethod("onMeasure", int.class, int.class);
+            onMeasureMethod.setAccessible(true);
+            onMeasureMethod.invoke(
+                    viewGroup,
+                    View.MeasureSpec.makeMeasureSpec(((View) viewGroup.getParent()).getMeasuredWidth(), View.MeasureSpec.AT_MOST),
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
             );
         } catch (Exception e) {
             AdvisorLog.errorMessage(ExpandAndCollapseViewUtil.class.getName(), e);
         }
 
-        final int initialHeight = v.getMeasuredHeight();
+        final int initialHeight = viewGroup.getMeasuredHeight();
 
         if (expand) {
-            v.getLayoutParams().height = 0;
+            viewGroup.getLayoutParams().height = 0;
         } else {
-            v.getLayoutParams().height = initialHeight;
+            viewGroup.getLayoutParams().height = initialHeight;
         }
-        v.setVisibility(View.VISIBLE);
+        viewGroup.setVisibility(View.VISIBLE);
 
-        Animation a = new Animation() {
+        Animation animation = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
                 int newHeight = 0;
@@ -64,11 +64,11 @@ public class ExpandAndCollapseViewUtil {
                 } else {
                     newHeight = (int) (initialHeight * (1 - interpolatedTime));
                 }
-                v.getLayoutParams().height = newHeight;
-                v.requestLayout();
+                viewGroup.getLayoutParams().height = newHeight;
+                viewGroup.requestLayout();
 
                 if (interpolatedTime == 1 && !expand) {
-                    v.setVisibility(View.GONE);
+                    viewGroup.setVisibility(View.GONE);
                 }
             }
 
@@ -78,7 +78,7 @@ public class ExpandAndCollapseViewUtil {
             }
         };
 
-        a.setDuration(duration);
-        v.startAnimation(a);
+        animation.setDuration(duration);
+        viewGroup.startAnimation(animation);
     }
 }

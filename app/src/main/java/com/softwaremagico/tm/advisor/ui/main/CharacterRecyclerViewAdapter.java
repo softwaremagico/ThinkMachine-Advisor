@@ -12,23 +12,20 @@
 
 package com.softwaremagico.tm.advisor.ui.main;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.core.DateUtils;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
@@ -46,6 +43,11 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
     private List<CharacterEntity> dataset;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private Map<CharacterEntity, String> charactersDescriptions;
+    private ClosePopUpListener closePopUpListener;
+
+    public interface ClosePopUpListener {
+        void dimiss();
+    }
 
     public CharacterRecyclerViewAdapter(ArrayList<CharacterEntity> data) {
         this.dataset = data;
@@ -66,12 +68,8 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(CharacterEntityViewHolder holder, int position) {
-        holder.itemView.setSelected(selectedPosition == position);
+        holder.cardView.setSelected(selectedPosition == position);
         holder.update(dataset.get(position));
-
-        // Here the selection style.
-        ((CardView) holder.itemView).setCardElevation(selectedPosition == position ? 30 : 4);
-        holder.itemView.setBackgroundResource(selectedPosition == position ? R.color.colorSelected : Color.TRANSPARENT);
     }
 
     @Override
@@ -83,54 +81,50 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         return selectedPosition == RecyclerView.NO_POSITION ? null : dataset.get(selectedPosition);
     }
 
-    class CharacterEntityViewHolder extends RecyclerView.ViewHolder
-            implements View
-            .OnClickListener {
-        private ViewGroup linearLayoutDetails;
-        private ImageView imageViewExpand;
+    public void addClosePopUpListener(ClosePopUpListener listener) {
+        closePopUpListener = listener;
+    }
+
+    class CharacterEntityViewHolder extends RecyclerView.ViewHolder {
         private static final int DURATION = 250;
 
+        private ImageView imageViewExpand;
+        private ViewGroup detailLayout;
         private CharacterEntity characterEntity;
-        private View itemView;
+        private View cardView;
         private Toolbar characterTitle;
         private TextView completeDescription;
-        private TextView race;
-        private TextView faction;
 
-        public CharacterEntityViewHolder(View itemView) {
-            super(itemView);
-            this.itemView = itemView;
-            itemView.setOnClickListener(this);
-            completeDescription = itemView.findViewById(R.id.character_description_skills);
-
-            //Card description
-            linearLayoutDetails = itemView.findViewById(R.id.linearLayoutDetails);
-            imageViewExpand = itemView.findViewById(R.id.imageViewExpand);
+        public CharacterEntityViewHolder(View cardView) {
+            super(cardView);
+            this.cardView = cardView;
+            completeDescription = cardView.findViewById(R.id.character_description_skills);
+            characterTitle = cardView.findViewById(R.id.character_title);
+            detailLayout = cardView.findViewById(R.id.details_layout);
+            imageViewExpand = cardView.findViewById(R.id.image_view_expand);
             imageViewExpand.setImageResource(R.drawable.ic_more);
 
-            LinearLayout descriptionContent = itemView.findViewById(R.id.description_layout);
-            descriptionContent.setOnClickListener(view -> toggleDetails(view));
+            imageViewExpand.setOnClickListener(view -> toggleDetails(view));
 
-            //Toolbar toolbar = itemView.findViewById(R.id.selector_toolbar);
-            //setSupportActionBar(toolbar);
-
-            characterTitle = itemView.findViewById(R.id.character_title);
-            //toolbarCard.inflateMenu(R.menu.menu_card);
-            characterTitle.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.character_copy:
-                            Snackbar
-                                    .make(itemView, "Copy", Snackbar.LENGTH_SHORT).show();
-                            break;
-                        case R.id.character_delete:
-                            Snackbar
-                                    .make(itemView, "Delete", Snackbar.LENGTH_SHORT).show();
-                            break;
-                    }
-                    return true;
+            characterTitle.inflateMenu(R.menu.character_selector_menu);
+            characterTitle.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.character_load:
+                        CharacterManager.setSelectedCharacter(characterEntity.getCharacterPlayer());
+                        if (closePopUpListener != null) {
+                            closePopUpListener.dimiss();
+                        }
+                        break;
+                    case R.id.character_copy:
+                        Snackbar
+                                .make(cardView, "Copy", Snackbar.LENGTH_SHORT).show();
+                        break;
+                    case R.id.character_delete:
+                        Snackbar
+                                .make(cardView, "Delete", Snackbar.LENGTH_SHORT).show();
+                        break;
                 }
+                return true;
             });
         }
 
@@ -140,8 +134,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             characterTitle.setSubtitle(DateUtils.formatTimestamp(characterEntity.getUpdateTime()));
         }
 
-        @Override
-        public void onClick(View view) {
+        public void cardClick(View view) {
             // Below line is just like a safety check, because sometimes holder could be null,
             // in that case, getAdapterPosition() will return RecyclerView.NO_POSITION
             if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
@@ -151,14 +144,14 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         }
 
         public void toggleDetails(View view) {
-            completeDescription = itemView.findViewById(R.id.character_description_skills);
-            if (linearLayoutDetails.getVisibility() == View.GONE) {
+            completeDescription = cardView.findViewById(R.id.character_description_skills);
+            if (detailLayout.getVisibility() == View.GONE) {
                 completeDescription.setText(getExtendedDescription(characterEntity));
-                ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
+                ExpandAndCollapseViewUtil.expand(detailLayout, DURATION);
                 imageViewExpand.setImageResource(R.drawable.ic_more);
                 rotate(-180.0f);
             } else {
-                ExpandAndCollapseViewUtil.collapse(linearLayoutDetails, DURATION);
+                ExpandAndCollapseViewUtil.collapse(detailLayout, DURATION);
                 imageViewExpand.setImageResource(R.drawable.ic_less);
                 rotate(180.0f);
             }

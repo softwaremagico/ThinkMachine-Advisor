@@ -60,25 +60,7 @@ public class LoadCharacter extends DialogFragment {
         //ADAPTER
         mAdapter = new CharacterRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
-
-        //LOAD/CANCEL buttons
-        Button cancelButton = rootView.findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-
-        Button loadButton = rootView.findViewById(R.id.load_button);
-        loadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CharacterEntity selectedCharacter = mAdapter.getSelectedItem();
-                CharacterManager.setSelectedCharacter(selectedCharacter.getCharacterPlayer());
-                dismiss();
-            }
-        });
+        mAdapter.addClosePopUpListener(() -> dismiss());
 
         return rootView;
     }

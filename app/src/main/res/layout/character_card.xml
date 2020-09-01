@@ -37,7 +37,7 @@
             android:titleTextColor="@color/colorPrimaryDark"
             app:popupTheme="@style/Theme.AppCompat.Light"
             app:subtitleTextAppearance="@style/Card.Subtitle"
-            app:theme="@style/ToolbarCard"
+            app:theme="@style/SmallToolbarCard"
             app:titleTextAppearance="@style/Card.Title" />
 
         <LinearLayout
@@ -48,7 +48,7 @@
             android:padding="8dp">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/image_view_faction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -57,6 +57,7 @@
                 android:src="@drawable/ic_launcher" />
 
             <TextView
+                android:id="@+id/short_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -85,7 +86,7 @@
                 android:textSize="20sp" />
 
             <ImageView
-                android:id="@+id/imageViewExpand"
+                android:id="@+id/image_view_expand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -94,7 +95,7 @@
 
 
         <LinearLayout
-            android:id="@+id/linearLayoutDetails"
+            android:id="@+id/details_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

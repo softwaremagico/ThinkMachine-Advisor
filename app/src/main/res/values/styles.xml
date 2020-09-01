@@ -40,6 +40,11 @@
         <item name="android:textColorPrimary">@color/colorContrast</item>
     </style>
 
+    <style name="SmallToolbarCard" parent="ToolbarCard">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">#000000</item>
+    </style>
+
     <style name="Card.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">24sp</item>
     </style>

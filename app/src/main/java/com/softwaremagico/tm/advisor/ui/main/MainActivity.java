@@ -109,28 +109,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-/*    private void loadCharacterList(View anchorView) {
-        View popupView = getLayoutInflater().inflate(R.layout.character_description, null);
-
-        PopupWindow popupWindow = new PopupWindow(popupView,
-                WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-
-        // If the PopupWindow should be focusable
-        popupWindow.setFocusable(true);
-
-        // If you need the PopupWindow to dismiss when when touched outside
-        popupWindow.setBackgroundDrawable(new ColorDrawable());
-
-        int location[] = new int[2];
-
-        // Get the View's(the one that was clicked in the Fragment) location
-        anchorView.getLocationOnScreen(location);
-
-        // Using location, the PopupWindow will be displayed right under anchorView
-        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
-
-    }*/
-
     public void showDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         LoadCharacter loadCharacter = new LoadCharacter();

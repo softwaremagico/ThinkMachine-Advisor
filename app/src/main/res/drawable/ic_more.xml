@@ -13,6 +13,6 @@
 <vector android:autoMirrored="true" android:height="33.866665dp"
     android:viewportHeight="33.866665" android:viewportWidth="33.866665"
     android:width="33.866665dp" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="#000000"
+    <path android:fillColor="@color/colorPrimaryDark"
         android:pathData="m12.0848,17.9055 l-4.671,-4.6807 0.9649,-0.9649 0.9649,-0.9649 3.7993,3.7875 3.7993,3.7875 3.8065,-3.7947 3.8065,-3.7947 0.9489,0.9905 0.9489,0.9905 -4.672,4.6624c-2.5696,2.5643 -4.7514,4.6624 -4.8485,4.6624 -0.0971,0 -2.2785,-2.1063 -4.8476,-4.6807z" android:strokeWidth="0.35277775"/>
 </vector>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright (C) 2020 Softwaremagico
   ~
   ~  This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero  <softwaremagico@gmail.com> Valencia (Spain).
@@ -14,10 +13,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/character_load"
+        android:icon="@drawable/ic_character_load"
+        android:title="@string/settings_load"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/character_copy"
         android:title="@string/character_copy"
         app:showAsAction="never" />
-
     <item
         android:id="@+id/character_delete"
         android:title="@string/character_delete"
