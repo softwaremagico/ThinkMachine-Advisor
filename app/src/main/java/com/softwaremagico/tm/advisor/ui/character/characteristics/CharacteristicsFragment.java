@@ -96,7 +96,7 @@ public class CharacteristicsFragment extends CustomFragment {
         translatedNumberPickers.put(characteristicDefinition.getCharacteristicName(), characteristicsNumberPicker);
         characteristicsNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText(characteristicDefinition.getId()));
         characteristicsNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        characteristicsNumberPicker.setPadding(20, 20, 20, 20);
+        characteristicsNumberPicker.setPadding(50, 20, 20, 20);
 
         // Add EditText to LinearLayout
         if (linearLayout != null) {

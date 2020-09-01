@@ -16,7 +16,7 @@
         android:id="@+id/character_load"
         android:icon="@drawable/ic_character_load"
         android:title="@string/settings_load"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/character_copy"
         android:title="@string/character_copy"

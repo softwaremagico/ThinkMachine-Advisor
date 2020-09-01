@@ -60,6 +60,7 @@
     <style name="TextSubtitle" parent="@android:style/Widget.TextView">
         <item name="android:textSize">20dp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:padding">15sp</item>
     </style>
 
     <style name="CharacterInfo" parent="@android:style/Widget.TextView">
