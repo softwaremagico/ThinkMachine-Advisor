@@ -34,6 +34,7 @@ import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
+import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
 import com.softwaremagico.tm.character.planets.Planet;
@@ -67,6 +68,24 @@ public class CharacterInfoFragment extends CustomFragment {
         createPlanetSpinner(root);
 
         return root;
+    }
+
+    @Override
+    public void setCharacter(View root, CharacterPlayer character){
+        final TranslatedEditText nameTextEditor = root.findViewById(R.id.character_name);
+        nameTextEditor.setText(character.getInfo().getNameRepresentation());
+        final TranslatedEditText surnameTextEditor = root.findViewById(R.id.character_surname);
+        surnameTextEditor.setText(character.getInfo().getSurname().getName());
+        final EnumSpinner genderSelector = root.findViewById(R.id.character_gender);
+        genderSelector.setSelection(character.getInfo().getGender());
+        final TranslatedEditText ageTextEditor = root.findViewById(R.id.character_age);
+        ageTextEditor.setText(character.getInfo().getAge().toString());
+        final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
+        raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
+        final ElementSpinner factionsSelector = root.findViewById(R.id.character_faction);
+        factionsSelector.setSelection(CharacterManager.getSelectedCharacter().getFaction());
+        final ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
+        planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
     }
 
     private void createNameText(View root) {
@@ -165,7 +184,7 @@ public class CharacterInfoFragment extends CustomFragment {
     }
 
     private void createRaceSpinner(View root) {
-        ElementSpinner raceSelector = root.findViewById(R.id.character_race);
+        final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
         raceSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableRaces(), false, Race.class));
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -194,7 +213,7 @@ public class CharacterInfoFragment extends CustomFragment {
     }
 
     private void createFactionSpinner(View root) {
-        ElementSpinner factionsSelector = root.findViewById(R.id.character_faction);
+        final ElementSpinner factionsSelector = root.findViewById(R.id.character_faction);
         factionsSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableFactions(), false, Faction.class));
         factionsSelector.setSelection(CharacterManager.getSelectedCharacter().getFaction());
         factionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -219,7 +238,7 @@ public class CharacterInfoFragment extends CustomFragment {
     }
 
     private void createPlanetSpinner(View root) {
-        ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
+        final ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
         planetSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailablePlanets(), false, Planet.class));
         planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
         planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

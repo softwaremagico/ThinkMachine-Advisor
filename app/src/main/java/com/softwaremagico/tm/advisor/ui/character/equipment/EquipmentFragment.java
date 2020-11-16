@@ -32,8 +32,10 @@ import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
+import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
+import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.equipment.armours.Armour;
 import com.softwaremagico.tm.character.equipment.armours.InvalidArmourException;
 import com.softwaremagico.tm.character.equipment.shields.InvalidShieldException;
@@ -58,6 +60,12 @@ public class EquipmentFragment extends CustomFragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    @Override
+    public void setCharacter(View root, CharacterPlayer character){
+
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

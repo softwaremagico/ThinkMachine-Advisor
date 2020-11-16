@@ -13,35 +13,37 @@
 package com.softwaremagico.tm.advisor.ui.components;
 
 import android.os.Build;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.character.CharacterPlayer;
 
-public class CustomFragment extends Fragment {
+public abstract class CustomFragment extends Fragment {
 
     public CustomFragment() {
         super();
-        CustomFragment currentFragment = this;
+
         CharacterManager.addSelectedCharacterListener(new CharacterManager.CharacterSelectedListener() {
             @Override
             public void selected(CharacterPlayer characterPlayer) {
-                //Refresh the fragment.
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    getParentFragmentManager().beginTransaction().detach(currentFragment).commitNow();
-                    getParentFragmentManager().beginTransaction().attach(currentFragment).commitNow();
-                } else {
-                    getParentFragmentManager().beginTransaction().detach(currentFragment).attach(currentFragment).commit();
+                if (getView() != null) {
+                    setCharacter(getView().getRootView(), characterPlayer);
                 }
             }
         });
     }
+
+    protected abstract void setCharacter(View root, CharacterPlayer character);
 
     protected void addSection(String title, LinearLayout linearLayout) {
         TextView textView = new TextView(getContext(), null);

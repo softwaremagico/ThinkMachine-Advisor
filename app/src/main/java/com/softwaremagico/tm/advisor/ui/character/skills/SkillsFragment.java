@@ -27,10 +27,13 @@ import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
+import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
+import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 import com.softwaremagico.tm.character.skills.AvailableSkill;
+import com.softwaremagico.tm.character.skills.AvailableSkillsFactory;
 import com.softwaremagico.tm.character.skills.InvalidSkillException;
 
 import java.util.HashMap;
@@ -47,6 +50,26 @@ public class SkillsFragment extends CustomFragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    @Override
+    public void setCharacter(View root, CharacterPlayer character) {
+        try {
+            for (AvailableSkill skill : AvailableSkillsFactory.getInstance().getNaturalSkills(character.getLanguage(), character.getModuleName())) {
+                translatedNumberPickers.get(skill).setValue(character.getSkillAssignedRanks(skill));
+            }
+        } catch (InvalidXmlElementException e) {
+            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        }
+
+        try {
+            for (AvailableSkill skill : AvailableSkillsFactory.getInstance().getLearnedSkills(character.getLanguage(), character.getModuleName())) {
+                translatedNumberPickers.get(skill).setValue(character.getSkillAssignedRanks(skill));
+            }
+        } catch (InvalidXmlElementException e) {
+            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        }
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

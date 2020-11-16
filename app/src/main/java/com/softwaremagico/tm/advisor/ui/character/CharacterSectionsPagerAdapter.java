@@ -13,6 +13,7 @@
 package com.softwaremagico.tm.advisor.ui.character;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
@@ -23,12 +24,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.character.characteristics.CharacteristicsFragment;
 import com.softwaremagico.tm.advisor.ui.character.equipment.EquipmentFragment;
 import com.softwaremagico.tm.advisor.ui.character.info.CharacterInfoFragment;
 import com.softwaremagico.tm.advisor.ui.character.skills.SkillsFragment;
 import com.softwaremagico.tm.advisor.ui.character.traits.TraitsFragment;
+import com.softwaremagico.tm.character.CharacterPlayer;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

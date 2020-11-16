@@ -40,22 +40,22 @@ import java.util.Map;
 public class CharacterRecyclerViewAdapter extends RecyclerView
         .Adapter<CharacterRecyclerViewAdapter.CharacterEntityViewHolder> {
 
-    private List<CharacterEntity> dataset;
+    private final List<CharacterEntity> dataSet;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private Map<CharacterEntity, String> charactersDescriptions;
     private ClosePopUpListener closePopUpListener;
 
     public interface ClosePopUpListener {
-        void dimiss();
+        void dismiss();
     }
 
     public CharacterRecyclerViewAdapter(ArrayList<CharacterEntity> data) {
-        this.dataset = data;
+        this.dataSet = data;
         charactersDescriptions = new HashMap<>();
     }
 
     /**
-     * Represent each character entity with a chracter card.
+     * Represent each character entity with a character card.
      *
      * @param parent
      * @param viewType
@@ -69,16 +69,16 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(CharacterEntityViewHolder holder, int position) {
         holder.cardView.setSelected(selectedPosition == position);
-        holder.update(dataset.get(position));
+        holder.update(dataSet.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return dataset.size();
+        return dataSet.size();
     }
 
     public CharacterEntity getSelectedItem() {
-        return selectedPosition == RecyclerView.NO_POSITION ? null : dataset.get(selectedPosition);
+        return selectedPosition == RecyclerView.NO_POSITION ? null : dataSet.get(selectedPosition);
     }
 
     public void addClosePopUpListener(ClosePopUpListener listener) {
@@ -112,7 +112,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                     case R.id.character_load:
                         CharacterManager.setSelectedCharacter(characterEntity.getCharacterPlayer());
                         if (closePopUpListener != null) {
-                            closePopUpListener.dimiss();
+                            closePopUpListener.dismiss();
                         }
                         break;
                     case R.id.character_copy:

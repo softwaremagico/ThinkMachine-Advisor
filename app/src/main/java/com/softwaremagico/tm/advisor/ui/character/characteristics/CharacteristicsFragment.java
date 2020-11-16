@@ -24,8 +24,10 @@ import androidx.annotation.Nullable;
 import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
+import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
+import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.characteristics.CharacteristicDefinition;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.characteristics.CharacteristicType;
@@ -48,6 +50,20 @@ public class CharacteristicsFragment extends CustomFragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    @Override
+    public void setCharacter(View root, CharacterPlayer character) {
+        for (final CharacteristicType type : CharacteristicType.values()) {
+            if (type == CharacteristicType.OTHERS) {
+                continue;
+            }
+            for (CharacteristicDefinition characteristicDefinition : CharacteristicsDefinitionFactory.getInstance().getAll(type, Locale.getDefault().getLanguage(),
+                    ModuleManager.DEFAULT_MODULE)) {
+                translatedNumberPickers.get(characteristicDefinition.getCharacteristicName()).setValue(character.getCharacteristicValue(characteristicDefinition.getCharacteristicName()));
+            }
+        }
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
