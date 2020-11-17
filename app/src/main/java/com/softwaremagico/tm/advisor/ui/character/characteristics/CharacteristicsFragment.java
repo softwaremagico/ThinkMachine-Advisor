@@ -53,6 +53,7 @@ public class CharacteristicsFragment extends CustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
+        updateCharacteristicsLimits(character);
         for (final CharacteristicType type : CharacteristicType.values()) {
             if (type == CharacteristicType.OTHERS) {
                 continue;
@@ -83,14 +84,14 @@ public class CharacteristicsFragment extends CustomFragment {
             }
         }
 
-        updateCharacteristicsLimits();
+        updateCharacteristicsLimits(CharacterManager.getSelectedCharacter());
 
         return root;
     }
 
 
-    public void updateCharacteristicsLimits() {
-        if (CharacterManager.getSelectedCharacter().getRace() != null) {
+    public void updateCharacteristicsLimits(CharacterPlayer characterPlayer) {
+        if (characterPlayer != null && characterPlayer.getRace() != null) {
             for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
                 characteristicComponent.getValue().setLimits(CharacterManager.getSelectedCharacter().getStartingValue(characteristicComponent.getKey()),
                         FreeStyleCharacterCreation.getMaxInitialCharacteristicsValues(characteristicComponent.getKey(),
@@ -99,8 +100,8 @@ public class CharacteristicsFragment extends CustomFragment {
         }
     }
 
-    public void refreshCharacteristicValues() {
-        if (CharacterManager.getSelectedCharacter().getRace() != null) {
+    public void refreshCharacteristicValues(CharacterPlayer characterPlayer) {
+        if (characterPlayer != null && characterPlayer.getRace() != null) {
             for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
                 characteristicComponent.getValue().setValue(CharacterManager.getSelectedCharacter().getValue(characteristicComponent.getKey()));
             }

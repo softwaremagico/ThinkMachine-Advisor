@@ -53,6 +53,11 @@ public class EquipmentFragment extends CustomFragment {
     private Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private EquipmentViewModel mViewModel;
 
+    IncrementalElementsLayout weaponsLayout;
+    IncrementalElementsLayout armoursLayout;
+    IncrementalElementsLayout shieldsLayout;
+
+
     public static EquipmentFragment newInstance(int index) {
         EquipmentFragment fragment = new EquipmentFragment();
         Bundle bundle = new Bundle();
@@ -62,8 +67,10 @@ public class EquipmentFragment extends CustomFragment {
     }
 
     @Override
-    public void setCharacter(View root, CharacterPlayer character){
-
+    public void setCharacter(View root, CharacterPlayer character) {
+        weaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
+        armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedArmour());
+        shieldsLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedShield());
     }
 
 
@@ -75,19 +82,18 @@ public class EquipmentFragment extends CustomFragment {
         LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
 
         addSection(ThinkMachineTranslator.getTranslatedText("weapons"), rootLayout);
-        final IncrementalElementsLayout weaponsLayout = new WeaponsLayout(getContext(), true);
-        weaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
+        weaponsLayout = new WeaponsLayout(getContext(), true);
         rootLayout.addView(weaponsLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("armor"), rootLayout);
-        final IncrementalElementsLayout armoursLayout = new ArmourLayout(getContext(), true);
-        armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedArmour());
+        armoursLayout = new ArmourLayout(getContext(), true);
         rootLayout.addView(armoursLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("shield"), rootLayout);
-        final IncrementalElementsLayout shieldsLayout = new ShieldLayout(getContext(), true);
-        armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedShield());
+        shieldsLayout = new ShieldLayout(getContext(), true);
         rootLayout.addView(shieldsLayout);
+
+        setCharacter(rootView, CharacterManager.getSelectedCharacter());
 
         return rootView;
     }
@@ -127,7 +133,7 @@ public class EquipmentFragment extends CustomFragment {
                 try {
                     CharacterManager.getSelectedCharacter().setShield(shields.get(0));
                 } catch (InvalidShieldException e) {
-                   Snackbar
+                    Snackbar
                             .make(this, R.string.message_invalid_shield_armour_combination, Snackbar.LENGTH_SHORT).show();
                 }
             } else {

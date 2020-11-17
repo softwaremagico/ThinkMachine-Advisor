@@ -52,6 +52,9 @@ public class TraitsFragment extends CustomFragment {
     private Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private TraitsViewModel mViewModel;
 
+    IncrementalElementsLayout blessingsLayout;
+    IncrementalElementsLayout beneficesLayout;
+
     public static TraitsFragment newInstance(int index) {
         TraitsFragment fragment = new TraitsFragment();
         Bundle bundle = new Bundle();
@@ -62,7 +65,8 @@ public class TraitsFragment extends CustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-
+        blessingsLayout.setElements(character.getSelectedBlessings());
+        beneficesLayout.setElements(character.getSelectedBenefices());
     }
 
 
@@ -74,14 +78,14 @@ public class TraitsFragment extends CustomFragment {
         LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
 
         addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), rootLayout);
-        final IncrementalElementsLayout blessingsLayout = new BlessingLayout(getContext(), true);
-        blessingsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedBlessings());
+        blessingsLayout = new BlessingLayout(getContext(), true);
         rootLayout.addView(blessingsLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("beneficesTable"), rootLayout);
-        IncrementalElementsLayout beneficesLayout = new BeneficesLayout(getContext(), true);
-        beneficesLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedBenefices());
+        beneficesLayout = new BeneficesLayout(getContext(), true);
         rootLayout.addView(beneficesLayout);
+
+        setCharacter(rootView, CharacterManager.getSelectedCharacter());
 
         return rootView;
     }

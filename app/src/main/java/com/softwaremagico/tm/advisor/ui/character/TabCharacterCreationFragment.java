@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.character.characteristics.CharacteristicsFragment;
 import com.softwaremagico.tm.advisor.ui.character.skills.SkillsFragment;
@@ -30,7 +31,6 @@ public class TabCharacterCreationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Override
@@ -40,30 +40,8 @@ public class TabCharacterCreationFragment extends Fragment {
         ViewPager viewPager = view.findViewById(R.id.view_pager);
         viewPager.setAdapter(characterSectionsPagerAdapter);
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                Fragment selectedFragment = ((CharacterSectionsPagerAdapter) viewPager.getAdapter()).getRegisteredFragment(position);
-                if (selectedFragment != null) {
-                    if (selectedFragment instanceof CharacteristicsFragment) {
-                        ((CharacteristicsFragment) selectedFragment).updateCharacteristicsLimits();
-                        ((CharacteristicsFragment) selectedFragment).refreshCharacteristicValues();
-                    } else if (selectedFragment instanceof SkillsFragment) {
-                        ((SkillsFragment) selectedFragment).refreshSkillsValues();
-                    }
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        //Avoid refreshing of fragments. We will update them manually.
+        viewPager.setOffscreenPageLimit(characterSectionsPagerAdapter.getCount());
 
         TabLayout tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);

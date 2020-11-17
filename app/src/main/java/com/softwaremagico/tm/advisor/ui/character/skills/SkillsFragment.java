@@ -53,21 +53,8 @@ public class SkillsFragment extends CustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-        try {
-            for (AvailableSkill skill : AvailableSkillsFactory.getInstance().getNaturalSkills(character.getLanguage(), character.getModuleName())) {
-                translatedNumberPickers.get(skill).setValue(character.getSkillAssignedRanks(skill));
-            }
-        } catch (InvalidXmlElementException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        }
-
-        try {
-            for (AvailableSkill skill : AvailableSkillsFactory.getInstance().getLearnedSkills(character.getLanguage(), character.getModuleName())) {
-                translatedNumberPickers.get(skill).setValue(character.getSkillAssignedRanks(skill));
-            }
-        } catch (InvalidXmlElementException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        }
+        updateSkillsLimits(character);
+        refreshSkillsValues(character);
     }
 
 
@@ -96,7 +83,7 @@ public class SkillsFragment extends CustomFragment {
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }
 
-        updateSkillsLimits();
+        updateSkillsLimits(CharacterManager.getSelectedCharacter());
 
         return root;
     }
@@ -128,23 +115,23 @@ public class SkillsFragment extends CustomFragment {
     }
 
 
-    private void updateSkillsLimits() {
-        if (CharacterManager.getSelectedCharacter().getRace() != null) {
+    private void updateSkillsLimits(CharacterPlayer character) {
+        if (character != null && character.getRace() != null) {
             for (Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
                 if (skillComponent.getKey().getSkillDefinition().isNatural()) {
-                    skillComponent.getValue().setLimits(FreeStyleCharacterCreation.getMinInitialNaturalSkillsValues(CharacterManager.getSelectedCharacter().getInfo().getAge()),
-                            FreeStyleCharacterCreation.getMaxInitialSkillsValues(CharacterManager.getSelectedCharacter().getInfo().getAge()));
+                    skillComponent.getValue().setLimits(FreeStyleCharacterCreation.getMinInitialNaturalSkillsValues(character.getInfo().getAge()),
+                            FreeStyleCharacterCreation.getMaxInitialSkillsValues(character.getInfo().getAge()));
                 } else {
-                    skillComponent.getValue().setLimits(0, FreeStyleCharacterCreation.getMaxInitialSkillsValues(CharacterManager.getSelectedCharacter().getInfo().getAge()));
+                    skillComponent.getValue().setLimits(0, FreeStyleCharacterCreation.getMaxInitialSkillsValues(character.getInfo().getAge()));
                 }
             }
         }
     }
 
-    public void refreshSkillsValues() {
+    public void refreshSkillsValues(CharacterPlayer characterPlayer) {
         if (CharacterManager.getSelectedCharacter().getRace() != null) {
             for (Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
-                skillComponent.getValue().setValue(CharacterManager.getSelectedCharacter().getSkillAssignedRanks(skillComponent.getKey()));
+                skillComponent.getValue().setValue(characterPlayer.getSkillAssignedRanks(skillComponent.getKey()));
             }
         }
     }
