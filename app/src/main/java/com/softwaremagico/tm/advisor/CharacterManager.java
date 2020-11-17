@@ -13,6 +13,7 @@
 package com.softwaremagico.tm.advisor;
 
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.Set;
 public class CharacterManager {
     private static List<CharacterPlayer> characters = new ArrayList<>();
     private static CharacterPlayer selectedCharacter;
+    private static CostCalculator costCalculator;
     private static Set<CharacterSelectedListener> characterSelectedListener = new HashSet<>();
 
     public interface CharacterSelectedListener {
@@ -47,11 +49,16 @@ public class CharacterManager {
         return selectedCharacter;
     }
 
+    public static CostCalculator getCostCalculator() {
+        return costCalculator;
+    }
+
     public static void setSelectedCharacter(CharacterPlayer characterPlayer) {
         if (!characters.contains(characterPlayer)) {
             characters.add(characterPlayer);
         }
         selectedCharacter = characterPlayer;
+        costCalculator = new CostCalculator(selectedCharacter);
         launchSelectedCharacterListeners(characterPlayer);
     }
 
@@ -59,6 +66,7 @@ public class CharacterManager {
         CharacterPlayer characterPlayer = new CharacterPlayer(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
         characters.add(characterPlayer);
         selectedCharacter = characterPlayer;
+        costCalculator = new CostCalculator(characterPlayer);
         //launchSelectedCharacterListeners(characterPlayer);
     }
 

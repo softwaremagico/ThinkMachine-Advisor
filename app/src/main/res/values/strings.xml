@@ -37,4 +37,5 @@
     <string name="character_card_details">Description ...</string>
     <string name="character_delete">Delete</string>
     <string name="character_copy">Duplicate</string>
+    <string name="character_progression_status">Status:</string>
 </resources>

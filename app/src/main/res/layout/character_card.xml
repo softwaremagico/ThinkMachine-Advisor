@@ -63,7 +63,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur semper purus quis viverra."
                 android:textColor="@android:color/black" />
         </LinearLayout>
 

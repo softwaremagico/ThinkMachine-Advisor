@@ -12,6 +12,7 @@
 
 package com.softwaremagico.tm.advisor.ui.main;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.core.DateUtils;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
+import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.txt.CharacterSheet;
 
@@ -94,11 +96,13 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         private View cardView;
         private Toolbar characterTitle;
         private TextView completeDescription;
+        private TextView sortDescription;
 
         public CharacterEntityViewHolder(View cardView) {
             super(cardView);
             this.cardView = cardView;
             completeDescription = cardView.findViewById(R.id.character_description_skills);
+            sortDescription = cardView.findViewById(R.id.short_description);
             characterTitle = cardView.findViewById(R.id.character_title);
             detailLayout = cardView.findViewById(R.id.details_layout);
             imageViewExpand = cardView.findViewById(R.id.image_view_expand);
@@ -132,6 +136,24 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             this.characterEntity = characterEntity;
             characterTitle.setTitle(characterEntity.getCharacterPlayer().getCompleteNameRepresentation());
             characterTitle.setSubtitle(DateUtils.formatTimestamp(characterEntity.getUpdateTime()));
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                sortDescription.setText(Html.fromHtml(createStatus(characterEntity), Html.FROM_HTML_MODE_LEGACY));
+            } else {
+                sortDescription.setText(Html.fromHtml(createStatus(characterEntity)));
+            }
+        }
+
+        private String createStatus(CharacterEntity characterEntity) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(characterEntity.getCharacterPlayer().getFaction().getName());
+            stringBuilder.append(" (");
+            stringBuilder.append(characterEntity.getCharacterPlayer().getRace().getName());
+            stringBuilder.append(")");
+            stringBuilder.append("<br>");
+            //Status label.
+            stringBuilder.append("<b>").append(itemView.getContext().getString(R.string.character_progression_status)).append("</b>");
+            stringBuilder.append(CharacterManager.getCostCalculator().getStatus(CharacterManager.getSelectedCharacter()));
+            return stringBuilder.toString();
         }
 
         public void cardClick(View view) {
