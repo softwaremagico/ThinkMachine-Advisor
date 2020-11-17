@@ -34,7 +34,7 @@
     <string name="message_character_saved_successfully">Character saved!</string>
     <string name="message_character_saved_error">Character save error!</string>
     <string name="loading">Loading ...</string>
-    <string name="character_card_details">Description ...</string>
+    <string name="character_card_details">Details ...</string>
     <string name="character_delete">Delete</string>
     <string name="character_copy">Duplicate</string>
     <string name="character_progression_status">Status:</string>
@@ -45,4 +45,5 @@
     <string name="character_status_equipped">Equipped</string>
     <string name="character_status_extended">Extended</string>
     <string name="character_status_finished">Finished</string>
+    <string name="character_threat">Threat Level:</string>
 </resources>

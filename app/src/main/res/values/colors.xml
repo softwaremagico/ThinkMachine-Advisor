@@ -17,4 +17,18 @@
     <color name="colorUnselected">#00000000</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorContrast">#FFFFFF</color>
+
+    <color name="statusUndefined">#6c6689</color>
+    <color name="statusDraft">#bfa0b2</color>
+    <color name="statusNotStarted">#aa5c94</color>
+    <color name="statusInProgress">#943461</color>
+    <color name="statusFinished">#612750</color>
+    <color name="statusEquipped">#382b48</color>
+    <color name="statusExtended">#25151b</color>
+
+    <color name="threatPeace">#021e07</color>
+    <color name="threatLow">#bf3132</color>
+    <color name="threatMedium">#d5100a</color>
+    <color name="threatHigh">#a20c06</color>
+    <color name="threatExtreme">#6e0309</color>
 </resources>

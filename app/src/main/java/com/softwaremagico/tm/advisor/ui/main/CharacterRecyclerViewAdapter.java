@@ -28,9 +28,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.core.CharacterStatusHandler;
 import com.softwaremagico.tm.advisor.core.DateUtils;
+import com.softwaremagico.tm.advisor.core.ThreatLevelHandler;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
-import com.softwaremagico.tm.character.creation.CharacterProgressionStatus;
+import com.softwaremagico.tm.character.ThreatLevel;
 import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.txt.CharacterSheet;
@@ -138,13 +140,14 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             characterTitle.setTitle(characterEntity.getCharacterPlayer().getCompleteNameRepresentation());
             characterTitle.setSubtitle(DateUtils.formatTimestamp(characterEntity.getUpdateTime()));
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                sortDescription.setText(Html.fromHtml(createStatus(characterEntity), Html.FROM_HTML_MODE_LEGACY));
+                sortDescription.setText(Html.fromHtml(createStatusText(characterEntity), Html.FROM_HTML_MODE_LEGACY));
             } else {
-                sortDescription.setText(Html.fromHtml(createStatus(characterEntity)));
+                sortDescription.setText(Html.fromHtml(createStatusText(characterEntity)));
             }
         }
 
-        private String createStatus(CharacterEntity characterEntity) {
+        private String createStatusText(CharacterEntity characterEntity) {
+            final CostCalculator costCalculator = new CostCalculator(characterEntity.getCharacterPlayer());
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(characterEntity.getCharacterPlayer().getFaction().getName());
             stringBuilder.append(" (");
@@ -152,31 +155,21 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             stringBuilder.append(")");
             stringBuilder.append("<br>");
             //Status label.
-            stringBuilder.append("<b>").append(itemView.getContext().getString(R.string.character_progression_status)).append("</b>");
+            stringBuilder.append(itemView.getContext().getString(R.string.character_progression_status));
             stringBuilder.append(" ");
-            stringBuilder.append(itemView.getContext().getString(translateStatus(new CostCalculator(characterEntity.getCharacterPlayer()).getStatus())));
+            stringBuilder.append("<font color=\"").append(CharacterStatusHandler.getStatusColor(cardView.getContext(), costCalculator.getStatus())).append("\">");
+            stringBuilder.append("<b>").append(itemView.getContext().getString(CharacterStatusHandler.translateStatus(costCalculator.getStatus()))).append("</b>");
+            stringBuilder.append("</font>");
+            stringBuilder.append("<br>");
+            //Threat
+            ThreatLevelHandler threatLevelHandler = new ThreatLevelHandler(characterEntity.getCharacterPlayer());
+            stringBuilder.append(itemView.getContext().getString(R.string.character_threat));
+            stringBuilder.append(" ");
+            stringBuilder.append("<font color=\"").append(threatLevelHandler.getColor(cardView.getContext())).append("\">");
+            stringBuilder.append("<b>").append(threatLevelHandler.getThreatLevel()).append("</b>");
             return stringBuilder.toString();
         }
 
-        private int translateStatus(CharacterProgressionStatus status) {
-            switch (status) {
-                case DRAFT:
-                    return R.string.character_status_draft;
-                case NOT_STARTED:
-                    return R.string.character_status_not_started;
-                case IN_PROGRESS:
-                    return R.string.character_status_in_progress;
-                case FINISHED:
-                    return R.string.character_status_finished;
-                case EXTENDED:
-                    return R.string.character_status_extended;
-                case EQUIPPED:
-                    return R.string.character_status_equipped;
-                case UNDEFINED:
-                    return R.string.character_status_undefined;
-            }
-            return R.string.character_status_undefined;
-        }
 
         public void cardClick(View view) {
             // Below line is just like a safety check, because sometimes holder could be null,
