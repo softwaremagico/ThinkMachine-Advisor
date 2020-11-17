@@ -37,4 +37,11 @@
     <string name="character_delete">Borrar</string>
     <string name="character_copy">Duplicar</string>
     <string name="character_progression_status">Estado:</string>
+    <string name="character_status_in_progress">En progreso</string>
+    <string name="character_status_undefined">Sin definir</string>
+    <string name="character_status_not_started">No empezado</string>
+    <string name="character_status_draft">Boceto</string>
+    <string name="character_status_equipped">Equipado</string>
+    <string name="character_status_extended">Extendido</string>
+    <string name="character_status_finished">Finalizado</string>
 </resources>

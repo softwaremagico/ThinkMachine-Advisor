@@ -30,6 +30,7 @@ import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.core.DateUtils;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
+import com.softwaremagico.tm.character.creation.CharacterProgressionStatus;
 import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.txt.CharacterSheet;
@@ -152,8 +153,29 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             stringBuilder.append("<br>");
             //Status label.
             stringBuilder.append("<b>").append(itemView.getContext().getString(R.string.character_progression_status)).append("</b>");
-            stringBuilder.append(CharacterManager.getCostCalculator().getStatus(CharacterManager.getSelectedCharacter()));
+            stringBuilder.append(" ");
+            stringBuilder.append(itemView.getContext().getString(translateStatus(new CostCalculator(characterEntity.getCharacterPlayer()).getStatus())));
             return stringBuilder.toString();
+        }
+
+        private int translateStatus(CharacterProgressionStatus status) {
+            switch (status) {
+                case DRAFT:
+                    return R.string.character_status_draft;
+                case NOT_STARTED:
+                    return R.string.character_status_not_started;
+                case IN_PROGRESS:
+                    return R.string.character_status_in_progress;
+                case FINISHED:
+                    return R.string.character_status_finished;
+                case EXTENDED:
+                    return R.string.character_status_extended;
+                case EQUIPPED:
+                    return R.string.character_status_equipped;
+                case UNDEFINED:
+                    return R.string.character_status_undefined;
+            }
+            return R.string.character_status_undefined;
         }
 
         public void cardClick(View view) {
