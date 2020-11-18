@@ -36,6 +36,7 @@ import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
 import com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer;
 import com.softwaremagico.tm.file.modules.ModuleManager;
+import com.softwaremagico.tm.language.Translator;
 import com.softwaremagico.tm.log.MachineLog;
 
 import java.util.Locale;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
+        Translator.setLanguage(Locale.getDefault().getLanguage());
         //Preload all data in a seconday thread.
         new Thread(() -> {
             try {
