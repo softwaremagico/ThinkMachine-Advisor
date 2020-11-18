@@ -147,7 +147,9 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             }
             if (characterEntity.getCharacterPlayer() != null) {
                 ImageView factionImageView = cardView.findViewById(R.id.image_view_faction);
-                factionImageView.setImageResource(FactionLogoSelection.getLogo(characterEntity.getCharacterPlayer().getFaction()));
+                factionImageView.setMaxWidth(175);
+                factionImageView.setMaxHeight(175);
+                factionImageView.setImageResource(FactionLogoSelection.getLogo(cardView.getContext(), characterEntity.getCharacterPlayer().getFaction()));
             }
         }
 
