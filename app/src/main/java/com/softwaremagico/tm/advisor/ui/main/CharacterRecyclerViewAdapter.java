@@ -12,6 +12,7 @@
 
 package com.softwaremagico.tm.advisor.ui.main;
 
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,6 +144,10 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                 sortDescription.setText(Html.fromHtml(createStatusText(characterEntity), Html.FROM_HTML_MODE_LEGACY));
             } else {
                 sortDescription.setText(Html.fromHtml(createStatusText(characterEntity)));
+            }
+            if (characterEntity.getCharacterPlayer() != null) {
+                ImageView factionImageView = cardView.findViewById(R.id.image_view_faction);
+                factionImageView.setImageResource(FactionLogoSelection.getLogo(characterEntity.getCharacterPlayer().getFaction()));
             }
         }
 
