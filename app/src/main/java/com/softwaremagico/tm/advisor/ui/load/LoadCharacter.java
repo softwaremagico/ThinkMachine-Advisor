@@ -38,9 +38,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class LoadCharacter extends DialogFragment {
-    private RecyclerView mRecyclerView;
-    private CharacterRecyclerViewAdapter mAdapter;
-    private static final String LOG_TAG = "CardViewActivity";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -50,12 +47,12 @@ public class LoadCharacter extends DialogFragment {
         final View rootView = inflater.inflate(R.layout.character_loader, container, false);
 
         //RECYCLER
-        mRecyclerView = rootView.findViewById(R.id.character_recycler_loader);
+        RecyclerView mRecyclerView = rootView.findViewById(R.id.character_recycler_loader);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
         //ADAPTER
-        mAdapter = new CharacterRecyclerViewAdapter(getDataSet());
+        CharacterRecyclerViewAdapter mAdapter = new CharacterRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.addClosePopUpListener(() -> dismiss());
 

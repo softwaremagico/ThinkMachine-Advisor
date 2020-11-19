@@ -16,7 +16,11 @@ import androidx.room.TypeConverter;
 
 import java.sql.Timestamp;
 
-public class TimestampConverter {
+public final class TimestampConverter {
+
+    private TimestampConverter() {
+
+    }
 
     @TypeConverter
     public static Timestamp toDate(Long timestamp) {

@@ -39,7 +39,7 @@ public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_character_info, R.string.tab_character_characteristics, R.string.tab_character_skills, R.string.tab_character_traits, R.string.tab_character_equipment};
     private final Context mContext;
-    private SparseArray<Fragment> fragments = new SparseArray<>();
+    private final SparseArray<Fragment> fragments = new SparseArray<>();
 
     CharacterSectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);

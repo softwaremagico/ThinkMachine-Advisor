@@ -44,7 +44,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
     private final List<CharacterEntity> dataSet;
     private int selectedPosition = RecyclerView.NO_POSITION;
-    private Map<CharacterEntity, String> charactersDescriptions;
+    private final Map<CharacterEntity, String> charactersDescriptions;
     private ClosePopUpListener closePopUpListener;
 
     public interface ClosePopUpListener {
@@ -90,13 +90,13 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
     class CharacterEntityViewHolder extends RecyclerView.ViewHolder {
         private static final int DURATION = 250;
 
-        private ImageView imageViewExpand;
-        private ViewGroup detailLayout;
+        private final ImageView imageViewExpand;
+        private final ViewGroup detailLayout;
         private CharacterEntity characterEntity;
-        private View cardView;
-        private Toolbar characterTitle;
+        private final View cardView;
+        private final Toolbar characterTitle;
         private TextView completeDescription;
-        private TextView sortDescription;
+        private final TextView sortDescription;
 
         public CharacterEntityViewHolder(View cardView) {
             super(cardView);
@@ -127,6 +127,8 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                         Snackbar
                                 .make(cardView, "Delete", Snackbar.LENGTH_SHORT).show();
                         break;
+                    default:
+                        break;
                 }
                 return true;
             });
@@ -151,25 +153,16 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
         private String createStatusText(CharacterEntity characterEntity) {
             final CostCalculator costCalculator = new CostCalculator(characterEntity.getCharacterPlayer());
-            final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(characterEntity.getCharacterPlayer().getFaction().getName());
-            stringBuilder.append(" (");
-            stringBuilder.append(characterEntity.getCharacterPlayer().getRace().getName());
-            stringBuilder.append(")");
-            stringBuilder.append("<br>");
+            final StringBuilder stringBuilder = new StringBuilder(100);
+            stringBuilder.append(characterEntity.getCharacterPlayer().getFaction().getName()).append(" (")
+                    .append(characterEntity.getCharacterPlayer().getRace().getName()).append(")<br>");
             //Status label.
-            stringBuilder.append(itemView.getContext().getString(R.string.character_progression_status));
-            stringBuilder.append(" ");
-            stringBuilder.append("<font color=\"").append(CharacterStatusHandler.getStatusColor(cardView.getContext(), costCalculator.getStatus())).append("\">");
-            stringBuilder.append("<b>").append(itemView.getContext().getString(CharacterStatusHandler.translateStatus(costCalculator.getStatus()))).append("</b>");
-            stringBuilder.append("</font>");
-            stringBuilder.append("<br>");
+            stringBuilder.append(itemView.getContext().getString(R.string.character_progression_status)).append(" <font color=\"").append(CharacterStatusHandler.getStatusColor(cardView.getContext(), costCalculator.getStatus()))
+                    .append("\"><b>").append(itemView.getContext().getString(CharacterStatusHandler.translateStatus(costCalculator.getStatus()))).append("</b></font><br>");
             //Threat
             final ThreatLevelHandler threatLevelHandler = new ThreatLevelHandler(characterEntity.getThreat());
-            stringBuilder.append(itemView.getContext().getString(R.string.character_threat));
-            stringBuilder.append(" ");
-            stringBuilder.append("<font color=\"").append(threatLevelHandler.getColor(cardView.getContext())).append("\">");
-            stringBuilder.append("<b>").append(threatLevelHandler.getThreatLevel()).append("</b>");
+            stringBuilder.append(itemView.getContext().getString(R.string.character_threat)).append(" <font color=\"").append(threatLevelHandler.getColor(cardView.getContext())).append("\"><b>")
+                    .append(threatLevelHandler.getThreatLevel()).append("</b>");
             return stringBuilder.toString();
         }
 

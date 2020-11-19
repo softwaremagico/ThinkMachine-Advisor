@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class CharacteristicsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private Map<CharacteristicName, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private final Map<CharacteristicName, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
 
     public static CharacteristicsFragment newInstance(int index) {
         final CharacteristicsFragment fragment = new CharacteristicsFragment();
@@ -76,7 +76,7 @@ public class CharacteristicsFragment extends CustomFragment {
                 continue;
             }
 
-            addSection(ThinkMachineTranslator.getTranslatedText(type.name().toLowerCase() + "Characteristics"), linearLayout);
+            addSection(ThinkMachineTranslator.getTranslatedText(type.name().toLowerCase(Locale.getDefault()) + "Characteristics"), linearLayout);
             for (final CharacteristicDefinition characteristicDefinition : CharacteristicsDefinitionFactory.getInstance().getAll(type, Locale.getDefault().getLanguage(),
                     ModuleManager.DEFAULT_MODULE)) {
                 createCharacteristicsEditText(root, linearLayout, characteristicDefinition);

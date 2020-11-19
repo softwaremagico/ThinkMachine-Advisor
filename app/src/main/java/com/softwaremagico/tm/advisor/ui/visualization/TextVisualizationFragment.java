@@ -78,7 +78,7 @@ public class TextVisualizationFragment extends Fragment {
                 ": " + CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() : ""));
         final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
         shareIntent.putExtra(Intent.EXTRA_TEXT, TextVariablesManager.replace(getString(R.string.share_body) + "\n\n" + characterSheet.toString()));
-        final Intent chooser = Intent.createChooser(shareIntent, "Share File");
+        //final Intent chooser = Intent.createChooser(shareIntent, "Share File");
         startActivity(shareIntent);
     }
 }

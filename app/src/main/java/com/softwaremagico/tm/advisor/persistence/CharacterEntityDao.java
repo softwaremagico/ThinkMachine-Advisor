@@ -27,7 +27,7 @@ public abstract class CharacterEntityDao extends BaseEntityDao<CharacterEntity> 
     public abstract List<CharacterEntity> getAll();
 
     @Query("SELECT * FROM " + CharacterEntity.CHARACTER_PLAYER_TABLE + " WHERE id IN (:ids)")
-    public abstract List<CharacterEntity> loadAllByIds(long[] ids);
+    public abstract List<CharacterEntity> loadAllByIds(long... ids);
 
     @Query("SELECT * FROM " + CharacterEntity.CHARACTER_PLAYER_TABLE + " WHERE id=:id")
     public abstract CharacterEntity get(long id);

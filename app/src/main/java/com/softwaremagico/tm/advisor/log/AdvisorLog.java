@@ -15,11 +15,12 @@ package com.softwaremagico.tm.advisor.log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
-public class AdvisorLog {
+public final class AdvisorLog {
 
     private static final Logger logger = LoggerFactory.getLogger(AdvisorLog.class);
 
@@ -114,8 +115,20 @@ public class AdvisorLog {
     private static String getStackTrace(Throwable throwable) {
         final Writer writer = new StringWriter();
         final PrintWriter printWriter = new PrintWriter(writer);
-        throwable.printStackTrace(printWriter);
-        return writer.toString();
+        try {
+            throwable.printStackTrace(printWriter);
+            try {
+                return writer.toString();
+            } finally {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    AdvisorLog.errorMessage(AdvisorLog.class.getName(), e);
+                }
+            }
+        } finally {
+            printWriter.close();
+        }
     }
 
     public static boolean isDebugEnabled() {

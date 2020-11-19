@@ -14,8 +14,12 @@ package com.softwaremagico.tm.advisor.ui.translation;
 
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 
-public class TextVariablesManager {
+public final class TextVariablesManager {
     private static final String CHARACTER_NAME = "${CHARACTER_NAME}";
+
+    private TextVariablesManager() {
+
+    }
 
     public static String replace(String input) {
         return input.replace(CHARACTER_NAME, CharacterManager.getSelectedCharacter().getCompleteNameRepresentation());

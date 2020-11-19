@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     InvalidXmlElementException e) {
                 AdvisorLog.errorMessage(this.getClass().getName(), e);
             }
-        }).run();
+        }).start();
 
         super.onCreate(savedInstanceState);
 
@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings_save:
                 saveCurrentCharacter(parentLayout);
                 return true;
+            default:
+                return super.onOptionsItemSelected(menuItem);
         }
-        return super.onOptionsItemSelected(menuItem);
     }
 
     private void saveCurrentCharacter(View parentLayout) {

@@ -21,7 +21,11 @@ import com.softwaremagico.tm.advisor.log.AdvisorLog;
 
 import java.lang.reflect.Method;
 
-public class ExpandAndCollapseViewUtil {
+public final class ExpandAndCollapseViewUtil {
+
+    private ExpandAndCollapseViewUtil() {
+
+    }
 
     public static void expand(final ViewGroup viewGroup, int duration) {
         slide(viewGroup, duration, true);

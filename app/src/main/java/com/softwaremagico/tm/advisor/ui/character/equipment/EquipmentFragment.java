@@ -49,7 +49,6 @@ import java.util.Map;
 
 public class EquipmentFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private EquipmentViewModel mViewModel;
 
     IncrementalElementsLayout weaponsLayout;
@@ -128,18 +127,18 @@ public class EquipmentFragment extends CustomFragment {
                     shields.add(spinner.getSelection());
                 }
             }
-            if (!shields.isEmpty()) {
+            if (shields.isEmpty()) {
+                try {
+                    CharacterManager.getSelectedCharacter().setShield(null);
+                } catch (InvalidShieldException e) {
+                    AdvisorLog.errorMessage(this.getClass().getName(), e);
+                }
+            } else {
                 try {
                     CharacterManager.getSelectedCharacter().setShield(shields.get(0));
                 } catch (InvalidShieldException e) {
                     Snackbar
                             .make(this, R.string.message_invalid_shield_armour_combination, Snackbar.LENGTH_SHORT).show();
-                }
-            } else {
-                try {
-                    CharacterManager.getSelectedCharacter().setShield(null);
-                } catch (InvalidShieldException e) {
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
             }
         }
@@ -177,19 +176,19 @@ public class EquipmentFragment extends CustomFragment {
                     armours.add(spinner.getSelection());
                 }
             }
-            if (!armours.isEmpty()) {
+            if (armours.isEmpty()) {
+                try {
+                    CharacterManager.getSelectedCharacter().setArmour(null);
+                } catch (InvalidArmourException e) {
+                    AdvisorLog.errorMessage(this.getClass().getName(), e);
+                }
+            } else {
                 try {
                     CharacterManager.getSelectedCharacter().setArmour(armours.get(0));
                 } catch (InvalidArmourException e) {
                     final Snackbar snackbar = Snackbar
                             .make(this, R.string.message_invalid_shield_armour_combination, Snackbar.LENGTH_SHORT);
                     snackbar.show();
-                }
-            } else {
-                try {
-                    CharacterManager.getSelectedCharacter().setArmour(null);
-                } catch (InvalidArmourException e) {
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
             }
         }

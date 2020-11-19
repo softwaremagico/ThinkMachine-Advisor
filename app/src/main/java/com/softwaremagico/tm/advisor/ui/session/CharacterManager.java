@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-public class CharacterManager {
+public final class CharacterManager {
     private static final List<CharacterPlayer> characters = new ArrayList<>();
     private static CharacterPlayer selectedCharacter;
     private static CostCalculator costCalculator;
@@ -30,6 +30,10 @@ public class CharacterManager {
 
     public interface CharacterSelectedListener {
         void selected(CharacterPlayer characterPlayer);
+    }
+
+    private CharacterManager() {
+
     }
 
     private static void launchSelectedCharacterListeners(CharacterPlayer characterPlayer) {

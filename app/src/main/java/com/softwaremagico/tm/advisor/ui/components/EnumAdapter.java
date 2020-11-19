@@ -25,9 +25,10 @@ import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 
 import java.util.List;
+import java.util.Locale;
 
 public class EnumAdapter<T extends Enum> extends ArrayAdapter<T> {
-    private List<T> elements;
+    private final List<T> elements;
 
     public EnumAdapter(@NonNull Context context, int resource, @NonNull List<T> objects) {
         super(context, resource, objects);
@@ -45,7 +46,7 @@ public class EnumAdapter<T extends Enum> extends ArrayAdapter<T> {
 
         if (element != null) {
             final TextView name = listItem.findViewById(R.id.selected_item);
-            name.setText(ThinkMachineTranslator.getTranslatedText(element.name().toLowerCase()));
+            name.setText(ThinkMachineTranslator.getTranslatedText(element.name().toLowerCase(Locale.getDefault())));
         }
 
         return listItem;
@@ -66,7 +67,7 @@ public class EnumAdapter<T extends Enum> extends ArrayAdapter<T> {
 
         if (element != null) {
             final TextView elementName = listItem.findViewById(R.id.selected_item);
-            elementName.setText(ThinkMachineTranslator.getTranslatedText(element.name().toLowerCase()));
+            elementName.setText(ThinkMachineTranslator.getTranslatedText(element.name().toLowerCase(Locale.getDefault())));
         }
 
         return listItem;

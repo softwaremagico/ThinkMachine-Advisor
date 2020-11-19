@@ -39,7 +39,7 @@ import java.util.Map;
 
 public class SkillsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private final Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
 
     public static SkillsFragment newInstance(int index) {
         final SkillsFragment fragment = new SkillsFragment();

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CharacterHandler {
-    private Map<CharacterPlayer, CharacterEntity> entities = new HashMap<>();
+    private final Map<CharacterPlayer, CharacterEntity> entities = new HashMap<>();
 
     private static volatile CharacterHandler instance;
 
@@ -37,11 +37,11 @@ public class CharacterHandler {
     }
 
     public void save(Context context, CharacterPlayer characterPlayer) {
-        if (entities.get(characterPlayer) != null) {
+        if (entities.get(characterPlayer) == null) {
+            AppDatabase.getInstance(context).getCharacterEntityDao().persist(new CharacterEntity(CharacterManager.getSelectedCharacter()));
+        } else {
             entities.get(characterPlayer).setCharacterPlayer(characterPlayer);
             AppDatabase.getInstance(context).getCharacterEntityDao().update(entities.get(characterPlayer));
-        } else {
-            AppDatabase.getInstance(context).getCharacterEntityDao().persist(new CharacterEntity(CharacterManager.getSelectedCharacter()));
         }
     }
 

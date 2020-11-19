@@ -52,7 +52,6 @@ public abstract class PdfVisualizationFragment extends Fragment {
         final View root = getFragmentView(inflater, container);
 
         final PDFView pdfViewer = root.findViewById(R.id.pdf_viewer);
-        final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
         pdfViewer.fromBytes(generatePdf()).load();
 
         final FloatingActionButton fab = root.findViewById(R.id.share);
@@ -107,11 +106,8 @@ public abstract class PdfVisualizationFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == FILE_IDENTIFICATOR) {
-            if (characterSheetAsPdf != null) {
-                characterSheetAsPdf.delete();
-            }
+        if (requestCode == FILE_IDENTIFICATOR && characterSheetAsPdf != null) {
+            characterSheetAsPdf.delete();
         }
     }
-
 }

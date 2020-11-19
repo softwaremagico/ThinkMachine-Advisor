@@ -18,7 +18,11 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class DateUtils {
+public final class DateUtils {
+
+    private DateUtils() {
+
+    }
 
     public static String formatTimestamp(Timestamp timestamp) {
         final Calendar cal = Calendar.getInstance(Locale.ENGLISH);

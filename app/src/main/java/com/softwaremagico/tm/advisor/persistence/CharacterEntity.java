@@ -53,7 +53,7 @@ public class CharacterEntity extends BaseEntity {
         setCharacterPlayer(characterPlayer);
     }
 
-    public void setCharacterPlayer(CharacterPlayer characterPlayer) {
+    public final void setCharacterPlayer(CharacterPlayer characterPlayer) {
         updateTime = new Timestamp(new Date().getTime());
         setJson(CharacterJsonManager.toJson(characterPlayer));
         setName(characterPlayer.getCompleteNameRepresentation());

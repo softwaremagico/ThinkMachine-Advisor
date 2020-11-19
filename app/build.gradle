@@ -12,6 +12,7 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
+apply plugin: 'pmd'
 
 android {
     signingConfigs {
@@ -110,6 +111,20 @@ task checkstyle(type: Checkstyle) {
     exclude '**/gen/**'
     classpath = files()
     ignoreFailures = false
+}
+
+task pmd(type: Pmd) {
+    ruleSetFiles = files("pmd-rules.xml")
+    ignoreFailures = false
+    ruleSets = []
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        html.destination = file("$project.buildDir/outputs/pmd/pmd.html")
+    }
 }
 
 

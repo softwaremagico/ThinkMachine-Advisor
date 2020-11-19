@@ -100,13 +100,13 @@ public class CharacterInfoFragment extends CustomFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-
+                //Nothing
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
-
+                //Nothing
             }
 
             @Override
@@ -122,13 +122,13 @@ public class CharacterInfoFragment extends CustomFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-
+                //Nothing
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
-
+                //Nothing
             }
 
             @Override
@@ -149,6 +149,7 @@ public class CharacterInfoFragment extends CustomFragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
+                //Nothing
             }
         });
     }
@@ -160,13 +161,13 @@ public class CharacterInfoFragment extends CustomFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-
+                //Nothing
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
-
+                //Nothing
             }
 
             @Override
@@ -228,7 +229,7 @@ public class CharacterInfoFragment extends CustomFragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-
+                //Nothing
             }
         });
     }
@@ -248,7 +249,7 @@ public class CharacterInfoFragment extends CustomFragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-
+                //Nothing
             }
         });
     }
