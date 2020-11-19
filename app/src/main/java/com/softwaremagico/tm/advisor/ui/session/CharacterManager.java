@@ -69,9 +69,7 @@ public final class CharacterManager {
     public static void addNewCharacter() {
         final CharacterPlayer characterPlayer = new CharacterPlayer(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
         characters.add(characterPlayer);
-        selectedCharacter = characterPlayer;
-        costCalculator = new CostCalculator(characterPlayer);
-        //launchSelectedCharacterListeners(characterPlayer);
+        setSelectedCharacter(characterPlayer);
     }
 
 }

@@ -51,7 +51,7 @@ public class ElementSpinner extends Component {
     }
 
     public <T extends Element<?>> void setAdapter(ElementAdapter<T> adapter) {
-        final  Spinner selector = findViewById(R.id.spinner);
+        final Spinner selector = findViewById(R.id.spinner);
         selector.setAdapter(adapter);
     }
 
@@ -62,7 +62,11 @@ public class ElementSpinner extends Component {
 
     public <T extends Element<?>> void setSelection(T selected) {
         final Spinner selector = findViewById(R.id.spinner);
-        selector.setSelection(((ElementAdapter<T>) selector.getAdapter()).indexOf(selected));
+        if (selected == null) {
+            selector.setSelection(0);
+        } else {
+            selector.setSelection(((ElementAdapter<T>) selector.getAdapter()).indexOf(selected));
+        }
     }
 
     public <T extends Element<?>> T getSelection() {

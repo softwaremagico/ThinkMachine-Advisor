@@ -24,6 +24,11 @@
         android:title="@string/settings_load"
         app:showAsAction="ifRoom" />
 
+    <item android:id="@+id/settings_new"
+        android:icon="@drawable/ic_character_full"
+        android:title="@string/settings_new"
+        app:showAsAction="ifRoom" />
+
     <item android:id="@+id/settings_import_file"
         android:icon="@drawable/ic_character_icon"
         android:title="@string/settings_import"

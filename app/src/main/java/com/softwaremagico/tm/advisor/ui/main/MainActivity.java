@@ -91,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings_save:
                 saveCurrentCharacter(parentLayout);
                 return true;
+            case R.id.settings_new:
+                newCharacter();
+                return true;
             default:
                 return super.onOptionsItemSelected(menuItem);
         }
@@ -113,7 +116,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void showDialog() {
+    private void newCharacter(){
+        CharacterManager.addNewCharacter();
+    }
+
+    private void showDialog() {
         final FragmentManager fragmentManager = getSupportFragmentManager();
         final LoadCharacter loadCharacter = new LoadCharacter();
 

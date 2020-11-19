@@ -79,12 +79,16 @@ public class CharacterInfoFragment extends CustomFragment {
         final TranslatedEditText surnameTextEditor = root.findViewById(R.id.character_surname);
         if (CharacterManager.getSelectedCharacter().getInfo().getSurname() != null) {
             surnameTextEditor.setText(character.getInfo().getSurname().getName());
+        } else {
+            surnameTextEditor.setText("");
         }
         final EnumSpinner genderSelector = root.findViewById(R.id.character_gender);
         genderSelector.setSelection(character.getInfo().getGender());
         final TranslatedEditText ageTextEditor = root.findViewById(R.id.character_age);
         if (CharacterManager.getSelectedCharacter().getInfo().getAge() != null) {
             ageTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getAge().toString());
+        } else {
+            ageTextEditor.setText("");
         }
         final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
