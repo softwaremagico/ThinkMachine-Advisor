@@ -18,10 +18,13 @@ import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class CharacterHandler {
-    private final Map<CharacterPlayer, CharacterEntity> entities = new HashMap<>();
+    private Map<CharacterPlayer, CharacterEntity> entities = new HashMap<>();
 
     private static volatile CharacterHandler instance;
 
@@ -38,11 +41,19 @@ public class CharacterHandler {
 
     public void save(Context context, CharacterPlayer characterPlayer) {
         if (entities.get(characterPlayer) == null) {
-            AppDatabase.getInstance(context).getCharacterEntityDao().persist(new CharacterEntity(CharacterManager.getSelectedCharacter()));
+            final CharacterEntity characterEntity = new CharacterEntity(CharacterManager.getSelectedCharacter());
+            AppDatabase.getInstance(context).getCharacterEntityDao().persist(characterEntity);
+            entities.put(characterPlayer, characterEntity);
         } else {
             entities.get(characterPlayer).setCharacterPlayer(characterPlayer);
             AppDatabase.getInstance(context).getCharacterEntityDao().update(entities.get(characterPlayer));
         }
+    }
+
+    public List<CharacterEntity> load(Context context) {
+        List<CharacterEntity> loadedCharacters = AppDatabase.getInstance(context).getCharacterEntityDao().getAll();
+        entities = loadedCharacters.stream().collect(Collectors.toMap(CharacterEntity::getCharacterPlayer, c -> c));
+        return loadedCharacters;
     }
 
 }

@@ -20,19 +20,19 @@ public class ThreatLevelHandler {
     }
 
     public String getThreatLevel() {
-        if (threatLevel < 20) {
+        if (threatLevel < 40) {
             return "☮☮☮☮";
-        } else if (threatLevel < 30) {
+        } else if (threatLevel < 60) {
             return "☮☮☮";
-        } else if (threatLevel < 50) {
+        } else if (threatLevel < 80) {
             return "☮☮";
-        } else if (threatLevel < 75) {
-            return "☮";
         } else if (threatLevel < 100) {
+            return "☮";
+        } else if (threatLevel < 120) {
             return "☠";
-        } else if (threatLevel < 125) {
-            return "☠☠";
         } else if (threatLevel < 150) {
+            return "☠☠";
+        } else if (threatLevel < 175) {
             return "☠☠☠";
         } else if (threatLevel < 200) {
             return "☠☠☠☠";
@@ -43,9 +43,9 @@ public class ThreatLevelHandler {
     }
 
     public String getColor(Context context) {
-        if (threatLevel < 75) {
+        if (threatLevel < 100) {
             return String.format(HEXADECIMAL_FORMAT, ContextCompat.getColor(context, R.color.threatPeace) & 0xffffff);
-        } else if (threatLevel < 100) {
+        } else if (threatLevel < 125) {
             return String.format(HEXADECIMAL_FORMAT, ContextCompat.getColor(context, R.color.threatLow) & 0xffffff);
         } else if (threatLevel < 150) {
             return String.format(HEXADECIMAL_FORMAT, ContextCompat.getColor(context, R.color.threatMedium) & 0xffffff);

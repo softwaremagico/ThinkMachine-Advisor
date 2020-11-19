@@ -51,7 +51,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         void dismiss();
     }
 
-    public CharacterRecyclerViewAdapter(ArrayList<CharacterEntity> data) {
+    public CharacterRecyclerViewAdapter(List<CharacterEntity> data) {
         this.dataSet = data;
         charactersDescriptions = new HashMap<>();
     }

@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
+import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.RandomizeCharacter;
 import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
@@ -35,6 +36,7 @@ import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedExcep
 import com.softwaremagico.tm.random.selectors.DifficultLevelPreferences;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class LoadCharacter extends DialogFragment {
@@ -59,25 +61,7 @@ public class LoadCharacter extends DialogFragment {
         return rootView;
     }
 
-    private ArrayList<CharacterEntity> getDataSet() {
-        final ArrayList results = new ArrayList<CharacterEntity>();
-        for (int index = 0; index < 3; index++) {
-            try {
-                final CharacterPlayer characterPlayer = new CharacterPlayer(Locale.getDefault().getLanguage(), PathManager.DEFAULT_MODULE_FOLDER);
-                final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(characterPlayer, 0, DifficultLevelPreferences.HARD);
-                randomizeCharacter.createCharacter();
-                final CharacterEntity characterEntity = new CharacterEntity(characterPlayer);
-                results.add(index, characterEntity);
-            } catch (DuplicatedPreferenceException e) {
-                e.printStackTrace();
-            } catch (TooManyBlessingsException e) {
-                e.printStackTrace();
-            } catch (InvalidXmlElementException e) {
-                e.printStackTrace();
-            } catch (InvalidRandomElementSelectedException e) {
-                e.printStackTrace();
-            }
-        }
-        return results;
+    private List<CharacterEntity> getDataSet() {
+        return CharacterHandler.getInstance().load(getContext());
     }
 }
