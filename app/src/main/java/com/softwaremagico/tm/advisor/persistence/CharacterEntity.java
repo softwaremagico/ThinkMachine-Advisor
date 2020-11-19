@@ -74,43 +74,43 @@ public class CharacterEntity extends BaseEntity {
         }
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
-    public String getRace() {
+    public final String getRace() {
         return race;
     }
 
-    public void setRace(String race) {
+    public final void setRace(String race) {
         this.race = race;
     }
 
-    public String getFaction() {
+    public final String getFaction() {
         return faction;
     }
 
-    public void setFaction(String faction) {
+    public final void setFaction(String faction) {
         this.faction = faction;
     }
 
-    public String getJson() {
+    public final String getJson() {
         return json;
     }
 
-    public void setJson(String json) {
+    public final void setJson(String json) {
         this.json = json;
     }
 
-    public int getThreat() {
+    public final int getThreat() {
         return threat;
     }
 
-    public void setThreat(int threat) {
+    public final void setThreat(int threat) {
         this.threat = threat;
     }
 }

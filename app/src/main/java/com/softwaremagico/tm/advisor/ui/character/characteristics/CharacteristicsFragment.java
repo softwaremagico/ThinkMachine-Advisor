@@ -79,7 +79,7 @@ public class CharacteristicsFragment extends CustomFragment {
             addSection(ThinkMachineTranslator.getTranslatedText(type.name().toLowerCase(Locale.getDefault()) + "Characteristics"), linearLayout);
             for (final CharacteristicDefinition characteristicDefinition : CharacteristicsDefinitionFactory.getInstance().getAll(type, Locale.getDefault().getLanguage(),
                     ModuleManager.DEFAULT_MODULE)) {
-                createCharacteristicsEditText(root, linearLayout, characteristicDefinition);
+                createCharacteristicsEditText(linearLayout, characteristicDefinition);
             }
         }
 
@@ -107,7 +107,7 @@ public class CharacteristicsFragment extends CustomFragment {
         }
     }
 
-    private void createCharacteristicsEditText(View root, LinearLayout linearLayout, CharacteristicDefinition characteristicDefinition) {
+    private void createCharacteristicsEditText(LinearLayout linearLayout, CharacteristicDefinition characteristicDefinition) {
         final TranslatedNumberPicker characteristicsNumberPicker = new TranslatedNumberPicker(getContext(), null);
         translatedNumberPickers.put(characteristicDefinition.getCharacteristicName(), characteristicsNumberPicker);
         characteristicsNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText(characteristicDefinition.getId()));

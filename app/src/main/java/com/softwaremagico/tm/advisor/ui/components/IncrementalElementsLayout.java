@@ -58,7 +58,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         updateContent();
     }
 
-    private void updateContent() {
+    private final void updateContent() {
         if (!enabled) {
             return;
         }
@@ -114,7 +114,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         return elementSpinners;
     }
 
-    private void addElementSpinner(ElementSpinner spinner) {
+    private final void addElementSpinner(ElementSpinner spinner) {
         if (elementSpinners.size() >= maxElements) {
             return;
         }
@@ -142,13 +142,13 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         enabled = true;
     }
 
-    private void setElementSpinnerProperties(ElementSpinner spinner) {
+    private final void setElementSpinnerProperties(ElementSpinner spinner) {
         spinner.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
     }
 
-    public ElementSpinner createElementSpinner() {
+    public final ElementSpinner createElementSpinner() {
         final ElementSpinner blessingSelector = new ElementSpinner(getContext());
         blessingSelector.setAdapter(getElementAdapter());
         return blessingSelector;
