@@ -81,7 +81,7 @@ public class SkillsFragment extends CustomFragment {
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }
 
-        updateSkillsLimits(CharacterManager.getSelectedCharacter());
+        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateSkillsLimits(characterPlayer));
 
         return root;
     }

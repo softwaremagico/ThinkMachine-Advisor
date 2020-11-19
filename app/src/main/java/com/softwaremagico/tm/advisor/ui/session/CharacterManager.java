@@ -12,8 +12,11 @@
 
 package com.softwaremagico.tm.advisor.ui.session;
 
+import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.creation.CostCalculator;
+import com.softwaremagico.tm.character.races.InvalidRaceException;
+import com.softwaremagico.tm.character.races.Race;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 
 import java.util.ArrayList;
@@ -27,9 +30,19 @@ public final class CharacterManager {
     private static CharacterPlayer selectedCharacter;
     private static CostCalculator costCalculator;
     private static final Set<CharacterSelectedListener> characterSelectedListener = new HashSet<>();
+    private static final Set<CharacterUpdatedListener> characterUpdatedListener = new HashSet<>();
+    private static final Set<CharacterRaceUpdatedListener> characterRaceUpdatedListener = new HashSet<>();
 
     public interface CharacterSelectedListener {
         void selected(CharacterPlayer characterPlayer);
+    }
+
+    public interface CharacterUpdatedListener {
+        void updated(CharacterPlayer characterPlayer);
+    }
+
+    public interface CharacterRaceUpdatedListener {
+        void updated(CharacterPlayer characterPlayer);
     }
 
     private CharacterManager() {
@@ -42,15 +55,46 @@ public final class CharacterManager {
         }
     }
 
+    private static void launchCharacterUpdatedListeners(CharacterPlayer characterPlayer) {
+        for (final CharacterUpdatedListener listener : characterUpdatedListener) {
+            listener.updated(characterPlayer);
+        }
+    }
+
+    private static void launchCharacterRaceUpdatedListeners(CharacterPlayer characterPlayer) {
+        for (final CharacterRaceUpdatedListener listener : characterRaceUpdatedListener) {
+            listener.updated(characterPlayer);
+        }
+    }
+
     public static void addSelectedCharacterListener(CharacterSelectedListener listener) {
         characterSelectedListener.add(listener);
     }
+
+    public static void addCharacterUpdatedListener(CharacterUpdatedListener listener) {
+        characterUpdatedListener.add(listener);
+    }
+
+    public static void addCharacterRaceUpdatedListener(CharacterRaceUpdatedListener listener) {
+        characterRaceUpdatedListener.add(listener);
+    }
+
 
     public static CharacterPlayer getSelectedCharacter() {
         if (characters.isEmpty()) {
             addNewCharacter();
         }
         return selectedCharacter;
+    }
+
+    public static void setRace(Race race) {
+        try {
+            CharacterManager.getSelectedCharacter().setRace(race);
+            launchCharacterRaceUpdatedListeners(CharacterManager.getSelectedCharacter());
+            launchCharacterUpdatedListeners(CharacterManager.getSelectedCharacter());
+        } catch (InvalidRaceException e) {
+            AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
+        }
     }
 
     public static CostCalculator getCostCalculator() {

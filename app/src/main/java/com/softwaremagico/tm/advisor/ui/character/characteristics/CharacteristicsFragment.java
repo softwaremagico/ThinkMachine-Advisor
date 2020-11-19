@@ -83,7 +83,7 @@ public class CharacteristicsFragment extends CustomFragment {
             }
         }
 
-        updateCharacteristicsLimits(CharacterManager.getSelectedCharacter());
+        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateCharacteristicsLimits(characterPlayer));
 
         return root;
     }

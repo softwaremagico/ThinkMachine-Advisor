@@ -192,14 +192,10 @@ public class CharacterInfoFragment extends CustomFragment {
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                try {
-                    if (mViewModel.getAvailableRaces().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
-                        CharacterManager.getSelectedCharacter().setRace(null);
-                    } else {
-                        CharacterManager.getSelectedCharacter().setRace(mViewModel.getAvailableRaces().get(position));
-                    }
-                } catch (InvalidRaceException e) {
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
+                if (mViewModel.getAvailableRaces().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                    CharacterManager.setRace(null);
+                } else {
+                    CharacterManager.setRace(mViewModel.getAvailableRaces().get(position));
                 }
             }
 
@@ -233,7 +229,11 @@ public class CharacterInfoFragment extends CustomFragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                //Nothing
+                try {
+                    CharacterManager.getSelectedCharacter().setFaction(null);
+                } catch (InvalidFactionException e) {
+                    AdvisorLog.errorMessage(this.getClass().getName(), e);
+                }
             }
         });
     }
@@ -253,7 +253,7 @@ public class CharacterInfoFragment extends CustomFragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                //Nothing
+                CharacterManager.getSelectedCharacter().getInfo().setPlanet(null);
             }
         });
     }
