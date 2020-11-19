@@ -22,7 +22,7 @@ import androidx.annotation.Nullable;
 
 import com.itextpdf.text.DocumentException;
 import com.softwaremagico.tm.InvalidXmlElementException;
-import com.softwaremagico.tm.advisor.CharacterManager;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.pdf.complete.EmptyPdfBodyException;

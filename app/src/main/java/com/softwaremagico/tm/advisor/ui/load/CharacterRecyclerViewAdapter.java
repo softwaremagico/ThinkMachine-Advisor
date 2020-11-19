@@ -10,9 +10,8 @@
  *  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  */
 
-package com.softwaremagico.tm.advisor.ui.main;
+package com.softwaremagico.tm.advisor.ui.load;
 
-import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +26,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.softwaremagico.tm.advisor.CharacterManager;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.core.CharacterStatusHandler;
 import com.softwaremagico.tm.advisor.core.DateUtils;
-import com.softwaremagico.tm.advisor.core.ThreatLevelHandler;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
-import com.softwaremagico.tm.character.ThreatLevel;
 import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.txt.CharacterSheet;
@@ -169,7 +165,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             stringBuilder.append("</font>");
             stringBuilder.append("<br>");
             //Threat
-            ThreatLevelHandler threatLevelHandler = new ThreatLevelHandler(characterEntity.getCharacterPlayer());
+            ThreatLevelHandler threatLevelHandler = new ThreatLevelHandler(characterEntity.getThreat());
             stringBuilder.append(itemView.getContext().getString(R.string.character_threat));
             stringBuilder.append(" ");
             stringBuilder.append("<font color=\"").append(threatLevelHandler.getColor(cardView.getContext())).append("\">");

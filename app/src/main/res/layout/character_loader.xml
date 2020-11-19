@@ -14,7 +14,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.softwaremagico.tm.advisor.ui.main.LoadCharacter">
+    tools:context="com.softwaremagico.tm.advisor.ui.load.LoadCharacter">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/character_recycler_loader"

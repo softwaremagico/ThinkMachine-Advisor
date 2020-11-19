@@ -14,7 +14,7 @@ package com.softwaremagico.tm.advisor.persistence;
 
 import android.content.Context;
 
-import com.softwaremagico.tm.advisor.CharacterManager;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 
 import java.util.HashMap;

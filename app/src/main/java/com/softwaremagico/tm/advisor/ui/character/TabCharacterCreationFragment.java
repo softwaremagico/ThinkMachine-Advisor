@@ -21,10 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.softwaremagico.tm.advisor.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.ui.character.characteristics.CharacteristicsFragment;
-import com.softwaremagico.tm.advisor.ui.character.skills.SkillsFragment;
 
 public class TabCharacterCreationFragment extends Fragment {
 

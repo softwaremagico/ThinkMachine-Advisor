@@ -28,9 +28,9 @@ import androidx.fragment.app.Fragment;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.softwaremagico.tm.advisor.CharacterManager;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.TextVariablesManager;
+import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.pdf.complete.CharacterSheet;
 

@@ -15,7 +15,10 @@ package com.softwaremagico.tm.advisor.persistence;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
+import com.softwaremagico.tm.InvalidXmlElementException;
+import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.ThreatLevel;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.json.InvalidJsonException;
 
@@ -35,6 +38,9 @@ public class CharacterEntity extends BaseEntity {
     @ColumnInfo(name = "faction")
     public String faction;
 
+    @ColumnInfo(name = "threat")
+    public int threat;
+
     @ColumnInfo(name = "character_as_json")
     public String json;
 
@@ -53,6 +59,11 @@ public class CharacterEntity extends BaseEntity {
         setName(characterPlayer.getCompleteNameRepresentation());
         setRace(characterPlayer.getRace().getNameRepresentation());
         setFaction(characterPlayer.getFaction().getNameRepresentation());
+        try {
+            setThreat(ThreatLevel.getThreatLevel(characterPlayer));
+        } catch (InvalidXmlElementException e) {
+            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        }
     }
 
     public CharacterPlayer getCharacterPlayer() {
@@ -95,4 +106,11 @@ public class CharacterEntity extends BaseEntity {
         this.json = json;
     }
 
+    public int getThreat() {
+        return threat;
+    }
+
+    public void setThreat(int threat) {
+        this.threat = threat;
+    }
 }

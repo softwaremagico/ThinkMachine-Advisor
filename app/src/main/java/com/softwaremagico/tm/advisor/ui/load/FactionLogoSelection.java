@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.main;
+package com.softwaremagico.tm.advisor.ui.load;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.core;
+package com.softwaremagico.tm.advisor.ui.load;
 
 import android.content.Context;
 
@@ -12,19 +12,10 @@ import com.softwaremagico.tm.character.ThreatLevel;
 import com.softwaremagico.tm.character.creation.CharacterProgressionStatus;
 
 public class ThreatLevelHandler {
-    private final CharacterPlayer characterPlayer;
     private final int threatLevel;
 
-    public ThreatLevelHandler(CharacterPlayer characterPlayer) {
-        int threatLevel1;
-        this.characterPlayer = characterPlayer;
-        try {
-            threatLevel1 = ThreatLevel.getThreatLevel(characterPlayer);
-        } catch (InvalidXmlElementException e) {
-            threatLevel1 = 0;
-            AdvisorLog.errorMessage(ThreatLevelHandler.class.getName(), e);
-        }
-        threatLevel = threatLevel1;
+    public ThreatLevelHandler(int threatLevel) {
+        this.threatLevel = threatLevel;
     }
 
     public String getThreatLevel() {
