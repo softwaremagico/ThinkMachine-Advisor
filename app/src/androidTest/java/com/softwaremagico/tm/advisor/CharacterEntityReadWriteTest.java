@@ -42,7 +42,7 @@ public class CharacterEntityReadWriteTest {
 
     @Before
     public void createDb() {
-        Context context = ApplicationProvider.getApplicationContext();
+        final Context context = ApplicationProvider.getApplicationContext();
         appDatabase = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
         characterEntityDao = appDatabase.getCharacterEntityDao();
     }
@@ -60,12 +60,12 @@ public class CharacterEntityReadWriteTest {
 
         Assert.assertEquals(0, characterEntityDao.getRowCount());
 
-        CharacterEntity characterEntity =  new CharacterEntity(characterPlayer);
+        final CharacterEntity characterEntity =  new CharacterEntity(characterPlayer);
         Assert.assertNotNull(characterEntity.getJson());
-        long id = characterEntityDao.persist(characterEntity);
+        final long id = characterEntityDao.persist(characterEntity);
         Assert.assertEquals(1, id);
         Assert.assertEquals(1, characterEntityDao.getRowCount());
-        CharacterEntity storedCharacterEntity = characterEntityDao.get(id);
+        final CharacterEntity storedCharacterEntity = characterEntityDao.get(id);
         Assert.assertNotNull(storedCharacterEntity);
         Assert.assertEquals(storedCharacterEntity.getCreationTime(), characterEntity.getCreationTime());
         Assert.assertEquals(storedCharacterEntity.getJson(), characterEntity.getJson());

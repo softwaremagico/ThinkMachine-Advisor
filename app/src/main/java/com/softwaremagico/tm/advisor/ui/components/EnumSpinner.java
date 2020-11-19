@@ -35,26 +35,26 @@ public class EnumSpinner extends Component {
     }
 
     private void initComponents(AttributeSet attrs) {
-        TextView tagText = findViewById(R.id.translated_tag);
-        TypedArray attributes = getContext().obtainStyledAttributes(attrs,
+        final TextView tagText = findViewById(R.id.translated_tag);
+        final TypedArray attributes = getContext().obtainStyledAttributes(attrs,
                 R.styleable.translated_text, 0, 0);
-        String tag = attributes.getString(R.styleable.translated_text_translation);
+        final String tag = attributes.getString(R.styleable.translated_text_translation);
         tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
         tagText.setTextAppearance(R.style.CharacterInfo);
     }
 
     public <T extends Enum<?>> void setAdapter(EnumAdapter<T> adapter) {
-        Spinner selector = findViewById(R.id.spinner);
+        final Spinner selector = findViewById(R.id.spinner);
         selector.setAdapter(adapter);
     }
 
     public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener onItemSelectedListener) {
-        Spinner selector = findViewById(R.id.spinner);
+        final Spinner selector = findViewById(R.id.spinner);
         selector.setOnItemSelectedListener(onItemSelectedListener);
     }
 
     public <T extends Enum<?>> void setSelection(T selected) {
-        Spinner selector = findViewById(R.id.spinner);
+        final Spinner selector = findViewById(R.id.spinner);
         selector.setSelection(((EnumAdapter<T>) selector.getAdapter()).indexOf(selected));
     }
 

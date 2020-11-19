@@ -46,8 +46,8 @@ public class CharacterInfoFragment extends CustomFragment {
     private CharacterInfoViewModel mViewModel;
 
     public static CharacterInfoFragment newInstance(int index) {
-        CharacterInfoFragment fragment = new CharacterInfoFragment();
-        Bundle bundle = new Bundle();
+        final CharacterInfoFragment fragment = new CharacterInfoFragment();
+        final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
         return fragment;
@@ -56,7 +56,7 @@ public class CharacterInfoFragment extends CustomFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.character_info_fragment, container, false);
+        final View root = inflater.inflate(R.layout.character_info_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(CharacterInfoViewModel.class);
 
         createNameText(root);

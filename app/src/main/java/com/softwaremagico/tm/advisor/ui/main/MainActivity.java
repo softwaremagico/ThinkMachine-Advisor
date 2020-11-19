@@ -63,27 +63,27 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
 
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        final BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+        final AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_sheet)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+        final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        View parentLayout = findViewById(android.R.id.content);
+        final View parentLayout = findViewById(android.R.id.content);
         switch (menuItem.getItemId()) {
             case R.id.settings_load:
                 showDialog();
@@ -113,17 +113,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showDialog() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        LoadCharacter loadCharacter = new LoadCharacter();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final LoadCharacter loadCharacter = new LoadCharacter();
 
-        boolean isLargeLayout = true;
+        final boolean isLargeLayout = true;
 
         if (isLargeLayout) {
             // The device is using a large layout, so show the fragment as a dialog
             loadCharacter.show(fragmentManager, "dialog");
         } else {
             // The device is smaller, so show the fragment fullscreen
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            final FragmentTransaction transaction = fragmentManager.beginTransaction();
             // For a little polish, specify a transition animation
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             // To make it fullscreen, use the 'content' root view as the container
@@ -132,5 +132,4 @@ public class MainActivity extends AppCompatActivity {
                     .addToBackStack(null).commit();
         }
     }
-
 }

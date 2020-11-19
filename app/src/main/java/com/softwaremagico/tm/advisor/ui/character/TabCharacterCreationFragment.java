@@ -32,15 +32,15 @@ public class TabCharacterCreationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.character_creation_fragment, container, false);
-        CharacterSectionsPagerAdapter characterSectionsPagerAdapter = new CharacterSectionsPagerAdapter(getContext(), getChildFragmentManager());
-        ViewPager viewPager = view.findViewById(R.id.view_pager);
+        final View view = inflater.inflate(R.layout.character_creation_fragment, container, false);
+        final CharacterSectionsPagerAdapter characterSectionsPagerAdapter = new CharacterSectionsPagerAdapter(getContext(), getChildFragmentManager());
+        final ViewPager viewPager = view.findViewById(R.id.view_pager);
         viewPager.setAdapter(characterSectionsPagerAdapter);
 
         //Avoid refreshing of fragments. We will update them manually.
         viewPager.setOffscreenPageLimit(characterSectionsPagerAdapter.getCount());
 
-        TabLayout tabs = view.findViewById(R.id.tabs);
+        final TabLayout tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         return view;
     }

@@ -41,10 +41,10 @@ public class EnumAdapter<T extends Enum> extends ArrayAdapter<T> {
             listItem = LayoutInflater.from(getContext()).inflate(R.layout.element_list, parent, false);
         }
 
-        Enum element = elements.get(position);
+        final Enum element = elements.get(position);
 
         if (element != null) {
-            TextView name = listItem.findViewById(R.id.selected_item);
+            final TextView name = listItem.findViewById(R.id.selected_item);
             name.setText(ThinkMachineTranslator.getTranslatedText(element.name().toLowerCase()));
         }
 
@@ -62,10 +62,10 @@ public class EnumAdapter<T extends Enum> extends ArrayAdapter<T> {
             listItem = LayoutInflater.from(getContext()).inflate(R.layout.element_list, parent, false);
         }
 
-        Enum element = elements.get(position);
+        final Enum element = elements.get(position);
 
         if (element != null) {
-            TextView elementName = listItem.findViewById(R.id.selected_item);
+            final TextView elementName = listItem.findViewById(R.id.selected_item);
             elementName.setText(ThinkMachineTranslator.getTranslatedText(element.name().toLowerCase()));
         }
 
@@ -75,6 +75,5 @@ public class EnumAdapter<T extends Enum> extends ArrayAdapter<T> {
     public int indexOf(T element){
         return elements.indexOf(element);
     }
-
 
 }

@@ -42,7 +42,7 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
     private void addNullValue(Class<T> clazz) {
         try {
             //Create null instance.
-            T instance = clazz.newInstance();
+            final T instance = clazz.newInstance();
             insert(instance, 0);
             elements.add(0, instance);
         } catch (IllegalAccessException | InstantiationException e) {
@@ -57,10 +57,10 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
             listItem = LayoutInflater.from(getContext()).inflate(R.layout.element_list, parent, false);
         }
 
-        T element = elements.get(position);
+        final T element = elements.get(position);
 
         if (element != null) {
-            TextView name = listItem.findViewById(R.id.selected_item);
+            final TextView name = listItem.findViewById(R.id.selected_item);
             name.setText(getElementRepresentation(element));
         }
 
@@ -85,10 +85,10 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
             listItem = LayoutInflater.from(getContext()).inflate(R.layout.element_list, parent, false);
         }
 
-        T element = elements.get(position);
+        final T element = elements.get(position);
 
         if (element != null) {
-            TextView elementName = listItem.findViewById(R.id.selected_item);
+            final TextView elementName = listItem.findViewById(R.id.selected_item);
             elementName.setText(getElementRepresentation(element));
         }
 

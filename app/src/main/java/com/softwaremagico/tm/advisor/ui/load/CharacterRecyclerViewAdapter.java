@@ -142,7 +142,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                 sortDescription.setText(Html.fromHtml(createStatusText(characterEntity)));
             }
             if (characterEntity.getCharacterPlayer() != null) {
-                ImageView factionImageView = cardView.findViewById(R.id.image_view_faction);
+                final ImageView factionImageView = cardView.findViewById(R.id.image_view_faction);
                 factionImageView.setMaxWidth(175);
                 factionImageView.setMaxHeight(175);
                 factionImageView.setImageResource(FactionLogoSelection.getLogo(cardView.getContext(), characterEntity.getCharacterPlayer().getFaction()));
@@ -151,7 +151,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
         private String createStatusText(CharacterEntity characterEntity) {
             final CostCalculator costCalculator = new CostCalculator(characterEntity.getCharacterPlayer());
-            StringBuilder stringBuilder = new StringBuilder();
+            final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(characterEntity.getCharacterPlayer().getFaction().getName());
             stringBuilder.append(" (");
             stringBuilder.append(characterEntity.getCharacterPlayer().getRace().getName());
@@ -165,7 +165,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             stringBuilder.append("</font>");
             stringBuilder.append("<br>");
             //Threat
-            ThreatLevelHandler threatLevelHandler = new ThreatLevelHandler(characterEntity.getThreat());
+            final ThreatLevelHandler threatLevelHandler = new ThreatLevelHandler(characterEntity.getThreat());
             stringBuilder.append(itemView.getContext().getString(R.string.character_threat));
             stringBuilder.append(" ");
             stringBuilder.append("<font color=\"").append(threatLevelHandler.getColor(cardView.getContext())).append("\">");
@@ -177,7 +177,9 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         public void cardClick(View view) {
             // Below line is just like a safety check, because sometimes holder could be null,
             // in that case, getAdapterPosition() will return RecyclerView.NO_POSITION
-            if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
+            if (getAdapterPosition() == RecyclerView.NO_POSITION) {
+                return;
+            }
             notifyItemChanged(selectedPosition);
             selectedPosition = getLayoutPosition();
             notifyItemChanged(selectedPosition);
@@ -207,7 +209,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         }
 
         private void rotate(float angle) {
-            Animation animation = new RotateAnimation(0.0f, angle, Animation.RELATIVE_TO_SELF, 0.5f,
+            final Animation animation = new RotateAnimation(0.0f, angle, Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
             animation.setFillAfter(true);
             animation.setDuration(DURATION);

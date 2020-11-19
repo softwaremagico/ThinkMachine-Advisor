@@ -49,13 +49,13 @@ public abstract class PdfVisualizationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = getFragmentView(inflater, container);
+        final View root = getFragmentView(inflater, container);
 
-        PDFView pdfViewer = root.findViewById(R.id.pdf_viewer);
+        final PDFView pdfViewer = root.findViewById(R.id.pdf_viewer);
         final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
         pdfViewer.fromBytes(generatePdf()).load();
 
-        FloatingActionButton fab = root.findViewById(R.id.share);
+        final FloatingActionButton fab = root.findViewById(R.id.share);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,11 +72,11 @@ public abstract class PdfVisualizationFragment extends Fragment {
     }
 
     protected void sharePdf() throws IOException {
-        File imagePath = new File(getContext().getCacheDir(), "pdf");
+        final File imagePath = new File(getContext().getCacheDir(), "pdf");
         characterSheetAsPdf = new File(imagePath, CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
                 CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet.pdf" :
                 "pdf_sheet.pdf");
-        Uri contentUri = FileProvider.getUriForFile(getContext(), "com.softwaremagico.tm.advisor", characterSheetAsPdf);
+        final Uri contentUri = FileProvider.getUriForFile(getContext(), "com.softwaremagico.tm.advisor", characterSheetAsPdf);
 
         if (contentUri != null) {
             //getContext().grantUriPermission("com.softwaremagico.tm.advisor", contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -84,7 +84,7 @@ public abstract class PdfVisualizationFragment extends Fragment {
             characterSheetAsPdf.getParentFile().mkdirs();
             characterSheet.createFile(characterSheetAsPdf.getAbsolutePath());
 
-            Intent shareIntent = new Intent();
+            final Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // temp permission for receiving app to read this file
             shareIntent.setType(getActivity().getContentResolver().getType(contentUri));
@@ -93,10 +93,10 @@ public abstract class PdfVisualizationFragment extends Fragment {
                     ": " + CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() : ""));
             shareIntent.putExtra(Intent.EXTRA_TEXT, TextVariablesManager.replace(getString(R.string.share_body)));
 
-            Intent chooser = Intent.createChooser(shareIntent, "Share File");
-            List<ResolveInfo> resInfoList = getContext().getPackageManager().queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY);
-            for (ResolveInfo resolveInfo : resInfoList) {
-                String packageName = resolveInfo.activityInfo.packageName;
+            final Intent chooser = Intent.createChooser(shareIntent, "Share File");
+            final List<ResolveInfo> resInfoList = getContext().getPackageManager().queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY);
+            for (final ResolveInfo resolveInfo : resInfoList) {
+                final String packageName = resolveInfo.activityInfo.packageName;
                 getContext().grantUriPermission(packageName, contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
             startActivity(chooser);

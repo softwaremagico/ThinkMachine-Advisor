@@ -21,7 +21,7 @@ import java.util.Locale;
 public class DateUtils {
 
     public static String formatTimestamp(Timestamp timestamp) {
-        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        final Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(timestamp.getTime());
         return DateFormat.format("yyyy-MM-dd hh:mm:ss", cal).toString();
     }

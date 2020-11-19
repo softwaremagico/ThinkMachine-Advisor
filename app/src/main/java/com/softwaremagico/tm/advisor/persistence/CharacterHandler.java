@@ -23,20 +23,17 @@ import java.util.Map;
 public class CharacterHandler {
     private Map<CharacterPlayer, CharacterEntity> entities = new HashMap<>();
 
-    private static volatile CharacterHandler INSTANCE;
+    private static volatile CharacterHandler instance;
 
     public static CharacterHandler getInstance() {
-        if (INSTANCE == null) {
+        if (instance == null) {
             synchronized (CharacterHandler.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new CharacterHandler();
+                if (instance == null) {
+                    instance = new CharacterHandler();
                 }
             }
         }
-        return INSTANCE;
-    }
-
-    private void CharacterHander() {
+        return instance;
     }
 
     public void save(Context context, CharacterPlayer characterPlayer) {

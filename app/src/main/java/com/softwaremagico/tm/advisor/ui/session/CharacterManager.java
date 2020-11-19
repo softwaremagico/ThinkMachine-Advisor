@@ -23,17 +23,17 @@ import java.util.Locale;
 import java.util.Set;
 
 public class CharacterManager {
-    private static List<CharacterPlayer> characters = new ArrayList<>();
+    private static final List<CharacterPlayer> characters = new ArrayList<>();
     private static CharacterPlayer selectedCharacter;
     private static CostCalculator costCalculator;
-    private static Set<CharacterSelectedListener> characterSelectedListener = new HashSet<>();
+    private static final Set<CharacterSelectedListener> characterSelectedListener = new HashSet<>();
 
     public interface CharacterSelectedListener {
         void selected(CharacterPlayer characterPlayer);
     }
 
     private static void launchSelectedCharacterListeners(CharacterPlayer characterPlayer) {
-        for (CharacterSelectedListener listener : characterSelectedListener) {
+        for (final CharacterSelectedListener listener : characterSelectedListener) {
             listener.selected(characterPlayer);
         }
     }
@@ -63,7 +63,7 @@ public class CharacterManager {
     }
 
     public static void addNewCharacter() {
-        CharacterPlayer characterPlayer = new CharacterPlayer(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+        final CharacterPlayer characterPlayer = new CharacterPlayer(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
         characters.add(characterPlayer);
         selectedCharacter = characterPlayer;
         costCalculator = new CostCalculator(characterPlayer);

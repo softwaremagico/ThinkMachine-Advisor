@@ -11,6 +11,7 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'checkstyle'
 
 android {
     signingConfigs {
@@ -98,6 +99,19 @@ android {
         targetCompatibility = 1.8
     }
 }
+
+
+task checkstyle(type: Checkstyle) {
+    description 'Check code standards'
+    group 'verification'
+    configFile file('checkstyle.xml')
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    classpath = files()
+    ignoreFailures = false
+}
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

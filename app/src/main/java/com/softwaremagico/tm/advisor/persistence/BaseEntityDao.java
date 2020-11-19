@@ -34,7 +34,7 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
         }
         t.setCreationTime(new Timestamp(new Date().getTime()));
         t.setUpdateTime(new Timestamp(new Date().getTime()));
-        long id = actualInsert(t);
+        final long id = actualInsert(t);
         t.setId(id);
         return id;
     }
@@ -44,7 +44,7 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
 
     public List<Long> insertAll(List<T> ts) {
         if (ts != null) {
-            for (T t : ts) {
+            for (final T t : ts) {
                 t.setCreationTime(new Timestamp(new Date().getTime()));
                 t.setUpdateTime(new Timestamp(new Date().getTime()));
             }
@@ -65,7 +65,7 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
 
     public void updateAll(List<T> ts) {
         if (ts != null) {
-            for (T t : ts) {
+            for (final T t : ts) {
                 t.setUpdateTime(new Timestamp(new Date().getTime()));
             }
         }

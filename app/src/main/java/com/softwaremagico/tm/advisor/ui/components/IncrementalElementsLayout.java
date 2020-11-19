@@ -90,7 +90,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
     }
 
     public void setElement(T element) {
-        List<T> elements = new ArrayList<>();
+        final List<T> elements = new ArrayList<>();
         elements.add(element);
         setElements(elements);
     }
@@ -98,8 +98,8 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
     public void setElements(Collection<T> elements) {
         enabled = false;
         clear();
-        for (T element : elements) {
-            ElementSpinner spinner = createElementSpinner();
+        for (final T element : elements) {
+            final ElementSpinner spinner = createElementSpinner();
             spinner.setSelection(element);
             addElementSpinner(spinner);
         }
@@ -126,7 +126,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 updateContent();
-                for (AdapterView.OnItemSelectedListener listener : listeners) {
+                for (final AdapterView.OnItemSelectedListener listener : listeners) {
                     listener.onItemSelected(parent, view, position, id);
                 }
             }
@@ -134,7 +134,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 updateContent();
-                for (AdapterView.OnItemSelectedListener listener : listeners) {
+                for (final AdapterView.OnItemSelectedListener listener : listeners) {
                     listener.onNothingSelected(parent);
                 }
             }
@@ -149,7 +149,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
     }
 
     public ElementSpinner createElementSpinner() {
-        ElementSpinner blessingSelector = new ElementSpinner(getContext());
+        final ElementSpinner blessingSelector = new ElementSpinner(getContext());
         blessingSelector.setAdapter(getElementAdapter());
         return blessingSelector;
     }

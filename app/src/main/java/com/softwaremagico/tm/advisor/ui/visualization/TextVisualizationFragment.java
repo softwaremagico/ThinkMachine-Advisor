@@ -37,8 +37,8 @@ public class TextVisualizationFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static TextVisualizationFragment newInstance(int index) {
-        TextVisualizationFragment fragment = new TextVisualizationFragment();
-        Bundle bundle = new Bundle();
+        final TextVisualizationFragment fragment = new TextVisualizationFragment();
+        final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
         return fragment;
@@ -47,14 +47,14 @@ public class TextVisualizationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.visualization_text_fragment, container, false);
+        final View root = inflater.inflate(R.layout.visualization_text_fragment, container, false);
 
-        TextView txtDetails = root.findViewById(R.id.character_text);
+        final TextView txtDetails = root.findViewById(R.id.character_text);
         final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
         txtDetails.setText(characterSheet.toString());
         txtDetails.setMovementMethod(new ScrollingMovementMethod());
 
-        FloatingActionButton fab = root.findViewById(R.id.share);
+        final FloatingActionButton fab = root.findViewById(R.id.share);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +70,7 @@ public class TextVisualizationFragment extends Fragment {
     }
 
     protected void shareText() throws IOException {
-        Intent shareIntent = new Intent();
+        final Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // temp permission for receiving app to read this file
         shareIntent.setType("text/plain");
@@ -78,7 +78,7 @@ public class TextVisualizationFragment extends Fragment {
                 ": " + CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() : ""));
         final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
         shareIntent.putExtra(Intent.EXTRA_TEXT, TextVariablesManager.replace(getString(R.string.share_body) + "\n\n" + characterSheet.toString()));
-        Intent chooser = Intent.createChooser(shareIntent, "Share File");
+        final Intent chooser = Intent.createChooser(shareIntent, "Share File");
         startActivity(shareIntent);
     }
 }

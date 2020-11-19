@@ -34,10 +34,10 @@ public class TranslatedNumberPicker extends Component {
     }
 
     private void initComponents(AttributeSet attrs) {
-        TextView tagText = findViewById(R.id.translated_tag);
-        TypedArray attributes = getContext().obtainStyledAttributes(attrs,
+        final TextView tagText = findViewById(R.id.translated_tag);
+        final TypedArray attributes = getContext().obtainStyledAttributes(attrs,
                 R.styleable.translated_text, 0, 0);
-        String tag = attributes.getString(R.styleable.translated_text_translation);
+        final String tag = attributes.getString(R.styleable.translated_text_translation);
         if (tag != null) {
             tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
         }
@@ -45,14 +45,14 @@ public class TranslatedNumberPicker extends Component {
     }
 
     public void setLabel(String text) {
-        TextView tagText = findViewById(R.id.translated_tag);
+        final TextView tagText = findViewById(R.id.translated_tag);
         if (tagText != null) {
             tagText.setText(text);
         }
     }
 
     public int getValue() {
-        NumberPicker picker = findViewById(R.id.picker);
+        final NumberPicker picker = findViewById(R.id.picker);
         if (picker == null) {
             return -1;
         }
@@ -60,7 +60,7 @@ public class TranslatedNumberPicker extends Component {
     }
 
     public void setValue(int value) {
-        NumberPicker picker = findViewById(R.id.picker);
+        final NumberPicker picker = findViewById(R.id.picker);
         if (picker != null) {
             if (picker.getMaxValue() < value) {
                 picker.setValue(picker.getMaxValue());
@@ -71,14 +71,14 @@ public class TranslatedNumberPicker extends Component {
     }
 
     public void addValueChangeListener(NumberPicker.OnValueChangeListener listener) {
-        NumberPicker picker = findViewById(R.id.picker);
+        final NumberPicker picker = findViewById(R.id.picker);
         if (picker != null) {
             picker.setOnValueChangedListener(listener);
         }
     }
 
     public void setLimits(int minimum, int maximum) {
-        NumberPicker picker = findViewById(R.id.picker);
+        final NumberPicker picker = findViewById(R.id.picker);
         if (picker != null) {
             picker.setMaxValue(maximum);
             picker.setMinValue(minimum);

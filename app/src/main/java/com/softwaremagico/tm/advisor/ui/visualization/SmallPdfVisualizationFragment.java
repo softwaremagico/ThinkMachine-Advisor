@@ -32,8 +32,8 @@ public class SmallPdfVisualizationFragment extends PdfVisualizationFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static SmallPdfVisualizationFragment newInstance(int index) {
-        SmallPdfVisualizationFragment fragment = new SmallPdfVisualizationFragment();
-        Bundle bundle = new Bundle();
+        final SmallPdfVisualizationFragment fragment = new SmallPdfVisualizationFragment();
+        final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
         return fragment;

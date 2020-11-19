@@ -38,18 +38,16 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class LoadCharacter extends DialogFragment {
-
     private RecyclerView mRecyclerView;
     private CharacterRecyclerViewAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private static String LOG_TAG = "CardViewActivity";
+    private static final String LOG_TAG = "CardViewActivity";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View rootView = inflater.inflate(R.layout.character_loader, container, false);
+        final View rootView = inflater.inflate(R.layout.character_loader, container, false);
 
         //RECYCLER
         mRecyclerView = rootView.findViewById(R.id.character_recycler_loader);
@@ -65,13 +63,13 @@ public class LoadCharacter extends DialogFragment {
     }
 
     private ArrayList<CharacterEntity> getDataSet() {
-        ArrayList results = new ArrayList<CharacterEntity>();
+        final ArrayList results = new ArrayList<CharacterEntity>();
         for (int index = 0; index < 3; index++) {
             try {
                 final CharacterPlayer characterPlayer = new CharacterPlayer(Locale.getDefault().getLanguage(), PathManager.DEFAULT_MODULE_FOLDER);
                 final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(characterPlayer, 0, DifficultLevelPreferences.HARD);
                 randomizeCharacter.createCharacter();
-                CharacterEntity characterEntity = new CharacterEntity(characterPlayer);
+                final CharacterEntity characterEntity = new CharacterEntity(characterPlayer);
                 results.add(index, characterEntity);
             } catch (DuplicatedPreferenceException e) {
                 e.printStackTrace();

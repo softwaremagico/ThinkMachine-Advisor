@@ -40,34 +40,34 @@ public class ElementSpinner extends Component {
     }
 
     private void initComponents(AttributeSet attrs) {
-        TextView tagText = findViewById(R.id.translated_tag);
-        TypedArray attributes = getContext().obtainStyledAttributes(attrs,
+        final TextView tagText = findViewById(R.id.translated_tag);
+        final TypedArray attributes = getContext().obtainStyledAttributes(attrs,
                 R.styleable.translated_text, 0, 0);
-        String tag = attributes.getString(R.styleable.translated_text_translation);
-        if(tag!=null) {
+        final String tag = attributes.getString(R.styleable.translated_text_translation);
+        if (tag != null) {
             tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
         }
         tagText.setTextAppearance(R.style.CharacterInfo);
     }
 
     public <T extends Element<?>> void setAdapter(ElementAdapter<T> adapter) {
-        Spinner selector = findViewById(R.id.spinner);
+        final  Spinner selector = findViewById(R.id.spinner);
         selector.setAdapter(adapter);
     }
 
     public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener onItemSelectedListener) {
-        Spinner selector = findViewById(R.id.spinner);
+        final Spinner selector = findViewById(R.id.spinner);
         selector.setOnItemSelectedListener(onItemSelectedListener);
     }
 
     public <T extends Element<?>> void setSelection(T selected) {
-        Spinner selector = findViewById(R.id.spinner);
+        final Spinner selector = findViewById(R.id.spinner);
         selector.setSelection(((ElementAdapter<T>) selector.getAdapter()).indexOf(selected));
     }
 
     public <T extends Element<?>> T getSelection() {
-        Spinner selector = findViewById(R.id.spinner);
-        T selectedItem = (T) selector.getSelectedItem();
+        final Spinner selector = findViewById(R.id.spinner);
+        final T selectedItem = (T) selector.getSelectedItem();
         if (Element.isNull(selectedItem)) {
             return null;
         }

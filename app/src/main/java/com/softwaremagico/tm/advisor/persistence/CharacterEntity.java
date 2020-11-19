@@ -27,7 +27,7 @@ import java.util.Date;
 
 @Entity(tableName = CharacterEntity.CHARACTER_PLAYER_TABLE)
 public class CharacterEntity extends BaseEntity {
-    public final static String CHARACTER_PLAYER_TABLE = "character_player";
+    public static final String CHARACTER_PLAYER_TABLE = "character_player";
 
     @ColumnInfo(name = "name")
     public String name;

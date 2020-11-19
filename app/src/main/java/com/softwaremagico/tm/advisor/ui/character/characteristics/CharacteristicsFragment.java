@@ -43,8 +43,8 @@ public class CharacteristicsFragment extends CustomFragment {
     private Map<CharacteristicName, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
 
     public static CharacteristicsFragment newInstance(int index) {
-        CharacteristicsFragment fragment = new CharacteristicsFragment();
-        Bundle bundle = new Bundle();
+        final CharacteristicsFragment fragment = new CharacteristicsFragment();
+        final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
         return fragment;
@@ -57,7 +57,7 @@ public class CharacteristicsFragment extends CustomFragment {
             if (type == CharacteristicType.OTHERS) {
                 continue;
             }
-            for (CharacteristicDefinition characteristicDefinition : CharacteristicsDefinitionFactory.getInstance().getAll(type, Locale.getDefault().getLanguage(),
+            for (final CharacteristicDefinition characteristicDefinition : CharacteristicsDefinitionFactory.getInstance().getAll(type, Locale.getDefault().getLanguage(),
                     ModuleManager.DEFAULT_MODULE)) {
                 translatedNumberPickers.get(characteristicDefinition.getCharacteristicName()).setValue(character.getCharacteristicValue(characteristicDefinition.getCharacteristicName()));
             }
@@ -68,8 +68,8 @@ public class CharacteristicsFragment extends CustomFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.character_characteristics_fragment, container, false);
-        LinearLayout linearLayout = root.findViewById(R.id.characteristics_container);
+        final View root = inflater.inflate(R.layout.character_characteristics_fragment, container, false);
+        final LinearLayout linearLayout = root.findViewById(R.id.characteristics_container);
 
         for (final CharacteristicType type : CharacteristicType.values()) {
             if (type == CharacteristicType.OTHERS) {
@@ -77,7 +77,7 @@ public class CharacteristicsFragment extends CustomFragment {
             }
 
             addSection(ThinkMachineTranslator.getTranslatedText(type.name().toLowerCase() + "Characteristics"), linearLayout);
-            for (CharacteristicDefinition characteristicDefinition : CharacteristicsDefinitionFactory.getInstance().getAll(type, Locale.getDefault().getLanguage(),
+            for (final CharacteristicDefinition characteristicDefinition : CharacteristicsDefinitionFactory.getInstance().getAll(type, Locale.getDefault().getLanguage(),
                     ModuleManager.DEFAULT_MODULE)) {
                 createCharacteristicsEditText(root, linearLayout, characteristicDefinition);
             }
@@ -91,7 +91,7 @@ public class CharacteristicsFragment extends CustomFragment {
 
     public void updateCharacteristicsLimits(CharacterPlayer characterPlayer) {
         if (characterPlayer != null && characterPlayer.getRace() != null) {
-            for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
+            for (final Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
                 characteristicComponent.getValue().setLimits(CharacterManager.getSelectedCharacter().getStartingValue(characteristicComponent.getKey()),
                         FreeStyleCharacterCreation.getMaxInitialCharacteristicsValues(characteristicComponent.getKey(),
                                 CharacterManager.getSelectedCharacter().getInfo().getAge(), CharacterManager.getSelectedCharacter().getRace()));
@@ -101,14 +101,14 @@ public class CharacteristicsFragment extends CustomFragment {
 
     public void refreshCharacteristicValues(CharacterPlayer characterPlayer) {
         if (characterPlayer != null && characterPlayer.getRace() != null) {
-            for (Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
+            for (final Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
                 characteristicComponent.getValue().setValue(CharacterManager.getSelectedCharacter().getValue(characteristicComponent.getKey()));
             }
         }
     }
 
     private void createCharacteristicsEditText(View root, LinearLayout linearLayout, CharacteristicDefinition characteristicDefinition) {
-        TranslatedNumberPicker characteristicsNumberPicker = new TranslatedNumberPicker(getContext(), null);
+        final TranslatedNumberPicker characteristicsNumberPicker = new TranslatedNumberPicker(getContext(), null);
         translatedNumberPickers.put(characteristicDefinition.getCharacteristicName(), characteristicsNumberPicker);
         characteristicsNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText(characteristicDefinition.getId()));
         characteristicsNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

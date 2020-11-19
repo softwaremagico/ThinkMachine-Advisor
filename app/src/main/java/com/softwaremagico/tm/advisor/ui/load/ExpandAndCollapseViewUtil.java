@@ -34,7 +34,7 @@ public class ExpandAndCollapseViewUtil {
     private static void slide(final ViewGroup viewGroup, int duration, final boolean expand) {
         try {
             //onmeasure method is protected
-            Method onMeasureMethod = viewGroup.getClass().getDeclaredMethod("onMeasure", int.class, int.class);
+            final Method onMeasureMethod = viewGroup.getClass().getDeclaredMethod("onMeasure", int.class, int.class);
             onMeasureMethod.setAccessible(true);
             onMeasureMethod.invoke(
                     viewGroup,
@@ -54,7 +54,7 @@ public class ExpandAndCollapseViewUtil {
         }
         viewGroup.setVisibility(View.VISIBLE);
 
-        Animation animation = new Animation() {
+        final Animation animation = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
                 int newHeight = 0;

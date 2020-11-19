@@ -42,8 +42,8 @@ public class SkillsFragment extends CustomFragment {
     private Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
 
     public static SkillsFragment newInstance(int index) {
-        SkillsFragment fragment = new SkillsFragment();
-        Bundle bundle = new Bundle();
+        final SkillsFragment fragment = new SkillsFragment();
+        final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
         return fragment;
@@ -59,12 +59,12 @@ public class SkillsFragment extends CustomFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.character_skills_fragment, container, false);
-        LinearLayout linearLayout = root.findViewById(R.id.skills_container);
+        final View root = inflater.inflate(R.layout.character_skills_fragment, container, false);
+        final LinearLayout linearLayout = root.findViewById(R.id.skills_container);
         addSection(ThinkMachineTranslator.getTranslatedText("naturalSkills"), linearLayout);
 
         try {
-            for (AvailableSkill skill : CharacterManager.getSelectedCharacter().getNaturalSkills()) {
+            for (final AvailableSkill skill : CharacterManager.getSelectedCharacter().getNaturalSkills()) {
                 createSkillEditText(root, linearLayout, skill);
             }
         } catch (InvalidXmlElementException e) {
@@ -74,7 +74,7 @@ public class SkillsFragment extends CustomFragment {
         addSection(ThinkMachineTranslator.getTranslatedText("learnedSkills"), linearLayout);
 
         try {
-            for (AvailableSkill skill : CharacterManager.getSelectedCharacter().getLearnedSkills()) {
+            for (final AvailableSkill skill : CharacterManager.getSelectedCharacter().getLearnedSkills()) {
                 createSkillEditText(root, linearLayout, skill);
             }
         } catch (InvalidXmlElementException e) {
@@ -87,7 +87,7 @@ public class SkillsFragment extends CustomFragment {
     }
 
     private void createSkillEditText(View root, LinearLayout linearLayout, AvailableSkill skill) {
-        TranslatedNumberPicker skillNumberPicker = new TranslatedNumberPicker(getContext(), null);
+        final TranslatedNumberPicker skillNumberPicker = new TranslatedNumberPicker(getContext(), null);
         translatedNumberPickers.put(skill, skillNumberPicker);
         skillNumberPicker.setLabel(skill.getCompleteName());
         skillNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -115,7 +115,7 @@ public class SkillsFragment extends CustomFragment {
 
     private void updateSkillsLimits(CharacterPlayer character) {
         if (character != null && character.getRace() != null) {
-            for (Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
+            for (final Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
                 if (skillComponent.getKey().getSkillDefinition().isNatural()) {
                     skillComponent.getValue().setLimits(FreeStyleCharacterCreation.getMinInitialNaturalSkillsValues(character.getInfo().getAge()),
                             FreeStyleCharacterCreation.getMaxInitialSkillsValues(character.getInfo().getAge()));
@@ -128,7 +128,7 @@ public class SkillsFragment extends CustomFragment {
 
     public void refreshSkillsValues(CharacterPlayer characterPlayer) {
         if (CharacterManager.getSelectedCharacter().getRace() != null) {
-            for (Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
+            for (final Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
                 skillComponent.getValue().setValue(characterPlayer.getSkillAssignedRanks(skillComponent.getKey()));
             }
         }

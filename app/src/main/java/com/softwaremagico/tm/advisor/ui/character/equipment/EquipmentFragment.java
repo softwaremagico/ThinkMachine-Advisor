@@ -58,8 +58,8 @@ public class EquipmentFragment extends CustomFragment {
 
 
     public static EquipmentFragment newInstance(int index) {
-        EquipmentFragment fragment = new EquipmentFragment();
-        Bundle bundle = new Bundle();
+        final EquipmentFragment fragment = new EquipmentFragment();
+        final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
         return fragment;
@@ -76,9 +76,9 @@ public class EquipmentFragment extends CustomFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.character_equipment_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.character_equipment_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(EquipmentViewModel.class);
-        LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
+        final LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
 
         addSection(ThinkMachineTranslator.getTranslatedText("weapons"), rootLayout);
         weaponsLayout = new WeaponsLayout(getContext(), true);
@@ -98,7 +98,7 @@ public class EquipmentFragment extends CustomFragment {
     }
 
     class ShieldLayout extends IncrementalElementsLayout {
-        private final static int MAX_ITEMS = 1;
+        private static final int MAX_ITEMS = 1;
 
         public ShieldLayout(Context context, boolean nullsAllowed) {
             super(context, nullsAllowed, MAX_ITEMS);
@@ -122,8 +122,8 @@ public class EquipmentFragment extends CustomFragment {
         }
 
         private void setShield(List<ElementSpinner> spinners) {
-            List<Shield> shields = new ArrayList<>();
-            for (ElementSpinner spinner : spinners) {
+            final List<Shield> shields = new ArrayList<>();
+            for (final ElementSpinner spinner : spinners) {
                 if (spinner.getSelection() != null) {
                     shields.add(spinner.getSelection());
                 }
@@ -147,7 +147,7 @@ public class EquipmentFragment extends CustomFragment {
 
 
     class ArmourLayout extends IncrementalElementsLayout {
-        private final static int MAX_ITEMS = 1;
+        private static final int MAX_ITEMS = 1;
 
         public ArmourLayout(Context context, boolean nullsAllowed) {
             super(context, nullsAllowed, MAX_ITEMS);
@@ -171,8 +171,8 @@ public class EquipmentFragment extends CustomFragment {
         }
 
         private void setArmour(List<ElementSpinner> spinners) {
-            List<Armour> armours = new ArrayList<>();
-            for (ElementSpinner spinner : spinners) {
+            final List<Armour> armours = new ArrayList<>();
+            for (final ElementSpinner spinner : spinners) {
                 if (spinner.getSelection() != null) {
                     armours.add(spinner.getSelection());
                 }
@@ -181,7 +181,7 @@ public class EquipmentFragment extends CustomFragment {
                 try {
                     CharacterManager.getSelectedCharacter().setArmour(armours.get(0));
                 } catch (InvalidArmourException e) {
-                    Snackbar snackbar = Snackbar
+                    final Snackbar snackbar = Snackbar
                             .make(this, R.string.message_invalid_shield_armour_combination, Snackbar.LENGTH_SHORT);
                     snackbar.show();
                 }
@@ -219,8 +219,8 @@ public class EquipmentFragment extends CustomFragment {
         }
 
         private void setWeapons(List<ElementSpinner> spinners) {
-            List<Weapon> weapons = new ArrayList<>();
-            for (ElementSpinner spinner : spinners) {
+            final List<Weapon> weapons = new ArrayList<>();
+            for (final ElementSpinner spinner : spinners) {
                 if (spinner.getSelection() != null) {
                     weapons.add(spinner.getSelection());
                 }

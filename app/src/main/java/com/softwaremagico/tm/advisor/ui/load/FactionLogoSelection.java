@@ -10,7 +10,7 @@ public class FactionLogoSelection {
     public static int getLogo(Context context, Faction faction) {
         if (faction != null) {
             try {
-                int id = context.getResources().getIdentifier("ic_" + faction.getId().toLowerCase(), "drawable", context.getPackageName());
+                final int id = context.getResources().getIdentifier("ic_" + faction.getId().toLowerCase(), "drawable", context.getPackageName());
                 if (id > 0) {
                     return id;
                 }

@@ -55,8 +55,8 @@ public class TraitsFragment extends CustomFragment {
     IncrementalElementsLayout beneficesLayout;
 
     public static TraitsFragment newInstance(int index) {
-        TraitsFragment fragment = new TraitsFragment();
-        Bundle bundle = new Bundle();
+        final TraitsFragment fragment = new TraitsFragment();
+        final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
         return fragment;
@@ -72,9 +72,9 @@ public class TraitsFragment extends CustomFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.character_traits_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.character_traits_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(TraitsViewModel.class);
-        LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
+        final LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
 
         addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), rootLayout);
         blessingsLayout = new BlessingLayout(getContext(), true);
@@ -91,7 +91,7 @@ public class TraitsFragment extends CustomFragment {
 
 
     class BlessingLayout extends IncrementalElementsLayout {
-        private final static int MAX_BENEFICES = 7;
+        private static final int MAX_BENEFICES = 7;
 
         public BlessingLayout(Context context, boolean nullAllowed) {
             super(context, nullAllowed, MAX_BENEFICES);
@@ -124,8 +124,8 @@ public class TraitsFragment extends CustomFragment {
         }
 
         private void setBlessings(List<ElementSpinner> spinners) {
-            List<Blessing> blessings = new ArrayList<>();
-            for (ElementSpinner spinner : spinners) {
+            final List<Blessing> blessings = new ArrayList<>();
+            for (final ElementSpinner spinner : spinners) {
                 if (spinner.getSelection() != null) {
                     blessings.add(spinner.getSelection());
                 }
@@ -133,7 +133,7 @@ public class TraitsFragment extends CustomFragment {
             try {
                 CharacterManager.getSelectedCharacter().setBlessings(blessings);
             } catch (TooManyBlessingsException e) {
-                Snackbar snackbar = Snackbar
+                final Snackbar snackbar = Snackbar
                         .make(this, R.string.message_too_many_blessings, Snackbar.LENGTH_SHORT);
                 snackbar.show();
             }
@@ -176,8 +176,8 @@ public class TraitsFragment extends CustomFragment {
         }
 
         private void setBenefice(List<ElementSpinner> spinners) {
-            List<AvailableBenefice> benefices = new ArrayList<>();
-            for (ElementSpinner spinner : spinners) {
+            final List<AvailableBenefice> benefices = new ArrayList<>();
+            for (final ElementSpinner spinner : spinners) {
                 if (spinner.getSelection() != null) {
                     benefices.add(spinner.getSelection());
                 }
@@ -185,7 +185,7 @@ public class TraitsFragment extends CustomFragment {
             try {
                 CharacterManager.getSelectedCharacter().setBenefices(benefices);
             } catch (InvalidBeneficeException e) {
-                Snackbar snackbar = Snackbar
+                final Snackbar snackbar = Snackbar
                         .make(this, R.string.message_invalid_benefice, Snackbar.LENGTH_SHORT);
                 snackbar.show();
             }
