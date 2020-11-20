@@ -37,6 +37,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.core.FileUtils;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
 import com.softwaremagico.tm.advisor.ui.load.LoadCharacter;
@@ -49,18 +50,14 @@ import com.softwaremagico.tm.json.InvalidJsonException;
 import com.softwaremagico.tm.language.Translator;
 import com.softwaremagico.tm.log.MachineLog;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String FILE_EXPORT_EXTENSION = ".tma";
+    private static final String FILE_EXPORT_EXTENSION = "tma";
     private static final int FILE_SELECT_CODE = 0;
 
     @Override
@@ -160,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultData != null) {
                 uri = resultData.getData();
                 try {
-                    CharacterManager.setSelectedCharacter(CharacterJsonManager.fromJson(readFile(uri)));
+                    CharacterManager.setSelectedCharacter(CharacterJsonManager.fromJson(FileUtils.readFile(uri)));
                 } catch (InvalidJsonException e) {
                     SnackbarGenerator.getErrorMessage(this.getCurrentFocus(), R.string.invalid_json_file).show();
                 }
@@ -168,40 +165,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String readFile(Uri uri) {
-        //Get the text file
-        File file = new File(uri.getPath());
 
-        //Read text from file
-        StringBuilder text = new StringBuilder();
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                text.append(line);
-            }
-            br.close();
-        } catch (IOException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        }
-        return text.toString();
-    }
-
-
-    private void exportJson(View parentLayout) throws IOException {
-        final File imagePath = new File(parentLayout.getContext().getCacheDir(), FILE_EXPORT_EXTENSION);
-        File characterExport = new File(imagePath, CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
+    private void exportJson(View view) throws IOException {
+        final File exportsPath = new File(view.getContext().getCacheDir(), "export");
+        File characterExport = new File(exportsPath, CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
                 CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet." + FILE_EXPORT_EXTENSION :
                 "export_sheet." + FILE_EXPORT_EXTENSION);
-        final Uri contentUri = FileProvider.getUriForFile(parentLayout.getContext(), "com.softwaremagico.tm.advisor", characterExport);
+        final Uri contentUri = FileProvider.getUriForFile(view.getContext(), "com.softwaremagico.tm.advisor", characterExport);
 
         if (contentUri != null) {
+            exportsPath.mkdir();
             String jsonContent = CharacterJsonManager.toJson(CharacterManager.getSelectedCharacter());
-
-            try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(characterExport.getAbsolutePath())), true)) {
-                out.println(jsonContent);
+            FileOutputStream stream = new FileOutputStream(characterExport);
+            try {
+                stream.write(jsonContent.getBytes());
+            } finally {
+                stream.close();
             }
 
             final Intent shareIntent = new Intent();
@@ -214,10 +193,10 @@ public class MainActivity extends AppCompatActivity {
             shareIntent.putExtra(Intent.EXTRA_TEXT, TextVariablesManager.replace(getString(R.string.export_body)));
 
             final Intent chooser = Intent.createChooser(shareIntent, "Share File");
-            final List<ResolveInfo> resInfoList = parentLayout.getContext().getPackageManager().queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY);
+            final List<ResolveInfo> resInfoList = view.getContext().getPackageManager().queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY);
             for (final ResolveInfo resolveInfo : resInfoList) {
                 final String packageName = resolveInfo.activityInfo.packageName;
-                parentLayout.getContext().grantUriPermission(packageName, contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                view.getContext().grantUriPermission(packageName, contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
             startActivity(chooser);
         }

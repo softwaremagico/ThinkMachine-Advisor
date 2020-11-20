@@ -31,15 +31,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
-import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.pdf.complete.CharacterSheet;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public abstract class PdfVisualizationFragment extends Fragment {
-    private static final int FILE_IDENTIFICATOR = 42;
+    private static final int FILE_IDENTIFICATION = 42;
     private File characterSheetAsPdf;
 
     protected abstract View getFragmentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container);
@@ -74,6 +72,7 @@ public abstract class PdfVisualizationFragment extends Fragment {
         final Uri contentUri = FileProvider.getUriForFile(getContext(), "com.softwaremagico.tm.advisor", characterSheetAsPdf);
 
         if (contentUri != null) {
+            imagePath.mkdirs();
             //getContext().grantUriPermission("com.softwaremagico.tm.advisor", contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
             characterSheetAsPdf.getParentFile().mkdirs();
@@ -102,7 +101,7 @@ public abstract class PdfVisualizationFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == FILE_IDENTIFICATOR && characterSheetAsPdf != null) {
+        if (requestCode == FILE_IDENTIFICATION && characterSheetAsPdf != null) {
             characterSheetAsPdf.delete();
         }
     }

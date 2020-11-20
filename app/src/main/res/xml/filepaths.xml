@@ -12,4 +12,5 @@
 
 <paths>
     <cache-path name="shared_pdfs" path="pdf/"/>
+    <cache-path name="jsons" path="export/" />
 </paths>
