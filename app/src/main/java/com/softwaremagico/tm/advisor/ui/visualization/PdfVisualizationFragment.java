@@ -58,11 +58,7 @@ public abstract class PdfVisualizationFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    sharePdf();
-                } catch (IOException e) {
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
-                }
+                sharePdf();
             }
         });
 
@@ -70,7 +66,7 @@ public abstract class PdfVisualizationFragment extends Fragment {
         return root;
     }
 
-    protected void sharePdf() throws IOException {
+    protected void sharePdf() {
         final File imagePath = new File(getContext().getCacheDir(), "pdf");
         characterSheetAsPdf = new File(imagePath, CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
                 CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet.pdf" :

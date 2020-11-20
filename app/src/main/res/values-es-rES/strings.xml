@@ -46,4 +46,6 @@
     <string name="character_status_finished">Finalizado</string>
     <string name="character_threat">Nivel de Amenaza:</string>
     <string name="settings_new">Nuevo</string>
+    <string name="export_body">Fichero para importar el personaje \'${CHARACTER_NAME}\' .</string>
+    <string name="invalid_json_file">El fichero seleccionado es inválido.</string>
 </resources>

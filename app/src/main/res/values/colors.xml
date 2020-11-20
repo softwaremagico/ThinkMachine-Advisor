@@ -18,6 +18,12 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorContrast">#FFFFFF</color>
 
+
+    <color name="colorTextMessageOk">#ffffff</color>
+    <color name="colorBackgroundMessageOk">#382b48</color>
+    <color name="colorTextMessageError">#ffffff</color>
+    <color name="colorBackgroundMessageError">#6e0309</color>
+
     <color name="statusUndefined">#6c6689</color>
     <color name="statusDraft">#bfa0b2</color>
     <color name="statusNotStarted">#aa5c94</color>

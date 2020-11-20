@@ -47,4 +47,6 @@
     <string name="character_status_finished">Finished</string>
     <string name="character_threat">Threat Level:</string>
     <string name="settings_new">New</string>
+    <string name="export_body">File for importing \'${CHARACTER_NAME}\'  character.</string>
+    <string name="invalid_json_file">The file selected is invalid</string>
 </resources>

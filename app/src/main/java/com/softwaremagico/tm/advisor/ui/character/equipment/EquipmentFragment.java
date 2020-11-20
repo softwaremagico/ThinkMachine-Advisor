@@ -24,15 +24,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
-import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
+import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.equipment.armours.Armour;
@@ -40,12 +39,9 @@ import com.softwaremagico.tm.character.equipment.armours.InvalidArmourException;
 import com.softwaremagico.tm.character.equipment.shields.InvalidShieldException;
 import com.softwaremagico.tm.character.equipment.shields.Shield;
 import com.softwaremagico.tm.character.equipment.weapons.Weapon;
-import com.softwaremagico.tm.character.skills.AvailableSkill;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class EquipmentFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -137,8 +133,7 @@ public class EquipmentFragment extends CustomFragment {
                 try {
                     CharacterManager.getSelectedCharacter().setShield(shields.get(0));
                 } catch (InvalidShieldException e) {
-                    Snackbar
-                            .make(this, R.string.message_invalid_shield_armour_combination, Snackbar.LENGTH_SHORT).show();
+                    SnackbarGenerator.getErrorMessage(this, R.string.message_invalid_shield_armour_combination).show();
                 }
             }
         }
@@ -186,9 +181,7 @@ public class EquipmentFragment extends CustomFragment {
                 try {
                     CharacterManager.getSelectedCharacter().setArmour(armours.get(0));
                 } catch (InvalidArmourException e) {
-                    final Snackbar snackbar = Snackbar
-                            .make(this, R.string.message_invalid_shield_armour_combination, Snackbar.LENGTH_SHORT);
-                    snackbar.show();
+                    SnackbarGenerator.getErrorMessage(this, R.string.message_invalid_shield_armour_combination).show();
                 }
             }
         }

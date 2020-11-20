@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.core.DateUtils;
@@ -120,12 +121,10 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                         }
                         break;
                     case R.id.character_copy:
-                        Snackbar
-                                .make(cardView, "Copy", Snackbar.LENGTH_SHORT).show();
+                        SnackbarGenerator.getInfoMessage(cardView, "Copy").show();
                         break;
                     case R.id.character_delete:
-                        Snackbar
-                                .make(cardView, "Delete", Snackbar.LENGTH_SHORT).show();
+                        SnackbarGenerator.getInfoMessage(cardView, "Delete").show();
                         break;
                     default:
                         break;

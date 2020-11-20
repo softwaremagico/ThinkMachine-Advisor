@@ -24,27 +24,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.softwaremagico.tm.Element;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
-import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
+import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.benefices.InvalidBeneficeException;
 import com.softwaremagico.tm.character.blessings.Blessing;
 import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
-import com.softwaremagico.tm.character.skills.AvailableSkill;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TraitsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -132,9 +128,7 @@ public class TraitsFragment extends CustomFragment {
             try {
                 CharacterManager.getSelectedCharacter().setBlessings(blessings);
             } catch (TooManyBlessingsException e) {
-                final Snackbar snackbar = Snackbar
-                        .make(this, R.string.message_too_many_blessings, Snackbar.LENGTH_SHORT);
-                snackbar.show();
+                SnackbarGenerator.getErrorMessage(this, R.string.message_too_many_blessings).show();
             }
         }
     }
@@ -184,9 +178,7 @@ public class TraitsFragment extends CustomFragment {
             try {
                 CharacterManager.getSelectedCharacter().setBenefices(benefices);
             } catch (InvalidBeneficeException e) {
-                final Snackbar snackbar = Snackbar
-                        .make(this, R.string.message_invalid_benefice, Snackbar.LENGTH_SHORT);
-                snackbar.show();
+                SnackbarGenerator.getErrorMessage(this, R.string.message_invalid_benefice).show();
             }
         }
     }

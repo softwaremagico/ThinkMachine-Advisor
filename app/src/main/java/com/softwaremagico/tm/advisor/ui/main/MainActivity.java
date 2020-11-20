@@ -12,14 +12,21 @@
 
 package com.softwaremagico.tm.advisor.ui.main;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -28,21 +35,33 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.softwaremagico.tm.InvalidXmlElementException;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
 import com.softwaremagico.tm.advisor.ui.load.LoadCharacter;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
+import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
 import com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer;
 import com.softwaremagico.tm.file.modules.ModuleManager;
+import com.softwaremagico.tm.json.CharacterJsonManager;
+import com.softwaremagico.tm.json.InvalidJsonException;
 import com.softwaremagico.tm.language.Translator;
 import com.softwaremagico.tm.log.MachineLog;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String FILE_EXPORT_EXTENSION = ".tma";
+    private static final int FILE_SELECT_CODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +113,113 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings_new:
                 newCharacter();
                 return true;
+            case R.id.settings_export_file:
+                try {
+                    exportJson(parentLayout);
+                } catch (IOException e) {
+                    AdvisorLog.errorMessage(this.getClass().getName(), e);
+                }
+                return true;
+            case R.id.settings_import_file:
+                importJson(parentLayout);
+                return true;
             default:
                 return super.onOptionsItemSelected(menuItem);
+        }
+    }
+
+    private void importJson(View parentLayout) {
+
+    }
+
+    // Request code for selecting a PDF document.
+    private static final int PICK_TMA_FILE = 0;
+
+    private void openFile(Uri pickerInitialUri) {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        // Provide read access to files and sub-directories in the user-selected
+        // directory.
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        // Optionally, specify a URI for the file that should appear in the
+        // system file picker when it loads.
+        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
+
+        startActivityForResult(intent, PICK_TMA_FILE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
+        if (requestCode == PICK_TMA_FILE
+                && resultCode == Activity.RESULT_OK) {
+            // The result data contains a URI for the document or directory that
+            // the user selected.
+            Uri uri = null;
+            if (resultData != null) {
+                uri = resultData.getData();
+                try {
+                    CharacterManager.setSelectedCharacter(CharacterJsonManager.fromJson(readFile(uri)));
+                } catch (InvalidJsonException e) {
+                    SnackbarGenerator.getErrorMessage(this.getCurrentFocus(), R.string.invalid_json_file).show();
+                }
+            }
+        }
+    }
+
+    private String readFile(Uri uri) {
+        //Get the text file
+        File file = new File(uri.getPath());
+
+        //Read text from file
+        StringBuilder text = new StringBuilder();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                text.append(line);
+            }
+            br.close();
+        } catch (IOException e) {
+            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        }
+        return text.toString();
+    }
+
+
+    private void exportJson(View parentLayout) throws IOException {
+        final File imagePath = new File(parentLayout.getContext().getCacheDir(), FILE_EXPORT_EXTENSION);
+        File characterExport = new File(imagePath, CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
+                CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet." + FILE_EXPORT_EXTENSION :
+                "export_sheet." + FILE_EXPORT_EXTENSION);
+        final Uri contentUri = FileProvider.getUriForFile(parentLayout.getContext(), "com.softwaremagico.tm.advisor", characterExport);
+
+        if (contentUri != null) {
+            String jsonContent = CharacterJsonManager.toJson(CharacterManager.getSelectedCharacter());
+
+            try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(characterExport.getAbsolutePath())), true)) {
+                out.println(jsonContent);
+            }
+
+            final Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // temp permission for receiving app to read this file
+            shareIntent.setType(this.getContentResolver().getType(contentUri));
+            shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + (CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
+                    ": " + CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() : ""));
+            shareIntent.putExtra(Intent.EXTRA_TEXT, TextVariablesManager.replace(getString(R.string.export_body)));
+
+            final Intent chooser = Intent.createChooser(shareIntent, "Share File");
+            final List<ResolveInfo> resInfoList = parentLayout.getContext().getPackageManager().queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY);
+            for (final ResolveInfo resolveInfo : resInfoList) {
+                final String packageName = resolveInfo.activityInfo.packageName;
+                parentLayout.getContext().grantUriPermission(packageName, contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+            startActivity(chooser);
         }
     }
 
@@ -105,18 +229,16 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 try {
                     CharacterHandler.getInstance().save(getApplicationContext(), CharacterManager.getSelectedCharacter());
-                    Snackbar
-                            .make(parentLayout, R.string.message_character_saved_successfully, Snackbar.LENGTH_SHORT).show();
+                    SnackbarGenerator.getInfoMessage(parentLayout, R.string.message_character_saved_successfully).show();
                 } catch (Exception e) {
-                    Snackbar
-                            .make(parentLayout, R.string.message_character_saved_error, Snackbar.LENGTH_SHORT).show();
+                    SnackbarGenerator.getErrorMessage(parentLayout, R.string.message_character_saved_error).show();
                     MachineLog.errorMessage(this.getClass().getName(), e);
                 }
             }
         });
     }
 
-    private void newCharacter(){
+    private void newCharacter() {
         CharacterManager.addNewCharacter();
     }
 
