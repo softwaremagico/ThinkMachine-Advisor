@@ -48,4 +48,9 @@
     <string name="settings_new">Nuevo</string>
     <string name="export_body">Fichero para importar el personaje \'${CHARACTER_NAME}\' .</string>
     <string name="invalid_json_file">El fichero seleccionado es inválido.</string>
+    <string name="error_duplicating_character">El personaje no ha se ha podido duplicar. Error desconocido.</string>
+    <string name="message_duplication_ok">Personaje duplicado correctamente.</string>
+    <string name="character_deleted_correctly">Personaje eliminado!</string>
+    <string name="undo">Deshacer</string>
+    <string name="error_deleting_character">Error borrando el personaje!</string>
 </resources>

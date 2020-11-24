@@ -39,7 +39,7 @@ public final class CharacterManager {
 
     public interface CharacterUpdatedListener {
         void updated(CharacterPlayer characterPlayer);
-    }
+    } 
 
     public interface CharacterRaceUpdatedListener {
         void updated(CharacterPlayer characterPlayer);

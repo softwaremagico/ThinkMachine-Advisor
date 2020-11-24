@@ -25,17 +25,18 @@ import android.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.core.DateUtils;
+import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
+import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
+import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
+import com.softwaremagico.tm.character.InvalidGeneratedCharacter;
 import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.txt.CharacterSheet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
      */
     @Override
     public CharacterEntityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CharacterEntityViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.character_card, parent, false));
+        return new CharacterEntityViewHolder(this, LayoutInflater.from(parent.getContext()).inflate(R.layout.character_card, parent, false));
     }
 
     @Override
@@ -98,10 +99,12 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         private final Toolbar characterTitle;
         private TextView completeDescription;
         private final TextView sortDescription;
+        private final RecyclerView.Adapter adapter;
 
-        public CharacterEntityViewHolder(View cardView) {
+        public CharacterEntityViewHolder(RecyclerView.Adapter adapter, View cardView) {
             super(cardView);
             this.cardView = cardView;
+            this.adapter = adapter;
             completeDescription = cardView.findViewById(R.id.character_description_skills);
             sortDescription = cardView.findViewById(R.id.short_description);
             characterTitle = cardView.findViewById(R.id.character_title);
@@ -121,16 +124,44 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                         }
                         break;
                     case R.id.character_copy:
-                        SnackbarGenerator.getInfoMessage(cardView, "Copy").show();
+                        duplicate(characterEntity);
                         break;
                     case R.id.character_delete:
-                        SnackbarGenerator.getInfoMessage(cardView, "Delete").show();
+                        delete(characterEntity);
                         break;
                     default:
                         break;
                 }
                 return true;
             });
+        }
+
+        private void delete(final CharacterEntity characterEntity) {
+            try {
+                CharacterHandler.getInstance().delete(cardView.getContext(), characterEntity);
+                int index = dataSet.indexOf(characterEntity);
+                SnackbarGenerator.getInfoMessage(cardView, R.string.character_deleted_correctly, R.string.undo, v -> {
+                    dataSet.add(index, characterEntity);
+                    adapter.notifyDataSetChanged();
+                }).show();
+                dataSet.remove(characterEntity);
+                adapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                AdvisorLog.errorMessage(this.getClass().getName(), e);
+                SnackbarGenerator.getErrorMessage(cardView, R.string.error_deleting_character).show();
+            }
+        }
+
+        private void duplicate(CharacterEntity characterEntity) {
+            try {
+                CharacterEntity duplicatedCharacterEntity = new CharacterEntity(characterEntity.getCharacterPlayer().duplicate());
+                CharacterHandler.getInstance().save(cardView.getContext(), duplicatedCharacterEntity);
+                SnackbarGenerator.getInfoMessage(cardView, R.string.message_duplication_ok).show();
+                dataSet.add(0, duplicatedCharacterEntity);
+                adapter.notifyDataSetChanged();
+            } catch (InvalidGeneratedCharacter invalidGeneratedCharacter) {
+                SnackbarGenerator.getErrorMessage(cardView, R.string.error_duplicating_character).show();
+            }
         }
 
         public void update(CharacterEntity characterEntity) {

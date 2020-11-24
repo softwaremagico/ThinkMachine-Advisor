@@ -45,6 +45,7 @@ public class CharacterEntity extends BaseEntity {
     public String json;
 
     public CharacterEntity() {
+        super();
         creationTime = new Timestamp(new Date().getTime());
     }
 

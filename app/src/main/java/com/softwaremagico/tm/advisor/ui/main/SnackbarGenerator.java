@@ -20,6 +20,12 @@ public final class SnackbarGenerator {
         return snackbar;
     }
 
+    public static Snackbar getInfoMessage(View view, int messageResource, int actionResource, View.OnClickListener action) {
+        Snackbar snackbar = getInfoMessage(view, messageResource);
+        snackbar.setAction(actionResource, action);
+        return snackbar;
+    }
+
     public static Snackbar getInfoMessage(View view, String message) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
         snackbar.setActionTextColor(ContextCompat.getColor(view.getContext(), R.color.colorTextMessageOk));

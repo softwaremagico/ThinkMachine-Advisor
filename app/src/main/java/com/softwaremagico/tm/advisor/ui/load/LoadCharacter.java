@@ -23,21 +23,11 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
 import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
-import com.softwaremagico.tm.character.CharacterPlayer;
-import com.softwaremagico.tm.character.RandomizeCharacter;
-import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
-import com.softwaremagico.tm.file.PathManager;
-import com.softwaremagico.tm.random.exceptions.DuplicatedPreferenceException;
-import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
-import com.softwaremagico.tm.random.selectors.DifficultLevelPreferences;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class LoadCharacter extends DialogFragment {
 

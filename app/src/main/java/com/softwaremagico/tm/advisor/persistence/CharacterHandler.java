@@ -20,7 +20,6 @@ import com.softwaremagico.tm.character.CharacterPlayer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class CharacterHandler {
@@ -48,6 +47,20 @@ public class CharacterHandler {
             entities.get(characterPlayer).setCharacterPlayer(characterPlayer);
             AppDatabase.getInstance(context).getCharacterEntityDao().update(entities.get(characterPlayer));
         }
+    }
+
+    public void save(Context context, CharacterEntity characterEntity) {
+        if (!entities.values().contains(characterEntity)) {
+            AppDatabase.getInstance(context).getCharacterEntityDao().persist(characterEntity);
+            entities.put(characterEntity.getCharacterPlayer(), characterEntity);
+        } else {
+            AppDatabase.getInstance(context).getCharacterEntityDao().update(characterEntity);
+        }
+    }
+
+    public void delete(Context context, CharacterEntity characterEntity) {
+        AppDatabase.getInstance(context).getCharacterEntityDao().delete(characterEntity);
+        entities.remove(characterEntity.getCharacterPlayer());
     }
 
     public List<CharacterEntity> load(Context context) {

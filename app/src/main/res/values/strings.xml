@@ -49,4 +49,9 @@
     <string name="settings_new">New</string>
     <string name="export_body">File for importing \'${CHARACTER_NAME}\'  character.</string>
     <string name="invalid_json_file">The file selected is invalid</string>
+    <string name="error_duplicating_character">Character cannot be duplicated. Unknown error.</string>
+    <string name="message_duplication_ok">Character duplicated correctly!</string>
+    <string name="character_deleted_correctly">Character deleted!</string>
+    <string name="undo">Undo</string>
+    <string name="error_deleting_character">Error deleting the character!</string>
 </resources>
