@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/translated_tag"
         android:singleLine="true"
-        android:fontFamily="@font/selection"
+        ndroid:theme="@style/InputData"
         />
 
 </RelativeLayout>

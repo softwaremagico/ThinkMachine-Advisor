@@ -12,7 +12,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="50dp"
     android:orientation="vertical">
 
     <View android:id="@+id/strut"
@@ -25,7 +25,7 @@
     <TextView
         android:id="@+id/translated_tag"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="match_parent"
         android:singleLine="true"
         android:ellipsize="marquee"
         android:layout_alignRight="@id/strut"
@@ -39,12 +39,13 @@
     <NumberPicker
         android:id="@+id/picker"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="match_parent"
         android:layout_toRightOf="@id/translated_tag"
         android:layout_alignLeft="@id/strut"
         android:singleLine="true"
         android:text="right"
         android:fontFamily="@font/selection"
+        android:theme="@style/InputData"
         />
 
 </RelativeLayout>

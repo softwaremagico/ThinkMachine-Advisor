@@ -67,4 +67,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="InputData">
+        <item name="android:fontFamily">@font/selection</item>
+    </style>
+
+
 </resources>
