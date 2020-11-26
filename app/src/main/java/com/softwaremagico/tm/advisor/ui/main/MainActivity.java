@@ -45,7 +45,6 @@ import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
 import com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.json.CharacterJsonManager;
-import com.softwaremagico.tm.json.InvalidJsonException;
 import com.softwaremagico.tm.language.Translator;
 import com.softwaremagico.tm.log.MachineLog;
 
@@ -57,7 +56,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final String FILE_EXPORT_EXTENSION = "tma";
-    private static final int FILE_SELECT_CODE = 0;
+    private static final int PICK_TMA_FILE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,11 +119,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void importJson(View parentLayout) {
-
+        Intent chooseFile;
+        Intent intent;
+        chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
+        chooseFile.setType("*/*");
+        intent = Intent.createChooser(chooseFile, "Choose a file");
+        startActivityForResult(intent, PICK_TMA_FILE);
     }
 
-    // Request code for selecting a PDF document.
-    private static final int PICK_TMA_FILE = 0;
 
     private void openFile(Uri pickerInitialUri) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
@@ -142,8 +145,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
-        if (requestCode == PICK_TMA_FILE
-                && resultCode == Activity.RESULT_OK) {
+        if (requestCode == PICK_TMA_FILE && resultCode == Activity.RESULT_OK) {
             // The result data contains a URI for the document or directory that
             // the user selected.
             Uri uri = null;
@@ -151,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
                 uri = resultData.getData();
                 try {
                     CharacterManager.setSelectedCharacter(CharacterJsonManager.fromJson(FileUtils.readFile(uri)));
-                } catch (InvalidJsonException e) {
-                    SnackbarGenerator.getErrorMessage(this.getCurrentFocus(), R.string.invalid_json_file).show();
+                } catch (Exception e) {
+                    //SnackbarGenerator.getErrorMessage(this.getCurrentFocus(), R.string.invalid_json_file).show();
                 }
             }
         }
