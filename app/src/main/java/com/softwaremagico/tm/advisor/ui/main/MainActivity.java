@@ -19,7 +19,6 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,6 +44,7 @@ import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
 import com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.json.CharacterJsonManager;
+import com.softwaremagico.tm.json.InvalidJsonException;
 import com.softwaremagico.tm.language.Translator;
 import com.softwaremagico.tm.log.MachineLog;
 
@@ -55,7 +55,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String FILE_EXPORT_EXTENSION = "tma";
     private static final int PICK_TMA_FILE = 0;
 
     @Override
@@ -111,14 +110,14 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.settings_import_file:
-                importJson(parentLayout);
+                importJson();
                 return true;
             default:
                 return super.onOptionsItemSelected(menuItem);
         }
     }
 
-    private void importJson(View parentLayout) {
+    private void importJson() {
         Intent chooseFile;
         Intent intent;
         chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
@@ -128,23 +127,10 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_TMA_FILE);
     }
 
-
-    private void openFile(Uri pickerInitialUri) {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        // Provide read access to files and sub-directories in the user-selected
-        // directory.
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        // Optionally, specify a URI for the file that should appear in the
-        // system file picker when it loads.
-        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
-
-        startActivityForResult(intent, PICK_TMA_FILE);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
+        View parentLayout = findViewById(android.R.id.content);
         if (requestCode == PICK_TMA_FILE && resultCode == Activity.RESULT_OK) {
             // The result data contains a URI for the document or directory that
             // the user selected.
@@ -152,9 +138,10 @@ public class MainActivity extends AppCompatActivity {
             if (resultData != null) {
                 uri = resultData.getData();
                 try {
-                    CharacterManager.setSelectedCharacter(CharacterJsonManager.fromJson(FileUtils.readFile(uri)));
-                } catch (Exception e) {
-                    //SnackbarGenerator.getErrorMessage(this.getCurrentFocus(), R.string.invalid_json_file).show();
+                    CharacterManager.setSelectedCharacter(CharacterJsonManager.fromJson(FileUtils.readFile(this.getBaseContext(), uri)));
+                } catch (InvalidJsonException e) {
+                    AdvisorLog.errorMessage(this.getClass().getName(), e);
+                    SnackbarGenerator.getErrorMessage(parentLayout, R.string.invalid_json_file).show();
                 }
             }
         }
@@ -164,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
     private void exportJson(View view) throws IOException {
         final File exportsPath = new File(view.getContext().getCacheDir(), "export");
         File characterExport = new File(exportsPath, CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
-                CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet." + FILE_EXPORT_EXTENSION :
-                "export_sheet." + FILE_EXPORT_EXTENSION);
+                CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet." + FileUtils.CHARACTER_FILE_EXTENSION :
+                "export_sheet." + FileUtils.CHARACTER_FILE_EXTENSION);
         final Uri contentUri = FileProvider.getUriForFile(view.getContext(), "com.softwaremagico.tm.advisor", characterExport);
 
         if (contentUri != null) {
