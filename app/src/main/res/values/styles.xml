@@ -71,5 +71,11 @@
         <item name="android:fontFamily">@font/selection</item>
     </style>
 
+    <style name="Counter">
+        <item name="android:fontFamily">@font/selection</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
 
 </resources>
