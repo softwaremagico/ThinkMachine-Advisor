@@ -12,19 +12,23 @@
 
 package com.softwaremagico.tm.advisor.ui.character.characteristics;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
+import com.hookedonplay.decoviewlib.DecoView;
+import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.characteristics.CharacteristicDefinition;
@@ -41,6 +45,9 @@ import java.util.Map;
 public class CharacteristicsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private final Map<CharacteristicName, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private DecoView mDecoView;
+    private int mBackIndex;
+    private int mSeries1Index;
 
     public static CharacteristicsFragment newInstance(int index) {
         final CharacteristicsFragment fragment = new CharacteristicsFragment();
@@ -83,9 +90,48 @@ public class CharacteristicsFragment extends CustomFragment {
             }
         }
 
+        //Create counters
+        mDecoView = (DecoView) root.findViewById(R.id.characteristics_points);
+
+        // Create required data series on the DecoView
+        createBackSeries();
+        createDataSeries1(root);
+
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateCharacteristicsLimits(characterPlayer));
 
         return root;
+    }
+
+    private void createBackSeries() {
+        SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#FFE2E2E2"))
+                .setRange(0, 10, 0)
+                .setInitialVisibility(true)
+                .build();
+
+        mBackIndex = mDecoView.addSeries(seriesItem);
+    }
+
+    private void createDataSeries1(View root) {
+        final SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#FF6699FF"))
+                .setRange(0, 10, 0)
+                .setInitialVisibility(false)
+                .build();
+
+        final TextView textActivity3 = (TextView) root.findViewById(R.id.textRemaining);
+
+        seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
+            @Override
+            public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
+                textActivity3.setText(String.format("%.2f Km", currentPosition));
+            }
+
+            @Override
+            public void onSeriesItemDisplayProgress(float percentComplete) {
+
+            }
+        });
+
+        mSeries1Index = mDecoView.addSeries(seriesItem);
     }
 
 
