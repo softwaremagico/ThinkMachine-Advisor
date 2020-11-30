@@ -6,9 +6,15 @@ The app will be available on Google Play soon, and this site is only for hosting
 
 ## Roadmap
 
-0.1 Basic Character Sheet generation
+0.1 Basic Character Sheet generation.
+- 0.1.1 PDF Chart generation.
+- 0.1.2 Export PDF charts.
 
-0.2 Character management: load, save, import, export. 
+0.2 Options to load and save a character.
+- 0.2.1 Load character description.
+
+0.3 Options to import and export a character.
+- 0.3.1 Options to load a character sheet from google drive. 
 
 
 
