@@ -68,6 +68,11 @@ public class Counter extends Component {
         tagText.setText(tag);
     }
 
+    public void setTag(int string) {
+        tagText = findViewById(R.id.tag);
+        tagText.setText(string);
+    }
+
     private synchronized void rotate(float angle) {
         final Animation animation = new RotateAnimation(0.0f, angle, Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f);

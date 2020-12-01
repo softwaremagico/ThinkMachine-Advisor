@@ -21,10 +21,11 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.components.Counter;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.characteristics.CharacteristicDefinition;
@@ -41,6 +42,8 @@ import java.util.Map;
 public class CharacteristicsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private final Map<CharacteristicName, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private Counter characteristicCounter;
+    private Counter extraCounter;
 
     public static CharacteristicsFragment newInstance(int index) {
         final CharacteristicsFragment fragment = new CharacteristicsFragment();
@@ -62,6 +65,23 @@ public class CharacteristicsFragment extends CustomFragment {
                 translatedNumberPickers.get(characteristicDefinition.getCharacteristicName()).setValue(character.getCharacteristicValue(characteristicDefinition.getCharacteristicName()));
             }
         }
+
+        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addCharacteristicPointsUpdatedListeners(value -> {
+            characteristicCounter.setValue(FreeStyleCharacterCreation.getCharacteristicsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentCharacteristicPoints());
+        });
+        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addExtraPointsUpdatedListeners(() ->
+                extraCounter.setValue(FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()))
+        );
+
+
+        characteristicCounter.setValue(FreeStyleCharacterCreation.getCharacteristicsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentCharacteristicPoints());
+        extraCounter.setValue(FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()));
+
+        //Set listeners to counters
+        for (final Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
+            characteristicComponent.getValue().addValueChangeListener(newValue -> character.setCharacteristic(characteristicComponent.getKey(), newValue));
+        }
+
     }
 
 
@@ -83,7 +103,14 @@ public class CharacteristicsFragment extends CustomFragment {
             }
         }
 
-        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateCharacteristicsLimits(characterPlayer));
+        characteristicCounter = root.findViewById(R.id.characteristics_counter);
+        characteristicCounter.setTag(R.string.counter_characteristics);
+        extraCounter = root.findViewById(R.id.extra_counter);
+        extraCounter.setTag(R.string.counter_extra);
+
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+
+        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
 
         return root;
     }
@@ -121,7 +148,6 @@ public class CharacteristicsFragment extends CustomFragment {
         if (CharacterManager.getSelectedCharacter().getValue(characteristicDefinition.getCharacteristicName()) != null) {
             characteristicsNumberPicker.setValue(CharacterManager.getSelectedCharacter().getValue(characteristicDefinition.getCharacteristicName()));
         }
-        characteristicsNumberPicker.addValueChangeListener((picker, oldVal, newVal) -> CharacterManager.getSelectedCharacter().getCharacteristic(characteristicDefinition.getCharacteristicName()).setValue(newVal));
 
     }
 

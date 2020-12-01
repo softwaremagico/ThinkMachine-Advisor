@@ -27,6 +27,10 @@ public class TranslatedNumberPicker extends Component {
         super(context, attrs);
     }
 
+    public interface OnValueChanged {
+        void update(int newValue);
+    }
+
     @Override
     protected void init(Context context, AttributeSet attrs) {
         inflate(context, R.layout.translated_number_picker, this);
@@ -70,10 +74,15 @@ public class TranslatedNumberPicker extends Component {
         }
     }
 
-    public void addValueChangeListener(NumberPicker.OnValueChangeListener listener) {
+    public void addValueChangeListener(OnValueChanged listener) {
         final NumberPicker picker = findViewById(R.id.picker);
+        int oldValue;
         if (picker != null) {
-            picker.setOnValueChangedListener(listener);
+            picker.setOnScrollListener((view, scrollState) -> {
+                if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
+                    listener.update(picker.getValue());
+                }
+            });
         }
     }
 

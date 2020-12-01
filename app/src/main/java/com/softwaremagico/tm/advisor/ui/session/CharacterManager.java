@@ -80,7 +80,7 @@ public final class CharacterManager {
     }
 
 
-    public static CharacterPlayer getSelectedCharacter() {
+    public synchronized static CharacterPlayer getSelectedCharacter() {
         if (characters.isEmpty()) {
             addNewCharacter();
         }
@@ -92,6 +92,7 @@ public final class CharacterManager {
             CharacterManager.getSelectedCharacter().setRace(race);
             launchCharacterRaceUpdatedListeners(CharacterManager.getSelectedCharacter());
             launchCharacterUpdatedListeners(CharacterManager.getSelectedCharacter());
+            costCalculator = new CostCalculator(selectedCharacter);
         } catch (InvalidRaceException e) {
             AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
         }

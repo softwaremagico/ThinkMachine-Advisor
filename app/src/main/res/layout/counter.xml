@@ -12,15 +12,15 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="24dp"
-    android:layout_height="30dp"
+    android:layout_width="40dp"
+    android:layout_height="50dp"
     android:orientation="vertical"
     tools:context=".ui.components.Counter">
 
     <ImageView
         android:id="@+id/gear"
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="40dp"
         android:background="@drawable/ic_counter"/>
 
 
@@ -28,18 +28,17 @@
         android:id="@+id/value"
         style="@style/Counter"
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_gravity="top"
         android:layout_marginTop="1dp"
-        android:gravity="center"
-        android:text="8" />
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/tag"
         style="@style/CounterTag"
         android:layout_width="match_parent"
-        android:layout_height="6dp"
+        android:layout_height="12dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_vertical"
         android:maxLines="1"

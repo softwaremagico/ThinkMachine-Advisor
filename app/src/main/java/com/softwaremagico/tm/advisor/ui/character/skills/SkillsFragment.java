@@ -17,17 +17,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.softwaremagico.tm.InvalidXmlElementException;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
@@ -100,14 +99,11 @@ public class SkillsFragment extends CustomFragment {
 
         skillNumberPicker.setValue(CharacterManager.getSelectedCharacter().getSkillAssignedRanks(skill));
 
-        skillNumberPicker.addValueChangeListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                try {
-                    CharacterManager.getSelectedCharacter().setSkillRank(skill, newVal);
-                } catch (InvalidSkillException e) {
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
-                }
+        skillNumberPicker.addValueChangeListener(newValue -> {
+            try {
+                CharacterManager.getSelectedCharacter().setSkillRank(skill, newValue);
+            } catch (InvalidSkillException e) {
+                AdvisorLog.errorMessage(this.getClass().getName(), e);
             }
         });
     }
