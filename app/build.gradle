@@ -75,7 +75,6 @@ android {
             signingConfig signingConfigs.beta
             repositories {
                 mavenLocal()
-                maven { url "https://jitpack.io" }
             }
         }
 
@@ -84,7 +83,6 @@ android {
             versionNameSuffix "-alpha"
             repositories {
                 mavenLocal()
-                maven { url "https://jitpack.io" }
             }
             signingConfig signingConfigs.alpha
         }
@@ -93,7 +91,6 @@ android {
             minifyEnabled false
             repositories {
                 mavenLocal()
-                maven { url "https://jitpack.io" }
             }
         }
     }
@@ -156,7 +153,5 @@ dependencies {
 
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation "androidx.recyclerview:recyclerview:1.1.0"
-
-    implementation 'com.github.bmarrdev:android-DecoView-charting:v1.2'
 
 }

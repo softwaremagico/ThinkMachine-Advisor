@@ -10,7 +10,7 @@
  *  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  */
 
-package com.softwaremagico.tm.advisor.ui.load;
+package com.softwaremagico.tm.advisor.ui.animations;
 
 import android.view.View;
 import android.view.ViewGroup;
