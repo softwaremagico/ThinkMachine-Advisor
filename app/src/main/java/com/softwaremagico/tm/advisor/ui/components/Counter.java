@@ -19,6 +19,8 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.softwaremagico.tm.advisor.R;
 
 public class Counter extends Component {
@@ -59,6 +61,19 @@ public class Counter extends Component {
             }
         }
         currentValue = value;
+        setColor();
+    }
+
+    private void setColor() {
+        if (currentValue < 0) {
+            tagText.setTextColor(ContextCompat.getColor(getContext(), R.color.counterError));
+            valueText.setTextColor(ContextCompat.getColor(getContext(), R.color.counterError));
+            gearImage.setColorFilter(ContextCompat.getColor(getContext(), R.color.counterError), android.graphics.PorterDuff.Mode.SRC_IN);
+        } else {
+            tagText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+            valueText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+            gearImage.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark), android.graphics.PorterDuff.Mode.SRC_IN);
+        }
     }
 
     public void setTag(String tag) {

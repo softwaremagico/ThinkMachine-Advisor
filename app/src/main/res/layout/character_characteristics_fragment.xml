@@ -20,7 +20,7 @@
     <LinearLayout
         android:id="@+id/counters"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="65dp"
         android:orientation="horizontal"
         android:scrollbars="none"
         android:gravity="center"
