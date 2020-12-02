@@ -67,20 +67,15 @@ public class CharacteristicsFragment extends CustomFragment {
         }
 
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addCharacteristicPointsUpdatedListeners(value -> {
-            characteristicCounter.setValue(FreeStyleCharacterCreation.getCharacteristicsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentCharacteristicPoints());
+            characteristicCounter.setValue(FreeStyleCharacterCreation.getCharacteristicsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentCharacteristicPoints(), true);
         });
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addExtraPointsUpdatedListeners(() ->
-                extraCounter.setValue(FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()))
+                extraCounter.setValue(FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), true)
         );
 
 
-        characteristicCounter.setValue(FreeStyleCharacterCreation.getCharacteristicsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentCharacteristicPoints());
-        extraCounter.setValue(FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()));
-
-        //Set listeners to counters
-        for (final Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
-            characteristicComponent.getValue().addValueChangeListener(newValue -> character.setCharacteristic(characteristicComponent.getKey(), newValue));
-        }
+        characteristicCounter.setValue(FreeStyleCharacterCreation.getCharacteristicsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentCharacteristicPoints(), false);
+        extraCounter.setValue(FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), false);
 
     }
 
@@ -148,6 +143,9 @@ public class CharacteristicsFragment extends CustomFragment {
         if (CharacterManager.getSelectedCharacter().getValue(characteristicDefinition.getCharacteristicName()) != null) {
             characteristicsNumberPicker.setValue(CharacterManager.getSelectedCharacter().getValue(characteristicDefinition.getCharacteristicName()));
         }
+
+        //Set listeners to counter
+        characteristicsNumberPicker.addValueChangeListener(newValue -> CharacterManager.getSelectedCharacter().setCharacteristic(characteristicDefinition.getCharacteristicName(), newValue));
 
     }
 

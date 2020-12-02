@@ -71,6 +71,10 @@
         <item name="android:fontFamily">@font/selection</item>
     </style>
 
+    <style name="NumberPicker">
+        <item name="android:fontFamily">@font/selection</item>
+    </style>
+
     <style name="Counter">
         <item name="android:fontFamily">@font/selection</item>
         <item name="android:textStyle">bold</item>

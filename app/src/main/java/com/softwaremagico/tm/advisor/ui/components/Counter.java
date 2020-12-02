@@ -48,16 +48,14 @@ public class Counter extends Component {
         valueText = findViewById(R.id.value);
     }
 
-    public void setValue(int value) {
+    public void setValue(int value, boolean animation) {
         valueText = findViewById(R.id.value);
         valueText.setText(value + "");
-        if (currentValue < value) {
-            for (int i = 0; i < value - currentValue; i++) {
-                rotate(45f);
-            }
-        } else {
-            for (int i = 0; i < currentValue - value; i++) {
-                rotate(-45f);
+        if (animation) {
+            if (currentValue < value) {
+                rotate(45f * (value - currentValue));
+            } else {
+                rotate(-45f * (currentValue - value));
             }
         }
         currentValue = value;
@@ -73,7 +71,7 @@ public class Counter extends Component {
         tagText.setText(string);
     }
 
-    private synchronized void rotate(float angle) {
+    private void rotate(float angle) {
         final Animation animation = new RotateAnimation(0.0f, angle, Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f);
         animation.setFillAfter(true);
