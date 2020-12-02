@@ -54,10 +54,8 @@ public class Counter extends Component {
         valueText = findViewById(R.id.value);
         valueText.setText(value + "");
         if (animation) {
-            if (currentValue < value) {
-                rotate(45f * (value - currentValue));
-            } else {
-                rotate(-45f * (currentValue - value));
+            if (currentValue != value) {
+                rotate(45f * (float) (value - currentValue));
             }
         }
         currentValue = value;
