@@ -17,15 +17,18 @@
     <color name="colorUnselected">#00000000</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorContrast">#FFFFFF</color>
+    <color name="colorError">#d5100a</color>
 
 
-    <color name="colorTextMessageOk">#ffffff</color>
+    <color name="colorTextMessageOk">@color/colorContrast</color>
     <color name="colorBackgroundMessageOk">#382b48</color>
-    <color name="colorTextMessageError">#ffffff</color>
+    <color name="colorTextMessageError">@color/colorContrast</color>
     <color name="colorBackgroundMessageError">#6e0309</color>
 
-    <color name="counterError">#d5100a</color>
+    <color name="counterError">@color/colorError</color>
+    <color name="counterNormal">@color/colorPrimaryDark</color>
 
+    <color name="statusInvalid">@color/colorError</color>
     <color name="statusUndefined">#6c6689</color>
     <color name="statusDraft">#bfa0b2</color>
     <color name="statusNotStarted">#aa5c94</color>
