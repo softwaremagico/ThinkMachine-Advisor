@@ -65,13 +65,21 @@ public class Counter extends Component {
     private void setColor() {
         if (currentValue < 0) {
             tagText.setTextColor(ContextCompat.getColor(getContext(), R.color.counterError));
-            valueText.setTextColor(ContextCompat.getColor(getContext(), R.color.counterError));
+            valueText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorContrast));
             gearImage.setColorFilter(ContextCompat.getColor(getContext(), R.color.counterError), android.graphics.PorterDuff.Mode.SRC_IN);
         } else {
-            tagText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-            valueText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-            gearImage.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark), android.graphics.PorterDuff.Mode.SRC_IN);
+            tagText.setTextColor(ContextCompat.getColor(getContext(), getMainColor()));
+            valueText.setTextColor(ContextCompat.getColor(getContext(), getTextColor()));
+            gearImage.setColorFilter(ContextCompat.getColor(getContext(), getMainColor()), android.graphics.PorterDuff.Mode.SRC_IN);
         }
+    }
+
+    protected int getMainColor() {
+        return R.color.colorPrimaryDark;
+    }
+
+    protected int getTextColor() {
+        return R.color.colorContrast;
     }
 
     public void setTag(String tag) {
