@@ -50,6 +50,7 @@ public class TranslatedNumberPicker extends Component {
         }
         tagText.setTextAppearance(R.style.CharacterInfo);
         picker = findViewById(R.id.picker);
+        picker.setWrapSelectorWheel(false);
     }
 
     public void setLabel(String text) {
