@@ -28,6 +28,10 @@
     <color name="counterError">@color/colorError</color>
     <color name="counterCharacteristics">@color/colorPrimaryDark</color>
     <color name="counterCharacteristicsText">@color/colorContrast</color>
+    <color name="counterSkills">@color/colorPrimary</color>
+    <color name="counterSkillsText">@color/colorContrast</color>
+    <color name="counterCybernetics">#554b6b</color>
+    <color name="counterCyberneticsText">@color/colorContrast</color>
     <color name="counterExtra">#0800b3</color>
     <color name="counterExtraText">@color/colorContrast</color>
 
