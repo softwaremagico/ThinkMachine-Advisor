@@ -29,6 +29,8 @@ public class Counter extends Component {
     private ImageView gearImage;
     private TextView valueText;
     private int currentValue = 0;
+    private int gearColor = R.color.colorPrimaryDark;
+    private int textColor = R.color.colorContrast;
 
     public Counter(Context context) {
         this(context, null);
@@ -44,22 +46,29 @@ public class Counter extends Component {
         initComponents(attrs);
     }
 
-    private void initComponents(AttributeSet attrs) {
+    protected void initComponents(AttributeSet attrs) {
         tagText = findViewById(R.id.tag);
         gearImage = findViewById(R.id.gear);
         valueText = findViewById(R.id.value);
     }
 
     public void setValue(int value, boolean animation) {
-        valueText = findViewById(R.id.value);
         valueText.setText(value + "");
         if (animation) {
             if (currentValue != value) {
-                rotate(45f * (float) (value - currentValue));
+                rotate(45f * (float) (value - currentValue), gearImage);
             }
         }
-        currentValue = value;
+        setCurrentValue(value);
         setColor();
+    }
+
+    protected int getCurrentValue() {
+        return currentValue;
+    }
+
+    protected void setCurrentValue(int currentValue) {
+        this.currentValue = currentValue;
     }
 
     private void setColor() {
@@ -68,18 +77,26 @@ public class Counter extends Component {
             valueText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorContrast));
             gearImage.setColorFilter(ContextCompat.getColor(getContext(), R.color.counterError), android.graphics.PorterDuff.Mode.SRC_IN);
         } else {
-            tagText.setTextColor(ContextCompat.getColor(getContext(), getMainColor()));
+            tagText.setTextColor(ContextCompat.getColor(getContext(), getGearColor()));
             valueText.setTextColor(ContextCompat.getColor(getContext(), getTextColor()));
-            gearImage.setColorFilter(ContextCompat.getColor(getContext(), getMainColor()), android.graphics.PorterDuff.Mode.SRC_IN);
+            gearImage.setColorFilter(ContextCompat.getColor(getContext(), getGearColor()), android.graphics.PorterDuff.Mode.SRC_IN);
         }
     }
 
-    protected int getMainColor() {
-        return R.color.colorPrimaryDark;
+    public int getGearColor() {
+        return gearColor;
     }
 
-    protected int getTextColor() {
-        return R.color.colorContrast;
+    public void setGearColor(int gearColor) {
+        this.gearColor = gearColor;
+    }
+
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
     }
 
     public void setTag(String tag) {
@@ -92,7 +109,7 @@ public class Counter extends Component {
         tagText.setText(string);
     }
 
-    private void rotate(float angle) {
+    private void rotate(float angle, ImageView gearImage) {
         final Animation animation = new RotateAnimation(0.0f, angle, Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f);
         animation.setFillAfter(true);

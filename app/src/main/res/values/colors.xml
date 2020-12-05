@@ -26,7 +26,10 @@
     <color name="colorBackgroundMessageError">#6e0309</color>
 
     <color name="counterError">@color/colorError</color>
-    <color name="counterNormal">@color/colorPrimaryDark</color>
+    <color name="counterCharacteristics">@color/colorPrimaryDark</color>
+    <color name="counterCharacteristicsText">@color/colorContrast</color>
+    <color name="counterExtra">#0800b3</color>
+    <color name="counterExtraText">@color/colorContrast</color>
 
     <color name="statusInvalid">@color/colorError</color>
     <color name="statusUndefined">#6c6689</color>

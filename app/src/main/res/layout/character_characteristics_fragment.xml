@@ -33,7 +33,7 @@
             android:gravity="center"
             android:layout_gravity="center_vertical" />
 
-        <com.softwaremagico.tm.advisor.ui.components.Counter
+        <com.softwaremagico.tm.advisor.ui.components.SegmentCounter
             android:id="@+id/extra_counter"
             android:layout_width="100dp"
             android:layout_height="match_parent"

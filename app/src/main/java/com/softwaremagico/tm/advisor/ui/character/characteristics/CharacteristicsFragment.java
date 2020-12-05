@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.Counter;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
+import com.softwaremagico.tm.advisor.ui.components.SegmentCounter;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
@@ -32,6 +33,7 @@ import com.softwaremagico.tm.character.characteristics.CharacteristicDefinition;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.characteristics.CharacteristicType;
 import com.softwaremagico.tm.character.characteristics.CharacteristicsDefinitionFactory;
+import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 
@@ -43,7 +45,7 @@ public class CharacteristicsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private final Map<CharacteristicName, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private Counter characteristicCounter;
-    private Counter extraCounter;
+    private SegmentCounter extraCounter;
 
     public static CharacteristicsFragment newInstance(int index) {
         final CharacteristicsFragment fragment = new CharacteristicsFragment();
@@ -70,12 +72,14 @@ public class CharacteristicsFragment extends CustomFragment {
             characteristicCounter.setValue(FreeStyleCharacterCreation.getCharacteristicsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentCharacteristicPoints(), true);
         });
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addExtraPointsUpdatedListeners(() ->
-                extraCounter.setValue(FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), true)
+                extraCounter.setValue(CharacterManager.getCostCalculator().getCurrentCharacteristicExtraPoints() * CostCalculator.CHARACTERISTIC_EXTRA_POINTS_COST,
+                        FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), true)
         );
 
 
         characteristicCounter.setValue(FreeStyleCharacterCreation.getCharacteristicsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentCharacteristicPoints(), false);
-        extraCounter.setValue(FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), false);
+        extraCounter.setValue(CharacterManager.getCostCalculator().getCurrentCharacteristicExtraPoints() * CostCalculator.CHARACTERISTIC_EXTRA_POINTS_COST,
+                FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), false);
 
     }
 
@@ -100,8 +104,15 @@ public class CharacteristicsFragment extends CustomFragment {
 
         characteristicCounter = root.findViewById(R.id.characteristics_counter);
         characteristicCounter.setTag(R.string.counter_characteristics);
+        characteristicCounter.setGearColor(R.color.counterCharacteristics);
+        characteristicCounter.setTextColor(R.color.counterCharacteristicsText);
         extraCounter = root.findViewById(R.id.extra_counter);
-        extraCounter.setTag(R.string.counter_extra);
+        extraCounter.setTag(R.string.counter_characteristics);
+        extraCounter.setGearColor(R.color.counterCharacteristics);
+        extraCounter.setTextColor(R.color.counterCharacteristicsText);
+        extraCounter.setTag2(R.string.counter_extra);
+        extraCounter.setGearColor2(R.color.counterExtra);
+        extraCounter.setTextColor2(R.color.counterExtraText);
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
 
