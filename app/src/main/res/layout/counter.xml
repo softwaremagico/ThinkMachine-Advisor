@@ -16,7 +16,7 @@
     android:layout_width="40dp"
     android:layout_height="55dp"
     android:orientation="vertical"
-    tools:context=".ui.components.Counter">
+    tools:context=".ui.components.counters.Counter">
 
     <ImageView
         android:id="@+id/gear"

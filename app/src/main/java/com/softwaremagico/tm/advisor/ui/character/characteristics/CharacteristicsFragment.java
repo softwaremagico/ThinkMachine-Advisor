@@ -22,8 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.ui.components.CharacteristicsCounter;
-import com.softwaremagico.tm.advisor.ui.components.CharacteristicsExtraCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsExtraCounter;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;

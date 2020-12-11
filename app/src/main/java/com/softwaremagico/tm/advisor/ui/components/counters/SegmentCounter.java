@@ -10,10 +10,11 @@
  *  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  */
 
-package com.softwaremagico.tm.advisor.ui.components;
+package com.softwaremagico.tm.advisor.ui.components.counters;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -39,7 +40,7 @@ public abstract class SegmentCounter extends Counter {
 
     @Override
     protected void init(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.segment_counter, this);
+        View.inflate(context, R.layout.segment_counter, this);
         initComponents(attrs);
     }
 

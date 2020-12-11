@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.components;
+package com.softwaremagico.tm.advisor.ui.components.counters;
 
 import android.content.Context;
 import android.util.AttributeSet;

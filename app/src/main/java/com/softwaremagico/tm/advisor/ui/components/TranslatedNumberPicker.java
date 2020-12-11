@@ -84,7 +84,6 @@ public class TranslatedNumberPicker extends Component {
                 selectedValue = newVal;
             });
             picker.setOnScrollListener((view, scrollState) -> {
-                System.out.println(scrollState + " -> " + selectedValue);
                 if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE && oldValue != picker.getValue()) {
                     listener.update(selectedValue);
                     oldValue = selectedValue;

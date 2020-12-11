@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="80dp"
     android:layout_height="55dp"
-    tools:context=".ui.components.CharacteristicsExtraCounter">
+    tools:context=".ui.components.counters.CharacteristicsExtraCounter">
 
     <include android:id="@+id/counter" layout="@layout/segment_counter" />
 

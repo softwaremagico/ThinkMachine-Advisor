@@ -17,7 +17,7 @@
     android:layout_width="80dp"
     android:layout_height="55dp"
     android:orientation="vertical"
-    tools:context=".ui.components.SegmentCounter">
+    tools:context=".ui.components.counters.SegmentCounter">
 
     <ImageView
         android:id="@+id/gear"

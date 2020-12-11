@@ -10,7 +10,7 @@
  *  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  */
 
-package com.softwaremagico.tm.advisor.ui.components;
+package com.softwaremagico.tm.advisor.ui.components.counters;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -22,6 +22,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.components.Component;
 import com.softwaremagico.tm.character.CharacterPlayer;
 
 public abstract class Counter extends Component {
