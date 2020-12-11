@@ -22,15 +22,15 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.character.CharacterPlayer;
 
-public class Counter extends Component {
+public abstract class Counter extends Component {
     private static final int DURATION = 500;
     private TextView tagText;
     private ImageView gearImage;
     private TextView valueText;
     private int currentValue = 0;
-    private int gearColor = R.color.colorPrimaryDark;
-    private int textColor = R.color.colorContrast;
+
 
     public Counter(Context context) {
         this(context, null);
@@ -83,26 +83,12 @@ public class Counter extends Component {
         }
     }
 
-    public int getGearColor() {
-        return gearColor;
-    }
 
-    public void setGearColor(int gearColor) {
-        this.gearColor = gearColor;
-    }
+    public abstract void setCharacter(CharacterPlayer character);
 
-    public int getTextColor() {
-        return textColor;
-    }
+    protected abstract int getGearColor();
 
-    public void setTextColor(int textColor) {
-        this.textColor = textColor;
-    }
-
-    public void setTag(String tag) {
-        tagText = findViewById(R.id.tag);
-        tagText.setText(tag);
-    }
+    protected abstract int getTextColor();
 
     public void setTag(int string) {
         tagText = findViewById(R.id.tag);

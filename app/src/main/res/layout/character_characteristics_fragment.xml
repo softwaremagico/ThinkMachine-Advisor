@@ -26,14 +26,14 @@
         android:gravity="center"
         android:paddingBottom="10dp">
 
-        <com.softwaremagico.tm.advisor.ui.components.Counter
+        <com.softwaremagico.tm.advisor.ui.components.CharacteristicsCounter
             android:id="@+id/characteristics_counter"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_gravity="center_vertical" />
 
-        <com.softwaremagico.tm.advisor.ui.components.SegmentCounter
+        <com.softwaremagico.tm.advisor.ui.components.CharacteristicsExtraCounter
             android:id="@+id/extra_counter"
             android:layout_width="100dp"
             android:layout_height="match_parent"

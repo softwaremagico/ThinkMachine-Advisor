@@ -23,14 +23,11 @@ import androidx.core.content.ContextCompat;
 
 import com.softwaremagico.tm.advisor.R;
 
-public class SegmentCounter extends Counter {
+public abstract class SegmentCounter extends Counter {
     private static final int DURATION = 500;
-    private TextView tagText2;
     private ImageView gearImage2;
     private TextView valueText2;
     private int totalValue;
-    private int gearColor2 = R.color.colorPrimaryDark;
-    private int textColor2 = R.color.colorContrast;
 
     public SegmentCounter(Context context) {
         super(context, null);
@@ -49,7 +46,6 @@ public class SegmentCounter extends Counter {
     @Override
     protected void initComponents(AttributeSet attrs) {
         super.initComponents(attrs);
-        tagText2 = findViewById(R.id.tag2);
         gearImage2 = findViewById(R.id.gear2);
         valueText2 = findViewById(R.id.value2);
     }
@@ -78,41 +74,18 @@ public class SegmentCounter extends Counter {
 
     private void setColor() {
         if (getTotalValue() < 0) {
-            tagText2.setTextColor(ContextCompat.getColor(getContext(), R.color.counterError));
             valueText2.setTextColor(ContextCompat.getColor(getContext(), R.color.colorContrast));
             gearImage2.setColorFilter(ContextCompat.getColor(getContext(), R.color.counterError), android.graphics.PorterDuff.Mode.SRC_IN);
         } else {
-            tagText2.setTextColor(ContextCompat.getColor(getContext(), getGearColor2()));
             valueText2.setTextColor(ContextCompat.getColor(getContext(), getTextColor2()));
             gearImage2.setColorFilter(ContextCompat.getColor(getContext(), getGearColor2()), android.graphics.PorterDuff.Mode.SRC_IN);
         }
     }
 
-    public int getGearColor2() {
-        return gearColor2;
-    }
+    public abstract int getGearColor2();
 
-    public void setGearColor2(int gearColor) {
-        this.gearColor2 = gearColor;
-    }
+    public abstract int getTextColor2();
 
-    public int getTextColor2() {
-        return textColor2;
-    }
-
-    public void setTextColor2(int textColor) {
-        this.textColor2 = textColor;
-    }
-
-    public void setTag2(String tag) {
-        tagText2 = findViewById(R.id.tag2);
-        tagText2.setText(tag);
-    }
-
-    public void setTag2(int string) {
-        tagText2 = findViewById(R.id.tag2);
-        tagText2.setText(string);
-    }
 
     private void rotate(float angle, ImageView gearImage) {
         final Animation animation = new RotateAnimation(0.0f, angle, Animation.RELATIVE_TO_SELF, 0.5f,

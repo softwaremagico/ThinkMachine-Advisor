@@ -25,15 +25,17 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.Element;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
+import com.softwaremagico.tm.advisor.ui.components.CharacteristicsCounter;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
+import com.softwaremagico.tm.advisor.ui.components.ExtraCounter;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
@@ -44,6 +46,8 @@ import com.softwaremagico.tm.character.races.Race;
 public class CharacterInfoFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private CharacterInfoViewModel mViewModel;
+    private CharacteristicsCounter characteristicsCounter;
+    private ExtraCounter extraCounter;
 
     public static CharacterInfoFragment newInstance(int index) {
         final CharacterInfoFragment fragment = new CharacterInfoFragment();
@@ -66,6 +70,9 @@ public class CharacterInfoFragment extends CustomFragment {
         createRaceSpinner(root);
         createFactionSpinner(root);
         createPlanetSpinner(root);
+
+        characteristicsCounter = root.findViewById(R.id.characteristics_counter);
+        extraCounter = root.findViewById(R.id.extra_counter);
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
 
@@ -96,6 +103,9 @@ public class CharacterInfoFragment extends CustomFragment {
         factionsSelector.setSelection(CharacterManager.getSelectedCharacter().getFaction());
         final ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
         planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
+
+        characteristicsCounter.setCharacter(character);
+        extraCounter.setCharacter(character);
     }
 
     private void createNameText(View root) {
