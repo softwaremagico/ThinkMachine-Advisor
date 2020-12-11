@@ -26,6 +26,8 @@ import com.softwaremagico.tm.advisor.R;
 
 public abstract class SegmentCounter extends Counter {
     private static final int DURATION = 500;
+    private int gear2Color = R.color.counterExtra;
+    private int text2Color = R.color.counterExtraText;
     private ImageView gearImage2;
     private TextView valueText2;
     private int totalValue;
@@ -83,9 +85,13 @@ public abstract class SegmentCounter extends Counter {
         }
     }
 
-    public abstract int getGearColor2();
+    public int getGearColor2() {
+        return gear2Color;
+    }
 
-    public abstract int getTextColor2();
+    public int getTextColor2() {
+        return text2Color;
+    }
 
 
     private void rotate(float angle, ImageView gearImage) {

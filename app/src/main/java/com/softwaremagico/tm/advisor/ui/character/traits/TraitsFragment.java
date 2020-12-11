@@ -30,6 +30,8 @@ import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
+import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.TraitsExtraCounter;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
@@ -46,8 +48,11 @@ public class TraitsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private TraitsViewModel mViewModel;
 
-    IncrementalElementsLayout blessingsLayout;
-    IncrementalElementsLayout beneficesLayout;
+    private TraitsCounter traitsCounter;
+    private TraitsExtraCounter extraCounter;
+
+    private IncrementalElementsLayout blessingsLayout;
+    private IncrementalElementsLayout beneficesLayout;
 
     public static TraitsFragment newInstance(int index) {
         final TraitsFragment fragment = new TraitsFragment();
@@ -61,6 +66,8 @@ public class TraitsFragment extends CustomFragment {
     public void setCharacter(View root, CharacterPlayer character) {
         blessingsLayout.setElements(character.getSelectedBlessings());
         beneficesLayout.setElements(character.getSelectedBenefices());
+        traitsCounter.setCharacter(character);
+        extraCounter.setCharacter(character);
     }
 
 
@@ -78,6 +85,9 @@ public class TraitsFragment extends CustomFragment {
         addSection(ThinkMachineTranslator.getTranslatedText("beneficesTable"), rootLayout);
         beneficesLayout = new BeneficesLayout(getContext(), true);
         rootLayout.addView(beneficesLayout);
+
+        traitsCounter = rootView.findViewById(R.id.traits_counter);
+        extraCounter = rootView.findViewById(R.id.extra_counter);
 
         setCharacter(rootView, CharacterManager.getSelectedCharacter());
 

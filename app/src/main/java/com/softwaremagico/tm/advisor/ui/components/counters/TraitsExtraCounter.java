@@ -9,12 +9,11 @@ import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 
-public class CharacteristicsExtraCounter extends SegmentCounter {
-    private int gearColor = R.color.counterCharacteristics;
-    private int textColor = R.color.counterCharacteristicsText;
+public class TraitsExtraCounter extends SegmentCounter {
+    private int gearColor = R.color.counterTraits;
+    private int textColor = R.color.counterTraitsText;
 
-
-    public CharacteristicsExtraCounter(Context context) {
+    public TraitsExtraCounter(Context context) {
         super(context);
     }
 
@@ -24,17 +23,17 @@ public class CharacteristicsExtraCounter extends SegmentCounter {
         setTag(R.string.counter_extra);
     }
 
-    public CharacteristicsExtraCounter(Context context, AttributeSet attrs) {
+    public TraitsExtraCounter(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
     public void setCharacter(CharacterPlayer character) {
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addExtraPointsUpdatedListeners(() ->
-                setValue(CharacterManager.getCostCalculator().getCurrentCharacteristicExtraPoints() * CostCalculator.CHARACTERISTIC_EXTRA_POINTS_COST,
+                setValue(CharacterManager.getCostCalculator().getCurrentTraitsExtraPoints() * CostCalculator.TRAITS_EXTRA_POINTS_COST,
                         FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), true)
         );
-        setValue(CharacterManager.getCostCalculator().getCurrentCharacteristicExtraPoints() * CostCalculator.CHARACTERISTIC_EXTRA_POINTS_COST,
+        setValue(CharacterManager.getCostCalculator().getCurrentTraitsExtraPoints() * CostCalculator.TRAITS_EXTRA_POINTS_COST,
                 FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), false);
     }
 

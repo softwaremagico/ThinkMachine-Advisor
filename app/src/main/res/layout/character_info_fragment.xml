@@ -91,6 +91,20 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center" />
 
+            <com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter
+                android:id="@+id/skills_counter"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:gravity="center" />
+
+            <com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter
+                android:id="@+id/traits_counter"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:gravity="center" />
+
             <com.softwaremagico.tm.advisor.ui.components.counters.ExtraCounter
                 android:id="@+id/extra_counter"
                 android:layout_width="90dp"

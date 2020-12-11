@@ -27,14 +27,16 @@ import androidx.lifecycle.ViewModelProvider;
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
-import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
-import com.softwaremagico.tm.advisor.ui.components.counters.ExtraCounter;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
+import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.ExtraCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.factions.Faction;
@@ -47,6 +49,8 @@ public class CharacterInfoFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private CharacterInfoViewModel mViewModel;
     private CharacteristicsCounter characteristicsCounter;
+    private SkillsCounter skillsCounter;
+    private TraitsCounter traitsCounter;
     private ExtraCounter extraCounter;
 
     public static CharacterInfoFragment newInstance(int index) {
@@ -72,6 +76,8 @@ public class CharacterInfoFragment extends CustomFragment {
         createPlanetSpinner(root);
 
         characteristicsCounter = root.findViewById(R.id.characteristics_counter);
+        skillsCounter = root.findViewById(R.id.skills_counter);
+        traitsCounter = root.findViewById(R.id.traits_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
@@ -106,6 +112,8 @@ public class CharacterInfoFragment extends CustomFragment {
 
         characteristicsCounter.setCharacter(character);
         extraCounter.setCharacter(character);
+        skillsCounter.setCharacter(character);
+        traitsCounter.setCharacter(character);
     }
 
     private void createNameText(View root) {

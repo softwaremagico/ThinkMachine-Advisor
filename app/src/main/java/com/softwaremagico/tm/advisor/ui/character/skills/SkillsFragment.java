@@ -26,6 +26,8 @@ import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
+import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.SkillsExtraCounter;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
@@ -39,6 +41,8 @@ import java.util.Map;
 public class SkillsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private final Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private SkillsCounter skillsCounter;
+    private SkillsExtraCounter extraCounter;
 
     public static SkillsFragment newInstance(int index) {
         final SkillsFragment fragment = new SkillsFragment();
@@ -52,6 +56,8 @@ public class SkillsFragment extends CustomFragment {
     public void setCharacter(View root, CharacterPlayer character) {
         updateSkillsLimits(character);
         refreshSkillsValues(character);
+        skillsCounter.setCharacter(character);
+        extraCounter.setCharacter(character);
     }
 
 
@@ -79,6 +85,11 @@ public class SkillsFragment extends CustomFragment {
         } catch (InvalidXmlElementException e) {
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }
+
+        skillsCounter = root.findViewById(R.id.skills_counter);
+        extraCounter = root.findViewById(R.id.extra_counter);
+
+        setCharacter(root, CharacterManager.getSelectedCharacter());
 
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateSkillsLimits(characterPlayer));
 
