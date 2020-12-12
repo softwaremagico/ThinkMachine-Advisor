@@ -38,8 +38,9 @@ public class TabCharacterCreationFragment extends Fragment {
         viewPager.setAdapter(characterSectionsPagerAdapter);
 
         //Avoid refreshing of fragments. We will update them manually.
-        //viewPager.setOffscreenPageLimit(characterSectionsPagerAdapter.getCount());
-        viewPager.setOffscreenPageLimit(1);
+        viewPager.setOffscreenPageLimit(characterSectionsPagerAdapter.getCount());
+        //Force lazy loading of fragmetns.
+        // viewPager.setOffscreenPageLimit(1);
 
         final TabLayout tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
