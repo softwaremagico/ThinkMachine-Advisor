@@ -41,6 +41,8 @@ import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
 import com.softwaremagico.tm.advisor.ui.load.LoadCharacter;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
+import com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer;
+import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.json.InvalidJsonException;
 import com.softwaremagico.tm.language.Translator;
@@ -60,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         Translator.setLanguage(Locale.getDefault().getLanguage());
         //Preload all data in a secondary thread.
-//        new Thread(() -> {
-//            ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
-//        }).start();
+        new Thread(() -> {
+            ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+        }).start();
 
         super.onCreate(savedInstanceState);
 

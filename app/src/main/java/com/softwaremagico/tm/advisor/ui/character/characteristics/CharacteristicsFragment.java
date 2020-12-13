@@ -64,7 +64,9 @@ public class CharacteristicsFragment extends CustomFragment {
             }
             for (final CharacteristicDefinition characteristicDefinition : CharacteristicsDefinitionFactory.getInstance().getAll(type, Locale.getDefault().getLanguage(),
                     ModuleManager.DEFAULT_MODULE)) {
-                translatedNumberPickers.get(characteristicDefinition.getCharacteristicName()).setValue(character.getCharacteristicValue(characteristicDefinition.getCharacteristicName()));
+                if (translatedNumberPickers.get(characteristicDefinition.getCharacteristicName()) != null) {
+                    translatedNumberPickers.get(characteristicDefinition.getCharacteristicName()).setValue(character.getCharacteristicValue(characteristicDefinition.getCharacteristicName()));
+                }
             }
         }
 

@@ -62,9 +62,15 @@ public class EquipmentFragment extends CustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-        weaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
-        armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedArmour());
-        shieldsLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedShield());
+        if (weaponsLayout != null) {
+            weaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
+        }
+        if (armoursLayout != null) {
+            armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedArmour());
+        }
+        if (shieldsLayout != null) {
+            shieldsLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedShield());
+        }
     }
 
     @Override

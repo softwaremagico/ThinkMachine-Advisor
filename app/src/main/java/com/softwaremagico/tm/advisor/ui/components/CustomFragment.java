@@ -54,8 +54,10 @@ public abstract class CustomFragment extends Fragment {
      * Lazy Loading Method
      */
     public void lazyInitData() {
-        isInitialized = true;
-        initData();
+        if (!isInitialized) {
+            isInitialized = true;
+            initData();
+        }
     }
 
     /**
@@ -78,7 +80,7 @@ public abstract class CustomFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        lazyInitData();
+       // lazyInitData();
     }
 
     @Override

@@ -66,10 +66,18 @@ public class TraitsFragment extends CustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-        blessingsLayout.setElements(character.getSelectedBlessings());
-        beneficesLayout.setElements(character.getSelectedBenefices());
-        traitsCounter.setCharacter(character);
-        extraCounter.setCharacter(character);
+        if (blessingsLayout != null) {
+            blessingsLayout.setElements(character.getSelectedBlessings());
+        }
+        if (beneficesLayout != null) {
+            beneficesLayout.setElements(character.getSelectedBenefices());
+        }
+        if (traitsCounter != null) {
+            traitsCounter.setCharacter(character);
+        }
+        if (extraCounter != null) {
+            extraCounter.setCharacter(character);
+        }
     }
 
     @Override
