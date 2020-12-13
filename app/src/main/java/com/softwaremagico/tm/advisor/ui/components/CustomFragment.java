@@ -12,18 +12,27 @@
 
 package com.softwaremagico.tm.advisor.ui.components;
 
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 
 public abstract class CustomFragment extends Fragment {
+    // flag bit to determine whether the data is initialized
+    private boolean isInitialized = false;
+    // flags to determine whether fragments are visible
+    private boolean isVisible = false;
+    // flag bit to determine that view has been loaded to avoid null pointer operations
+    private boolean isPrepareView = false;
 
     public CustomFragment() {
         super();
@@ -36,6 +45,46 @@ public abstract class CustomFragment extends Fragment {
                 }
             }
         });
+    }
+
+    /**
+     * Lazy Loading Method
+     */
+    /**
+     * Lazy Loading Method
+     */
+    public void lazyInitData() {
+        isInitialized = true;
+        initData();
+    }
+
+    /**
+     * Method of loading data, implemented by subclasses
+     */
+    protected abstract void initData();
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        lazyInitData();
+    }
+
+    /**
+     * Method after onViewCreated in fragment lifecycle calls a lazy load here to avoid the first visible unload of data
+     *
+     * @param savedInstanceState
+     */
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        lazyInitData();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        isPrepareView = true; // At this point the view has been loaded and set to true
     }
 
     protected abstract void setCharacter(View root, CharacterPlayer character);

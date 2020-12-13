@@ -45,6 +45,7 @@ public class CharacteristicsFragment extends CustomFragment {
     private final Map<CharacteristicName, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private CharacteristicsCounter characteristicsCounter;
     private CharacteristicsExtraCounter extraCounter;
+    private View root;
 
     public static CharacteristicsFragment newInstance(int index) {
         final CharacteristicsFragment fragment = new CharacteristicsFragment();
@@ -71,13 +72,9 @@ public class CharacteristicsFragment extends CustomFragment {
         extraCounter.setCharacter(character);
     }
 
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.character_characteristics_fragment, container, false);
+    protected void initData() {
         final LinearLayout linearLayout = root.findViewById(R.id.characteristics_container);
-
         for (final CharacteristicType type : CharacteristicType.values()) {
             if (type == CharacteristicType.OTHERS) {
                 continue;
@@ -90,10 +87,16 @@ public class CharacteristicsFragment extends CustomFragment {
             }
         }
 
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
+
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.character_characteristics_fragment, container, false);
         characteristicsCounter = root.findViewById(R.id.characteristics_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
-
-        setCharacter(root, CharacterManager.getSelectedCharacter());
 
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
 

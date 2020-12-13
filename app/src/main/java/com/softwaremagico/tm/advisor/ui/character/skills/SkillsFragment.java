@@ -43,6 +43,7 @@ public class SkillsFragment extends CustomFragment {
     private final Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private SkillsCounter skillsCounter;
     private SkillsExtraCounter extraCounter;
+    private View root;
 
     public static SkillsFragment newInstance(int index) {
         final SkillsFragment fragment = new SkillsFragment();
@@ -60,14 +61,10 @@ public class SkillsFragment extends CustomFragment {
         extraCounter.setCharacter(character);
     }
 
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.character_skills_fragment, container, false);
+    protected void initData() {
         final LinearLayout linearLayout = root.findViewById(R.id.skills_container);
         addSection(ThinkMachineTranslator.getTranslatedText("naturalSkills"), linearLayout);
-
         try {
             for (final AvailableSkill skill : CharacterManager.getSelectedCharacter().getNaturalSkills()) {
                 createSkillEditText(root, linearLayout, skill);
@@ -85,11 +82,16 @@ public class SkillsFragment extends CustomFragment {
         } catch (InvalidXmlElementException e) {
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
 
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.character_skills_fragment, container, false);
         skillsCounter = root.findViewById(R.id.skills_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
-
-        setCharacter(root, CharacterManager.getSelectedCharacter());
 
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateSkillsLimits(characterPlayer));
 

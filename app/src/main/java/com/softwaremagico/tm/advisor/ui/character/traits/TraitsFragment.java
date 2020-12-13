@@ -54,6 +54,8 @@ public class TraitsFragment extends CustomFragment {
     private IncrementalElementsLayout blessingsLayout;
     private IncrementalElementsLayout beneficesLayout;
 
+    private View root;
+
     public static TraitsFragment newInstance(int index) {
         final TraitsFragment fragment = new TraitsFragment();
         final Bundle bundle = new Bundle();
@@ -70,13 +72,9 @@ public class TraitsFragment extends CustomFragment {
         extraCounter.setCharacter(character);
     }
 
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.character_traits_fragment, container, false);
-        mViewModel = new ViewModelProvider(this).get(TraitsViewModel.class);
-        final LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
+    protected void initData() {
+        final LinearLayout rootLayout = root.findViewById(R.id.root_container);
 
         addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), rootLayout);
         blessingsLayout = new BlessingLayout(getContext(), true);
@@ -86,12 +84,20 @@ public class TraitsFragment extends CustomFragment {
         beneficesLayout = new BeneficesLayout(getContext(), true);
         rootLayout.addView(beneficesLayout);
 
-        traitsCounter = rootView.findViewById(R.id.traits_counter);
-        extraCounter = rootView.findViewById(R.id.extra_counter);
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
 
-        setCharacter(rootView, CharacterManager.getSelectedCharacter());
 
-        return rootView;
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.character_traits_fragment, container, false);
+        mViewModel = new ViewModelProvider(this).get(TraitsViewModel.class);
+
+        traitsCounter = root.findViewById(R.id.traits_counter);
+        extraCounter = root.findViewById(R.id.extra_counter);
+
+        return root;
     }
 
 

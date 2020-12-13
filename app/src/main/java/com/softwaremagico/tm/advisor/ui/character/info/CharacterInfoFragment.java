@@ -52,6 +52,7 @@ public class CharacterInfoFragment extends CustomFragment {
     private SkillsCounter skillsCounter;
     private TraitsCounter traitsCounter;
     private ExtraCounter extraCounter;
+    private View root;
 
     public static CharacterInfoFragment newInstance(int index) {
         final CharacterInfoFragment fragment = new CharacterInfoFragment();
@@ -62,11 +63,7 @@ public class CharacterInfoFragment extends CustomFragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.character_info_fragment, container, false);
-        mViewModel = new ViewModelProvider(this).get(CharacterInfoViewModel.class);
-
+    protected void initData() {
         createNameText(root);
         createSurnameText(root);
         createGenderSpinner(root);
@@ -75,12 +72,19 @@ public class CharacterInfoFragment extends CustomFragment {
         createFactionSpinner(root);
         createPlanetSpinner(root);
 
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.character_info_fragment, container, false);
+        mViewModel = new ViewModelProvider(this).get(CharacterInfoViewModel.class);
+
         characteristicsCounter = root.findViewById(R.id.characteristics_counter);
         skillsCounter = root.findViewById(R.id.skills_counter);
         traitsCounter = root.findViewById(R.id.traits_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
-
-        setCharacter(root, CharacterManager.getSelectedCharacter());
 
         return root;
     }
