@@ -216,7 +216,7 @@ public class EquipmentFragment extends CustomFragment {
 
         @Override
         protected ElementAdapter createElementAdapter() {
-            return new ElementAdapter<Weapon>(getActivity(), mViewModel.getAvailableWeapons(), isNullAllowed(), Weapon.class);
+            return new ElementAdapter<>(getActivity(), mViewModel.getAvailableWeapons(), isNullAllowed(), Weapon.class);
         }
 
         private void setWeapons(List<ElementSpinner> spinners) {
