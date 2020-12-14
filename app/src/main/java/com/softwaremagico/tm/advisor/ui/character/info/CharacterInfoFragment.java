@@ -47,7 +47,6 @@ import com.softwaremagico.tm.character.races.Race;
 
 public class CharacterInfoFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private static final int DEFAULT_AGE = 31;
     private CharacterInfoViewModel mViewModel;
     private CharacteristicsCounter characteristicsCounter;
     private SkillsCounter skillsCounter;
@@ -105,9 +104,6 @@ public class CharacterInfoFragment extends CustomFragment {
         final TranslatedEditText ageTextEditor = root.findViewById(R.id.character_age);
         if (CharacterManager.getSelectedCharacter().getInfo().getAge() != null) {
             ageTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getAge().toString());
-        } else {
-            character.getInfo().setAge(DEFAULT_AGE);
-            ageTextEditor.setText(DEFAULT_AGE + "");
         }
         final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
@@ -209,7 +205,7 @@ public class CharacterInfoFragment extends CustomFragment {
                     //Force to update all costs.
                     updateCounters(CharacterManager.getSelectedCharacter());
                 } catch (NumberFormatException e) {
-                    ageTextEditor.setText(DEFAULT_AGE + "");
+                    ageTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getAge() + "");
                 }
             }
         });
