@@ -30,6 +30,8 @@ import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
+import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.TraitsExtraCounter;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
@@ -46,8 +48,13 @@ public class TraitsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private TraitsViewModel mViewModel;
 
-    IncrementalElementsLayout blessingsLayout;
-    IncrementalElementsLayout beneficesLayout;
+    private TraitsCounter traitsCounter;
+    private TraitsExtraCounter extraCounter;
+
+    private IncrementalElementsLayout blessingsLayout;
+    private IncrementalElementsLayout beneficesLayout;
+
+    private View root;
 
     public static TraitsFragment newInstance(int index) {
         final TraitsFragment fragment = new TraitsFragment();
@@ -59,17 +66,23 @@ public class TraitsFragment extends CustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-        blessingsLayout.setElements(character.getSelectedBlessings());
-        beneficesLayout.setElements(character.getSelectedBenefices());
+        if (blessingsLayout != null) {
+            blessingsLayout.setElements(character.getSelectedBlessings());
+        }
+        if (beneficesLayout != null) {
+            beneficesLayout.setElements(character.getSelectedBenefices());
+        }
+        if (traitsCounter != null) {
+            traitsCounter.setCharacter(character);
+        }
+        if (extraCounter != null) {
+            extraCounter.setCharacter(character);
+        }
     }
 
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.character_traits_fragment, container, false);
-        mViewModel = new ViewModelProvider(this).get(TraitsViewModel.class);
-        final LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
+    protected void initData() {
+        final LinearLayout rootLayout = root.findViewById(R.id.root_container);
 
         addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), rootLayout);
         blessingsLayout = new BlessingLayout(getContext(), true);
@@ -79,9 +92,20 @@ public class TraitsFragment extends CustomFragment {
         beneficesLayout = new BeneficesLayout(getContext(), true);
         rootLayout.addView(beneficesLayout);
 
-        setCharacter(rootView, CharacterManager.getSelectedCharacter());
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
 
-        return rootView;
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.character_traits_fragment, container, false);
+        mViewModel = new ViewModelProvider(this).get(TraitsViewModel.class);
+
+        traitsCounter = root.findViewById(R.id.traits_counter);
+        extraCounter = root.findViewById(R.id.extra_counter);
+
+        return root;
     }
 
 

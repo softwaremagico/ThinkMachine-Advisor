@@ -12,6 +12,7 @@
 
 package com.softwaremagico.tm.advisor.ui.main;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -62,9 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         Translator.setLanguage(Locale.getDefault().getLanguage());
         //Preload all data in a secondary thread.
-        new Thread(() -> {
-            ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
-        }).start();
+        new Thread(() -> ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).start();
 
         super.onCreate(savedInstanceState);
 
@@ -89,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         final View parentLayout = findViewById(android.R.id.content);
@@ -132,13 +132,14 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, resultData);
         View parentLayout = findViewById(android.R.id.content);
         if (requestCode == PICK_TMA_FILE && resultCode == Activity.RESULT_OK) {
-            // The result data contains a URI for the document or directory that
-            // the user selected.
-            Uri uri = null;
             if (resultData != null) {
-                uri = resultData.getData();
+                // The result data contains a URI for the document or directory that
+                // the user selected.
+                Uri uri = resultData.getData();
                 try {
-                    CharacterManager.setSelectedCharacter(CharacterJsonManager.fromJson(FileUtils.readFile(this.getBaseContext(), uri)));
+                    if (uri != null) {
+                        CharacterManager.setSelectedCharacter(CharacterJsonManager.fromJson(FileUtils.readFile(this.getBaseContext(), uri)));
+                    }
                 } catch (InvalidJsonException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                     SnackbarGenerator.getErrorMessage(parentLayout, R.string.invalid_json_file).show();
@@ -156,13 +157,12 @@ public class MainActivity extends AppCompatActivity {
         final Uri contentUri = FileProvider.getUriForFile(view.getContext(), "com.softwaremagico.tm.advisor", characterExport);
 
         if (contentUri != null) {
-            exportsPath.mkdir();
+            if (exportsPath.mkdir()) {
+                MachineLog.debug(this.getClass().getName(), "Default folder '{}' created.", exportsPath);
+            }
             String jsonContent = CharacterJsonManager.toJson(CharacterManager.getSelectedCharacter());
-            FileOutputStream stream = new FileOutputStream(characterExport);
-            try {
+            try (FileOutputStream stream = new FileOutputStream(characterExport)) {
                 stream.write(jsonContent.getBytes());
-            } finally {
-                stream.close();
             }
 
             final Intent shareIntent = new Intent();

@@ -57,6 +57,7 @@
     <style name="TextSubtitleLayout">
         <item name="android:padding">15sp</item>
     </style>
+
     <style name="TextSubtitle" parent="@android:style/Widget.TextView">
         <item name="android:textSize">20dp</item>
         <item name="android:textStyle">bold</item>
@@ -71,5 +72,36 @@
         <item name="android:fontFamily">@font/selection</item>
     </style>
 
+    <style name="NumberPicker">
+        <!-- <item name="android:fontFamily">@font/selection</item> -->
+    </style>
+
+    <style name="Counter">
+        <item name="android:fontFamily">@font/selection</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="CounterTag">
+        <item name="android:fontFamily">@font/selection</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">10dp</item>
+        <item name="android:textColor">@color/colorContrast</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="Divider.Horizontal" parent="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+    </style>
+
+    <style name="Divider.Vertical" parent="Divider">
+        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
 
 </resources>

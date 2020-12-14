@@ -30,6 +30,7 @@ import com.softwaremagico.tm.advisor.core.DateUtils;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
 import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
+import com.softwaremagico.tm.advisor.ui.animations.ExpandAndCollapseViewUtil;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.InvalidGeneratedCharacter;

@@ -25,7 +25,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.Element;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
@@ -34,6 +33,11 @@ import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
+import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.ExtraCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
@@ -44,6 +48,11 @@ import com.softwaremagico.tm.character.races.Race;
 public class CharacterInfoFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private CharacterInfoViewModel mViewModel;
+    private CharacteristicsCounter characteristicsCounter;
+    private SkillsCounter skillsCounter;
+    private TraitsCounter traitsCounter;
+    private ExtraCounter extraCounter;
+    private View root;
 
     public static CharacterInfoFragment newInstance(int index) {
         final CharacterInfoFragment fragment = new CharacterInfoFragment();
@@ -54,11 +63,7 @@ public class CharacterInfoFragment extends CustomFragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.character_info_fragment, container, false);
-        mViewModel = new ViewModelProvider(this).get(CharacterInfoViewModel.class);
-
+    protected void initData() {
         createNameText(root);
         createSurnameText(root);
         createGenderSpinner(root);
@@ -68,6 +73,18 @@ public class CharacterInfoFragment extends CustomFragment {
         createPlanetSpinner(root);
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.character_info_fragment, container, false);
+        mViewModel = new ViewModelProvider(this).get(CharacterInfoViewModel.class);
+
+        characteristicsCounter = root.findViewById(R.id.characteristics_counter);
+        skillsCounter = root.findViewById(R.id.skills_counter);
+        traitsCounter = root.findViewById(R.id.traits_counter);
+        extraCounter = root.findViewById(R.id.extra_counter);
 
         return root;
     }
@@ -87,8 +104,6 @@ public class CharacterInfoFragment extends CustomFragment {
         final TranslatedEditText ageTextEditor = root.findViewById(R.id.character_age);
         if (CharacterManager.getSelectedCharacter().getInfo().getAge() != null) {
             ageTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getAge().toString());
-        } else {
-            ageTextEditor.setText("");
         }
         final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
@@ -96,6 +111,15 @@ public class CharacterInfoFragment extends CustomFragment {
         factionsSelector.setSelection(CharacterManager.getSelectedCharacter().getFaction());
         final ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
         planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
+
+        updateCounters(character);
+    }
+
+    private void updateCounters(CharacterPlayer character) {
+        characteristicsCounter.setCharacter(character);
+        extraCounter.setCharacter(character);
+        skillsCounter.setCharacter(character);
+        traitsCounter.setCharacter(character);
     }
 
     private void createNameText(View root) {
@@ -178,8 +202,10 @@ public class CharacterInfoFragment extends CustomFragment {
             public void afterTextChanged(Editable s) {
                 try {
                     CharacterManager.getSelectedCharacter().getInfo().setAge(Integer.parseInt(ageTextEditor.getText()));
+                    //Force to update all costs.
+                    updateCounters(CharacterManager.getSelectedCharacter());
                 } catch (NumberFormatException e) {
-                    //No age set.
+                    ageTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getAge() + "");
                 }
             }
         });

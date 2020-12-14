@@ -17,17 +17,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.softwaremagico.tm.InvalidXmlElementException;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
+import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.SkillsExtraCounter;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
@@ -40,6 +41,9 @@ import java.util.Map;
 public class SkillsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private final Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private SkillsCounter skillsCounter;
+    private SkillsExtraCounter extraCounter;
+    private View root;
 
     public static SkillsFragment newInstance(int index) {
         final SkillsFragment fragment = new SkillsFragment();
@@ -53,16 +57,14 @@ public class SkillsFragment extends CustomFragment {
     public void setCharacter(View root, CharacterPlayer character) {
         updateSkillsLimits(character);
         refreshSkillsValues(character);
+        skillsCounter.setCharacter(character);
+        extraCounter.setCharacter(character);
     }
 
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.character_skills_fragment, container, false);
+    protected void initData() {
         final LinearLayout linearLayout = root.findViewById(R.id.skills_container);
         addSection(ThinkMachineTranslator.getTranslatedText("naturalSkills"), linearLayout);
-
         try {
             for (final AvailableSkill skill : CharacterManager.getSelectedCharacter().getNaturalSkills()) {
                 createSkillEditText(root, linearLayout, skill);
@@ -80,6 +82,16 @@ public class SkillsFragment extends CustomFragment {
         } catch (InvalidXmlElementException e) {
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
+
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.character_skills_fragment, container, false);
+        skillsCounter = root.findViewById(R.id.skills_counter);
+        extraCounter = root.findViewById(R.id.extra_counter);
 
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateSkillsLimits(characterPlayer));
 
@@ -100,14 +112,11 @@ public class SkillsFragment extends CustomFragment {
 
         skillNumberPicker.setValue(CharacterManager.getSelectedCharacter().getSkillAssignedRanks(skill));
 
-        skillNumberPicker.addValueChangeListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                try {
-                    CharacterManager.getSelectedCharacter().setSkillRank(skill, newVal);
-                } catch (InvalidSkillException e) {
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
-                }
+        skillNumberPicker.addValueChangeListener(newValue -> {
+            try {
+                CharacterManager.getSelectedCharacter().setSkillRank(skill, newValue);
+            } catch (InvalidSkillException e) {
+                AdvisorLog.errorMessage(this.getClass().getName(), e);
             }
         });
     }

@@ -53,4 +53,8 @@
     <string name="character_deleted_correctly">¡Personaje eliminado!</string>
     <string name="undo">Deshacer</string>
     <string name="error_deleting_character">¡Error borrando el personaje!</string>
+    <string name="counter_characteristics">CAR</string>
+    <string name="counter_skills">HABIL</string>
+    <string name="counter_traits">RASGOS</string>
+    <string name="counter_extra">EXTRA</string>
 </resources>

@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.Set;
 
 public final class CharacterManager {
+    private static final int DEFAULT_AGE = 31;
     private static final List<CharacterPlayer> characters = new ArrayList<>();
     private static CharacterPlayer selectedCharacter;
     private static CostCalculator costCalculator;
@@ -39,7 +40,7 @@ public final class CharacterManager {
 
     public interface CharacterUpdatedListener {
         void updated(CharacterPlayer characterPlayer);
-    } 
+    }
 
     public interface CharacterRaceUpdatedListener {
         void updated(CharacterPlayer characterPlayer);
@@ -80,7 +81,7 @@ public final class CharacterManager {
     }
 
 
-    public static CharacterPlayer getSelectedCharacter() {
+    public synchronized static CharacterPlayer getSelectedCharacter() {
         if (characters.isEmpty()) {
             addNewCharacter();
         }
@@ -92,6 +93,9 @@ public final class CharacterManager {
             CharacterManager.getSelectedCharacter().setRace(race);
             launchCharacterRaceUpdatedListeners(CharacterManager.getSelectedCharacter());
             launchCharacterUpdatedListeners(CharacterManager.getSelectedCharacter());
+            if (costCalculator != null) {
+                costCalculator.updateCost();
+            }
         } catch (InvalidRaceException e) {
             AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
         }
@@ -112,6 +116,7 @@ public final class CharacterManager {
 
     public static void addNewCharacter() {
         final CharacterPlayer characterPlayer = new CharacterPlayer(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+        characterPlayer.getInfo().setAge(DEFAULT_AGE);
         characters.add(characterPlayer);
         setSelectedCharacter(characterPlayer);
     }

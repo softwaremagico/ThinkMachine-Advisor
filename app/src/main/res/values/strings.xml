@@ -54,4 +54,8 @@
     <string name="character_deleted_correctly">Character deleted!</string>
     <string name="undo">Undo</string>
     <string name="error_deleting_character">Error deleting the character!</string>
+    <string name="counter_characteristics">CHAR</string>
+    <string name="counter_skills">SKILLS</string>
+    <string name="counter_traits">TRAITS</string>
+    <string name="counter_extra">EXTRA</string>
 </resources>

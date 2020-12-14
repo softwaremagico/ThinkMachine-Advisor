@@ -21,10 +21,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsExtraCounter;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.characteristics.CharacteristicDefinition;
@@ -41,6 +43,9 @@ import java.util.Map;
 public class CharacteristicsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private final Map<CharacteristicName, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private CharacteristicsCounter characteristicsCounter;
+    private CharacteristicsExtraCounter extraCounter;
+    private View root;
 
     public static CharacteristicsFragment newInstance(int index) {
         final CharacteristicsFragment fragment = new CharacteristicsFragment();
@@ -59,18 +64,19 @@ public class CharacteristicsFragment extends CustomFragment {
             }
             for (final CharacteristicDefinition characteristicDefinition : CharacteristicsDefinitionFactory.getInstance().getAll(type, Locale.getDefault().getLanguage(),
                     ModuleManager.DEFAULT_MODULE)) {
-                translatedNumberPickers.get(characteristicDefinition.getCharacteristicName()).setValue(character.getCharacteristicValue(characteristicDefinition.getCharacteristicName()));
+                if (translatedNumberPickers.get(characteristicDefinition.getCharacteristicName()) != null) {
+                    translatedNumberPickers.get(characteristicDefinition.getCharacteristicName()).setValue(character.getCharacteristicValue(characteristicDefinition.getCharacteristicName()));
+                }
             }
         }
+
+        characteristicsCounter.setCharacter(character);
+        extraCounter.setCharacter(character);
     }
 
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.character_characteristics_fragment, container, false);
+    protected void initData() {
         final LinearLayout linearLayout = root.findViewById(R.id.characteristics_container);
-
         for (final CharacteristicType type : CharacteristicType.values()) {
             if (type == CharacteristicType.OTHERS) {
                 continue;
@@ -83,11 +89,21 @@ public class CharacteristicsFragment extends CustomFragment {
             }
         }
 
-        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateCharacteristicsLimits(characterPlayer));
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
+
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.character_characteristics_fragment, container, false);
+        characteristicsCounter = root.findViewById(R.id.characteristics_counter);
+        extraCounter = root.findViewById(R.id.extra_counter);
+
+        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
 
         return root;
     }
-
 
     public void updateCharacteristicsLimits(CharacterPlayer characterPlayer) {
         if (characterPlayer != null && characterPlayer.getRace() != null) {
@@ -122,7 +138,9 @@ public class CharacteristicsFragment extends CustomFragment {
         if (CharacterManager.getSelectedCharacter().getValue(characteristicDefinition.getCharacteristicName()) != null) {
             characteristicsNumberPicker.setValue(CharacterManager.getSelectedCharacter().getValue(characteristicDefinition.getCharacteristicName()));
         }
-        characteristicsNumberPicker.addValueChangeListener((picker, oldVal, newVal) -> CharacterManager.getSelectedCharacter().getCharacteristic(characteristicDefinition.getCharacteristicName()).setValue(newVal));
+
+        //Set listeners to counter
+        characteristicsNumberPicker.addValueChangeListener(newValue -> CharacterManager.getSelectedCharacter().setCharacteristic(characteristicDefinition.getCharacteristicName(), newValue));
 
     }
 

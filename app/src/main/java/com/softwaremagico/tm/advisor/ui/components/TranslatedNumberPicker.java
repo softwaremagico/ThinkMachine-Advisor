@@ -22,9 +22,16 @@ import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 
 public class TranslatedNumberPicker extends Component {
+    private int oldValue = 0;
+    private int selectedValue = 0;
+    private NumberPicker picker;
 
     public TranslatedNumberPicker(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public interface OnValueChanged {
+        void update(int newValue);
     }
 
     @Override
@@ -42,6 +49,8 @@ public class TranslatedNumberPicker extends Component {
             tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
         }
         tagText.setTextAppearance(R.style.CharacterInfo);
+        picker = findViewById(R.id.picker);
+        picker.setWrapSelectorWheel(false);
     }
 
     public void setLabel(String text) {
@@ -52,7 +61,6 @@ public class TranslatedNumberPicker extends Component {
     }
 
     public int getValue() {
-        final NumberPicker picker = findViewById(R.id.picker);
         if (picker == null) {
             return -1;
         }
@@ -60,9 +68,8 @@ public class TranslatedNumberPicker extends Component {
     }
 
     public void setValue(int value) {
-        final NumberPicker picker = findViewById(R.id.picker);
         if (picker != null) {
-            if (picker.getMaxValue() < value) {
+            if (value > picker.getMaxValue()) {
                 picker.setValue(picker.getMaxValue());
             } else {
                 picker.setValue(value);
@@ -70,15 +77,25 @@ public class TranslatedNumberPicker extends Component {
         }
     }
 
-    public void addValueChangeListener(NumberPicker.OnValueChangeListener listener) {
-        final NumberPicker picker = findViewById(R.id.picker);
+    public void addValueChangeListener(OnValueChanged listener) {
+        // When spinning, the picker launches lot of events for each value. We updated the value but only launch the listeners when stop spinning.
         if (picker != null) {
-            picker.setOnValueChangedListener(listener);
+            picker.setOnValueChangedListener((picker1, oldVal, newVal) -> {
+                selectedValue = newVal;
+            });
+            picker.setOnScrollListener((view, scrollState) -> {
+                if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE && oldValue != picker.getValue()) {
+                    listener.update(selectedValue);
+                    oldValue = selectedValue;
+
+                    picker.clearFocus();
+                    picker.setValue(selectedValue);
+                }
+            });
         }
     }
 
     public void setLimits(int minimum, int maximum) {
-        final NumberPicker picker = findViewById(R.id.picker);
         if (picker != null) {
             picker.setMaxValue(maximum);
             picker.setMinValue(minimum);

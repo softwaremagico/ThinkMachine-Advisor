@@ -19,23 +19,44 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 
 public abstract class CustomFragment extends Fragment {
+    // flag bit to determine whether the data is initialized
+    private boolean isInitialized = false;
 
     public CustomFragment() {
         super();
 
-        CharacterManager.addSelectedCharacterListener(new CharacterManager.CharacterSelectedListener() {
-            @Override
-            public void selected(CharacterPlayer characterPlayer) {
-                if (getView() != null) {
-                    setCharacter(getView().getRootView(), characterPlayer);
-                }
+        CharacterManager.addSelectedCharacterListener(characterPlayer -> {
+            if (getView() != null) {
+                setCharacter(getView().getRootView(), characterPlayer);
             }
         });
+    }
+
+    /**
+     * Lazy Loading Method
+     */
+    public void lazyInitData() {
+        if (!isInitialized) {
+            isInitialized = true;
+            initData();
+        }
+    }
+
+    /**
+     * Method of loading data, implemented by subclasses
+     */
+    protected abstract void initData();
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        lazyInitData();
     }
 
     protected abstract void setCharacter(View root, CharacterPlayer character);

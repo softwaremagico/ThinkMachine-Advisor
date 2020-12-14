@@ -11,8 +11,8 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.character.info.CharacterInfoFragment">
@@ -20,6 +20,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:divider="?android:dividerHorizontal"
         android:orientation="vertical">
 
         <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
@@ -27,58 +29,94 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            custom:translation="infoName"
-            />
+            custom:translation="infoName" />
 
         <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
             android:id="@+id/character_surname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            custom:translation="infoSurname"
-            />
+            custom:translation="infoSurname" />
 
         <com.softwaremagico.tm.advisor.ui.components.EnumSpinner
             android:id="@+id/character_gender"
-            android:ems="10"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            custom:translation="infoGender"
-            />
+            android:layout_height="wrap_content"
+            android:ems="10"
+            custom:translation="infoGender" />
 
         <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
             android:id="@+id/character_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            custom:translation="infoAge"
-            />
+            custom:translation="infoAge" />
 
         <com.softwaremagico.tm.advisor.ui.components.ElementSpinner
             android:id="@+id/character_race"
-            android:ems="10"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            custom:translation="infoRace"
-            />
+            android:layout_height="wrap_content"
+            android:ems="10"
+            custom:translation="infoRace" />
 
         <com.softwaremagico.tm.advisor.ui.components.ElementSpinner
             android:id="@+id/character_faction"
-            android:ems="10"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            custom:translation="infoFaction"
-            />
+            android:layout_height="wrap_content"
+            android:ems="10"
+            custom:translation="infoFaction" />
 
         <com.softwaremagico.tm.advisor.ui.components.ElementSpinner
             android:id="@+id/character_planet"
-            android:ems="10"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            custom:translation="infoPlanet"
-            />
+            android:layout_height="wrap_content"
+            android:ems="10"
+            custom:translation="infoPlanet" />
+
+        <View style="@style/Divider.Horizontal" />
+
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/counters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:columnCount="4"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter
+                android:id="@+id/characteristics_counter"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:gravity="center" />
+
+            <com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter
+                android:id="@+id/skills_counter"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:gravity="center" />
+
+            <com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter
+                android:id="@+id/traits_counter"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:gravity="center" />
+
+            <com.softwaremagico.tm.advisor.ui.components.counters.ExtraCounter
+                android:id="@+id/extra_counter"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:gravity="center" />
+
+
+        </GridLayout>
 
 
     </LinearLayout>
+
 
 </FrameLayout>

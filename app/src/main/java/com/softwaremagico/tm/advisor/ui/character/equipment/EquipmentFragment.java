@@ -46,10 +46,10 @@ import java.util.List;
 public class EquipmentFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private EquipmentViewModel mViewModel;
-
-    IncrementalElementsLayout weaponsLayout;
-    IncrementalElementsLayout armoursLayout;
-    IncrementalElementsLayout shieldsLayout;
+    private IncrementalElementsLayout weaponsLayout;
+    private IncrementalElementsLayout armoursLayout;
+    private IncrementalElementsLayout shieldsLayout;
+    private View root;
 
 
     public static EquipmentFragment newInstance(int index) {
@@ -62,19 +62,20 @@ public class EquipmentFragment extends CustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-        weaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
-        armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedArmour());
-        shieldsLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedShield());
+        if (weaponsLayout != null) {
+            weaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
+        }
+        if (armoursLayout != null) {
+            armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedArmour());
+        }
+        if (shieldsLayout != null) {
+            shieldsLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedShield());
+        }
     }
 
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.character_equipment_fragment, container, false);
-        mViewModel = new ViewModelProvider(this).get(EquipmentViewModel.class);
-        final LinearLayout rootLayout = rootView.findViewById(R.id.root_container);
-
+    protected void initData() {
+        final LinearLayout rootLayout = root.findViewById(R.id.root_container);
         addSection(ThinkMachineTranslator.getTranslatedText("weapons"), rootLayout);
         weaponsLayout = new WeaponsLayout(getContext(), true);
         rootLayout.addView(weaponsLayout);
@@ -87,9 +88,17 @@ public class EquipmentFragment extends CustomFragment {
         shieldsLayout = new ShieldLayout(getContext(), true);
         rootLayout.addView(shieldsLayout);
 
-        setCharacter(rootView, CharacterManager.getSelectedCharacter());
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
 
-        return rootView;
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.character_equipment_fragment, container, false);
+        mViewModel = new ViewModelProvider(this).get(EquipmentViewModel.class);
+
+        return root;
     }
 
     class ShieldLayout extends IncrementalElementsLayout {
@@ -207,7 +216,7 @@ public class EquipmentFragment extends CustomFragment {
 
         @Override
         protected ElementAdapter createElementAdapter() {
-            return new ElementAdapter<Weapon>(getActivity(), mViewModel.getAvailableWeapons(), isNullAllowed(), Weapon.class);
+            return new ElementAdapter<>(getActivity(), mViewModel.getAvailableWeapons(), isNullAllowed(), Weapon.class);
         }
 
         private void setWeapons(List<ElementSpinner> spinners) {
