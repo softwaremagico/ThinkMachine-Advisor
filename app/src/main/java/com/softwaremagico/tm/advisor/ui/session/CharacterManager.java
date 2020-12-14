@@ -39,7 +39,7 @@ public final class CharacterManager {
 
     public interface CharacterUpdatedListener {
         void updated(CharacterPlayer characterPlayer);
-    } 
+    }
 
     public interface CharacterRaceUpdatedListener {
         void updated(CharacterPlayer characterPlayer);
@@ -92,7 +92,9 @@ public final class CharacterManager {
             CharacterManager.getSelectedCharacter().setRace(race);
             launchCharacterRaceUpdatedListeners(CharacterManager.getSelectedCharacter());
             launchCharacterUpdatedListeners(CharacterManager.getSelectedCharacter());
-            costCalculator = new CostCalculator(selectedCharacter);
+            if (costCalculator != null) {
+                costCalculator.updateCost();
+            }
         } catch (InvalidRaceException e) {
             AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
         }

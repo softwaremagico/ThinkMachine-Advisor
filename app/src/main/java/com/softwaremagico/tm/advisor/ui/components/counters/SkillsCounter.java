@@ -6,11 +6,13 @@ import android.util.AttributeSet;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.creation.CostCalculatorModificationHandler;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 
 public class SkillsCounter extends Counter {
     private int gearColor = R.color.counterSkills;
     private int textColor = R.color.counterSkillsText;
+    private CostCalculatorModificationHandler.ICurrentSkillsPointsUpdatedListener listener;
 
     public SkillsCounter(Context context) {
         super(context);
@@ -28,6 +30,7 @@ public class SkillsCounter extends Counter {
 
     @Override
     public void setCharacter(CharacterPlayer character) {
+        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeSkillsPointsUpdatedListeners(listener);
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addSkillsPointsUpdatedListeners(value -> {
             setValue(FreeStyleCharacterCreation.getSkillsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentSkillsPoints(), true);
         });

@@ -7,11 +7,13 @@ import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.creation.CostCalculator;
+import com.softwaremagico.tm.character.creation.CostCalculatorModificationHandler;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 
 public class TraitsExtraCounter extends SegmentCounter {
     private int gearColor = R.color.counterTraits;
     private int textColor = R.color.counterTraitsText;
+    private CostCalculatorModificationHandler.IExtraPointUpdatedListener listener;
 
     public TraitsExtraCounter(Context context) {
         super(context);
@@ -29,6 +31,7 @@ public class TraitsExtraCounter extends SegmentCounter {
 
     @Override
     public void setCharacter(CharacterPlayer character) {
+        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeExtraPointsUpdatedListeners(listener);
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addExtraPointsUpdatedListeners(() ->
                 setValue(CharacterManager.getCostCalculator().getCurrentTraitsExtraPoints() * CostCalculator.TRAITS_EXTRA_POINTS_COST,
                         FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), true)

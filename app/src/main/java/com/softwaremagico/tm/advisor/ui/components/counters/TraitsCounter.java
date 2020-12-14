@@ -6,11 +6,13 @@ import android.util.AttributeSet;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.creation.CostCalculatorModificationHandler;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 
 public class TraitsCounter extends Counter {
     private int gearColor = R.color.counterTraits;
     private int textColor = R.color.counterTraitsText;
+    private CostCalculatorModificationHandler.ICurrentTraitsPointsUpdatedListener listener;
 
     public TraitsCounter(Context context) {
         super(context);
@@ -28,6 +30,7 @@ public class TraitsCounter extends Counter {
 
     @Override
     public void setCharacter(CharacterPlayer character) {
+        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeTraitsPointsUpdatedListeners(listener);
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addTraitsPointsUpdatedListeners(value -> {
             setValue(FreeStyleCharacterCreation.getTraitsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentTraitsPoints(), true);
         });

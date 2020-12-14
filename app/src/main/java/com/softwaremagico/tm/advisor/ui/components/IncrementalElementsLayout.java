@@ -125,18 +125,18 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                updateContent();
                 for (final AdapterView.OnItemSelectedListener listener : listeners) {
                     listener.onItemSelected(parent, view, position, id);
                 }
+                updateContent();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                updateContent();
                 for (final AdapterView.OnItemSelectedListener listener : listeners) {
                     listener.onNothingSelected(parent);
                 }
+                updateContent();
             }
         });
         enabled = true;
