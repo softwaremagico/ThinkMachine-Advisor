@@ -47,6 +47,7 @@ import com.softwaremagico.tm.character.races.Race;
 
 public class CharacterInfoFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private static final int DEFAULT_AGE = 31;
     private CharacterInfoViewModel mViewModel;
     private CharacteristicsCounter characteristicsCounter;
     private SkillsCounter skillsCounter;
@@ -105,7 +106,8 @@ public class CharacterInfoFragment extends CustomFragment {
         if (CharacterManager.getSelectedCharacter().getInfo().getAge() != null) {
             ageTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getAge().toString());
         } else {
-            ageTextEditor.setText("");
+            character.getInfo().setAge(DEFAULT_AGE);
+            ageTextEditor.setText(DEFAULT_AGE + "");
         }
         final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
@@ -114,6 +116,10 @@ public class CharacterInfoFragment extends CustomFragment {
         final ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
         planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
 
+        updateCounters(character);
+    }
+
+    private void updateCounters(CharacterPlayer character) {
         characteristicsCounter.setCharacter(character);
         extraCounter.setCharacter(character);
         skillsCounter.setCharacter(character);
@@ -200,8 +206,10 @@ public class CharacterInfoFragment extends CustomFragment {
             public void afterTextChanged(Editable s) {
                 try {
                     CharacterManager.getSelectedCharacter().getInfo().setAge(Integer.parseInt(ageTextEditor.getText()));
+                    //Force to update all costs.
+                    updateCounters(CharacterManager.getSelectedCharacter());
                 } catch (NumberFormatException e) {
-                    //No age set.
+                    ageTextEditor.setText(DEFAULT_AGE + "");
                 }
             }
         });

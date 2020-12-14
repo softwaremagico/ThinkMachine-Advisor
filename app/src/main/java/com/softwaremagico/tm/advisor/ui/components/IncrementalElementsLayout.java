@@ -30,10 +30,10 @@ import java.util.Set;
 
 public abstract class IncrementalElementsLayout<T extends Element<?>> extends LinearLayout {
     private ElementAdapter<T> elementAdapter;
-    private List<ElementSpinner> elementSpinners;
+    private final List<ElementSpinner> elementSpinners;
     private boolean enabled = true;
     private final boolean nullAllowed;
-    private Set<AdapterView.OnItemSelectedListener> listeners;
+    private final Set<AdapterView.OnItemSelectedListener> listeners;
     private final int maxElements;
 
     public IncrementalElementsLayout(Context context, boolean nullAllowed, int maxElements) {
@@ -58,7 +58,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         updateContent();
     }
 
-    private final void updateContent() {
+    private void updateContent() {
         if (!enabled) {
             return;
         }
@@ -114,7 +114,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         return elementSpinners;
     }
 
-    private final void addElementSpinner(ElementSpinner spinner) {
+    private void addElementSpinner(ElementSpinner spinner) {
         if (elementSpinners.size() >= maxElements) {
             return;
         }
@@ -142,7 +142,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         enabled = true;
     }
 
-    private final void setElementSpinnerProperties(ElementSpinner spinner) {
+    private void setElementSpinnerProperties(ElementSpinner spinner) {
         spinner.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
