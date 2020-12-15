@@ -39,6 +39,7 @@ import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.core.FileUtils;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
+import com.softwaremagico.tm.advisor.ui.about.AboutWindow;
 import com.softwaremagico.tm.advisor.ui.load.LoadCharacter;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
@@ -112,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings_import_file:
                 importJson();
                 return true;
+            case R.id.settings_about:
+                new AboutWindow().show(getSupportFragmentManager(), "");
             default:
                 return super.onOptionsItemSelected(menuItem);
         }

@@ -10,10 +10,11 @@
  *  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  */
 
-package com.softwaremagico.tm.advisor.ui.visualization;
+package com.softwaremagico.tm.advisor.ui.about;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
@@ -26,29 +27,27 @@ import com.softwaremagico.tm.advisor.R;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class VisualizationSectionsPagerAdapter extends FragmentPagerAdapter {
+public class AboutPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_visualization_txt, R.string.tab_visualization_pdf, R.string.tab_visualization_pdf_small};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_about, R.string.tab_license};
     private final Context mContext;
 
-    public VisualizationSectionsPagerAdapter(Context context, FragmentManager fm) {
+    public AboutPagerAdapter(Context context, FragmentManager fm) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mContext = context;
     }
 
     @Override
+    @NonNull
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         if (position == 0) {
-            return TextVisualizationFragment.newInstance(position + 1);
+            return AboutFragment.newInstance(position + 1);
         }
         if (position == 1) {
-            return CompletePdfVisualizationFragment.newInstance(position + 1);
-        }
-        if (position == 2) {
-            return SmallPdfVisualizationFragment.newInstance(position + 1);
+            return LicenseFragment.newInstance(position + 1);
         }
 
         return null;

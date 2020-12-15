@@ -12,6 +12,7 @@
 
 package com.softwaremagico.tm.advisor.ui.load;
 
+import android.annotation.SuppressLint;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,6 +103,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         private final TextView sortDescription;
         private final RecyclerView.Adapter adapter;
 
+        @SuppressLint("NonConstantResourceId")
         public CharacterEntityViewHolder(RecyclerView.Adapter adapter, View cardView) {
             super(cardView);
             this.cardView = cardView;
@@ -113,7 +115,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             imageViewExpand = cardView.findViewById(R.id.image_view_expand);
             imageViewExpand.setImageResource(R.drawable.ic_more);
 
-            imageViewExpand.setOnClickListener(view -> toggleDetails(view));
+            imageViewExpand.setOnClickListener(this::toggleDetails);
 
             characterTitle.inflateMenu(R.menu.character_selector_menu);
             characterTitle.setOnMenuItemClickListener(item -> {

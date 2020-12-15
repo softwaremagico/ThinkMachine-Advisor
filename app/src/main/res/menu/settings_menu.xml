@@ -38,4 +38,9 @@
         android:icon="@drawable/ic_character_icon"
         android:title="@string/settings_export"
         app:showAsAction="never" />
+
+    <item android:id="@+id/settings_about"
+        android:icon="@drawable/ic_help"
+        android:title="@string/settings_about"
+        app:showAsAction="never" />
 </menu>
