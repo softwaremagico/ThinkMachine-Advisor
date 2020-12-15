@@ -22,6 +22,8 @@
 
     <color name="colorTextMessageOk">@color/colorContrast</color>
     <color name="colorBackgroundMessageOk">#382b48</color>
+    <color name="colorTextMessageWarning">#000000</color>
+    <color name="colorBackgroundMessageWarning">#FF9800</color>
     <color name="colorTextMessageError">@color/colorContrast</color>
     <color name="colorBackgroundMessageError">#6e0309</color>
 

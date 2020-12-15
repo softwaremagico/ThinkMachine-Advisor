@@ -33,6 +33,13 @@ public final class SnackbarGenerator {
         return snackbar;
     }
 
+    public static Snackbar getWarningMessage(View view, int messageResource) {
+        Snackbar snackbar = Snackbar.make(view, messageResource, Snackbar.LENGTH_SHORT);
+        snackbar.setActionTextColor(ContextCompat.getColor(view.getContext(), R.color.colorTextMessageError));
+        snackbar.getView().setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorBackgroundMessageError));
+        return snackbar;
+    }
+
     public static Snackbar getErrorMessage(View view, int messageResource) {
         Snackbar snackbar = Snackbar.make(view, messageResource, Snackbar.LENGTH_SHORT);
         snackbar.setActionTextColor(ContextCompat.getColor(view.getContext(), R.color.colorTextMessageError));

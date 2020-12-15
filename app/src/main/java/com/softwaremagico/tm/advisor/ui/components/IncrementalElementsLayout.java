@@ -58,7 +58,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         updateContent();
     }
 
-    private void updateContent() {
+    protected void updateContent() {
         if (!enabled) {
             return;
         }
@@ -81,6 +81,27 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
                 }
             }
             i++;
+        }
+    }
+
+    protected void removeDuplicates() {
+        int i = 0;
+        Set<T> selections = new HashSet<>();
+        boolean removed = false;
+        while (i < elementSpinners.size()) {
+            if (elementSpinners.get(i).getSelection() != null) {
+                if (!selections.contains(elementSpinners.get(i).getSelection())) {
+                    selections.add(elementSpinners.get(i).getSelection());
+                } else {
+                    removeView(elementSpinners.get(i));
+                    elementSpinners.remove(i);
+                    removed = true;
+                }
+            }
+            i++;
+        }
+        if (removed) {
+            updateContent();
         }
     }
 

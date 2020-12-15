@@ -43,7 +43,7 @@
     </LinearLayout>
 
     <ScrollView xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/skills_frame"
+        android:id="@+id/traits_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

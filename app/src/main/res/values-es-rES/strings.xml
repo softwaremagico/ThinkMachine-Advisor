@@ -57,4 +57,5 @@
     <string name="counter_skills">HABIL</string>
     <string name="counter_traits">RASGOS</string>
     <string name="counter_extra">EXTRA</string>
+    <string name="duplicated_element_removed">El elemento duplicado ha sido eliminado.</string>
 </resources>

@@ -37,12 +37,15 @@ import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
+import com.softwaremagico.tm.character.benefices.BeneficeDefinition;
 import com.softwaremagico.tm.character.benefices.InvalidBeneficeException;
 import com.softwaremagico.tm.character.blessings.Blessing;
 import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TraitsFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -118,11 +121,13 @@ public class TraitsFragment extends CustomFragment {
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    removeDuplicates();
                     setBlessings(getElementSpinners());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
+                    removeDuplicates();
                     setBlessings(getElementSpinners());
                 }
             });
@@ -165,11 +170,13 @@ public class TraitsFragment extends CustomFragment {
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    removeDuplicates();
                     setBenefice(getElementSpinners());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
+                    removeDuplicates();
                     setBenefice(getElementSpinners());
                 }
             });
@@ -203,6 +210,28 @@ public class TraitsFragment extends CustomFragment {
                 CharacterManager.getSelectedCharacter().setBenefices(benefices);
             } catch (InvalidBeneficeException e) {
                 SnackbarGenerator.getErrorMessage(this, R.string.message_invalid_benefice).show();
+            }
+        }
+
+        @Override
+        protected void removeDuplicates() {
+            int i = 0;
+            Set<BeneficeDefinition> selections = new HashSet<>();
+            boolean removed = false;
+            while (i < getElementSpinners().size()) {
+                if (((ElementSpinner) getElementSpinners().get(i)).getSelection() != null) {
+                    if (!selections.contains(((AvailableBenefice) ((ElementSpinner) getElementSpinners().get(i)).getSelection()).getBeneficeDefinition())) {
+                        selections.add(((AvailableBenefice) ((ElementSpinner) getElementSpinners().get(i)).getSelection()).getBeneficeDefinition());
+                    } else {
+                        removeView((ElementSpinner) getElementSpinners().get(i));
+                        getElementSpinners().remove(i);
+                        removed = true;
+                    }
+                }
+                i++;
+            }
+            if (removed) {
+                updateContent();
             }
         }
     }
