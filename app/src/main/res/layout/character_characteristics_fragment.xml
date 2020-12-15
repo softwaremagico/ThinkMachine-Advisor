@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        tools:context=".ui.character.characteristics.CharacteristicsFragment">
+        tools:context=".ui.character.characteristics.CharacteristicsFragmentCharacter">
 
         <LinearLayout
             android:id="@+id/characteristics_container"

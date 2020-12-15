@@ -12,14 +12,13 @@ import androidx.annotation.Nullable;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
-import com.softwaremagico.tm.character.CharacterPlayer;
 
-public class AboutFragment extends CustomFragment {
+public class AboutFragmentCharacter extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private TextView content;
 
-    public static AboutFragment newInstance(int index) {
-        final AboutFragment fragment = new AboutFragment();
+    public static AboutFragmentCharacter newInstance(int index) {
+        final AboutFragmentCharacter fragment = new AboutFragmentCharacter();
         final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -42,10 +41,5 @@ public class AboutFragment extends CustomFragment {
         } else {
             content.setText(Html.fromHtml("JA JA JA"));
         }
-    }
-
-    @Override
-    protected void setCharacter(View root, CharacterPlayer character) {
-
     }
 }

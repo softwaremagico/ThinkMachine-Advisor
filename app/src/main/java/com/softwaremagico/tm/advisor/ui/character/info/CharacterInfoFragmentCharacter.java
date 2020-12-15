@@ -27,7 +27,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
-import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
+import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.EnumAdapter;
@@ -45,7 +45,7 @@ import com.softwaremagico.tm.character.planets.Planet;
 import com.softwaremagico.tm.character.races.InvalidRaceException;
 import com.softwaremagico.tm.character.races.Race;
 
-public class CharacterInfoFragment extends CustomFragment {
+public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private CharacterInfoViewModel mViewModel;
     private CharacteristicsCounter characteristicsCounter;
@@ -54,8 +54,8 @@ public class CharacterInfoFragment extends CustomFragment {
     private ExtraCounter extraCounter;
     private View root;
 
-    public static CharacterInfoFragment newInstance(int index) {
-        final CharacterInfoFragment fragment = new CharacterInfoFragment();
+    public static CharacterInfoFragmentCharacter newInstance(int index) {
+        final CharacterInfoFragmentCharacter fragment = new CharacterInfoFragmentCharacter();
         final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);

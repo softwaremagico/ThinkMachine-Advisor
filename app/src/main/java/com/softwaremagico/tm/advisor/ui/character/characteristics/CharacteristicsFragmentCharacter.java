@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsExtraCounter;
-import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
+import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
@@ -40,15 +40,15 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class CharacteristicsFragment extends CustomFragment {
+public class CharacteristicsFragmentCharacter extends CharacterCustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private final Map<CharacteristicName, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private CharacteristicsCounter characteristicsCounter;
     private CharacteristicsExtraCounter extraCounter;
     private View root;
 
-    public static CharacteristicsFragment newInstance(int index) {
-        final CharacteristicsFragment fragment = new CharacteristicsFragment();
+    public static CharacteristicsFragmentCharacter newInstance(int index) {
+        final CharacteristicsFragmentCharacter fragment = new CharacteristicsFragmentCharacter();
         final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);

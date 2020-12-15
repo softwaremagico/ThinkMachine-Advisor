@@ -26,7 +26,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
-import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
+import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
@@ -43,7 +43,7 @@ import com.softwaremagico.tm.character.equipment.weapons.Weapon;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EquipmentFragment extends CustomFragment {
+public class EquipmentFragmentCharacter extends CharacterCustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private EquipmentViewModel mViewModel;
     private IncrementalElementsLayout weaponsLayout;
@@ -52,8 +52,8 @@ public class EquipmentFragment extends CustomFragment {
     private View root;
 
 
-    public static EquipmentFragment newInstance(int index) {
-        final EquipmentFragment fragment = new EquipmentFragment();
+    public static EquipmentFragmentCharacter newInstance(int index) {
+        final EquipmentFragmentCharacter fragment = new EquipmentFragmentCharacter();
         final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);

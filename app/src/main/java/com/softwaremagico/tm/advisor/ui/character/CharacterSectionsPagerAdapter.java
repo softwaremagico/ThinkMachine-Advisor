@@ -24,11 +24,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.ui.character.characteristics.CharacteristicsFragment;
-import com.softwaremagico.tm.advisor.ui.character.equipment.EquipmentFragment;
-import com.softwaremagico.tm.advisor.ui.character.info.CharacterInfoFragment;
-import com.softwaremagico.tm.advisor.ui.character.skills.SkillsFragment;
-import com.softwaremagico.tm.advisor.ui.character.traits.TraitsFragment;
+import com.softwaremagico.tm.advisor.ui.character.characteristics.CharacteristicsFragmentCharacter;
+import com.softwaremagico.tm.advisor.ui.character.equipment.EquipmentFragmentCharacter;
+import com.softwaremagico.tm.advisor.ui.character.info.CharacterInfoFragmentCharacter;
+import com.softwaremagico.tm.advisor.ui.character.skills.SkillsFragmentCharacter;
+import com.softwaremagico.tm.advisor.ui.character.traits.TraitsFragmentCharacter;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -70,23 +70,23 @@ public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         if (position == 0) {
-            return CharacterInfoFragment.newInstance(position + 1);
+            return CharacterInfoFragmentCharacter.newInstance(position + 1);
         }
 
         if (position == 1) {
-            return CharacteristicsFragment.newInstance(position + 1);
+            return CharacteristicsFragmentCharacter.newInstance(position + 1);
         }
 
         if (position == 2) {
-            return SkillsFragment.newInstance(position + 1);
+            return SkillsFragmentCharacter.newInstance(position + 1);
         }
 
         if (position == 3) {
-            return TraitsFragment.newInstance(position + 1);
+            return TraitsFragmentCharacter.newInstance(position + 1);
         }
 
         if (position == 4) {
-            return EquipmentFragment.newInstance(position + 1);
+            return EquipmentFragmentCharacter.newInstance(position + 1);
         }
 
         return null;

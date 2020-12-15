@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
-import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
+import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
 import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.SkillsExtraCounter;
@@ -38,15 +38,15 @@ import com.softwaremagico.tm.character.skills.InvalidSkillException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SkillsFragment extends CustomFragment {
+public class SkillsFragmentCharacter extends CharacterCustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private final Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private SkillsCounter skillsCounter;
     private SkillsExtraCounter extraCounter;
     private View root;
 
-    public static SkillsFragment newInstance(int index) {
-        final SkillsFragment fragment = new SkillsFragment();
+    public static SkillsFragmentCharacter newInstance(int index) {
+        final SkillsFragmentCharacter fragment = new SkillsFragmentCharacter();
         final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);

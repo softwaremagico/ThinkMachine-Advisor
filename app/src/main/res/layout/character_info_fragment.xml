@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/LayoutPadding"
-    tools:context=".ui.character.info.CharacterInfoFragment">
+    tools:context=".ui.character.info.CharacterInfoFragmentCharacter">
 
     <LinearLayout
         android:layout_width="match_parent"

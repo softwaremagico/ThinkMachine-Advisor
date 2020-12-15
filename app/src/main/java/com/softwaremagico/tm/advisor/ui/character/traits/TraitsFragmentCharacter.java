@@ -26,7 +26,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
+import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
@@ -47,7 +47,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class TraitsFragment extends CustomFragment {
+public class TraitsFragmentCharacter extends CharacterCustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private TraitsViewModel mViewModel;
 
@@ -59,8 +59,8 @@ public class TraitsFragment extends CustomFragment {
 
     private View root;
 
-    public static TraitsFragment newInstance(int index) {
-        final TraitsFragment fragment = new TraitsFragment();
+    public static TraitsFragmentCharacter newInstance(int index) {
+        final TraitsFragmentCharacter fragment = new TraitsFragmentCharacter();
         final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
