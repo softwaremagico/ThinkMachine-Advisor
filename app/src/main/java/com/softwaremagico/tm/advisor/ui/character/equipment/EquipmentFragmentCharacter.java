@@ -30,6 +30,7 @@ import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
+import com.softwaremagico.tm.advisor.ui.components.counters.FirebirdsCounter;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
@@ -49,6 +50,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
     private IncrementalElementsLayout weaponsLayout;
     private IncrementalElementsLayout armoursLayout;
     private IncrementalElementsLayout shieldsLayout;
+    private FirebirdsCounter firebirdsCounter;
     private View root;
 
 
@@ -71,6 +73,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         if (shieldsLayout != null) {
             shieldsLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedShield());
         }
+        firebirdsCounter.setCharacter(character);
     }
 
     @Override
@@ -97,7 +100,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.character_equipment_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(EquipmentViewModel.class);
-
+        firebirdsCounter = root.findViewById(R.id.firebirds_counter);
         return root;
     }
 

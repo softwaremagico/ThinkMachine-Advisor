@@ -123,6 +123,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         extraCounter.setCharacter(character);
         skillsCounter.setCharacter(character);
         traitsCounter.setCharacter(character);
+        firebirdsCounter.setCharacter(character);
     }
 
     private void createNameText(View root) {
