@@ -2,7 +2,7 @@
 
 This is an Android based application for the use of [ThinkMachine](https://softwaremagico.github.io/ThinkMachine/) Java library.  That means that this is a mobile Android application developed to help the user to create character sheets for the Fading Suns revised edition.
 
-The app will be available on Google Play soon, and this site is only for hosting the source code of the application. If you are interested only on the use of this application as a standard user, please search it on Google Play.
+The app is available on Google Play, and this site is only for hosting the source code of the application. If you are interested only on the use of this application as a standard user, please search it on Google Play.
 
 ## Roadmap
 

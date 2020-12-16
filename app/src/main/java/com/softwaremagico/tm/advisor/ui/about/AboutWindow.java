@@ -18,8 +18,9 @@ public class AboutWindow extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about_window, container, false);
         AboutPagerAdapter aboutPagerAdapter = new AboutPagerAdapter(getContext(), getChildFragmentManager());
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
+        ViewPager viewPager = view.findViewById(R.id.view_pager);
         viewPager.setAdapter(aboutPagerAdapter);
+        viewPager.setOffscreenPageLimit(aboutPagerAdapter.getCount());
         final TabLayout tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);

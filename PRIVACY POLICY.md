@@ -4,5 +4,5 @@ This document is about Think Machine: Advisor's policy to respect your privacy r
 
 ## What we collect
 
-The Software "Think Machine: Advisor" is used for creating fictional characters and therefore does not store, collects or share any personal data. "Think Machine: Advisor" neither uses any kind of  third-party tools for advertisments, marketing like Adwords or any other that can collect any personal data from your device. This software neither requires any kind of regisrtation or payment. 
+The Software "Think Machine: Advisor" is used for creating fictional characters and therefore does not store, collects or share any personal data. "Think Machine: Advisor" neither uses any kind of  third-party tools for advertisments, marketing like Adwords or any other that can collect any personal data from your device. This software neither requires any kind of registration or payment. 
 

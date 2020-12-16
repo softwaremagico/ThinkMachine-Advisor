@@ -14,12 +14,12 @@ import androidx.annotation.Nullable;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 
-public class AboutFragment extends CustomFragment {
+public class PrivacyFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private TextView content;
 
-    public static AboutFragment newInstance(int index) {
-        final AboutFragment fragment = new AboutFragment();
+    public static PrivacyFragment newInstance(int index) {
+        final PrivacyFragment fragment = new PrivacyFragment();
         final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -29,7 +29,7 @@ public class AboutFragment extends CustomFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.about_content, container, false);
+        View root = inflater.inflate(R.layout.privacy_content, container, false);
         content = root.findViewById(R.id.content);
         content.setMovementMethod(LinkMovementMethod.getInstance());
         return root;
@@ -38,9 +38,9 @@ public class AboutFragment extends CustomFragment {
     @Override
     protected void initData() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            content.setText(Html.fromHtml(getString(R.string.about), Html.FROM_HTML_MODE_LEGACY));
+            content.setText(Html.fromHtml(getString(R.string.privacy), Html.FROM_HTML_MODE_LEGACY));
         } else {
-            content.setText(Html.fromHtml(getString(R.string.about)));
+            content.setText(Html.fromHtml(getString(R.string.privacy)));
         }
     }
 }

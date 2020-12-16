@@ -30,7 +30,7 @@ import com.softwaremagico.tm.advisor.R;
 public class AboutPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_about, R.string.tab_license};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_about, R.string.tab_license, R.string.tab_privacy};
     private final Context mContext;
 
     public AboutPagerAdapter(Context context, FragmentManager fm) {
@@ -48,6 +48,9 @@ public class AboutPagerAdapter extends FragmentPagerAdapter {
         }
         if (position == 1) {
             return LicenseFragment.newInstance(position + 1);
+        }
+        if (position == 2) {
+            return PrivacyFragment.newInstance(position + 1);
         }
 
         return null;
