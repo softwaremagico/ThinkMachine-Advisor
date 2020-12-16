@@ -44,10 +44,10 @@ public class AboutPagerAdapter extends FragmentPagerAdapter {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         if (position == 0) {
-            return AboutFragmentCharacter.newInstance(position + 1);
+            return AboutFragment.newInstance(position + 1);
         }
         if (position == 1) {
-            return LicenseFragmentCharacter.newInstance(position + 1);
+            return LicenseFragment.newInstance(position + 1);
         }
 
         return null;

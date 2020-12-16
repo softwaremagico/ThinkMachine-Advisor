@@ -2,6 +2,7 @@ package com.softwaremagico.tm.advisor.ui.about;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,12 @@ import androidx.annotation.Nullable;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 
-public class LicenseFragmentCharacter extends CustomFragment {
+public class AboutFragment extends CustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private TextView content;
 
-    public static LicenseFragmentCharacter newInstance(int index) {
-        final LicenseFragmentCharacter fragment = new LicenseFragmentCharacter();
+    public static AboutFragment newInstance(int index) {
+        final AboutFragment fragment = new AboutFragment();
         final Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -28,18 +29,18 @@ public class LicenseFragmentCharacter extends CustomFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.license_content, container, false);
+        View root = inflater.inflate(R.layout.about_content, container, false);
         content = root.findViewById(R.id.content);
-
+        content.setMovementMethod(LinkMovementMethod.getInstance());
         return root;
     }
 
     @Override
     protected void initData() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            content.setText(Html.fromHtml("JA JA JA", Html.FROM_HTML_MODE_LEGACY));
+            content.setText(Html.fromHtml(getString(R.string.licensing), Html.FROM_HTML_MODE_LEGACY));
         } else {
-            content.setText(Html.fromHtml("JA JA JA"));
+            content.setText(Html.fromHtml(getString(R.string.licensing)));
         }
     }
 }

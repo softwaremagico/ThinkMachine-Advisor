@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/LayoutPadding"
-    tools:context=".ui.about.AboutFragmentCharacter">
+    tools:context=".ui.about.AboutFragment">
 
     <TextView
         android:id="@+id/content"
