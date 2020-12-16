@@ -36,6 +36,8 @@
     <color name="counterTraitsText">@color/colorContrast</color>
     <color name="counterCybernetics">#554b6b</color>
     <color name="counterCyberneticsText">@color/colorContrast</color>
+    <color name="counterFirebirds">#382b48</color>
+    <color name="counterFirebirdsText">#382b48</color>
     <color name="counterExtra">#612750</color>
     <color name="counterExtraText">@color/colorContrast</color>
 

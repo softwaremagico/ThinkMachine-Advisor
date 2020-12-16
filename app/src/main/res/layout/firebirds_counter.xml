@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (C) 2020 Softwaremagico
+  ~
+  ~  This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero  <softwaremagico@gmail.com> Valencia (Spain).
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under  the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="80dp"
+    android:layout_height="55dp"
+    android:orientation="vertical"
+    tools:context=".ui.components.counters.Counter">
+
+    <ImageView
+        android:id="@+id/coin"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/ic_coin" />
+
+
+    <TextView
+        android:id="@+id/value"
+        style="@style/CounterTag"
+        android:layout_width="80dp"
+        android:layout_height="12dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_vertical"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:text="2000 fb" />
+
+</RelativeLayout>

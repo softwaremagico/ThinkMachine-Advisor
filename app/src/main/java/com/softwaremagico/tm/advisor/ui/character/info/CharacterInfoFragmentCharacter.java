@@ -35,6 +35,7 @@ import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
 import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.ExtraCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.FirebirdsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
@@ -52,6 +53,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     private SkillsCounter skillsCounter;
     private TraitsCounter traitsCounter;
     private ExtraCounter extraCounter;
+    private FirebirdsCounter firebirdsCounter;
     private View root;
 
     public static CharacterInfoFragmentCharacter newInstance(int index) {
@@ -85,6 +87,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         skillsCounter = root.findViewById(R.id.skills_counter);
         traitsCounter = root.findViewById(R.id.traits_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
+        firebirdsCounter = root.findViewById(R.id.firebirds_counter);
 
         return root;
     }

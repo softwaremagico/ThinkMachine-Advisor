@@ -10,12 +10,14 @@
   ~  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/equipment_frame"
+    style="@style/LayoutPadding"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/LayoutPadding"
+    android:scrollbars="vertical"
     tools:context=".ui.character.info.CharacterInfoFragmentCharacter">
 
     <LinearLayout
@@ -83,7 +85,8 @@
             android:layout_gravity="center"
             android:columnCount="4"
             android:orientation="horizontal"
-            android:padding="20dp">
+            android:useDefaultMargins="true"
+            android:paddingTop="10dp">
 
             <com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter
                 android:id="@+id/characteristics_counter"
@@ -113,6 +116,13 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center" />
 
+            <com.softwaremagico.tm.advisor.ui.components.counters.FirebirdsCounter
+                android:id="@+id/firebirds_counter"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:gravity="center" />
+
 
         </GridLayout>
 
@@ -120,4 +130,4 @@
     </LinearLayout>
 
 
-</FrameLayout>
+</ScrollView>
