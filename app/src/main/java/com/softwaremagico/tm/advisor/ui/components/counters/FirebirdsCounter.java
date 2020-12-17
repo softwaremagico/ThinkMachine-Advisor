@@ -15,12 +15,17 @@ import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.creation.CostCalculatorModificationHandler;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class FirebirdsCounter extends Component {
     private static final int DURATION = 1000;
     private ImageView coinImage;
     private TextView valueText;
-    private int currentValue = 0;
+    private float currentValue = 0;
     private CostCalculatorModificationHandler.ICurrentFirebirdSpendListener listener;
+    private CostCalculatorModificationHandler.IInitialFirebirdsUpdated initialListener;
+    private NumberFormat decimalFormat = new DecimalFormat("##.##");
 
 
     public FirebirdsCounter(Context context) {
@@ -43,8 +48,8 @@ public class FirebirdsCounter extends Component {
         valueText = findViewById(R.id.value);
     }
 
-    public void setValue(int value, boolean animation) {
-        valueText.setText(value + " " + getResources().getString(R.string.firebird_abbrev));
+    public void setValue(float value, boolean animation) {
+        valueText.setText(String.format("%s %s", decimalFormat.format(value), getResources().getString(R.string.firebird_abbrev)));
         if (animation) {
             if (currentValue != value) {
                 rotate(45f * (float) (value - currentValue) / 50, coinImage);
@@ -54,11 +59,11 @@ public class FirebirdsCounter extends Component {
         setColor();
     }
 
-    protected int getCurrentValue() {
+    protected float getCurrentValue() {
         return currentValue;
     }
 
-    protected void setCurrentValue(int currentValue) {
+    protected void setCurrentValue(float currentValue) {
         this.currentValue = currentValue;
     }
 
@@ -76,9 +81,13 @@ public class FirebirdsCounter extends Component {
     public void setCharacter(CharacterPlayer character) {
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeFirebirdSpendListeners(listener);
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addFirebirdSpendListeners(value -> {
-            setValue((int) (character.getInitialMoney() - CharacterManager.getCostCalculator().getFireBirdsExpend()), true);
+            setValue((character.getInitialMoney() - CharacterManager.getCostCalculator().getFireBirdsExpend()), false);
         });
-        setValue((int) (character.getInitialMoney() - CharacterManager.getCostCalculator().getFireBirdsExpend()), false);
+        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeInitialFirebirdListeners(initialListener);
+        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addInitialFirebirdListeners(value -> {
+            setValue((character.getInitialMoney() - CharacterManager.getCostCalculator().getFireBirdsExpend()), false);
+        });
+        setValue((character.getInitialMoney() - CharacterManager.getCostCalculator().getFireBirdsExpend()), false);
     }
 
 
