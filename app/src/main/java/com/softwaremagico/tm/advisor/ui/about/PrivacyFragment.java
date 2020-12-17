@@ -1,5 +1,6 @@
 package com.softwaremagico.tm.advisor.ui.about;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
@@ -31,6 +33,8 @@ public class PrivacyFragment extends CustomFragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.privacy_content, container, false);
         content = root.findViewById(R.id.content);
+        Typeface typeface = ResourcesCompat.getFont(root.getContext(), R.font.dejavu_sans);
+        content.setTypeface(typeface);
         content.setMovementMethod(LinkMovementMethod.getInstance());
         return root;
     }
