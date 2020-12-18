@@ -51,8 +51,8 @@ android {
         applicationId "com.softwaremagico.tm.advisor"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 6
-        versionName "0.1.0"
+        versionCode 7
+        versionName "0.4.1"
         setProperty("archivesBaseName", applicationId + "-v" + versionCode)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -62,11 +62,13 @@ android {
 
     buildTypes {
 
-
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            repositories {
+                mavenLocal()
+            }
         }
 
         beta {
@@ -89,6 +91,7 @@ android {
 
         debug {
             minifyEnabled false
+            versionNameSuffix "-debug"
             repositories {
                 mavenLocal()
             }
