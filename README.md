@@ -18,6 +18,7 @@ The app is available on Google Play, and this site is only for hosting the sourc
 
 0.4 Point counters for characteristics and skills
 - 0.4.1 Firebirds counters. 
+- 0.4.2 Code minified.
 
 
 
