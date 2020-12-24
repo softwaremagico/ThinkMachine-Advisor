@@ -89,6 +89,8 @@
 
 # Software Magico
 -keep class com.softwaremagico.*.** { *; }
+-keep class com.itextpdf.*.** { *; }
+
 
 
 
