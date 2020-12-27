@@ -85,42 +85,47 @@
             android:layout_gravity="center"
             android:columnCount="4"
             android:orientation="horizontal"
-            android:useDefaultMargins="true"
-            android:paddingTop="10dp">
+            android:paddingTop="10dp"
+            android:useDefaultMargins="true">
 
             <com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter
                 android:id="@+id/characteristics_counter"
-                android:layout_width="90dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:gravity="center" />
 
             <com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter
                 android:id="@+id/skills_counter"
-                android:layout_width="90dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:gravity="center" />
 
             <com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter
                 android:id="@+id/traits_counter"
-                android:layout_width="90dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:gravity="center" />
 
             <com.softwaremagico.tm.advisor.ui.components.counters.ExtraCounter
                 android:id="@+id/extra_counter"
-                android:layout_width="90dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:gravity="center" />
 
             <com.softwaremagico.tm.advisor.ui.components.counters.FirebirdsCounter
                 android:id="@+id/firebirds_counter"
-                android:layout_width="90dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:gravity="center" />
 
 

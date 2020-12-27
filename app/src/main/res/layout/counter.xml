@@ -13,7 +13,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="40dp"
+    android:layout_width="80dp"
     android:layout_height="55dp"
     android:orientation="vertical"
     tools:context=".ui.components.counters.Counter">
