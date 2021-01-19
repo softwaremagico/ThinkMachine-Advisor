@@ -31,6 +31,7 @@ import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 public class ElementSpinner extends Component {
 
     private ImageView helpButton;
+    private Spinner selector;
 
     public ElementSpinner(Context context) {
         this(context, null);
@@ -63,20 +64,13 @@ public class ElementSpinner extends Component {
             });
         }
 
-    }
-
-    public <T extends Element<?>> void setAdapter(ElementAdapter<T> adapter) {
-        final Spinner selector = findViewById(R.id.spinner);
-        selector.setAdapter(adapter);
-    }
-
-    public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener onItemSelectedListener) {
-        final Spinner selector = findViewById(R.id.spinner);
-        selector.setOnItemSelectedListener(onItemSelectedListener);
+        selector = findViewById(R.id.spinner);
         selector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0 && selector.getItemAtPosition(0) == null) {
+                if (selector.getItemAtPosition(0) == null ||
+                        ((Element) selector.getItemAtPosition(0)).getDescription() == null ||
+                        ((Element) selector.getItemAtPosition(0)).getDescription().isEmpty()) {
                     helpButton.setVisibility(ImageView.INVISIBLE);
                 } else {
                     helpButton.setVisibility(ImageView.VISIBLE);
@@ -85,6 +79,34 @@ public class ElementSpinner extends Component {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                helpButton.setVisibility(ImageView.INVISIBLE);
+            }
+        });
+
+    }
+
+    public <T extends Element<?>> void setAdapter(ElementAdapter<T> adapter) {
+        selector.setAdapter(adapter);
+    }
+
+    public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener onItemSelectedListener) {
+        selector = findViewById(R.id.spinner);
+        selector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                onItemSelectedListener.onItemSelected(parent, view, position, id);
+                if (selector.getItemAtPosition(0) == null ||
+                        ((Element) selector.getItemAtPosition(0)).getDescription() == null ||
+                        ((Element) selector.getItemAtPosition(0)).getDescription().isEmpty()) {
+                    helpButton.setVisibility(ImageView.INVISIBLE);
+                } else {
+                    helpButton.setVisibility(ImageView.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                onItemSelectedListener.onNothingSelected(parent);
                 helpButton.setVisibility(ImageView.INVISIBLE);
             }
         });

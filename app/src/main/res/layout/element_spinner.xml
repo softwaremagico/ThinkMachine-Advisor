@@ -42,6 +42,7 @@
         android:layout_weight = "0"
         android:layout_toRightOf="@id/spinner"
         android:gravity="center"
+        android:visibility="invisible"
         android:background="@drawable/ic_help"
         />
 
