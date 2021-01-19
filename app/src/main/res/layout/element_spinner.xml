@@ -10,29 +10,39 @@
   ~  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/translated_tag"
         android:layout_width="wrap_content"
+        android:layout_weight = "0"
         android:layout_height="45dp"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:ellipsize="marquee"
         android:fontFamily="@font/label"
-        />
+        android:singleLine="true" />
 
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight = "1"
         android:layout_toRightOf="@id/translated_tag"
         android:singleLine="true"
-        android:theme="@style/InputData"
+        android:theme="@style/InputData" />
+
+    <ImageView
+        android:id="@+id/button_help"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_weight = "0"
+        android:layout_toRightOf="@id/spinner"
+        android:gravity="center"
+        android:background="@drawable/ic_help"
         />
 
-</RelativeLayout>
+</LinearLayout>
