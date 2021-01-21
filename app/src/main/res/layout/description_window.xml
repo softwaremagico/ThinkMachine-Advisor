@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/LayoutPadding"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/LayoutPadding"
     android:minHeight="350dp"
     android:orientation="vertical">
 
@@ -20,17 +20,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:paddingTop="5dp"
-        android:gravity="right">
+        android:gravity="right"
+        android:paddingTop="5dp">
 
         <Button
             android:id="@+id/close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/close"
-            android:padding="5dp"
-            android:textColor="@color/colorContrast"
-            android:background="@color/colorPrimaryDark"/>
+            style="@style/CloseButton" />
 
     </LinearLayout>
 
