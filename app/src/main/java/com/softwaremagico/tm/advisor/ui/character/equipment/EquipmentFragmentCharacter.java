@@ -47,7 +47,8 @@ import java.util.List;
 public class EquipmentFragmentCharacter extends CharacterCustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private EquipmentViewModel mViewModel;
-    private IncrementalElementsLayout<Weapon> weaponsLayout;
+    private IncrementalElementsLayout<Weapon> meleeWeaponsLayout;
+    private IncrementalElementsLayout<Weapon> rangeWeaponsLayout;
     private IncrementalElementsLayout<Armour> armoursLayout;
     private IncrementalElementsLayout<Shield> shieldsLayout;
     private FirebirdsCounter firebirdsCounter;
@@ -64,8 +65,11 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-        if (weaponsLayout != null) {
-            weaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
+        if (meleeWeaponsLayout != null) {
+            meleeWeaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
+        }
+        if (rangeWeaponsLayout != null) {
+            rangeWeaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
         }
         if (armoursLayout != null) {
             armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedArmour());
@@ -79,9 +83,16 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
     @Override
     protected void initData() {
         final LinearLayout rootLayout = root.findViewById(R.id.root_container);
-        addSection(ThinkMachineTranslator.getTranslatedText("weapons"), rootLayout);
-        weaponsLayout = new WeaponsLayout(getContext(), true);
-        rootLayout.addView(weaponsLayout);
+
+        addSection(ThinkMachineTranslator.getTranslatedText("rangedWeapons"), rootLayout);
+
+        rangeWeaponsLayout = new RangedWeaponsLayout(getContext(), true);
+        rootLayout.addView(rangeWeaponsLayout);
+
+        addSection(ThinkMachineTranslator.getTranslatedText("meleeWeapons"), rootLayout);
+
+        meleeWeaponsLayout = new MeleeWeaponsLayout(getContext(), true);
+        rootLayout.addView(meleeWeaponsLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("armor"), rootLayout);
         armoursLayout = new ArmourLayout(getContext(), true);
@@ -199,7 +210,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         }
     }
 
-    class WeaponsLayout extends IncrementalElementsLayout<Weapon> {
+    abstract class WeaponsLayout extends IncrementalElementsLayout<Weapon> {
 
         public WeaponsLayout(Context context, boolean nullsAllowed) {
             super(context, nullsAllowed);
@@ -218,9 +229,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         }
 
         @Override
-        protected ElementAdapter<Weapon> createElementAdapter() {
-            return new ElementAdapter<>(getActivity(), mViewModel.getAvailableWeapons(), isNullAllowed(), Weapon.class);
-        }
+        protected abstract ElementAdapter<Weapon> createElementAdapter();
 
         private void setWeapons(List<ElementSpinner<Weapon>> spinners) {
             final List<Weapon> weapons = new ArrayList<>();
@@ -229,7 +238,41 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
                     weapons.add(spinner.getSelection());
                 }
             }
-            CharacterManager.getSelectedCharacter().setWeapons(weapons);
+            assignWeapons(weapons);
+        }
+
+        protected abstract void assignWeapons(List<Weapon> weapons);
+    }
+
+    class MeleeWeaponsLayout extends WeaponsLayout {
+        public MeleeWeaponsLayout(Context context, boolean nullsAllowed) {
+            super(context, nullsAllowed);
+        }
+
+        @Override
+        protected ElementAdapter<Weapon> createElementAdapter() {
+            return new ElementAdapter<>(getActivity(), mViewModel.getAvailableMeleeWeapons(), isNullAllowed(), Weapon.class);
+        }
+
+        @Override
+        protected void assignWeapons(List<Weapon> weapons) {
+            CharacterManager.getSelectedCharacter().setMeleeWeapons(weapons);
+        }
+    }
+
+    class RangedWeaponsLayout extends WeaponsLayout {
+        public RangedWeaponsLayout(Context context, boolean nullsAllowed) {
+            super(context, nullsAllowed);
+        }
+
+        @Override
+        protected ElementAdapter<Weapon> createElementAdapter() {
+            return new ElementAdapter<>(getActivity(), mViewModel.getAvailableRangedWeapons(), isNullAllowed(), Weapon.class);
+        }
+
+        @Override
+        protected void assignWeapons(List<Weapon> weapons) {
+            CharacterManager.getSelectedCharacter().setRangedWeapons(weapons);
         }
     }
 

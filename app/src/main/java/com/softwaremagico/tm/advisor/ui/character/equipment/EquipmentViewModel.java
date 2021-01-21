@@ -30,10 +30,20 @@ import java.util.Locale;
 
 public class EquipmentViewModel extends ViewModel {
 
-
-    public List<Weapon> getAvailableWeapons() {
+    public List<Weapon> getAvailableMeleeWeapons() {
         try {
-            return WeaponFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+            return WeaponFactory.getInstance().getMeleeWeapons(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+        } catch (InvalidXmlElementException | NullPointerException e) {
+            MachineLog.errorMessage(this.getClass().getName(), e);
+        }
+        return new ArrayList<>();
+    }
+
+
+
+    public List<Weapon> getAvailableRangedWeapons() {
+        try {
+            return WeaponFactory.getInstance().getRangedWeapons(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
         } catch (InvalidXmlElementException | NullPointerException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }
