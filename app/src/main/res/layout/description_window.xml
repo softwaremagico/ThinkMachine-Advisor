@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/LayoutPadding"
-    tools:context=".ui.about.AboutFragment">
+    android:orientation="vertical">
 
     <WebView
         android:id="@+id/content"
@@ -12,6 +12,25 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/primary_text_dark" />
+
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:paddingTop="5dp"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/close"
+            android:padding="5dp"
+            android:textColor="@color/colorContrast"
+            android:background="@color/colorPrimaryDark"/>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,15 +1,14 @@
 package com.softwaremagico.tm.advisor.ui.components;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.softwaremagico.tm.Element;
@@ -32,8 +31,8 @@ public class ElementDescriptionDialog<T extends Element<?>> extends DialogFragme
         super.onCreateView(inflater, container, savedInstanceState);
         final View root = inflater.inflate(R.layout.description_window, container, false);
         WebView content = root.findViewById(R.id.content);
-        Typeface typeface = ResourcesCompat.getFont(root.getContext(), R.font.dejavu_sans);
-
+        Button closeButton = root.findViewById(R.id.close_button);
+        closeButton.setOnClickListener(v -> dismiss());
         updateContent(content, element);
         return root;
     }

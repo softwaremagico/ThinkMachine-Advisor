@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~  Copyright (C) 2020 Softwaremagico
   ~
   ~  This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero  <softwaremagico@gmail.com> Valencia (Spain).
@@ -14,13 +15,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/LayoutPadding"
     tools:context="com.softwaremagico.tm.advisor.ui.load.LoadCharacter">
+
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="5dp"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="@string/close"
+            android:padding="5dp"
+            android:textColor="@color/colorContrast"
+            android:background="@color/colorPrimaryDark"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/character_recycler_loader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:layout_weight="1"
+        android:layout_above="@id/buttons_layout"/>
 
 
 </RelativeLayout>
