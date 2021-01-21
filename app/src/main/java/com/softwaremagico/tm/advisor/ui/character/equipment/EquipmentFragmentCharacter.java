@@ -47,9 +47,9 @@ import java.util.List;
 public class EquipmentFragmentCharacter extends CharacterCustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private EquipmentViewModel mViewModel;
-    private IncrementalElementsLayout weaponsLayout;
-    private IncrementalElementsLayout armoursLayout;
-    private IncrementalElementsLayout shieldsLayout;
+    private IncrementalElementsLayout<Weapon> weaponsLayout;
+    private IncrementalElementsLayout<Armour> armoursLayout;
+    private IncrementalElementsLayout<Shield> shieldsLayout;
     private FirebirdsCounter firebirdsCounter;
     private View root;
 
@@ -104,7 +104,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         return root;
     }
 
-    class ShieldLayout extends IncrementalElementsLayout {
+    class ShieldLayout extends IncrementalElementsLayout<Shield> {
         private static final int MAX_ITEMS = 1;
 
         public ShieldLayout(Context context, boolean nullsAllowed) {
@@ -124,13 +124,13 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         }
 
         @Override
-        protected ElementAdapter createElementAdapter() {
+        protected ElementAdapter<Shield> createElementAdapter() {
             return new ElementAdapter<>(getActivity(), mViewModel.getAvailableShields(), isNullAllowed(), Shield.class);
         }
 
-        private void setShield(List<ElementSpinner> spinners) {
+        private void setShield(List<ElementSpinner<Shield>> spinners) {
             final List<Shield> shields = new ArrayList<>();
-            for (final ElementSpinner spinner : spinners) {
+            for (final ElementSpinner<Shield> spinner : spinners) {
                 if (spinner.getSelection() != null) {
                     shields.add(spinner.getSelection());
                 }
@@ -152,7 +152,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
     }
 
 
-    class ArmourLayout extends IncrementalElementsLayout {
+    class ArmourLayout extends IncrementalElementsLayout<Armour> {
         private static final int MAX_ITEMS = 1;
 
         public ArmourLayout(Context context, boolean nullsAllowed) {
@@ -172,13 +172,13 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         }
 
         @Override
-        protected ElementAdapter createElementAdapter() {
+        protected ElementAdapter<Armour> createElementAdapter() {
             return new ElementAdapter<>(getActivity(), mViewModel.getAvailableArmours(), isNullAllowed(), Armour.class);
         }
 
-        private void setArmour(List<ElementSpinner> spinners) {
+        private void setArmour(List<ElementSpinner<Armour>> spinners) {
             final List<Armour> armours = new ArrayList<>();
-            for (final ElementSpinner spinner : spinners) {
+            for (final ElementSpinner<Armour> spinner : spinners) {
                 if (spinner.getSelection() != null) {
                     armours.add(spinner.getSelection());
                 }
@@ -199,7 +199,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         }
     }
 
-    class WeaponsLayout extends IncrementalElementsLayout {
+    class WeaponsLayout extends IncrementalElementsLayout<Weapon> {
 
         public WeaponsLayout(Context context, boolean nullsAllowed) {
             super(context, nullsAllowed);
@@ -218,13 +218,13 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         }
 
         @Override
-        protected ElementAdapter createElementAdapter() {
+        protected ElementAdapter<Weapon> createElementAdapter() {
             return new ElementAdapter<>(getActivity(), mViewModel.getAvailableWeapons(), isNullAllowed(), Weapon.class);
         }
 
-        private void setWeapons(List<ElementSpinner> spinners) {
+        private void setWeapons(List<ElementSpinner<Weapon>> spinners) {
             final List<Weapon> weapons = new ArrayList<>();
-            for (final ElementSpinner spinner : spinners) {
+            for (final ElementSpinner<Weapon> spinner : spinners) {
                 if (spinner.getSelection() != null) {
                     weapons.add(spinner.getSelection());
                 }

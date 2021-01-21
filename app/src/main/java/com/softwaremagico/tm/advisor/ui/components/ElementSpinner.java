@@ -22,13 +22,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 
-public class ElementSpinner extends Component {
+public class ElementSpinner<T extends Element<?>> extends Component {
 
     private ImageView helpButton;
     private Spinner selector;
@@ -60,7 +59,7 @@ public class ElementSpinner extends Component {
         helpButton = findViewById(R.id.button_help);
         if (helpButton != null) {
             helpButton.setOnClickListener(v -> {
-                openDescriptionWindow();
+                openDescriptionWindow(getSelection());
             });
         }
 
@@ -95,9 +94,9 @@ public class ElementSpinner extends Component {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 onItemSelectedListener.onItemSelected(parent, view, position, id);
-                if (selector.getItemAtPosition(0) == null ||
-                        ((Element) selector.getItemAtPosition(0)).getDescription() == null ||
-                        ((Element) selector.getItemAtPosition(0)).getDescription().isEmpty()) {
+                if (selector.getItemAtPosition(position) == null ||
+                        ((Element<?>) selector.getItemAtPosition(position)).getDescription() == null ||
+                        ((Element<?>) selector.getItemAtPosition(position)).getDescription().isEmpty()) {
                     helpButton.setVisibility(ImageView.INVISIBLE);
                 } else {
                     helpButton.setVisibility(ImageView.VISIBLE);
@@ -112,7 +111,7 @@ public class ElementSpinner extends Component {
         });
     }
 
-    public <T extends Element<?>> void setSelection(T selected) {
+    public void setSelection(T selected) {
         final Spinner selector = findViewById(R.id.spinner);
         if (selected == null) {
             selector.setSelection(0);
@@ -121,7 +120,7 @@ public class ElementSpinner extends Component {
         }
     }
 
-    public <T extends Element<?>> T getSelection() {
+    public T getSelection() {
         final Spinner selector = findViewById(R.id.spinner);
         final T selectedItem = (T) selector.getSelectedItem();
         if (Element.isNull(selectedItem)) {
@@ -130,24 +129,19 @@ public class ElementSpinner extends Component {
         return selectedItem;
     }
 
+    public <E extends Element<?>> E getSelection(Class<E> elementClass) {
+        final Spinner selector = findViewById(R.id.spinner);
+        final E selectedItem = elementClass.cast(selector.getSelectedItem());
+        if (Element.isNull(selectedItem)) {
+            return null;
+        }
+        return selectedItem;
+    }
 
-    protected void openDescriptionWindow() {
-        final ElementDescriptionDialog elementDescriptionDialog = new ElementDescriptionDialog();
 
-        final boolean isLargeLayout = true;
-
-        if (isLargeLayout) {
-            // The device is using a large layout, so show the fragment as a dialog
-            elementDescriptionDialog.show(((FragmentActivity) getContext()).getSupportFragmentManager(), "dialog");
-        } else {
-            // The device is smaller, so show the fragment fullscreen
-            final FragmentTransaction transaction = ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction();
-            // For a little polish, specify a transition animation
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            // To make it fullscreen, use the 'content' root view as the container
-            // for the fragment, which is always the root view for the activity
-            transaction.add(android.R.id.content, elementDescriptionDialog)
-                    .addToBackStack(null).commit();
+    protected void openDescriptionWindow(T element) {
+        if (element != null) {
+            new ElementDescriptionDialog(element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
         }
     }
 

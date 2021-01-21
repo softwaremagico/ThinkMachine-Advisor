@@ -30,7 +30,7 @@ import java.util.Set;
 
 public abstract class IncrementalElementsLayout<T extends Element<?>> extends LinearLayout {
     private ElementAdapter<T> elementAdapter;
-    private final List<ElementSpinner> elementSpinners;
+    private final List<ElementSpinner<T>> elementSpinners;
     private boolean enabled = true;
     private final boolean nullAllowed;
     private final Set<AdapterView.OnItemSelectedListener> listeners;
@@ -91,7 +91,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         while (i < elementSpinners.size()) {
             if (elementSpinners.get(i).getSelection() != null) {
                 if (!selections.contains(elementSpinners.get(i).getSelection())) {
-                    selections.add(elementSpinners.get(i).getSelection());
+                    selections.add((T) elementSpinners.get(i).getSelection());
                 } else {
                     removeView(elementSpinners.get(i));
                     elementSpinners.remove(i);
@@ -131,7 +131,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         enabled = true;
     }
 
-    public List<ElementSpinner> getElementSpinners() {
+    public List<ElementSpinner<T>> getElementSpinners() {
         return elementSpinners;
     }
 
@@ -170,9 +170,9 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
     }
 
     public final ElementSpinner createElementSpinner() {
-        final ElementSpinner blessingSelector = new ElementSpinner(getContext());
-        blessingSelector.setAdapter(getElementAdapter());
-        return blessingSelector;
+        final ElementSpinner selector = new ElementSpinner(getContext());
+        selector.setAdapter(getElementAdapter());
+        return selector;
     }
 
     protected abstract ElementAdapter<T> createElementAdapter();
