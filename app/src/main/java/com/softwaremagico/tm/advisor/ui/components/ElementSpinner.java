@@ -26,10 +26,12 @@ import androidx.fragment.app.FragmentActivity;
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.BeneficeDescriptionDialog;
+import com.softwaremagico.tm.advisor.ui.components.descriptions.BlessingDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.ElementDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.ShieldDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
+import com.softwaremagico.tm.character.blessings.Blessing;
 import com.softwaremagico.tm.character.equipment.shields.Shield;
 
 public class ElementSpinner<T extends Element<?>> extends Component {
@@ -63,9 +65,7 @@ public class ElementSpinner<T extends Element<?>> extends Component {
 
         helpButton = findViewById(R.id.button_help);
         if (helpButton != null) {
-            helpButton.setOnClickListener(v -> {
-                openDescriptionWindow(getSelection());
-            });
+            helpButton.setOnClickListener(v -> openDescriptionWindow(getSelection()));
         }
 
         selector = findViewById(R.id.spinner);
@@ -89,7 +89,7 @@ public class ElementSpinner<T extends Element<?>> extends Component {
 
     }
 
-    public <T extends Element<?>> void setAdapter(ElementAdapter<T> adapter) {
+    public <E extends Element<?>> void setAdapter(ElementAdapter<E> adapter) {
         selector.setAdapter(adapter);
     }
 
@@ -148,6 +148,8 @@ public class ElementSpinner<T extends Element<?>> extends Component {
         if (element != null) {
             if (element instanceof AvailableBenefice) {
                 new BeneficeDescriptionDialog((AvailableBenefice) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
+            } else if (element instanceof Blessing) {
+                new BlessingDescriptionDialog((Blessing) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
             } else if (element instanceof Shield) {
                 new ShieldDescriptionDialog((Shield) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
             } else {
