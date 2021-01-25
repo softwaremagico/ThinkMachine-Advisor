@@ -40,6 +40,7 @@ import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.benefices.BeneficeDefinition;
 import com.softwaremagico.tm.character.benefices.InvalidBeneficeException;
 import com.softwaremagico.tm.character.blessings.Blessing;
+import com.softwaremagico.tm.character.blessings.BlessingGroup;
 import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
 
 import java.util.ArrayList;
@@ -143,6 +144,11 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
                         return "";
                     }
                     return element.getName() + " (" + element.getCost() + ")";
+                }
+
+                @Override
+                public boolean isEnabled(int position) {
+                    return getItem(position).getBlessingGroup() != BlessingGroup.RESTRICTED;
                 }
             };
         }

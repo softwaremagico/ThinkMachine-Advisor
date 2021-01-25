@@ -13,6 +13,7 @@
 package com.softwaremagico.tm.advisor.ui.components;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,12 +63,21 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
         if (element != null) {
             final TextView name = listItem.findViewById(R.id.selected_item);
             name.setText(getElementRepresentation(element));
+            setElementColor(name, element, position);
         }
 
         return listItem;
     }
 
-    public String getElementRepresentation(T element){
+    protected void setElementColor(TextView elementRepresentation, T element, int position) {
+        if (isEnabled(position)) {
+            elementRepresentation.setTextColor(Color.BLACK);
+        } else {
+            elementRepresentation.setTextColor(Color.LTGRAY);
+        }
+    }
+
+    public String getElementRepresentation(T element) {
         if (element.getId().equals(Element.DEFAULT_NULL_ID)) {
             return "";
         }
