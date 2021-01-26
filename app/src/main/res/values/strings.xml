@@ -69,4 +69,5 @@
     <string name="firebird_abbrev">fbs</string>
     <string name="cost">Cost</string>
     <string name="close">Close</string>
+    <string name="properties">Properties</string>
 </resources>
