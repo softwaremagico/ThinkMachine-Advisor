@@ -27,13 +27,14 @@ import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.core.random.PreferenceGroup;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
-import com.softwaremagico.tm.advisor.ui.components.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.random.selectors.IRandomPreference;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class RandomPreferencesFragment extends CharacterCustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -64,7 +65,11 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
                         getContext().getPackageName())), linearLayout);
                 for (Class<? extends IRandomPreference> preference : preferenceGroup.getRandomPreferences()) {
                     final EnumSpinner optionsSelector = new EnumSpinner(getContext(), null);
-                    optionsSelector.setAdapter(new EnumAdapter(getActivity(), android.R.layout.simple_spinner_item, Arrays.asList(preference.getEnumConstants())));
+                    List<? extends IRandomPreference> options = new ArrayList<>(Arrays.asList(preference.getEnumConstants()));
+                    if (preference.getEnumConstants().length == 0 || preference.getEnumConstants()[0].getDefault() == null) {
+                        options.add(0, null);
+                    }
+                    optionsSelector.setAdapter(new RandomEnumAdapter(getActivity(), android.R.layout.simple_spinner_item, options));
                     optionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -83,6 +88,9 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
                         AdvisorLog.severe(this.getClass().getName(), "Preference option '" + preference + "' has no translation '" +
                                 getPreferenceStringResource(preference) + "'.");
                         optionsSelector.setText(getPreferenceStringResource(preference));
+                    }
+                    if (preference.getEnumConstants().length > 0 && preference.getEnumConstants()[0].getDefault() != null) {
+                        optionsSelector.setSelection(preference.getEnumConstants()[0].getDefault());
                     }
                     linearLayout.addView(optionsSelector);
                 }

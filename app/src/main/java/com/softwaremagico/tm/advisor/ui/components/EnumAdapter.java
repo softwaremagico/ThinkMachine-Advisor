@@ -81,4 +81,7 @@ public class EnumAdapter<T> extends ArrayAdapter<T> {
         return elements.indexOf(element);
     }
 
+    public List<T> getElements() {
+        return elements;
+    }
 }

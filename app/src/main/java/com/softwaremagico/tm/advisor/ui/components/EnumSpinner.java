@@ -61,7 +61,7 @@ public class EnumSpinner extends Component {
         selector.setOnItemSelectedListener(onItemSelectedListener);
     }
 
-    public <T extends Enum<?>> void setSelection(T selected) {
+    public <T> void setSelection(T selected) {
         final Spinner selector = findViewById(R.id.spinner);
         selector.setSelection(((EnumAdapter<T>) selector.getAdapter()).indexOf(selected));
     }
