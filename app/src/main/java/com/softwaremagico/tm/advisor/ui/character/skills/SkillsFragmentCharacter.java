@@ -73,6 +73,7 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }
 
+        addSpace(linearLayout);
         addSection(ThinkMachineTranslator.getTranslatedText("learnedSkills"), linearLayout);
 
         try {

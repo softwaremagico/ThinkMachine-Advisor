@@ -90,6 +90,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), rootLayout);
         blessingsLayout = new BlessingLayout(getContext(), true);
         rootLayout.addView(blessingsLayout);
+        addSpace(rootLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("beneficesTable"), rootLayout);
         beneficesLayout = new BeneficesLayout(getContext(), true);

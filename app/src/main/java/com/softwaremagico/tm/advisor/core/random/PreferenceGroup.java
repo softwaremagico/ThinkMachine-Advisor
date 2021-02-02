@@ -28,17 +28,19 @@ import com.softwaremagico.tm.random.selectors.WeaponsPreferences;
 
 public enum PreferenceGroup {
 
-    EQUIPMENT(WeaponsPreferences.class, ArmourPreferences.class, ShieldPreferences.class, TechnologicalPreferences.class),
+    CHARACTER_DESCRIPTION(RacePreferences.class, FactionPreferences.class, AgePreferences.class,
+            CombatPreferences.class, DifficultLevelPreferences.class, SpecializationPreferences.class,
+            NamesPreferences.class, StatusPreferences.class),
+
+    CHARACTER_CREATION(CharacteristicsPreferences.class, SkillGroupPreferences.class, TraitCostPreferences.class,
+            BlessingPreferences.class, BlessingNumberPreferences.class, CurseNumberPreferences.class, ExtraBeneficesNumberPreferences.class),
+
+    EQUIPMENT(TechnologicalPreferences.class, WeaponsPreferences.class, ArmourPreferences.class, ShieldPreferences.class),
 
     CYBERNETICS(CyberneticPointsPreferences.class, CyberneticTotalDevicesPreferences.class, CyberneticVisibilityPreferences.class),
 
-    PSI(PsiqueLevelPreferences.class, PsiquePathLevelPreferences.class),
+    PSI(PsiqueLevelPreferences.class, PsiquePathLevelPreferences.class);
 
-    CHARACTER_CREATION(BlessingNumberPreferences.class, CharacteristicsPreferences.class, CurseNumberPreferences.class,
-            ExtraBeneficesNumberPreferences.class, SkillGroupPreferences.class, TraitCostPreferences.class),
-
-    CHARACTER_DESCRIPTION(AgePreferences.class, BlessingPreferences.class, CombatPreferences.class, DifficultLevelPreferences.class,
-            FactionPreferences.class, NamesPreferences.class, RacePreferences.class, SpecializationPreferences.class, StatusPreferences.class);
 
     private final Class<? extends IRandomPreference>[] randomPreferences;
 

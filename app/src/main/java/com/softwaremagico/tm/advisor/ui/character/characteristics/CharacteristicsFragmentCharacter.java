@@ -87,6 +87,7 @@ public class CharacteristicsFragmentCharacter extends CharacterCustomFragment {
                     ModuleManager.DEFAULT_MODULE)) {
                 createCharacteristicsEditText(linearLayout, characteristicDefinition);
             }
+            addSpace(linearLayout);
         }
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
