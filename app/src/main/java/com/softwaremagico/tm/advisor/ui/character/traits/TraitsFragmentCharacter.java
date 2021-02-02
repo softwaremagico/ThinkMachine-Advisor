@@ -109,6 +109,9 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         traitsCounter = root.findViewById(R.id.traits_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
 
+        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
+        CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
+
         return root;
     }
 

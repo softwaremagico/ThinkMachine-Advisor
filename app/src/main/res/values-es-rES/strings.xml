@@ -162,4 +162,6 @@
     <string name="preference_option_prehistoric">Prehistórico</string>
     <string name="preference_option_warlord">Señor de la Guerra</string>
     <string name="preference_option_control">Control</string>
+    <string name="message_random_character_success">Personaje finalizado aleatoriamente.</string>
+    <string name="message_random_character_error">!El personaje no ha podido finalizarse aleatoriamente¡</string>
 </resources>

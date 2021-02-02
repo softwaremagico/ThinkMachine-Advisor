@@ -62,6 +62,8 @@ public class TranslatedEditText extends Component {
     public void setText(String text) {
         final EditText tagText = findViewById(R.id.input);
         tagText.setText(text);
+        //Place cursor at the end.
+        tagText.setSelection(tagText.getText().length());
     }
 
     public void addTextChangedListener(TextWatcher watcher){

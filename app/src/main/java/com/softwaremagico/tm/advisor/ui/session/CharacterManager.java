@@ -12,12 +12,18 @@
 
 package com.softwaremagico.tm.advisor.ui.session;
 
+import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.RandomizeCharacter;
+import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
 import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.character.races.InvalidRaceException;
 import com.softwaremagico.tm.character.races.Race;
 import com.softwaremagico.tm.file.modules.ModuleManager;
+import com.softwaremagico.tm.random.exceptions.DuplicatedPreferenceException;
+import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
+import com.softwaremagico.tm.random.selectors.IRandomPreference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,13 +32,13 @@ import java.util.Locale;
 import java.util.Set;
 
 public final class CharacterManager {
-    private static final int DEFAULT_AGE = 31;
     private static final List<CharacterPlayer> characters = new ArrayList<>();
     private static CharacterPlayer selectedCharacter;
     private static CostCalculator costCalculator;
     private static final Set<CharacterSelectedListener> characterSelectedListener = new HashSet<>();
     private static final Set<CharacterUpdatedListener> characterUpdatedListener = new HashSet<>();
     private static final Set<CharacterRaceUpdatedListener> characterRaceUpdatedListener = new HashSet<>();
+    private static final Set<CharacterAgeUpdatedListener> characterAgeUpdatedListener = new HashSet<>();
 
     public interface CharacterSelectedListener {
         void selected(CharacterPlayer characterPlayer);
@@ -46,11 +52,15 @@ public final class CharacterManager {
         void updated(CharacterPlayer characterPlayer);
     }
 
+    public interface CharacterAgeUpdatedListener {
+        void updated(CharacterPlayer characterPlayer);
+    }
+
     private CharacterManager() {
 
     }
 
-    private static void launchSelectedCharacterListeners(CharacterPlayer characterPlayer) {
+    public static void launchSelectedCharacterListeners(CharacterPlayer characterPlayer) {
         for (final CharacterSelectedListener listener : characterSelectedListener) {
             listener.selected(characterPlayer);
         }
@@ -68,6 +78,12 @@ public final class CharacterManager {
         }
     }
 
+    public static void launchCharacterAgeUpdatedListeners(CharacterPlayer characterPlayer) {
+        for (final CharacterRaceUpdatedListener listener : characterRaceUpdatedListener) {
+            listener.updated(characterPlayer);
+        }
+    }
+
     public static void addSelectedCharacterListener(CharacterSelectedListener listener) {
         characterSelectedListener.add(listener);
     }
@@ -78,6 +94,10 @@ public final class CharacterManager {
 
     public static void addCharacterRaceUpdatedListener(CharacterRaceUpdatedListener listener) {
         characterRaceUpdatedListener.add(listener);
+    }
+
+    public static void addCharacterAgeUpdatedListener(CharacterAgeUpdatedListener listener) {
+        characterAgeUpdatedListener.add(listener);
     }
 
 
@@ -116,9 +136,15 @@ public final class CharacterManager {
 
     public static void addNewCharacter() {
         final CharacterPlayer characterPlayer = new CharacterPlayer(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
-        characterPlayer.getInfo().setAge(DEFAULT_AGE);
         characters.add(characterPlayer);
         setSelectedCharacter(characterPlayer);
+    }
+
+    public static void randomizeCharacter(Set<IRandomPreference> randomPreferences) throws InvalidXmlElementException, TooManyBlessingsException,
+            DuplicatedPreferenceException, InvalidRandomElementSelectedException {
+        final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), 0, randomPreferences.toArray(new IRandomPreference[0]));
+        randomizeCharacter.createCharacter();
+        setSelectedCharacter(getSelectedCharacter());
     }
 
 }

@@ -17,28 +17,36 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.core.random.PreferenceGroup;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
+import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
+import com.softwaremagico.tm.random.exceptions.DuplicatedPreferenceException;
+import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
 import com.softwaremagico.tm.random.selectors.IRandomPreference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RandomPreferencesFragment extends CharacterCustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private View root;
+    private Set<EnumSpinner> optionsAvailable = new HashSet<>();
 
     public static RandomPreferencesFragment newInstance(int index) {
         final RandomPreferencesFragment fragment = new RandomPreferencesFragment();
@@ -70,17 +78,6 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
                         options.add(0, null);
                     }
                     optionsSelector.setAdapter(new RandomEnumAdapter(getActivity(), android.R.layout.simple_spinner_item, options));
-                    optionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parentView) {
-                            //Nothing
-                        }
-                    });
                     try {
                         optionsSelector.setText(getResources().getString(getResources().getIdentifier(getPreferenceStringResource(preference), "string",
                                 getContext().getPackageName())));
@@ -93,6 +90,7 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
                         optionsSelector.setSelection(preference.getEnumConstants()[0].getDefault());
                     }
                     linearLayout.addView(optionsSelector);
+                    optionsAvailable.add(optionsSelector);
                 }
                 addSpace(linearLayout);
             } catch (Resources.NotFoundException e) {
@@ -123,7 +121,33 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.random_preferences_fragment, container, false);
 
+        final FloatingActionButton fab = root.findViewById(R.id.random);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    CharacterManager.randomizeCharacter(getSelectedOptions());
+                    SnackbarGenerator.getInfoMessage(root, R.string.message_random_character_success).show();
+                } catch (InvalidXmlElementException | TooManyBlessingsException | DuplicatedPreferenceException | InvalidRandomElementSelectedException e) {
+                    SnackbarGenerator.getErrorMessage(root, R.string.message_random_character_error).show();
+                    AdvisorLog.errorMessage(this.getClass().getName(), e);
+                }
+            }
+        });
+
         return root;
+    }
+
+    public Set<IRandomPreference> getSelectedOptions() {
+        Set<IRandomPreference> selectedPreferences = new HashSet<>();
+        for (EnumSpinner optionSelected : optionsAvailable) {
+            if (optionSelected.getSelectedItem() != null) {
+                if (optionSelected.<IRandomPreference>getSelectedItem().getDefault() != optionSelected.<IRandomPreference>getSelectedItem()) {
+                    selectedPreferences.add(optionSelected.getSelectedItem());
+                }
+            }
+        }
+        return selectedPreferences;
     }
 
 

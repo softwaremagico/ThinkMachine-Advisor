@@ -102,6 +102,7 @@ public class CharacteristicsFragmentCharacter extends CharacterCustomFragment {
         extraCounter = root.findViewById(R.id.extra_counter);
 
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
+        CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
 
         return root;
     }

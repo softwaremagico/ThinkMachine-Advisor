@@ -95,6 +95,7 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
         extraCounter = root.findViewById(R.id.extra_counter);
 
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateSkillsLimits(characterPlayer));
+        CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
 
         return root;
     }
