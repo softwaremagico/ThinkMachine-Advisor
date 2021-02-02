@@ -34,6 +34,7 @@ import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 import com.softwaremagico.tm.character.skills.AvailableSkill;
 import com.softwaremagico.tm.character.skills.InvalidSkillException;
+import com.softwaremagico.tm.character.skills.SkillDefinition;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -97,7 +98,28 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateSkillsLimits(characterPlayer));
         CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
 
+        CharacterManager.addCharacterFactionUpdatedListener(characterPlayer -> updateDynamicSkills(characterPlayer));
+        CharacterManager.addCharacterPlanetUpdatedListener(characterPlayer -> updateDynamicSkills(characterPlayer));
+
         return root;
+    }
+
+    private void updateDynamicSkills(CharacterPlayer characterPlayer) {
+        for (Map.Entry<AvailableSkill, TranslatedNumberPicker> skillsEntry : translatedNumberPickers.entrySet()) {
+            if (skillsEntry.getKey().getId().equalsIgnoreCase(SkillDefinition.PLANETARY_LORE_ID)) {
+                if (characterPlayer.getInfo().getPlanet() != null) {
+                    skillsEntry.getValue().setLabel(skillsEntry.getKey().getName() + " [" + characterPlayer.getInfo().getPlanet().getName() + "]");
+                } else {
+                    skillsEntry.getValue().setLabel(skillsEntry.getKey().getCompleteName());
+                }
+            } else if (skillsEntry.getKey().getId().equalsIgnoreCase(SkillDefinition.FACTION_LORE_ID)) {
+                if (characterPlayer.getFaction() != null) {
+                    skillsEntry.getValue().setLabel(skillsEntry.getKey().getName() + " [" + characterPlayer.getFaction().getName() + "]");
+                } else {
+                    skillsEntry.getValue().setLabel(skillsEntry.getKey().getCompleteName());
+                }
+            }
+        }
     }
 
     private void createSkillEditText(View root, LinearLayout linearLayout, AvailableSkill skill) {

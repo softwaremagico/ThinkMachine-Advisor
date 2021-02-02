@@ -10,10 +10,10 @@
   ~  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
     android:layout_height="70dp"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <View android:id="@+id/strut"
         android:layout_width="0dp"
@@ -24,27 +24,30 @@
 
     <TextView
         android:id="@+id/translated_tag"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:singleLine="true"
         android:ellipsize="marquee"
+        android:layout_weight="1"
         android:layout_alignRight="@id/strut"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:text="left"
+        android:fillViewport="true"
         android:fontFamily="@font/label"
         android:gravity="center_vertical"
         />
 
     <NumberPicker
         android:id="@+id/picker"
-        android:layout_width="match_parent"
+        android:layout_width="75dp"
         android:layout_height="match_parent"
         android:layout_toRightOf="@id/translated_tag"
         android:layout_alignLeft="@id/strut"
+        android:layout_weight="0"
         android:singleLine="true"
         android:text="right"
         android:theme="@style/NumberPicker"
         />
 
-</RelativeLayout>
+</LinearLayout>

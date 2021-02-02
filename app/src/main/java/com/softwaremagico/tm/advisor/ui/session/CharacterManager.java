@@ -18,6 +18,9 @@ import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.RandomizeCharacter;
 import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
 import com.softwaremagico.tm.character.creation.CostCalculator;
+import com.softwaremagico.tm.character.factions.Faction;
+import com.softwaremagico.tm.character.factions.InvalidFactionException;
+import com.softwaremagico.tm.character.planets.Planet;
 import com.softwaremagico.tm.character.races.InvalidRaceException;
 import com.softwaremagico.tm.character.races.Race;
 import com.softwaremagico.tm.file.modules.ModuleManager;
@@ -39,6 +42,8 @@ public final class CharacterManager {
     private static final Set<CharacterUpdatedListener> characterUpdatedListener = new HashSet<>();
     private static final Set<CharacterRaceUpdatedListener> characterRaceUpdatedListener = new HashSet<>();
     private static final Set<CharacterAgeUpdatedListener> characterAgeUpdatedListener = new HashSet<>();
+    private static final Set<CharacterPlanetUpdatedListener> characterPlanetUpdatedListener = new HashSet<>();
+    private static final Set<CharacterFactionUpdatedListener> characterFactionUpdatedListener = new HashSet<>();
 
     public interface CharacterSelectedListener {
         void selected(CharacterPlayer characterPlayer);
@@ -53,6 +58,14 @@ public final class CharacterManager {
     }
 
     public interface CharacterAgeUpdatedListener {
+        void updated(CharacterPlayer characterPlayer);
+    }
+
+    public interface CharacterPlanetUpdatedListener {
+        void updated(CharacterPlayer characterPlayer);
+    }
+
+    public interface CharacterFactionUpdatedListener {
         void updated(CharacterPlayer characterPlayer);
     }
 
@@ -79,7 +92,19 @@ public final class CharacterManager {
     }
 
     public static void launchCharacterAgeUpdatedListeners(CharacterPlayer characterPlayer) {
-        for (final CharacterRaceUpdatedListener listener : characterRaceUpdatedListener) {
+        for (final CharacterAgeUpdatedListener listener : characterAgeUpdatedListener) {
+            listener.updated(characterPlayer);
+        }
+    }
+
+    public static void launchCharacterPlanetUpdatedListeners(CharacterPlayer characterPlayer) {
+        for (final CharacterPlanetUpdatedListener listener : characterPlanetUpdatedListener) {
+            listener.updated(characterPlayer);
+        }
+    }
+
+    public static void launchCharacterFactionUpdatedListeners(CharacterPlayer characterPlayer) {
+        for (final CharacterFactionUpdatedListener listener : characterFactionUpdatedListener) {
             listener.updated(characterPlayer);
         }
     }
@@ -100,6 +125,14 @@ public final class CharacterManager {
         characterAgeUpdatedListener.add(listener);
     }
 
+    public static void addCharacterPlanetUpdatedListener(CharacterPlanetUpdatedListener listener) {
+        characterPlanetUpdatedListener.add(listener);
+    }
+
+    public static void addCharacterFactionUpdatedListener(CharacterFactionUpdatedListener listener) {
+        characterFactionUpdatedListener.add(listener);
+    }
+
 
     public synchronized static CharacterPlayer getSelectedCharacter() {
         if (characters.isEmpty()) {
@@ -117,6 +150,20 @@ public final class CharacterManager {
                 costCalculator.updateCost();
             }
         } catch (InvalidRaceException e) {
+            AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
+        }
+    }
+
+    public static void setPlanet(Planet planet) {
+        CharacterManager.getSelectedCharacter().getInfo().setPlanet(planet);
+        launchCharacterPlanetUpdatedListeners(CharacterManager.getSelectedCharacter());
+    }
+
+    public static void setFaction(Faction faction) {
+        try {
+            CharacterManager.getSelectedCharacter().setFaction(faction);
+            launchCharacterFactionUpdatedListeners(CharacterManager.getSelectedCharacter());
+        } catch (InvalidFactionException e) {
             AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
         }
     }

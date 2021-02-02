@@ -275,18 +275,14 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         factionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                try {
-                    if (mViewModel.getAvailableFactions().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
-                        CharacterManager.getSelectedCharacter().setFaction(null);
+                if (mViewModel.getAvailableFactions().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                    CharacterManager.setFaction(null);
+                } else {
+                    if (position > 0) {
+                        CharacterManager.setFaction(mViewModel.getAvailableFactions().get(position - 1));
                     } else {
-                        if (position > 0) {
-                            CharacterManager.getSelectedCharacter().setFaction(mViewModel.getAvailableFactions().get(position - 1));
-                        } else {
-                            CharacterManager.getSelectedCharacter().setFaction(null);
-                        }
+                        CharacterManager.setFaction(null);
                     }
-                } catch (InvalidFactionException e) {
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
             }
 
@@ -310,12 +306,12 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (mViewModel.getAvailablePlanets().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
-                    CharacterManager.getSelectedCharacter().getInfo().setPlanet(null);
+                    CharacterManager.setPlanet(null);
                 } else {
                     if (position > 0) {
-                        CharacterManager.getSelectedCharacter().getInfo().setPlanet(mViewModel.getAvailablePlanets().get(position - 1));
+                        CharacterManager.setPlanet(mViewModel.getAvailablePlanets().get(position - 1));
                     } else {
-                        CharacterManager.getSelectedCharacter().getInfo().setPlanet(null);
+                        CharacterManager.setPlanet(null);
                     }
                 }
             }
