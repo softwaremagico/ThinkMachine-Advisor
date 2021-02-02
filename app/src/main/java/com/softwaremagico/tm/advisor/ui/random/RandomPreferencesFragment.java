@@ -23,11 +23,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.core.random.PreferenceGroup;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
-import com.softwaremagico.tm.random.selectors.PreferenceGroup;
 
 public class RandomPreferencesFragment extends CharacterCustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
