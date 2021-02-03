@@ -1,4 +1,4 @@
-<img src="./images/think_machine_logo_fenix.png" width="400" alt="Think Machine" align="middle"> 
+<img src="./images/ThinkMachine_logo_fenix.svg" width="400" alt="Think Machine" align="middle"> 
 
 # Think Machine: Advisor
 
