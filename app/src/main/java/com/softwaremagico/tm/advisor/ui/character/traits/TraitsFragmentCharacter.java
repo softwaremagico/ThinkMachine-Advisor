@@ -90,6 +90,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), rootLayout);
         blessingsLayout = new BlessingLayout(getContext(), true);
         rootLayout.addView(blessingsLayout);
+        addSpace(rootLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("beneficesTable"), rootLayout);
         beneficesLayout = new BeneficesLayout(getContext(), true);
@@ -107,6 +108,9 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
 
         traitsCounter = root.findViewById(R.id.traits_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
+
+        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
+        CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
 
         return root;
     }

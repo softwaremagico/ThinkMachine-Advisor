@@ -40,11 +40,16 @@ import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.Gender;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
 import com.softwaremagico.tm.character.planets.Planet;
 import com.softwaremagico.tm.character.races.InvalidRaceException;
 import com.softwaremagico.tm.character.races.Race;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -89,6 +94,9 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         extraCounter = root.findViewById(R.id.extra_counter);
         firebirdsCounter = root.findViewById(R.id.firebirds_counter);
 
+        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateCounters(characterPlayer));
+        CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> updateCounters(characterPlayer));
+
         return root;
     }
 
@@ -107,6 +115,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         final TranslatedEditText ageTextEditor = root.findViewById(R.id.character_age);
         if (CharacterManager.getSelectedCharacter().getInfo().getAge() != null) {
             ageTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getAge().toString());
+        } else {
+            ageTextEditor.setText("");
         }
         final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
@@ -172,11 +182,17 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
     private void createGenderSpinner(View root) {
         final EnumSpinner genderSelector = root.findViewById(R.id.character_gender);
-        genderSelector.setAdapter(new EnumAdapter<>(getActivity(), android.R.layout.simple_spinner_item, mViewModel.getAvailableGenders()));
+        List<Gender> options = new ArrayList<>(mViewModel.getAvailableGenders());
+        options.add(0, null);
+        genderSelector.setAdapter(new EnumAdapter<>(getActivity(), android.R.layout.simple_spinner_item, options));
         genderSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                CharacterManager.getSelectedCharacter().getInfo().setGender(mViewModel.getAvailableGenders().get(position));
+                if (position > 0) {
+                    CharacterManager.getSelectedCharacter().getInfo().setGender(mViewModel.getAvailableGenders().get(position - 1));
+                } else {
+                    CharacterManager.getSelectedCharacter().getInfo().setGender(null);
+                }
             }
 
             @Override
@@ -205,11 +221,14 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    CharacterManager.getSelectedCharacter().getInfo().setAge(Integer.parseInt(ageTextEditor.getText()));
-                    //Force to update all costs.
-                    updateCounters(CharacterManager.getSelectedCharacter());
+                    if (!Objects.equals(CharacterManager.getSelectedCharacter().getInfo().getAge() + "", ageTextEditor.getText())) {
+                        CharacterManager.getSelectedCharacter().getInfo().setAge(Integer.parseInt(ageTextEditor.getText()));
+                        //Force to update all costs.
+                        CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
+                    }
                 } catch (NumberFormatException e) {
-                    ageTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getAge() + "");
+                    CharacterManager.getSelectedCharacter().getInfo().setAge(null);
+                    CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
                 }
             }
         });
@@ -218,14 +237,21 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
     private void createRaceSpinner(View root) {
         final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
-        raceSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableRaces(), false, Race.class));
+        List<Race> options = new ArrayList<>(mViewModel.getAvailableRaces());
+        options.add(0, null);
+        raceSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Race.class));
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (mViewModel.getAvailableRaces().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
                     CharacterManager.setRace(null);
                 } else {
-                    CharacterManager.setRace(mViewModel.getAvailableRaces().get(position));
+                    if (position > 0) {
+                        CharacterManager.setRace(mViewModel.getAvailableRaces().get(position - 1));
+                    } else {
+                        CharacterManager.setRace(null);
+                    }
+                    updateCounters(CharacterManager.getSelectedCharacter());
                 }
             }
 
@@ -236,24 +262,27 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                 } catch (InvalidRaceException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
+                updateCounters(CharacterManager.getSelectedCharacter());
             }
         });
     }
 
     private void createFactionSpinner(View root) {
         final ElementSpinner factionsSelector = root.findViewById(R.id.character_faction);
-        factionsSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailableFactions(), false, Faction.class));
+        List<Faction> options = new ArrayList<>(mViewModel.getAvailableFactions());
+        options.add(0, null);
+        factionsSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Faction.class));
         factionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                try {
-                    if (mViewModel.getAvailableFactions().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
-                        CharacterManager.getSelectedCharacter().setFaction(null);
+                if (mViewModel.getAvailableFactions().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                    CharacterManager.setFaction(null);
+                } else {
+                    if (position > 0) {
+                        CharacterManager.setFaction(mViewModel.getAvailableFactions().get(position - 1));
                     } else {
-                        CharacterManager.getSelectedCharacter().setFaction(mViewModel.getAvailableFactions().get(position));
+                        CharacterManager.setFaction(null);
                     }
-                } catch (InvalidFactionException e) {
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
             }
 
@@ -270,14 +299,20 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
     private void createPlanetSpinner(View root) {
         final ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
-        planetSelector.setAdapter(new ElementAdapter<>(getActivity(), mViewModel.getAvailablePlanets(), false, Planet.class));
+        List<Planet> options = new ArrayList<>(mViewModel.getAvailablePlanets());
+        options.add(0, null);
+        planetSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Planet.class));
         planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (mViewModel.getAvailablePlanets().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
-                    CharacterManager.getSelectedCharacter().getInfo().setPlanet(null);
+                    CharacterManager.setPlanet(null);
                 } else {
-                    CharacterManager.getSelectedCharacter().getInfo().setPlanet(mViewModel.getAvailablePlanets().get(position));
+                    if (position > 0) {
+                        CharacterManager.setPlanet(mViewModel.getAvailablePlanets().get(position - 1));
+                    } else {
+                        CharacterManager.setPlanet(null);
+                    }
                 }
             }
 

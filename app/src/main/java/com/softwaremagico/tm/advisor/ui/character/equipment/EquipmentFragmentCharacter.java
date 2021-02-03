@@ -82,10 +82,12 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         addSection(ThinkMachineTranslator.getTranslatedText("weapons"), rootLayout);
         weaponsLayout = new WeaponsLayout(getContext(), true);
         rootLayout.addView(weaponsLayout);
+        addSpace(rootLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("armor"), rootLayout);
         armoursLayout = new ArmourLayout(getContext(), true);
         rootLayout.addView(armoursLayout);
+        addSpace(rootLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("shield"), rootLayout);
         shieldsLayout = new ShieldLayout(getContext(), true);

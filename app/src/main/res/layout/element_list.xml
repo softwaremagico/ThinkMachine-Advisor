@@ -21,6 +21,8 @@
         android:singleLine="true"
 		android:ellipsize="marquee"
         android:fontFamily="@font/label"
+        android:gravity="right"
+        android:paddingRight="20dp"
         />
 
 </RelativeLayout>

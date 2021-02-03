@@ -18,6 +18,11 @@
         android:title="@string/navigation_character" />
 
     <item
+        android:id="@+id/navigation_random"
+        android:icon="@drawable/ic_random_character"
+        android:title="@string/navigation_random" />
+
+    <item
         android:id="@+id/navigation_sheet"
         android:icon="@drawable/ic_sheet_icon"
         android:title="@string/navigation_visualization" />

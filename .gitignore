@@ -15,4 +15,4 @@
 *.apk
 *.aab
 /target/
-/.idea/
+.idea
