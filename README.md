@@ -20,5 +20,7 @@ The app is available on Google Play, and this site is only for hosting the sourc
 - 0.4.1 Firebirds counters. 
 - 0.4.2 Code minified.
 
+0.5 Random Character generation
+
 
 
