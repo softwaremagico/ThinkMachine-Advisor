@@ -16,3 +16,4 @@
 *.aab
 /target/
 .idea
+*.orig
