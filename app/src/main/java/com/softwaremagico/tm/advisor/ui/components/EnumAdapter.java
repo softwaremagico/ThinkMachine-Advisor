@@ -27,7 +27,7 @@ import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import java.util.List;
 import java.util.Locale;
 
-public class EnumAdapter<T extends Enum> extends ArrayAdapter<T> {
+public class EnumAdapter<T> extends ArrayAdapter<T> {
     private final List<T> elements;
 
     public EnumAdapter(@NonNull Context context, int resource, @NonNull List<T> objects) {
@@ -42,11 +42,13 @@ public class EnumAdapter<T extends Enum> extends ArrayAdapter<T> {
             listItem = LayoutInflater.from(getContext()).inflate(R.layout.element_list, parent, false);
         }
 
-        final Enum element = elements.get(position);
+        final Object element = elements.get(position);
 
         if (element != null) {
             final TextView name = listItem.findViewById(R.id.selected_item);
-            name.setText(ThinkMachineTranslator.getTranslatedText(element.name().toLowerCase(Locale.getDefault())));
+            if (element instanceof Enum) {
+                name.setText(ThinkMachineTranslator.getTranslatedText(((Enum<?>) element).name().toLowerCase(Locale.getDefault())));
+            }
         }
 
         return listItem;
@@ -63,18 +65,23 @@ public class EnumAdapter<T extends Enum> extends ArrayAdapter<T> {
             listItem = LayoutInflater.from(getContext()).inflate(R.layout.element_list, parent, false);
         }
 
-        final Enum element = elements.get(position);
+        final Object element = elements.get(position);
 
         if (element != null) {
             final TextView elementName = listItem.findViewById(R.id.selected_item);
-            elementName.setText(ThinkMachineTranslator.getTranslatedText(element.name().toLowerCase(Locale.getDefault())));
+            if (element instanceof Enum) {
+                elementName.setText(ThinkMachineTranslator.getTranslatedText(((Enum<?>) element).name().toLowerCase(Locale.getDefault())));
+            }
         }
 
         return listItem;
     }
 
-    public int indexOf(T element){
+    public int indexOf(T element) {
         return elements.indexOf(element);
     }
 
+    public List<T> getElements() {
+        return elements;
+    }
 }

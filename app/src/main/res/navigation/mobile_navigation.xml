@@ -26,6 +26,13 @@
         tools:layout="@layout/character_creation_fragment" />
 
     <fragment
+        android:id="@+id/navigation_random"
+        android:name="com.softwaremagico.tm.advisor.ui.random.TabRandomCreationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/character_creation_fragment" />
+
+    <fragment
         android:id="@+id/navigation_sheet"
         android:name="com.softwaremagico.tm.advisor.ui.visualization.TabSheetVisualizationFragment"
         android:layout_width="match_parent"

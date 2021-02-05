@@ -53,4 +53,14 @@ public abstract class CharacterCustomFragment extends CustomFragment {
             linearLayout.addView(space);
         }
     }
+
+    protected void addSpace(LinearLayout linearLayout) {
+        addSpace(linearLayout, 30);
+    }
+
+    protected void addSpace(LinearLayout linearLayout, int height) {
+        final View space = new View(getContext(), null);
+        space.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+        linearLayout.addView(space);
+    }
 }

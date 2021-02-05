@@ -88,15 +88,18 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
         rangeWeaponsLayout = new RangedWeaponsLayout(getContext(), true);
         rootLayout.addView(rangeWeaponsLayout);
+	addSpace(rootLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("meleeWeapons"), rootLayout);
 
         meleeWeaponsLayout = new MeleeWeaponsLayout(getContext(), true);
         rootLayout.addView(meleeWeaponsLayout);
+	addSpace(rootLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("armor"), rootLayout);
         armoursLayout = new ArmourLayout(getContext(), true);
         rootLayout.addView(armoursLayout);
+        addSpace(rootLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("shield"), rootLayout);
         shieldsLayout = new ShieldLayout(getContext(), true);
