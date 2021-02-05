@@ -21,10 +21,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
+import com.softwaremagico.tm.character.characteristics.CharacteristicName;
+import com.softwaremagico.tm.character.equipment.Equipment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +75,18 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
 
     protected void setElementColor(TextView elementRepresentation, T element, int position) {
         if (isEnabled(position)) {
-            elementRepresentation.setTextColor(Color.BLACK);
+            if (element instanceof Equipment) {
+                if (CharacterManager.getSelectedCharacter().getCharacteristic(CharacteristicName.TECH).getValue() <
+                        ((Equipment) element).getTechLevel()) {
+                    elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.insufficientTechnology));
+                } else if (CharacterManager.getSelectedCharacter().getInitialMoney() < ((Equipment) element).getCost()) {
+                    elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.unaffordableMoney));
+                } else if (CharacterManager.getSelectedCharacter().getMoney() < ((Equipment) element).getCost()) {
+                    elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.insufficientMoney));
+                }
+            } else {
+                elementRepresentation.setTextColor(Color.BLACK);
+            }
         } else {
             elementRepresentation.setTextColor(Color.LTGRAY);
         }

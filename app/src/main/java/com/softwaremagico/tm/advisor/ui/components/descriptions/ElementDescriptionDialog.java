@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.softwaremagico.tm.Element;
@@ -56,5 +57,11 @@ public class ElementDescriptionDialog<T extends Element<?>> extends DialogFragme
 
     protected String getDetails(T element) {
         return "";
+    }
+
+    protected String getColor(int color) {
+        int labelColor = ContextCompat.getColor(getContext(), color);
+        //Removing Alpha value
+        return String.format("%X", labelColor).substring(2);
     }
 }

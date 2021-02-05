@@ -1,7 +1,9 @@
 package com.softwaremagico.tm.advisor.ui.components.descriptions;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
+import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.equipment.DamageType;
 import com.softwaremagico.tm.character.equipment.armours.Armour;
 import com.softwaremagico.tm.character.equipment.armours.ArmourSpecification;
@@ -15,6 +17,11 @@ public class ArmourDescriptionDialog extends ElementDescriptionDialog<Armour> {
 
     @Override
     protected String getDetails(Armour armour) {
+        boolean techLimited = CharacterManager.getSelectedCharacter().getCharacteristic(CharacteristicName.TECH).getValue() <
+                armour.getTechLevel();
+        boolean costLimited = CharacterManager.getSelectedCharacter().getInitialMoney() < armour.getCost();
+        boolean costProhibited = CharacterManager.getSelectedCharacter().getMoney() < armour.getCost();
+
         StringBuilder stringBuilder = new StringBuilder("<table cellpadding=\"8\" style=\"border:1px solid black;margin-left:auto;margin-right:auto;\">" +
                 "<tr>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("techLevel") + "</th>" +
@@ -25,7 +32,11 @@ public class ArmourDescriptionDialog extends ElementDescriptionDialog<Armour> {
                 "<th>" + ThinkMachineTranslator.getTranslatedText("enduranceAbbreviature") + "</th>" +
                 "</tr>" +
                 "<tr>" +
-                "<td style=\"text-align:center\">" + armour.getTechLevel() + "</td>" +
+                "<td style=\"text-align:center\">" +
+                (techLimited ? "<font color=\"" + getColor(R.color.unaffordableMoney) + "\">" : "") +
+                armour.getTechLevel() +
+                (techLimited ? "</font>" : "") +
+                "</td>" +
                 "<td style=\"text-align:center\">" + armour.getProtection() + "D</td>" +
                 "<td style=\"text-align:center\">" + (armour.getStandardPenalization() != null ? armour.getStandardPenalization().getDexterityModification() : "")
                 + (armour.getSpecialPenalization() != null && armour.getSpecialPenalization().getDexterityModification() != 0 ? "/" +
@@ -71,7 +82,11 @@ public class ArmourDescriptionDialog extends ElementDescriptionDialog<Armour> {
                 separator = ", ";
             }
         }
-        stringBuilder.append("<br><b>" + getString(R.string.cost) + "</b> " + armour.getCost() + " " + ThinkMachineTranslator.getTranslatedText("firebirds"));
+        stringBuilder.append("<br><b>" + getString(R.string.cost) + "</b> " +
+                (costProhibited ? "<font color=\"" + getColor(R.color.unaffordableMoney) + "\">" :
+                        (costLimited ? "<font color=\"" + getColor(R.color.insufficientMoney) + "\">" : "")) +
+                armour.getCost() +
+                (costLimited || costProhibited ? "</font>" : "") + " " + ThinkMachineTranslator.getTranslatedText("firebirds"));
         return stringBuilder.toString();
     }
 }
