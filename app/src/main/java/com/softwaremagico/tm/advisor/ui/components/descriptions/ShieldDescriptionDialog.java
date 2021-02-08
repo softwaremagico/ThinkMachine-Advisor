@@ -16,8 +16,8 @@ public class ShieldDescriptionDialog extends ElementDescriptionDialog<Shield> {
     protected String getDetails(Shield shield) {
         boolean techLimited = CharacterManager.getSelectedCharacter().getCharacteristic(CharacteristicName.TECH).getValue() <
                 shield.getTechLevel();
-        boolean costLimited = CharacterManager.getSelectedCharacter().getInitialMoney() < shield.getCost();
-        boolean costProhibited = CharacterManager.getSelectedCharacter().getMoney() < shield.getCost();
+        boolean costLimited = CharacterManager.getSelectedCharacter().getMoney() < shield.getCost();
+        boolean costProhibited = CharacterManager.getSelectedCharacter().getInitialMoney() < shield.getCost();
         return "<table cellpadding=\"8\" style=\"border:1px solid black;margin-left:auto;margin-right:auto;\">" +
                 "<tr>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("techLevel") + "</th>" +
@@ -26,7 +26,7 @@ public class ShieldDescriptionDialog extends ElementDescriptionDialog<Shield> {
                 "</tr>" +
                 "<tr>" +
                 "<td style=\"text-align:center\">" +
-                (techLimited ? "<font color=\"" + getColor(R.color.unaffordableMoney) + "\">" : "") +
+                (techLimited ? "<font color=\"" + getColor(R.color.insufficientTechnology) + "\">" : "") +
                 shield.getTechLevel() +
                 (techLimited ? "</font>" : "") +
                 "</td>" +

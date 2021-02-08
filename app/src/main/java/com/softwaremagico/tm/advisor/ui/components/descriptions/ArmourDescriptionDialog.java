@@ -19,9 +19,8 @@ public class ArmourDescriptionDialog extends ElementDescriptionDialog<Armour> {
     protected String getDetails(Armour armour) {
         boolean techLimited = CharacterManager.getSelectedCharacter().getCharacteristic(CharacteristicName.TECH).getValue() <
                 armour.getTechLevel();
-        boolean costLimited = CharacterManager.getSelectedCharacter().getInitialMoney() < armour.getCost();
-        boolean costProhibited = CharacterManager.getSelectedCharacter().getMoney() < armour.getCost();
-
+        boolean costLimited = CharacterManager.getSelectedCharacter().getMoney() < armour.getCost();
+        boolean costProhibited = CharacterManager.getSelectedCharacter().getInitialMoney() < armour.getCost();
         StringBuilder stringBuilder = new StringBuilder("<table cellpadding=\"8\" style=\"border:1px solid black;margin-left:auto;margin-right:auto;\">" +
                 "<tr>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("techLevel") + "</th>" +
@@ -33,7 +32,7 @@ public class ArmourDescriptionDialog extends ElementDescriptionDialog<Armour> {
                 "</tr>" +
                 "<tr>" +
                 "<td style=\"text-align:center\">" +
-                (techLimited ? "<font color=\"" + getColor(R.color.unaffordableMoney) + "\">" : "") +
+                (techLimited ? "<font color=\"" + getColor(R.color.insufficientTechnology) + "\">" : "") +
                 armour.getTechLevel() +
                 (techLimited ? "</font>" : "") +
                 "</td>" +

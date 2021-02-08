@@ -29,12 +29,15 @@ import com.softwaremagico.tm.advisor.ui.components.descriptions.ArmourDescriptio
 import com.softwaremagico.tm.advisor.ui.components.descriptions.BeneficeDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.BlessingDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.ElementDescriptionDialog;
+import com.softwaremagico.tm.advisor.ui.components.descriptions.MeleeWeaponDescriptionDialog;
+import com.softwaremagico.tm.advisor.ui.components.descriptions.RangeWeaponDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.ShieldDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.blessings.Blessing;
 import com.softwaremagico.tm.character.equipment.armours.Armour;
 import com.softwaremagico.tm.character.equipment.shields.Shield;
+import com.softwaremagico.tm.character.equipment.weapons.Weapon;
 
 public class ElementSpinner<T extends Element<?>> extends Component {
 
@@ -156,6 +159,12 @@ public class ElementSpinner<T extends Element<?>> extends Component {
                 new ShieldDescriptionDialog((Shield) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
             } else if (element instanceof Armour) {
                 new ArmourDescriptionDialog((Armour) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
+            } else if (element instanceof Weapon){
+                if(((Weapon) element).isRangedWeapon()){
+                    new RangeWeaponDescriptionDialog((Weapon) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
+                }else{
+                    new MeleeWeaponDescriptionDialog((Weapon) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
+                }
             } else {
                 new ElementDescriptionDialog(element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
             }
