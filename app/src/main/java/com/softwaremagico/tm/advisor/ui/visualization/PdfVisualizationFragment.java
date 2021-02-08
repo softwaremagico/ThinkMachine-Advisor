@@ -28,10 +28,9 @@ import androidx.fragment.app.Fragment;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
-import com.softwaremagico.tm.pdf.complete.CharacterSheet;
 
 import java.io.File;
 import java.util.List;
@@ -44,6 +43,8 @@ public abstract class PdfVisualizationFragment extends Fragment {
 
     protected abstract byte[] generatePdf();
 
+    protected abstract void generatePdfFile(String path);
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -53,18 +54,13 @@ public abstract class PdfVisualizationFragment extends Fragment {
         pdfViewer.fromBytes(generatePdf()).load();
 
         final FloatingActionButton fab = root.findViewById(R.id.share);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sharePdf();
-            }
-        });
+        fab.setOnClickListener(view -> sharePdf());
 
 
         return root;
     }
 
-    protected void sharePdf() {
+    private void sharePdf() {
         final File imagePath = new File(getContext().getCacheDir(), "pdf");
         characterSheetAsPdf = new File(imagePath, CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
                 CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet.pdf" :
@@ -73,10 +69,8 @@ public abstract class PdfVisualizationFragment extends Fragment {
 
         if (contentUri != null) {
             imagePath.mkdirs();
-            //getContext().grantUriPermission("com.softwaremagico.tm.advisor", contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
             characterSheetAsPdf.getParentFile().mkdirs();
-            characterSheet.createFile(characterSheetAsPdf.getAbsolutePath());
+            generatePdfFile(characterSheetAsPdf.getAbsolutePath());
 
             final Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);

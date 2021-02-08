@@ -58,4 +58,10 @@ public class CompletePdfVisualizationFragment extends PdfVisualizationFragment {
         }
         return new byte[0];
     }
+
+    @Override
+    protected void generatePdfFile(String path){
+        final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
+        characterSheet.createFile(path);
+    }
 }
