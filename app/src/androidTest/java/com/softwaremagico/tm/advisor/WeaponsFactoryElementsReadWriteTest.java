@@ -19,12 +19,10 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 
 import com.softwaremagico.tm.advisor.persistence.AppDatabase;
-import com.softwaremagico.tm.advisor.persistence.CharacterEntity;
-import com.softwaremagico.tm.advisor.persistence.CharacterEntityDao;
-import com.softwaremagico.tm.character.CharacterPlayer;
-import com.softwaremagico.tm.character.RandomizeCharacter;
+import com.softwaremagico.tm.advisor.persistence.factories.WeaponsFactoryElements;
+import com.softwaremagico.tm.advisor.persistence.factories.WeaponsFactoryElementsDao;
+import com.softwaremagico.tm.character.equipment.weapons.WeaponFactory;
 import com.softwaremagico.tm.file.PathManager;
-import com.softwaremagico.tm.random.selectors.DifficultLevelPreferences;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -33,16 +31,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4ClassRunner.class)
-public class CharacterEntityReadWriteTest {
+public class WeaponsFactoryElementsReadWriteTest {
     private static final String LANGUAGE = "en";
-    private CharacterEntityDao characterEntityDao;
+    private WeaponsFactoryElementsDao weaponsFactoryElementsDao;
     private AppDatabase appDatabase;
 
     @Before
     public void createDb() {
         final Context context = ApplicationProvider.getApplicationContext();
         appDatabase = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
-        characterEntityDao = appDatabase.getCharacterEntityDao();
+        weaponsFactoryElementsDao = appDatabase.getWeaponsFactoryElementsDao();
     }
 
     @After
@@ -52,26 +50,23 @@ public class CharacterEntityReadWriteTest {
 
     @Test
     public void writeUserAndReadInList() throws Exception {
-        final CharacterPlayer characterPlayer = new CharacterPlayer(LANGUAGE, PathManager.DEFAULT_MODULE_FOLDER);
-        final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(characterPlayer, 0, DifficultLevelPreferences.HARD);
-        randomizeCharacter.createCharacter();
+        WeaponsFactoryElements weaponsFactoryElements = new WeaponsFactoryElements(WeaponFactory.getInstance().getVersion(PathManager.DEFAULT_MODULE_FOLDER),
+                WeaponFactory.getInstance().getNumberOfElements(PathManager.DEFAULT_MODULE_FOLDER),
+                LANGUAGE,
+                PathManager.DEFAULT_MODULE_FOLDER,
+                WeaponFactory.getInstance().getElements(LANGUAGE, PathManager.DEFAULT_MODULE_FOLDER));
 
-        Assert.assertEquals(0, characterEntityDao.getRowCount());
+        Assert.assertEquals(0, weaponsFactoryElementsDao.getRowCount());
 
-        final CharacterEntity characterEntity =  new CharacterEntity(characterPlayer);
-        Assert.assertNotNull(characterEntity.getJson());
-        final long id = characterEntityDao.persist(characterEntity);
+        final long id = weaponsFactoryElementsDao.persist(weaponsFactoryElements);
         Assert.assertEquals(1, id);
-        Assert.assertEquals(1, characterEntityDao.getRowCount());
-        final CharacterEntity storedCharacterEntity = characterEntityDao.get(id);
-        Assert.assertNotNull(storedCharacterEntity);
-        Assert.assertEquals(storedCharacterEntity.getCreationTime(), characterEntity.getCreationTime());
-        Assert.assertEquals(storedCharacterEntity.getJson(), characterEntity.getJson());
-        Assert.assertEquals(storedCharacterEntity.getCharacterPlayer().getComparisonId(), characterEntity.getCharacterPlayer().getComparisonId());
+        Assert.assertEquals(1, weaponsFactoryElementsDao.getRowCount());
 
-        //Check that if we insert a second time, only one is inserted.
-        characterEntityDao.persist(characterEntity);
-        Assert.assertEquals(1, characterEntityDao.getRowCount());
+        WeaponsFactoryElements storedWeaponsFactoryElements = weaponsFactoryElementsDao.get(id);
+        Assert.assertEquals((int) WeaponFactory.getInstance().getNumberOfElements(PathManager.DEFAULT_MODULE_FOLDER), storedWeaponsFactoryElements.getElements().size());
+
+        storedWeaponsFactoryElements = weaponsFactoryElementsDao.getByVersion(WeaponFactory.getInstance().getVersion(PathManager.DEFAULT_MODULE_FOLDER), LANGUAGE, PathManager.DEFAULT_MODULE_FOLDER);
+        Assert.assertEquals((int) WeaponFactory.getInstance().getNumberOfElements(PathManager.DEFAULT_MODULE_FOLDER), storedWeaponsFactoryElements.getElements().size());
     }
 
 }

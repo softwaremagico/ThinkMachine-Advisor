@@ -38,9 +38,7 @@ public class EquipmentViewModel extends ViewModel {
         }
         return new ArrayList<>();
     }
-
-
-
+    
     public List<Weapon> getAvailableRangedWeapons() {
         try {
             return WeaponFactory.getInstance().getRangedWeapons(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);

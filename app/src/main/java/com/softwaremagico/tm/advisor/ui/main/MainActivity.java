@@ -36,6 +36,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.core.FactoryCacheLoader;
 import com.softwaremagico.tm.advisor.core.FileUtils;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
@@ -64,7 +65,10 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         Translator.setLanguage(Locale.getDefault().getLanguage());
         //Preload all data in a secondary thread.
-        new Thread(() -> ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).start();
+        new Thread(() -> {
+            FactoryCacheLoader.load(getApplicationContext());
+            ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+        }).start();
 
         super.onCreate(savedInstanceState);
 

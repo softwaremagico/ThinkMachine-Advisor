@@ -18,13 +18,18 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {CharacterEntity.class}, version = 1, exportSchema = false)
+import com.softwaremagico.tm.advisor.persistence.factories.WeaponsFactoryElements;
+import com.softwaremagico.tm.advisor.persistence.factories.WeaponsFactoryElementsDao;
+
+@Database(entities = {CharacterEntity.class, WeaponsFactoryElements.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "ThinkMachine Database";
 
     private static volatile AppDatabase instance;
 
     public abstract CharacterEntityDao getCharacterEntityDao();
+
+    public abstract WeaponsFactoryElementsDao getWeaponsFactoryElementsDao();
 
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {
