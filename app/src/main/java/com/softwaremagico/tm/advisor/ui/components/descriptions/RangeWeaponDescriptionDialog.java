@@ -19,22 +19,31 @@ public class RangeWeaponDescriptionDialog extends WeaponDescriptionDialog {
                 weapon.getTechLevel();
         boolean costLimited = CharacterManager.getSelectedCharacter().getMoney() < weapon.getCost();
         boolean costProhibited = CharacterManager.getSelectedCharacter().getInitialMoney() < weapon.getCost();
-        StringBuilder stringBuilder = new StringBuilder("<table cellpadding=\"8\" style=\"border:1px solid black;margin-left:auto;margin-right:auto;\">" +
-                "<tr>" +
-                "<th>" + ThinkMachineTranslator.getTranslatedText("techLevel") + "</th>" +
+        StringBuilder stringBuilder = new StringBuilder("<table cellpadding=\"" + TABLE_PADDING + "\" style=\"" + TABLE_STYLE + "\">");
+        stringBuilder.append("<tr>");
+        if (weapon.getWeaponDamages().size() > 1) {
+            stringBuilder.append("<th>" + ThinkMachineTranslator.getTranslatedText("weapon") + "</th>");
+        }
+        stringBuilder.append("<th>" + ThinkMachineTranslator.getTranslatedText("techLevel") + "</th>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("weaponGoal") + "</th>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("weaponDamage") + "</th>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("weaponRange") + "</th>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("weaponShots") + "</th>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("weaponRate") + "</th>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("weaponSize") + "</th>" +
-                "</tr>" +
-                "<tr>");
+                "</tr>");
         for (WeaponDamage weaponDamage : weapon.getWeaponDamages()) {
+            boolean techDamageLimited = weaponDamage.getDamageTechLevel() != null &&
+                    CharacterManager.getSelectedCharacter().getCharacteristic(CharacteristicName.TECH).getValue() <
+                            weaponDamage.getDamageTechLevel();
+            stringBuilder.append("<tr>");
+            if (weapon.getWeaponDamages().size() > 1) {
+                stringBuilder.append("<td style=\"text-align:center\">" + (weaponDamage.getName() != null ? weaponDamage.getName() : weapon.getName()) + "</td>");
+            }
             stringBuilder.append("<td style=\"text-align:center\">" +
-                    (techLimited ? "<font color=\"" + getColor(R.color.insufficientTechnology) + "\">" : "") +
-                    weapon.getTechLevel() +
-                    (techLimited ? "</font>" : "") +
+                    (techLimited || techDamageLimited ? "<font color=\"" + getColor(R.color.insufficientTechnology) + "\">" : "") +
+                    (weaponDamage.getDamageTechLevel() == null ? weapon.getTechLevel() : weaponDamage.getDamageTechLevel()) +
+                    (techLimited || techDamageLimited ? "</font>" : "") +
                     "</td>" +
                     "<td style=\"text-align:center\">" + weaponDamage.getGoal() + "</td>" +
                     "<td style=\"text-align:center\" >" + getDamage(weaponDamage) + "</td>" +

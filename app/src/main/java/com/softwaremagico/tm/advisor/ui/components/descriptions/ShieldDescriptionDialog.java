@@ -18,7 +18,7 @@ public class ShieldDescriptionDialog extends ElementDescriptionDialog<Shield> {
                 shield.getTechLevel();
         boolean costLimited = CharacterManager.getSelectedCharacter().getMoney() < shield.getCost();
         boolean costProhibited = CharacterManager.getSelectedCharacter().getInitialMoney() < shield.getCost();
-        return "<table cellpadding=\"8\" style=\"border:1px solid black;margin-left:auto;margin-right:auto;\">" +
+        return "<table cellpadding=\""+TABLE_PADDING+"\" style=\"" + TABLE_STYLE + "\">" +
                 "<tr>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("techLevel") + "</th>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("impactForce") + "</th>" +

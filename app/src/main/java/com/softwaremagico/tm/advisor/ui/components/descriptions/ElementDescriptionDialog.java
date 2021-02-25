@@ -16,6 +16,8 @@ import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 
 public class ElementDescriptionDialog<T extends Element<?>> extends DialogFragment {
+    protected static final String TABLE_STYLE = "border:1px solid black;margin-left:auto;margin-right:auto;font-size:60%";
+    protected static final int TABLE_PADDING = 2;
     private final T element;
 
     public ElementDescriptionDialog(T element) {

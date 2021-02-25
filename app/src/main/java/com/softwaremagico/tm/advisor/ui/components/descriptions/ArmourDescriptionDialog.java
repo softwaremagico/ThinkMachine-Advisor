@@ -21,7 +21,7 @@ public class ArmourDescriptionDialog extends ElementDescriptionDialog<Armour> {
                 armour.getTechLevel();
         boolean costLimited = CharacterManager.getSelectedCharacter().getMoney() < armour.getCost();
         boolean costProhibited = CharacterManager.getSelectedCharacter().getInitialMoney() < armour.getCost();
-        StringBuilder stringBuilder = new StringBuilder("<table cellpadding=\"8\" style=\"border:1px solid black;margin-left:auto;margin-right:auto;\">" +
+        StringBuilder stringBuilder = new StringBuilder("<table cellpadding=\"" + TABLE_PADDING + "\" style=\"" + TABLE_STYLE + "\">" +
                 "<tr>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("techLevel") + "</th>" +
                 "<th>" + ThinkMachineTranslator.getTranslatedText("armorRating") + "</th>" +
