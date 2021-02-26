@@ -13,8 +13,6 @@
 package com.softwaremagico.tm.advisor.ui.character.info;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,10 +69,22 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
     @Override
     protected void initData() {
-        createNameText(root);
-        createSurnameText(root);
+        updateTranslatedTextField(root, R.id.character_name, value -> CharacterManager.getSelectedCharacter().getInfo().setNames(value));
+        updateTranslatedTextField(root, R.id.character_surname, value -> CharacterManager.getSelectedCharacter().getInfo().setSurname(value));
+        updateTranslatedTextField(root, R.id.character_age, value -> {
+            try {
+                if (!Objects.equals(CharacterManager.getSelectedCharacter().getInfo().getAge() + "", value)) {
+                    CharacterManager.getSelectedCharacter().getInfo().setAge(Integer.parseInt(value));
+                    //Force to update all costs.
+                    CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
+                }
+            } catch (NumberFormatException e) {
+                CharacterManager.getSelectedCharacter().getInfo().setAge(null);
+                CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
+            }
+
+        });
         createGenderSpinner(root);
-        createAgeText(root);
         createRaceSpinner(root);
         createFactionSpinner(root);
         createPlanetSpinner(root);
@@ -94,8 +104,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         extraCounter = root.findViewById(R.id.extra_counter);
         firebirdsCounter = root.findViewById(R.id.firebirds_counter);
 
-        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateCounters(characterPlayer));
-        CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> updateCounters(characterPlayer));
+        CharacterManager.addCharacterRaceUpdatedListener(this::updateCounters);
+        CharacterManager.addCharacterAgeUpdatedListener(this::updateCounters);
 
         return root;
     }
@@ -118,11 +128,11 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         } else {
             ageTextEditor.setText("");
         }
-        final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
+        final ElementSpinner<Race> raceSelector = root.findViewById(R.id.character_race);
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
-        final ElementSpinner factionsSelector = root.findViewById(R.id.character_faction);
+        final ElementSpinner<Faction> factionsSelector = root.findViewById(R.id.character_faction);
         factionsSelector.setSelection(CharacterManager.getSelectedCharacter().getFaction());
-        final ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
+        final ElementSpinner<Planet> planetSelector = root.findViewById(R.id.character_planet);
         planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
 
         updateCounters(character);
@@ -134,50 +144,6 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         skillsCounter.setCharacter(character);
         traitsCounter.setCharacter(character);
         firebirdsCounter.setCharacter(character);
-    }
-
-    private void createNameText(View root) {
-        final TranslatedEditText nameTextEditor = root.findViewById(R.id.character_name);
-        nameTextEditor.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                //Nothing
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                //Nothing
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                CharacterManager.getSelectedCharacter().getInfo().setNames(nameTextEditor.getText());
-            }
-        });
-    }
-
-    private void createSurnameText(View root) {
-        final TranslatedEditText surnameTextEditor = root.findViewById(R.id.character_surname);
-        surnameTextEditor.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                //Nothing
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                //Nothing
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                CharacterManager.getSelectedCharacter().getInfo().setSurname(surnameTextEditor.getText());
-            }
-        });
     }
 
     private void createGenderSpinner(View root) {
@@ -202,41 +168,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         });
     }
 
-    private void createAgeText(View root) {
-        final TranslatedEditText ageTextEditor = root.findViewById(R.id.character_age);
-        ageTextEditor.setAsNumberEditor();
-        ageTextEditor.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                //Nothing
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                //Nothing
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    if (!Objects.equals(CharacterManager.getSelectedCharacter().getInfo().getAge() + "", ageTextEditor.getText())) {
-                        CharacterManager.getSelectedCharacter().getInfo().setAge(Integer.parseInt(ageTextEditor.getText()));
-                        //Force to update all costs.
-                        CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
-                    }
-                } catch (NumberFormatException e) {
-                    CharacterManager.getSelectedCharacter().getInfo().setAge(null);
-                    CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
-                }
-            }
-        });
-
-    }
-
     private void createRaceSpinner(View root) {
-        final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
+        final ElementSpinner<Race> raceSelector = root.findViewById(R.id.character_race);
         List<Race> options = new ArrayList<>(mViewModel.getAvailableRaces());
         options.add(0, null);
         raceSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Race.class));
@@ -268,7 +201,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createFactionSpinner(View root) {
-        final ElementSpinner factionsSelector = root.findViewById(R.id.character_faction);
+        final ElementSpinner<Faction> factionsSelector = root.findViewById(R.id.character_faction);
         List<Faction> options = new ArrayList<>(mViewModel.getAvailableFactions());
         options.add(0, null);
         factionsSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Faction.class));
@@ -298,7 +231,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createPlanetSpinner(View root) {
-        final ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
+        final ElementSpinner<Planet> planetSelector = root.findViewById(R.id.character_planet);
         List<Planet> options = new ArrayList<>(mViewModel.getAvailablePlanets());
         options.add(0, null);
         planetSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Planet.class));

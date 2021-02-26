@@ -167,4 +167,7 @@
     <string name="cost">Coste</string>
     <string name="close">Cerrar</string>
     <string name="properties">Propiedades</string>
+    <string name="tab_character_description">Descripción</string>
+    <string name="description">Descripción del Personaje:</string>
+    <string name="background">La Historia:</string>
 </resources>
