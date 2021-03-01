@@ -17,12 +17,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.Element;
+import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
@@ -36,14 +38,19 @@ import com.softwaremagico.tm.advisor.ui.components.counters.ExtraCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.FirebirdsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;
+import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.Gender;
+import com.softwaremagico.tm.character.RandomName;
+import com.softwaremagico.tm.character.RandomSurname;
+import com.softwaremagico.tm.character.Surname;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
 import com.softwaremagico.tm.character.planets.Planet;
 import com.softwaremagico.tm.character.races.InvalidRaceException;
 import com.softwaremagico.tm.character.races.Race;
+import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +97,43 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         createPlanetSpinner(root);
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
+
+        ImageView randomNameButton = root.findViewById(R.id.button_random_name);
+        if (randomNameButton != null) {
+            randomNameButton.setOnClickListener(v -> {
+                CharacterManager.getSelectedCharacter().getInfo().setNames(new ArrayList<>());
+                final RandomName randomName;
+                try {
+                    randomName = new RandomName(CharacterManager.getSelectedCharacter(), null);
+                    randomName.assign();
+                    final TranslatedEditText nameTextEditor = root.findViewById(R.id.character_name);
+                    nameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getNameRepresentation());
+                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException e) {
+                    e.printStackTrace();
+                    SnackbarGenerator.getErrorMessage(root, R.string.selectFaction).show();
+                }
+            });
+        }
+
+        ImageView randomSurnameButton = root.findViewById(R.id.button_random_surname);
+        if (randomSurnameButton != null) {
+            randomSurnameButton.setOnClickListener(v -> {
+                CharacterManager.getSelectedCharacter().getInfo().setSurname((Surname) null);
+                final RandomSurname randomSurname;
+                try {
+                    randomSurname = new RandomSurname(CharacterManager.getSelectedCharacter(), null);
+                    randomSurname.assign();
+                    final TranslatedEditText surnameTextEditor = root.findViewById(R.id.character_surname);
+                    if (CharacterManager.getSelectedCharacter().getInfo().getSurname() != null) {
+                        surnameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getSurname().getName());
+                    } else {
+                        surnameTextEditor.setText("");
+                    }
+                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
     @Override
