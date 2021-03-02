@@ -91,6 +91,7 @@ public class SearchableSpinner<E extends Element<E>> extends androidx.appcompat.
                 }
                 // Change end.
                 searchableListDialog.show(scanForActivity(context).getFragmentManager(), "TAG");
+                searchableListDialog.setAdapter((ArrayAdapter<E>) getAdapter());
             }
         }
         return true;
@@ -104,13 +105,16 @@ public class SearchableSpinner<E extends Element<E>> extends androidx.appcompat.
                 ArrayAdapter<E> arrayAdapter = new ArrayAdapter(context, android.R.layout
                         .simple_list_item_1, new String[]{hintText});
                 super.setAdapter(arrayAdapter);
+                //searchableListDialog.setAdapter((ArrayAdapter<E>)arrayAdapter);
             } else {
                 super.setAdapter(adapter);
+                //searchableListDialog.setAdapter((ArrayAdapter<E>)adapter);
             }
 
         } else {
             isFromInit = false;
             super.setAdapter(adapter);
+            //searchableListDialog.setAdapter((ArrayAdapter<E>)adapter);
         }
     }
 

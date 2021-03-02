@@ -151,13 +151,8 @@ public class SearchableListDialog<E extends Element<E>> extends DialogFragment i
         mgr.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
 
 
-        List<E> items = (List<E>) getArguments().getSerializable(ITEMS);
-
         listViewItems = rootView.findViewById(R.id.listItems);
 
-        //create the adapter by passing your ArrayList data
-        listAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,
-                items);
         //attach the adapter to the list
         listViewItems.setAdapter(listAdapter);
 
@@ -171,7 +166,6 @@ public class SearchableListDialog<E extends Element<E>> extends DialogFragment i
 
     public void setAdapter(ArrayAdapter<E> adapter) {
         listAdapter = adapter;
-        listViewItems.setAdapter(adapter);
     }
 
     @Override
