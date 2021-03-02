@@ -102,7 +102,7 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
         }
 
         try {
-            final T element = elements.get(position);
+            final T element = getItem(position);
             if (element != null) {
                 final TextView elementName = listItem.findViewById(R.id.selected_item);
                 elementName.setText(getElementRepresentation(element));
@@ -116,6 +116,16 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
 
     public int indexOf(T element) {
         return elements.indexOf(element);
+    }
+
+    @Override
+    public T getItem(int position) {
+        return elements.get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return elements.size();
     }
 
     @Override

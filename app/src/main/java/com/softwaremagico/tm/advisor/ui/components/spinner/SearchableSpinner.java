@@ -3,7 +3,6 @@ package com.softwaremagico.tm.advisor.ui.components.spinner;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -105,16 +104,13 @@ public class SearchableSpinner<E extends Element<E>> extends androidx.appcompat.
                 ArrayAdapter<E> arrayAdapter = new ArrayAdapter(context, android.R.layout
                         .simple_list_item_1, new String[]{hintText});
                 super.setAdapter(arrayAdapter);
-                //searchableListDialog.setAdapter((ArrayAdapter<E>)arrayAdapter);
             } else {
                 super.setAdapter(adapter);
-                //searchableListDialog.setAdapter((ArrayAdapter<E>)adapter);
             }
 
         } else {
             isFromInit = false;
             super.setAdapter(adapter);
-            //searchableListDialog.setAdapter((ArrayAdapter<E>)adapter);
         }
     }
 
@@ -131,18 +127,6 @@ public class SearchableSpinner<E extends Element<E>> extends androidx.appcompat.
 
     public void setTitle(String strTitle) {
         searchableListDialog.setTitle(strTitle);
-    }
-
-    public void setPositiveButton(String strPositiveButtonText) {
-        searchableListDialog.setPositiveButton(strPositiveButtonText);
-    }
-
-    public void setPositiveButton(String strPositiveButtonText, DialogInterface.OnClickListener onClickListener) {
-        searchableListDialog.setPositiveButton(strPositiveButtonText, onClickListener);
-    }
-
-    public void setOnSearchTextChangedListener(SearchableListDialog.OnSearchTextChanged onSearchTextChanged) {
-        searchableListDialog.setOnSearchTextChangedListener(onSearchTextChanged);
     }
 
     private Activity scanForActivity(Context cont) {

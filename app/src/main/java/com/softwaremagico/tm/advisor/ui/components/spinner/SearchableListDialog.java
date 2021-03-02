@@ -145,9 +145,9 @@ public class SearchableListDialog<E extends Element<E>> extends DialogFragment i
         searchView.setOnQueryTextListener(this);
         searchView.setOnCloseListener(this);
         searchView.clearFocus();
-        InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context
                 .INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+        inputMethodManager.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
 
 
         listViewItems = rootView.findViewById(R.id.listItems);
@@ -160,6 +160,8 @@ public class SearchableListDialog<E extends Element<E>> extends DialogFragment i
         listViewItems.setOnItemClickListener((parent, view, position, id) -> {
             searchableItem.onSearchableItemClicked(listAdapter.getItem(position), position);
             getDialog().dismiss();
+            //Remove filter.
+            ((ArrayAdapter<E>) listViewItems.getAdapter()).getFilter().filter(null);
         });
     }
 
@@ -191,7 +193,7 @@ public class SearchableListDialog<E extends Element<E>> extends DialogFragment i
         } else {
             ((ArrayAdapter<E>) listViewItems.getAdapter()).getFilter().filter(s);
         }
-        if (null != onSearchTextChanged) {
+        if (onSearchTextChanged != null) {
             onSearchTextChanged.onSearchTextChanged(s);
         }
         return true;
