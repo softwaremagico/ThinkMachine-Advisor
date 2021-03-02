@@ -60,7 +60,6 @@ public class SearchableListDialog<E extends Element<E>> extends DialogFragment i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -114,16 +113,16 @@ public class SearchableListDialog<E extends Element<E>> extends DialogFragment i
     }
     // Change End
 
-    public void setTitle(String strTitle) {
-        title = strTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setPositiveButton(String strPositiveButtonText) {
-        positiveButtonText = strPositiveButtonText;
+    public void setPositiveButton(String positiveButtonText) {
+        this.positiveButtonText = positiveButtonText;
     }
 
-    public void setPositiveButton(String strPositiveButtonText, DialogInterface.OnClickListener onClickListener) {
-        positiveButtonText = strPositiveButtonText;
+    public void setPositiveButton(String positiveButtonText, DialogInterface.OnClickListener onClickListener) {
+        this.positiveButtonText = positiveButtonText;
         this.onClickListener = onClickListener;
     }
 

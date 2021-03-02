@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
-    private final List<T> elements;
+    private List<T> elements;
+
+    //For filtering
+    private final Object mLock = new Object();
+    private ArrayList<T> mOriginalValues;
+    private ElementFilter mFilter;
 
     public ElementAdapter(@NonNull Context context, @NonNull List<T> objects, boolean nullAllowed, Class<T> clazz) {
         super(context, android.R.layout.simple_spinner_dropdown_item, objects);
@@ -95,11 +101,14 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
             listItem = LayoutInflater.from(getContext()).inflate(R.layout.element_list, parent, false);
         }
 
-        final T element = elements.get(position);
-
-        if (element != null) {
-            final TextView elementName = listItem.findViewById(R.id.selected_item);
-            elementName.setText(getElementRepresentation(element));
+        try {
+            final T element = elements.get(position);
+            if (element != null) {
+                final TextView elementName = listItem.findViewById(R.id.selected_item);
+                elementName.setText(getElementRepresentation(element));
+            }
+        } catch (IndexOutOfBoundsException e) {
+            //Filtered elements.
         }
 
         return listItem;
@@ -107,6 +116,65 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
 
     public int indexOf(T element) {
         return elements.indexOf(element);
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new ElementFilter();
+        }
+        return mFilter;
+    }
+
+    /**
+     * <p>An array filter constrains the content of the array adapter with
+     * a prefix. Each item that does not start with the supplied prefix
+     * is removed from the list.</p>
+     */
+    private class ElementFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence prefix) {
+            FilterResults results = new FilterResults();
+            if (prefix == null || prefix.length() == 0) {
+                // No filter implemented we return all the list
+                results.values = elements;
+                results.count = elements.size();
+            } else {
+                // We perform filtering operation
+                List<T> elementList = new ArrayList<T>();
+                final String prefixString = prefix.toString().toLowerCase();
+
+                for (T element : elements) {
+                    if (element.getName().toLowerCase()
+                            .startsWith(prefixString)) {
+                        elementList.add(element);
+                    } else {
+                        final String[] words = element.getName().split(" ");
+                        for (String word : words) {
+                            if (word.startsWith(prefixString)) {
+                                elementList.add(element);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                results.values = elementList;
+                results.count = elementList.size();
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            //noinspection unchecked
+            elements = (List<T>) results.values;
+            if (results.count > 0) {
+                notifyDataSetChanged();
+            } else {
+                notifyDataSetInvalidated();
+            }
+        }
     }
 
 
