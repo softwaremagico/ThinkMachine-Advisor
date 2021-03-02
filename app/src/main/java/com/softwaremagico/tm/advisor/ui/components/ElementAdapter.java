@@ -27,16 +27,16 @@ import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
     private List<T> elements;
+    private List<T> originalElements;
 
     //For filtering
-    private final Object mLock = new Object();
-    private ArrayList<T> mOriginalValues;
-    private ElementFilter mFilter;
+    private ElementFilter elementFilter;
 
     public ElementAdapter(@NonNull Context context, @NonNull List<T> objects, boolean nullAllowed, Class<T> clazz) {
         super(context, android.R.layout.simple_spinner_dropdown_item, objects);
@@ -120,10 +120,10 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
 
     @Override
     public Filter getFilter() {
-        if (mFilter == null) {
-            mFilter = new ElementFilter();
+        if (elementFilter == null) {
+            elementFilter = new ElementFilter();
         }
-        return mFilter;
+        return elementFilter;
     }
 
     /**
@@ -132,24 +132,36 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
      * is removed from the list.</p>
      */
     private class ElementFilter extends Filter {
+
         @Override
         protected FilterResults performFiltering(CharSequence prefix) {
             FilterResults results = new FilterResults();
+
+            if (originalElements == null) {
+                synchronized (this) {
+                    originalElements = new ArrayList<>(elements);
+                }
+            }
+
             if (prefix == null || prefix.length() == 0) {
-                // No filter implemented we return all the list
-                results.values = elements;
-                results.count = elements.size();
+                // No filter implemented we return all the original list
+                final ArrayList<T> list;
+                synchronized (this) {
+                    list = new ArrayList<>(originalElements);
+                }
+                results.values = list;
+                results.count = list.size();
             } else {
                 // We perform filtering operation
                 List<T> elementList = new ArrayList<T>();
-                final String prefixString = prefix.toString().toLowerCase();
+                final String prefixString = removeDiacriticalMarks(prefix.toString().toLowerCase());
 
-                for (T element : elements) {
-                    if (element.getName().toLowerCase()
-                            .startsWith(prefixString)) {
+                for (T element : originalElements) {
+                    String name = removeDiacriticalMarks(element.getName().toLowerCase());
+                    if (name.startsWith(prefixString)) {
                         elementList.add(element);
                     } else {
-                        final String[] words = element.getName().split(" ");
+                        final String[] words = name.split(" ");
                         for (String word : words) {
                             if (word.startsWith(prefixString)) {
                                 elementList.add(element);
@@ -165,6 +177,7 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
             return results;
         }
 
+
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             //noinspection unchecked
@@ -177,5 +190,13 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
         }
     }
 
+
+    public static String removeDiacriticalMarks(String string) {
+        if (string == null) {
+            return "";
+        }
+        return Normalizer.normalize(string, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+    }
 
 }
