@@ -14,4 +14,7 @@
     <declare-styleable name="translated_text">
         <attr name="translation" format="string" localization="suggested" />
     </declare-styleable>
+    <declare-styleable name="SearchableSpinner">
+        <attr name="hintText" format="string"/>
+    </declare-styleable>
 </resources>

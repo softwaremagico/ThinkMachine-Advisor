@@ -32,6 +32,7 @@ import com.softwaremagico.tm.advisor.ui.components.descriptions.ElementDescripti
 import com.softwaremagico.tm.advisor.ui.components.descriptions.MeleeWeaponDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.RangeWeaponDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.ShieldDescriptionDialog;
+import com.softwaremagico.tm.advisor.ui.components.spinner.SearchableSpinner;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.blessings.Blessing;
@@ -42,7 +43,7 @@ import com.softwaremagico.tm.character.equipment.weapons.Weapon;
 public class ElementSpinner<T extends Element<?>> extends Component {
 
     private ImageView helpButton;
-    private Spinner selector;
+    private SearchableSpinner selector;
 
     public ElementSpinner(Context context) {
         this(context, null);

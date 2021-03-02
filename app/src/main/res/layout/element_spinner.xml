@@ -26,7 +26,7 @@
         android:fontFamily="@font/label"
         android:singleLine="true" />
 
-    <Spinner
+    <com.softwaremagico.tm.advisor.ui.components.spinner.SearchableSpinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
