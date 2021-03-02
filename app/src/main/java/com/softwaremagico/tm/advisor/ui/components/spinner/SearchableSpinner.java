@@ -12,87 +12,85 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchableSpinner extends androidx.appcompat.widget.AppCompatSpinner implements View.OnTouchListener,
-        SearchableListDialog.SearchableItem {
+public class SearchableSpinner<E extends Element<E>> extends androidx.appcompat.widget.AppCompatSpinner implements View.OnTouchListener,
+        SearchableListDialog.SearchableItem<E> {
 
     public static final int NO_ITEM_SELECTED = -1;
-    private Context _context;
-    private List _items;
-    private SearchableListDialog _searchableListDialog;
+    private final Context context;
+    private List<E> items;
+    private SearchableListDialog<E> searchableListDialog;
 
-    private boolean _isDirty;
-    private ArrayAdapter _arrayAdapter;
-    private String _strHintText;
-    private boolean _isFromInit;
+    private boolean isDirty;
+    private ArrayAdapter<E> arrayAdapter;
+    private String hintText;
+    private boolean isFromInit;
 
     public SearchableSpinner(Context context) {
         super(context);
-        this._context = context;
+        this.context = context;
         init();
     }
 
     public SearchableSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this._context = context;
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SearchableSpinner);
-        final int N = a.getIndexCount();
-        for (int i = 0; i < N; ++i) {
-            int attr = a.getIndex(i);
-            if (attr == R.styleable.SearchableSpinner_hintText) {
-                _strHintText = a.getString(attr);
+        this.context = context;
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.SearchableSpinner);
+        for (int i = 0; i < attributes.getIndexCount(); ++i) {
+            if (attributes.getIndex(i) == R.styleable.SearchableSpinner_hintText) {
+                hintText = attributes.getString(attributes.getIndex(i));
             }
         }
-        a.recycle();
+        attributes.recycle();
         init();
     }
 
     public SearchableSpinner(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this._context = context;
+        this.context = context;
         init();
     }
 
     private void init() {
-        _items = new ArrayList();
-        _searchableListDialog = SearchableListDialog.newInstance
-                (_items);
-        _searchableListDialog.setOnSearchableItemClickListener(this);
+        items = new ArrayList<E>();
+        searchableListDialog = SearchableListDialog.newInstance
+                (items);
+        searchableListDialog.setOnSearchableItemClickListener(this);
         setOnTouchListener(this);
+        //searchableListDialog.setAdapter((ArrayAdapter<E>)getAdapter());
 
-        _arrayAdapter = (ArrayAdapter) getAdapter();
-        if (!TextUtils.isEmpty(_strHintText)) {
-            ArrayAdapter arrayAdapter = new ArrayAdapter(_context, android.R.layout
-                    .simple_list_item_1, new String[]{_strHintText});
-            _isFromInit = true;
+        arrayAdapter = (ArrayAdapter<E>) getAdapter();
+        if (!TextUtils.isEmpty(hintText)) {
+            ArrayAdapter<E> arrayAdapter = new ArrayAdapter(context, android.R.layout
+                    .simple_list_item_1, new String[]{hintText});
+            isFromInit = true;
             setAdapter(arrayAdapter);
         }
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (_searchableListDialog.isAdded()) {
+        if (searchableListDialog.isAdded()) {
             return true;
         }
+
         if (event.getAction() == MotionEvent.ACTION_UP) {
-
-            if (null != _arrayAdapter) {
-
+            if (null != arrayAdapter) {
                 // Refresh content #6
                 // Change Start
                 // Description: The items were only set initially, not reloading the data in the
                 // spinner every time it is loaded with items in the adapter.
-                _items.clear();
-                for (int i = 0; i < _arrayAdapter.getCount(); i++) {
-                    _items.add(_arrayAdapter.getItem(i));
+                items.clear();
+                for (int i = 0; i < arrayAdapter.getCount(); i++) {
+                    items.add(arrayAdapter.getItem(i));
                 }
                 // Change end.
-
-                _searchableListDialog.show(scanForActivity(_context).getFragmentManager(), "TAG");
+                searchableListDialog.show(scanForActivity(context).getFragmentManager(), "TAG");
             }
         }
         return true;
@@ -100,48 +98,47 @@ public class SearchableSpinner extends androidx.appcompat.widget.AppCompatSpinne
 
     @Override
     public void setAdapter(SpinnerAdapter adapter) {
-
-        if (!_isFromInit) {
-            _arrayAdapter = (ArrayAdapter) adapter;
-            if (!TextUtils.isEmpty(_strHintText) && !_isDirty) {
-                ArrayAdapter arrayAdapter = new ArrayAdapter(_context, android.R.layout
-                        .simple_list_item_1, new String[]{_strHintText});
+        if (!isFromInit) {
+            arrayAdapter = (ArrayAdapter<E>) adapter;
+            if (!TextUtils.isEmpty(hintText) && !isDirty) {
+                ArrayAdapter<E> arrayAdapter = new ArrayAdapter(context, android.R.layout
+                        .simple_list_item_1, new String[]{hintText});
                 super.setAdapter(arrayAdapter);
             } else {
                 super.setAdapter(adapter);
             }
 
         } else {
-            _isFromInit = false;
+            isFromInit = false;
             super.setAdapter(adapter);
         }
     }
 
     @Override
-    public void onSearchableItemClicked(Object item, int position) {
-        setSelection(_items.indexOf(item));
+    public void onSearchableItemClicked(E item, int position) {
+        setSelection(items.indexOf(item));
 
-        if (!_isDirty) {
-            _isDirty = true;
-            setAdapter(_arrayAdapter);
-            setSelection(_items.indexOf(item));
+        if (!isDirty) {
+            isDirty = true;
+            setAdapter(arrayAdapter);
+            setSelection(items.indexOf(item));
         }
     }
 
     public void setTitle(String strTitle) {
-        _searchableListDialog.setTitle(strTitle);
+        searchableListDialog.setTitle(strTitle);
     }
 
     public void setPositiveButton(String strPositiveButtonText) {
-        _searchableListDialog.setPositiveButton(strPositiveButtonText);
+        searchableListDialog.setPositiveButton(strPositiveButtonText);
     }
 
     public void setPositiveButton(String strPositiveButtonText, DialogInterface.OnClickListener onClickListener) {
-        _searchableListDialog.setPositiveButton(strPositiveButtonText, onClickListener);
+        searchableListDialog.setPositiveButton(strPositiveButtonText, onClickListener);
     }
 
     public void setOnSearchTextChangedListener(SearchableListDialog.OnSearchTextChanged onSearchTextChanged) {
-        _searchableListDialog.setOnSearchTextChangedListener(onSearchTextChanged);
+        searchableListDialog.setOnSearchTextChangedListener(onSearchTextChanged);
     }
 
     private Activity scanForActivity(Context cont) {
@@ -157,7 +154,7 @@ public class SearchableSpinner extends androidx.appcompat.widget.AppCompatSpinne
 
     @Override
     public int getSelectedItemPosition() {
-        if (!TextUtils.isEmpty(_strHintText) && !_isDirty) {
+        if (!TextUtils.isEmpty(hintText) && !isDirty) {
             return NO_ITEM_SELECTED;
         } else {
             return super.getSelectedItemPosition();
@@ -166,7 +163,7 @@ public class SearchableSpinner extends androidx.appcompat.widget.AppCompatSpinne
 
     @Override
     public Object getSelectedItem() {
-        if (!TextUtils.isEmpty(_strHintText) && !_isDirty) {
+        if (!TextUtils.isEmpty(hintText) && !isDirty) {
             return null;
         } else {
             return super.getSelectedItem();

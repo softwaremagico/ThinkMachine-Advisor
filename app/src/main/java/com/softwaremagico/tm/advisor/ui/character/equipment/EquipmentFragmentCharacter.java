@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
@@ -88,13 +89,13 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
         rangeWeaponsLayout = new RangedWeaponsLayout(getContext(), true);
         rootLayout.addView(rangeWeaponsLayout);
-	addSpace(rootLayout);
+        addSpace(rootLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("meleeWeapons"), rootLayout);
 
         meleeWeaponsLayout = new MeleeWeaponsLayout(getContext(), true);
         rootLayout.addView(meleeWeaponsLayout);
-	addSpace(rootLayout);
+        addSpace(rootLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("armor"), rootLayout);
         armoursLayout = new ArmourLayout(getContext(), true);
@@ -270,7 +271,16 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
         @Override
         protected ElementAdapter<Weapon> createElementAdapter() {
-            return new ElementAdapter<>(getActivity(), mViewModel.getAvailableRangedWeapons(), isNullAllowed(), Weapon.class);
+            return new ElementAdapter<Weapon>(getActivity(), mViewModel.getAvailableRangedWeapons(), isNullAllowed(), Weapon.class) {
+
+                @Override
+                public String getElementRepresentation(Weapon element) {
+                    if (element.getId().equals(Element.DEFAULT_NULL_ID)) {
+                        return "";
+                    }
+                    return element.getName() + " (" + element.getCost() + ")";
+                }
+            };
         }
 
         @Override

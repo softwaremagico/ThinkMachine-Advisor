@@ -68,6 +68,7 @@ public class ElementSpinner<T extends Element<?>> extends Component {
             tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
         }
         tagText.setTextAppearance(R.style.CharacterInfo);
+        attributes.recycle();
 
         helpButton = findViewById(R.id.button_help);
         if (helpButton != null) {

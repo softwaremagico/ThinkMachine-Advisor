@@ -13,40 +13,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class SearchableListDialog extends DialogFragment implements
+public class SearchableListDialog<E extends Element<E>> extends DialogFragment implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     private static final String ITEMS = "items";
 
-    private ArrayAdapter listAdapter;
+    private ArrayAdapter<E> listAdapter;
 
-    private ListView _listViewItems;
+    private ListView listViewItems;
 
-    private SearchableItem _searchableItem;
+    private SearchableItem<E> searchableItem;
 
-    private OnSearchTextChanged _onSearchTextChanged;
+    private OnSearchTextChanged onSearchTextChanged;
 
-    private SearchView _searchView;
+    private SearchView searchView;
 
-    private String _strTitle;
+    private String title;
 
-    private String _strPositiveButtonText;
+    private String positiveButtonText;
 
-    private DialogInterface.OnClickListener _onClickListener;
+    private DialogInterface.OnClickListener onClickListener;
 
-    public SearchableListDialog() {
-
-    }
 
     public static SearchableListDialog newInstance(List items) {
         SearchableListDialog multiSelectExpandableFragment = new
@@ -85,7 +82,7 @@ public class SearchableListDialog extends DialogFragment implements
         // Description: As the instance was re initializing to null on rotating the device,
         // getting the instance from the saved instance
         if (null != savedInstanceState) {
-            _searchableItem = (SearchableItem) savedInstanceState.getSerializable("item");
+            searchableItem = (SearchableItem<E>) savedInstanceState.getSerializable("item");
         }
         // Change End
 
@@ -95,10 +92,10 @@ public class SearchableListDialog extends DialogFragment implements
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setView(rootView);
 
-        String strPositiveButton = _strPositiveButtonText == null ? "CLOSE" : _strPositiveButtonText;
-        alertDialog.setPositiveButton(strPositiveButton, _onClickListener);
+        String strPositiveButton = positiveButtonText == null ? "CLOSE" : positiveButtonText;
+        alertDialog.setPositiveButton(strPositiveButton, onClickListener);
 
-        String strTitle = _strTitle == null ? "Select Item" : _strTitle;
+        String strTitle = title == null ? "Select Item" : title;
         alertDialog.setTitle(strTitle);
 
         final AlertDialog dialog = alertDialog.create();
@@ -112,67 +109,69 @@ public class SearchableListDialog extends DialogFragment implements
     // Description: Saving the instance of searchable item instance.
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable("item", _searchableItem);
+        outState.putSerializable("item", searchableItem);
         super.onSaveInstanceState(outState);
     }
     // Change End
 
     public void setTitle(String strTitle) {
-        _strTitle = strTitle;
+        title = strTitle;
     }
 
     public void setPositiveButton(String strPositiveButtonText) {
-        _strPositiveButtonText = strPositiveButtonText;
+        positiveButtonText = strPositiveButtonText;
     }
 
     public void setPositiveButton(String strPositiveButtonText, DialogInterface.OnClickListener onClickListener) {
-        _strPositiveButtonText = strPositiveButtonText;
-        _onClickListener = onClickListener;
+        positiveButtonText = strPositiveButtonText;
+        this.onClickListener = onClickListener;
     }
 
-    public void setOnSearchableItemClickListener(SearchableItem searchableItem) {
-        this._searchableItem = searchableItem;
+    public void setOnSearchableItemClickListener(SearchableItem<E> searchableItem) {
+        this.searchableItem = searchableItem;
     }
 
     public void setOnSearchTextChangedListener(OnSearchTextChanged onSearchTextChanged) {
-        this._onSearchTextChanged = onSearchTextChanged;
+        this.onSearchTextChanged = onSearchTextChanged;
     }
 
     private void setData(View rootView) {
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context
                 .SEARCH_SERVICE);
 
-        _searchView = (SearchView) rootView.findViewById(R.id.search);
-        _searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName
+        searchView = rootView.findViewById(R.id.search);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName
                 ()));
-        _searchView.setIconifiedByDefault(false);
-        _searchView.setOnQueryTextListener(this);
-        _searchView.setOnCloseListener(this);
-        _searchView.clearFocus();
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnCloseListener(this);
+        searchView.clearFocus();
         InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context
                 .INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(_searchView.getWindowToken(), 0);
+        mgr.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
 
 
-        List items = (List) getArguments().getSerializable(ITEMS);
+        List<E> items = (List<E>) getArguments().getSerializable(ITEMS);
 
-        _listViewItems = (ListView) rootView.findViewById(R.id.listItems);
+        listViewItems = rootView.findViewById(R.id.listItems);
 
         //create the adapter by passing your ArrayList data
         listAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,
                 items);
         //attach the adapter to the list
-        _listViewItems.setAdapter(listAdapter);
+        listViewItems.setAdapter(listAdapter);
 
-        _listViewItems.setTextFilterEnabled(true);
+        listViewItems.setTextFilterEnabled(true);
 
-        _listViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                _searchableItem.onSearchableItemClicked(listAdapter.getItem(position), position);
-                getDialog().dismiss();
-            }
+        listViewItems.setOnItemClickListener((parent, view, position, id) -> {
+            searchableItem.onSearchableItemClicked(listAdapter.getItem(position), position);
+            getDialog().dismiss();
         });
+    }
+
+    public void setAdapter(ArrayAdapter<E> adapter) {
+        listAdapter = adapter;
+        listViewItems.setAdapter(adapter);
     }
 
     @Override
@@ -181,29 +180,26 @@ public class SearchableListDialog extends DialogFragment implements
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
         dismiss();
     }
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        _searchView.clearFocus();
+        searchView.clearFocus();
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String s) {
-//        listAdapter.filterData(s);
         if (TextUtils.isEmpty(s)) {
-//                _listViewItems.clearTextFilter();
-            ((ArrayAdapter) _listViewItems.getAdapter()).getFilter().filter(null);
+            ((ArrayAdapter<E>) listViewItems.getAdapter()).getFilter().filter(null);
         } else {
-            ((ArrayAdapter) _listViewItems.getAdapter()).getFilter().filter(s);
+            ((ArrayAdapter<E>) listViewItems.getAdapter()).getFilter().filter(s);
         }
-        if (null != _onSearchTextChanged) {
-            _onSearchTextChanged.onSearchTextChanged(s);
+        if (null != onSearchTextChanged) {
+            onSearchTextChanged.onSearchTextChanged(s);
         }
         return true;
     }

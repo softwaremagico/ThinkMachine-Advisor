@@ -91,7 +91,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         while (i < elementSpinners.size()) {
             if (elementSpinners.get(i).getSelection() != null) {
                 if (!selections.contains(elementSpinners.get(i).getSelection())) {
-                    selections.add((T) elementSpinners.get(i).getSelection());
+                    selections.add(elementSpinners.get(i).getSelection());
                 } else {
                     removeView(elementSpinners.get(i));
                     elementSpinners.remove(i);
@@ -120,7 +120,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         enabled = false;
         clear();
         for (final T element : elements) {
-            final ElementSpinner spinner = createElementSpinner();
+            final ElementSpinner<T> spinner = createElementSpinner();
             spinner.setSelection(element);
             addElementSpinner(spinner);
         }
@@ -135,7 +135,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         return elementSpinners;
     }
 
-    private void addElementSpinner(ElementSpinner spinner) {
+    private void addElementSpinner(ElementSpinner<T> spinner) {
         if (elementSpinners.size() >= maxElements) {
             return;
         }
@@ -163,14 +163,14 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         enabled = true;
     }
 
-    private void setElementSpinnerProperties(ElementSpinner spinner) {
+    private void setElementSpinnerProperties(ElementSpinner<T> spinner) {
         spinner.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
     }
 
-    public final ElementSpinner createElementSpinner() {
-        final ElementSpinner selector = new ElementSpinner(getContext());
+    public final ElementSpinner<T> createElementSpinner() {
+        final ElementSpinner<T> selector = new ElementSpinner<>(getContext());
         selector.setAdapter(getElementAdapter());
         return selector;
     }
