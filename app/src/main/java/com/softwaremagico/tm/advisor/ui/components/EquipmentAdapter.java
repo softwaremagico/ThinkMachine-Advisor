@@ -25,7 +25,7 @@ public class EquipmentAdapter<T extends Equipment<?>> extends ElementAdapter<T> 
     protected void setElementColor(TextView elementRepresentation, T element, int position) {
         if (isEnabled(position)) {
             if (CharacterManager.getSelectedCharacter().getCharacteristic(CharacteristicName.TECH).getValue() <
-                    ((Equipment) element).getTechLevel()) {
+                    element.getTechLevel()) {
                 elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.insufficientTechnology));
             } else if (CharacterManager.getSelectedCharacter().getInitialMoney() < element.getCost()) {
                 elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.unaffordableMoney));

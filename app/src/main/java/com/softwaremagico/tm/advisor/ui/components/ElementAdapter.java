@@ -50,8 +50,10 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
         try {
             //Create null instance.
             final T instance = clazz.newInstance();
-            insert(instance, 0);
-            elements.add(0, instance);
+            if (elements.isEmpty() || !getItem(0).getId().equals(Element.DEFAULT_NULL_ID)) {
+                insert(instance, 0);
+                elements.add(0, instance);
+            }
         } catch (IllegalAccessException | InstantiationException e) {
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }
