@@ -80,11 +80,11 @@ public class FirebirdsCounter extends Component {
 
     public void setCharacter(CharacterPlayer character) {
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeFirebirdSpendListeners(listener);
-        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addFirebirdSpendListeners(value -> {
+        listener = CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addFirebirdSpendListeners(value -> {
             setValue((character.getInitialMoney() - CharacterManager.getCostCalculator().getFireBirdsExpend()), false);
         });
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeInitialFirebirdListeners(initialListener);
-        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addInitialFirebirdListeners(value -> {
+        initialListener = CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addInitialFirebirdListeners(value -> {
             setValue((character.getInitialMoney() - CharacterManager.getCostCalculator().getFireBirdsExpend()), false);
         });
         setValue((character.getInitialMoney() - CharacterManager.getCostCalculator().getFireBirdsExpend()), false);

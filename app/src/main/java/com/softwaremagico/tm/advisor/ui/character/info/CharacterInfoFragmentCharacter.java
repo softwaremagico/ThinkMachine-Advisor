@@ -13,18 +13,18 @@
 package com.softwaremagico.tm.advisor.ui.character.info;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.Element;
+import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
@@ -38,14 +38,19 @@ import com.softwaremagico.tm.advisor.ui.components.counters.ExtraCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.FirebirdsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;
+import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.Gender;
+import com.softwaremagico.tm.character.RandomName;
+import com.softwaremagico.tm.character.RandomSurname;
+import com.softwaremagico.tm.character.Surname;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
 import com.softwaremagico.tm.character.planets.Planet;
 import com.softwaremagico.tm.character.races.InvalidRaceException;
 import com.softwaremagico.tm.character.races.Race;
+import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,15 +76,64 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
     @Override
     protected void initData() {
-        createNameText(root);
-        createSurnameText(root);
+        updateTranslatedTextField(root, R.id.character_name, value -> CharacterManager.getSelectedCharacter().getInfo().setNames(value));
+        updateTranslatedTextField(root, R.id.character_surname, value -> CharacterManager.getSelectedCharacter().getInfo().setSurname(value));
+        updateTranslatedTextField(root, R.id.character_age, value -> {
+            try {
+                if (!Objects.equals(CharacterManager.getSelectedCharacter().getInfo().getAge() + "", value)) {
+                    CharacterManager.getSelectedCharacter().getInfo().setAge(Integer.parseInt(value));
+                    //Force to update all costs.
+                    CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
+                }
+            } catch (NumberFormatException e) {
+                CharacterManager.getSelectedCharacter().getInfo().setAge(null);
+                CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
+            }
+
+        });
         createGenderSpinner(root);
-        createAgeText(root);
         createRaceSpinner(root);
         createFactionSpinner(root);
         createPlanetSpinner(root);
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
+
+        ImageView randomNameButton = root.findViewById(R.id.button_random_name);
+        if (randomNameButton != null) {
+            randomNameButton.setOnClickListener(v -> {
+                CharacterManager.getSelectedCharacter().getInfo().setNames(new ArrayList<>());
+                final RandomName randomName;
+                try {
+                    randomName = new RandomName(CharacterManager.getSelectedCharacter(), null);
+                    randomName.assign();
+                    final TranslatedEditText nameTextEditor = root.findViewById(R.id.character_name);
+                    nameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getNameRepresentation());
+                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException e) {
+                    e.printStackTrace();
+                    SnackbarGenerator.getErrorMessage(root, R.string.selectFaction).show();
+                }
+            });
+        }
+
+        ImageView randomSurnameButton = root.findViewById(R.id.button_random_surname);
+        if (randomSurnameButton != null) {
+            randomSurnameButton.setOnClickListener(v -> {
+                CharacterManager.getSelectedCharacter().getInfo().setSurname((Surname) null);
+                final RandomSurname randomSurname;
+                try {
+                    randomSurname = new RandomSurname(CharacterManager.getSelectedCharacter(), null);
+                    randomSurname.assign();
+                    final TranslatedEditText surnameTextEditor = root.findViewById(R.id.character_surname);
+                    if (CharacterManager.getSelectedCharacter().getInfo().getSurname() != null) {
+                        surnameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getSurname().getName());
+                    } else {
+                        surnameTextEditor.setText("");
+                    }
+                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
     @Override
@@ -94,8 +148,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         extraCounter = root.findViewById(R.id.extra_counter);
         firebirdsCounter = root.findViewById(R.id.firebirds_counter);
 
-        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateCounters(characterPlayer));
-        CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> updateCounters(characterPlayer));
+        CharacterManager.addCharacterRaceUpdatedListener(this::updateCounters);
+        CharacterManager.addCharacterAgeUpdatedListener(this::updateCounters);
 
         return root;
     }
@@ -118,11 +172,11 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         } else {
             ageTextEditor.setText("");
         }
-        final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
+        final ElementSpinner<Race> raceSelector = root.findViewById(R.id.character_race);
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
-        final ElementSpinner factionsSelector = root.findViewById(R.id.character_faction);
+        final ElementSpinner<Faction> factionsSelector = root.findViewById(R.id.character_faction);
         factionsSelector.setSelection(CharacterManager.getSelectedCharacter().getFaction());
-        final ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
+        final ElementSpinner<Planet> planetSelector = root.findViewById(R.id.character_planet);
         planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
 
         updateCounters(character);
@@ -134,50 +188,6 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         skillsCounter.setCharacter(character);
         traitsCounter.setCharacter(character);
         firebirdsCounter.setCharacter(character);
-    }
-
-    private void createNameText(View root) {
-        final TranslatedEditText nameTextEditor = root.findViewById(R.id.character_name);
-        nameTextEditor.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                //Nothing
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                //Nothing
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                CharacterManager.getSelectedCharacter().getInfo().setNames(nameTextEditor.getText());
-            }
-        });
-    }
-
-    private void createSurnameText(View root) {
-        final TranslatedEditText surnameTextEditor = root.findViewById(R.id.character_surname);
-        surnameTextEditor.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                //Nothing
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                //Nothing
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                CharacterManager.getSelectedCharacter().getInfo().setSurname(surnameTextEditor.getText());
-            }
-        });
     }
 
     private void createGenderSpinner(View root) {
@@ -202,48 +212,15 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         });
     }
 
-    private void createAgeText(View root) {
-        final TranslatedEditText ageTextEditor = root.findViewById(R.id.character_age);
-        ageTextEditor.setAsNumberEditor();
-        ageTextEditor.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                //Nothing
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                //Nothing
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    if (!Objects.equals(CharacterManager.getSelectedCharacter().getInfo().getAge() + "", ageTextEditor.getText())) {
-                        CharacterManager.getSelectedCharacter().getInfo().setAge(Integer.parseInt(ageTextEditor.getText()));
-                        //Force to update all costs.
-                        CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
-                    }
-                } catch (NumberFormatException e) {
-                    CharacterManager.getSelectedCharacter().getInfo().setAge(null);
-                    CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
-                }
-            }
-        });
-
-    }
-
     private void createRaceSpinner(View root) {
-        final ElementSpinner raceSelector = root.findViewById(R.id.character_race);
+        final ElementSpinner<Race> raceSelector = root.findViewById(R.id.character_race);
         List<Race> options = new ArrayList<>(mViewModel.getAvailableRaces());
         options.add(0, null);
         raceSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Race.class));
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (mViewModel.getAvailableRaces().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                if (position == 0 || mViewModel.getAvailableRaces().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
                     CharacterManager.setRace(null);
                 } else {
                     if (position > 0) {
@@ -268,14 +245,14 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createFactionSpinner(View root) {
-        final ElementSpinner factionsSelector = root.findViewById(R.id.character_faction);
+        final ElementSpinner<Faction> factionsSelector = root.findViewById(R.id.character_faction);
         List<Faction> options = new ArrayList<>(mViewModel.getAvailableFactions());
         options.add(0, null);
         factionsSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Faction.class));
         factionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (mViewModel.getAvailableFactions().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                if (position == 0 || mViewModel.getAvailableFactions().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
                     CharacterManager.setFaction(null);
                 } else {
                     if (position > 0) {
@@ -298,14 +275,14 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createPlanetSpinner(View root) {
-        final ElementSpinner planetSelector = root.findViewById(R.id.character_planet);
+        final ElementSpinner<Planet> planetSelector = root.findViewById(R.id.character_planet);
         List<Planet> options = new ArrayList<>(mViewModel.getAvailablePlanets());
         options.add(0, null);
         planetSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Planet.class));
         planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (mViewModel.getAvailablePlanets().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                if (position == 0 || mViewModel.getAvailablePlanets().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
                     CharacterManager.setPlanet(null);
                 } else {
                     if (position > 0) {

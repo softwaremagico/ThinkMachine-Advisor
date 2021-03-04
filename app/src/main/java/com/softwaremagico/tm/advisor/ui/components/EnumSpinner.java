@@ -44,6 +44,7 @@ public class EnumSpinner extends Component {
             tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
         }
         tagText.setTextAppearance(R.style.CharacterInfo);
+        attributes.recycle();
     }
 
     public void setText(String text) {

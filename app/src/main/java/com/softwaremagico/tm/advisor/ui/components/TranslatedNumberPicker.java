@@ -89,7 +89,7 @@ public class TranslatedNumberPicker extends Component {
                     oldValue = selectedValue;
 
                     picker.clearFocus();
-                    picker.setValue(selectedValue);
+                    //picker.setValue(selectedValue);
                 }
             });
         }

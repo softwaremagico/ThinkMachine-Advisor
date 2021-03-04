@@ -12,6 +12,8 @@
 
 package com.softwaremagico.tm.advisor.ui.components;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -46,7 +48,6 @@ public abstract class CharacterCustomFragment extends CustomFragment {
 
         final View space = new View(getContext(), null);
         space.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        //space.setBackgroundColor(Color.parseColor("#ff000000"));
 
         if (linearLayout != null) {
             linearLayout.addView(textView);
@@ -63,4 +64,55 @@ public abstract class CharacterCustomFragment extends CustomFragment {
         space.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         linearLayout.addView(space);
     }
+
+
+    protected interface CharacterValueUpdated {
+        void valueUpdated(String value);
+    }
+
+    protected void updateTranslatedTextField(View root, int resource, CharacterValueUpdated callback) {
+        final TranslatedEditText textField = root.findViewById(resource);
+        textField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                //Nothing
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                //Nothing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                callback.valueUpdated(textField.getText());
+            }
+        });
+    }
+
+    protected void updateTextField(View root, int resource, CharacterValueUpdated callback) {
+        final TextView textField = root.findViewById(resource);
+        textField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                //Nothing
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                //Nothing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                callback.valueUpdated(textField.getText().toString());
+            }
+        });
+    }
+
+
 }

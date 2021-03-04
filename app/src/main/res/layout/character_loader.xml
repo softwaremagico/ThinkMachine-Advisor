@@ -12,14 +12,31 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/LayoutPadding"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.softwaremagico.tm.advisor.ui.load.LoadCharacter">
+
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="0"
+        android:gravity="right"
+        android:paddingTop="5dp">
+
+        <Button
+            android:id="@+id/close_button"
+            style="@style/CloseButton" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/character_recycler_loader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/buttons_layout"
+        android:layout_weight="1"
         android:scrollbars="vertical" />
 
 

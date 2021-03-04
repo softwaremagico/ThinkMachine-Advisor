@@ -40,6 +40,7 @@ import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.benefices.BeneficeDefinition;
 import com.softwaremagico.tm.character.benefices.InvalidBeneficeException;
 import com.softwaremagico.tm.character.blessings.Blessing;
+import com.softwaremagico.tm.character.blessings.BlessingGroup;
 import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
 
 import java.util.ArrayList;
@@ -54,8 +55,8 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
     private TraitsCounter traitsCounter;
     private TraitsExtraCounter extraCounter;
 
-    private IncrementalElementsLayout blessingsLayout;
-    private IncrementalElementsLayout beneficesLayout;
+    private IncrementalElementsLayout<Blessing> blessingsLayout;
+    private IncrementalElementsLayout<AvailableBenefice> beneficesLayout;
 
     private View root;
 
@@ -116,7 +117,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
     }
 
 
-    class BlessingLayout extends IncrementalElementsLayout {
+    class BlessingLayout extends IncrementalElementsLayout<Blessing> {
         private static final int MAX_BENEFICES = 7;
 
         public BlessingLayout(Context context, boolean nullAllowed) {
@@ -138,7 +139,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         }
 
         @Override
-        protected ElementAdapter createElementAdapter() {
+        protected ElementAdapter<Blessing> createElementAdapter() {
             return new ElementAdapter<Blessing>(getActivity(), mViewModel.getAvailableBlessings(), isNullAllowed(), Blessing.class) {
 
                 @Override
@@ -148,12 +149,17 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
                     }
                     return element.getName() + " (" + element.getCost() + ")";
                 }
+
+                @Override
+                public boolean isEnabled(int position) {
+                    return getItem(position).getBlessingGroup() != BlessingGroup.RESTRICTED;
+                }
             };
         }
 
-        private void setBlessings(List<ElementSpinner> spinners) {
+        private void setBlessings(List<ElementSpinner<Blessing>> spinners) {
             final List<Blessing> blessings = new ArrayList<>();
-            for (final ElementSpinner spinner : spinners) {
+            for (final ElementSpinner<Blessing> spinner : spinners) {
                 if (spinner.getSelection() != null) {
                     blessings.add(spinner.getSelection());
                 }
@@ -166,7 +172,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         }
     }
 
-    class BeneficesLayout extends IncrementalElementsLayout {
+    class BeneficesLayout extends IncrementalElementsLayout<AvailableBenefice> {
 
         public BeneficesLayout(Context context, boolean nullAllowed) {
             super(context, nullAllowed);
@@ -187,7 +193,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         }
 
         @Override
-        protected ElementAdapter createElementAdapter() {
+        protected ElementAdapter<AvailableBenefice> createElementAdapter() {
             return new ElementAdapter<AvailableBenefice>(getActivity(), mViewModel.getAvailableBenefices(), isNullAllowed(), AvailableBenefice.class) {
 
                 @Override
@@ -203,9 +209,9 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
             };
         }
 
-        private void setBenefice(List<ElementSpinner> spinners) {
+        private void setBenefice(List<ElementSpinner<AvailableBenefice>> spinners) {
             final List<AvailableBenefice> benefices = new ArrayList<>();
-            for (final ElementSpinner spinner : spinners) {
+            for (final ElementSpinner<AvailableBenefice> spinner : spinners) {
                 if (spinner.getSelection() != null) {
                     benefices.add(spinner.getSelection());
                 }
@@ -223,11 +229,11 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
             Set<BeneficeDefinition> selections = new HashSet<>();
             boolean removed = false;
             while (i < getElementSpinners().size()) {
-                if (((ElementSpinner) getElementSpinners().get(i)).getSelection() != null) {
-                    if (!selections.contains(((AvailableBenefice) ((ElementSpinner) getElementSpinners().get(i)).getSelection()).getBeneficeDefinition())) {
-                        selections.add(((AvailableBenefice) ((ElementSpinner) getElementSpinners().get(i)).getSelection()).getBeneficeDefinition());
+                if ((getElementSpinners().get(i)).getSelection() != null) {
+                    if (!selections.contains(((getElementSpinners().get(i)).getSelection()).getBeneficeDefinition())) {
+                        selections.add(((getElementSpinners().get(i)).getSelection()).getBeneficeDefinition());
                     } else {
-                        removeView((ElementSpinner) getElementSpinners().get(i));
+                        removeView(getElementSpinners().get(i));
                         getElementSpinners().remove(i);
                         removed = true;
                     }

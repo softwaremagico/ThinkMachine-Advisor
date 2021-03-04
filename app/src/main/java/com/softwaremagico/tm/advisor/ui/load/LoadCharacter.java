@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +38,9 @@ public class LoadCharacter extends DialogFragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         final View rootView = inflater.inflate(R.layout.character_loader, container, false);
+
+        Button closeButton = rootView.findViewById(R.id.close_button);
+        closeButton.setOnClickListener(v -> dismiss());
 
         //RECYCLER
         RecyclerView mRecyclerView = rootView.findViewById(R.id.character_recycler_loader);

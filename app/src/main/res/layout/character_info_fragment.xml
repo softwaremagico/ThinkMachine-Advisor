@@ -27,19 +27,50 @@
         android:divider="?android:dividerHorizontal"
         android:orientation="vertical">
 
-        <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
-            android:id="@+id/character_name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            custom:translation="infoName" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
-            android:id="@+id/character_surname"
+            <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
+                android:id="@+id/character_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                custom:translation="infoName" />
+
+            <ImageView
+                android:id="@+id/button_random_name"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_weight="0"
+                android:background="@drawable/ic_dice"
+                android:gravity="bottom" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            custom:translation="infoSurname" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
+                android:id="@+id/character_surname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                custom:translation="infoSurname" />
+
+            <ImageView
+                android:id="@+id/button_random_surname"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_weight="0"
+                android:background="@drawable/ic_dice"
+                android:gravity="bottom" />
+
+        </LinearLayout>
 
         <com.softwaremagico.tm.advisor.ui.components.EnumSpinner
             android:id="@+id/character_gender"

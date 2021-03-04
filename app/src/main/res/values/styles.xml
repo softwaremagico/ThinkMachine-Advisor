@@ -108,4 +108,33 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="CloseButton">
+        <item name="android:text">@string/close</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textColor">@color/colorContrast</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColor">@color/colorContrast</item>
+        <item name="android:editTextColor">@color/colorContrast</item>
+        <item name="android:textColorHint">@color/colorContrast</item>
+        <item name="android:textColorSecondary">@color/colorContrast</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:queryBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="AlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colorContrast</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+
+
 </resources>

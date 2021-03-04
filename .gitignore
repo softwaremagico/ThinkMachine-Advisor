@@ -16,3 +16,5 @@
 *.aab
 /target/
 .idea
+*.orig
+*/mapping.txt
