@@ -220,7 +220,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (mViewModel.getAvailableRaces().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                if (position == 0 || mViewModel.getAvailableRaces().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
                     CharacterManager.setRace(null);
                 } else {
                     if (position > 0) {
@@ -252,7 +252,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         factionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (mViewModel.getAvailableFactions().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                if (position == 0 || mViewModel.getAvailableFactions().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
                     CharacterManager.setFaction(null);
                 } else {
                     if (position > 0) {
@@ -282,7 +282,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (mViewModel.getAvailablePlanets().get(position).getId().equals(Element.DEFAULT_NULL_ID)) {
+                if (position == 0 || mViewModel.getAvailablePlanets().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
                     CharacterManager.setPlanet(null);
                 } else {
                     if (position > 0) {
