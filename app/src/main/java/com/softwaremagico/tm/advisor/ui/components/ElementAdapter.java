@@ -194,7 +194,11 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             //noinspection unchecked
-            elements = (List<T>) results.values;
+            if (results.values != null) {
+                elements = (List<T>) results.values;
+            } else {
+                elements = new ArrayList<>();
+            }
             if (results.count > 0) {
                 notifyDataSetChanged();
             } else {
