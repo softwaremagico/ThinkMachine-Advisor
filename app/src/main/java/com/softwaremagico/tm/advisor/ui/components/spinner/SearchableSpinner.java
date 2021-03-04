@@ -125,10 +125,6 @@ public class SearchableSpinner<E extends Element<E>> extends androidx.appcompat.
         }
     }
 
-    public void setTitle(String strTitle) {
-        searchableListDialog.setTitle(strTitle);
-    }
-
     private Activity scanForActivity(Context cont) {
         if (cont == null)
             return null;

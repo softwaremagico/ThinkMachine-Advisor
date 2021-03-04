@@ -38,10 +38,6 @@ public class SearchableListDialog<E extends Element<E>> extends DialogFragment i
 
     private SearchView searchView;
 
-    private String title;
-
-    private String positiveButtonText;
-
     private DialogInterface.OnClickListener onClickListener;
 
 
@@ -88,14 +84,11 @@ public class SearchableListDialog<E extends Element<E>> extends DialogFragment i
         View rootView = inflater.inflate(R.layout.searchable_list_dialog, null);
         setData(rootView);
 
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme);
         alertDialog.setView(rootView);
 
-        String strPositiveButton = positiveButtonText == null ? "CLOSE" : positiveButtonText;
-        alertDialog.setPositiveButton(strPositiveButton, onClickListener);
-
-        String strTitle = title == null ? "Select Item" : title;
-        alertDialog.setTitle(strTitle);
+        String closeButton = getContext().getString(R.string.close);
+        alertDialog.setPositiveButton(closeButton, onClickListener);
 
         final AlertDialog dialog = alertDialog.create();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
@@ -111,18 +104,8 @@ public class SearchableListDialog<E extends Element<E>> extends DialogFragment i
         outState.putSerializable("item", searchableItem);
         super.onSaveInstanceState(outState);
     }
-    // Change End
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setPositiveButton(String positiveButtonText) {
-        this.positiveButtonText = positiveButtonText;
-    }
-
-    public void setPositiveButton(String positiveButtonText, DialogInterface.OnClickListener onClickListener) {
-        this.positiveButtonText = positiveButtonText;
+    public void setCloseButton(DialogInterface.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
 

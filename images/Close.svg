@@ -20,7 +20,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -40,8 +40,8 @@
      id="namedview6"
      showgrid="false"
      inkscape:zoom="0.18224951"
-     inkscape:cx="335.40789"
-     inkscape:cy="179.78545"
+     inkscape:cx="-956.77665"
+     inkscape:cy="157.83752"
      inkscape:window-x="72"
      inkscape:window-y="1107"
      inkscape:window-maximized="1"
@@ -54,12 +54,12 @@
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none"
-     x="306.89163"
-     y="644.5401"
+     x="250.06564"
+     y="652.35742"
      id="text814"><tspan
        sodipodi:role="line"
        id="tspan812"
-       x="306.89163"
-       y="644.5401"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:601.33300781px;line-height:50px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';fill:#ff0000;fill-opacity:1">X</tspan></text>
+       x="250.06564"
+       y="652.35742"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:601.33300781px;line-height:50px;font-family:'Roman Antique';-inkscape-font-specification:'Roman Antique';fill:#ff0000;fill-opacity:1">X</tspan></text>
 </svg>
