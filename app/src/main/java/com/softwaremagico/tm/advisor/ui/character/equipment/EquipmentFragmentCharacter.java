@@ -214,7 +214,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         }
     }
 
-    abstract class WeaponsLayout extends IncrementalElementsLayout<Weapon> {
+    abstract static class WeaponsLayout extends IncrementalElementsLayout<Weapon> {
 
         public WeaponsLayout(Context context, boolean nullsAllowed) {
             super(context, nullsAllowed);

@@ -108,6 +108,7 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
             if (element != null) {
                 final TextView elementName = listItem.findViewById(R.id.selected_item);
                 elementName.setText(getElementRepresentation(element));
+                setElementColor(elementName, element, position);
             }
         } catch (IndexOutOfBoundsException e) {
             //Filtered elements.

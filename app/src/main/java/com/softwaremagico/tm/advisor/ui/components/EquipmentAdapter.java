@@ -1,7 +1,6 @@
 package com.softwaremagico.tm.advisor.ui.components;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,9 +30,11 @@ public class EquipmentAdapter<T extends Equipment<?>> extends ElementAdapter<T> 
                 elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.unaffordableMoney));
             } else if (CharacterManager.getSelectedCharacter().getMoney() < element.getCost()) {
                 elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.insufficientMoney));
+            } else {
+                elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.colorNormal));
             }
         } else {
-            elementRepresentation.setTextColor(Color.LTGRAY);
+            elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.colorDisabled));
         }
     }
 

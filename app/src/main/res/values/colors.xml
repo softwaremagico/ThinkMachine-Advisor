@@ -19,6 +19,8 @@
     <color name="colorContrast">#FFFFFF</color>
     <color name="colorError">#d5100a</color>
     <color name="colorWarning">#612750</color>
+    <color name="colorNormal">#ff212121</color>
+    <color name="colorDisabled">#ffaaaaaa</color>
 
 
     <color name="colorTextMessageOk">@color/colorContrast</color>
@@ -60,4 +62,5 @@
     <color name="insufficientTechnology">@color/colorError</color>
     <color name="insufficientMoney">@color/colorWarning</color>
     <color name="unaffordableMoney">@color/colorError</color>
+    <color name="correctElement">@color/colorError</color>
 </resources>
