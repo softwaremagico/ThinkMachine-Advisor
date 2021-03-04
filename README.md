@@ -28,6 +28,9 @@ The app is available on Google Play, and this site is only for hosting the sourc
 - 0.4.2 Code minified.
 
 0.5 Random Character generation
+- 0.5.1 Added armors and shields descriptions
+- 0.5.2 Added weapons descriptions
+- 0.5.3 Added item search option for selection. 
 
 
 
