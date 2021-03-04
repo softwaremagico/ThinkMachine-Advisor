@@ -154,12 +154,14 @@ public class SearchableListDialog<E extends Element<E>> extends DialogFragment i
 
     @Override
     public boolean onClose() {
+        ((ArrayAdapter<E>) listViewItems.getAdapter()).getFilter().filter(null);
         return false;
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        ((ArrayAdapter<E>) listViewItems.getAdapter()).getFilter().filter(null);
         dismiss();
     }
 
