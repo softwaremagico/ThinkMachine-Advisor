@@ -66,17 +66,29 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
             addElementSpinner(createElementSpinner());
             return;
         }
-        for(int i=elementSpinners.size()-1; i>=0; i--){
+        boolean previousIsNull = false;
+        for (int i = elementSpinners.size() - 1; i >= 0; i--) {
             //Not the last spinner.
             if (i < elementSpinners.size() - 1) {
                 if (elementSpinners.get(i).getSelection() == null) {
-                    removeView(elementSpinners.get(i));
-                    elementSpinners.remove(i);
+                    if (previousIsNull) {
+                        removeView(elementSpinners.get(i + 1));
+                        elementSpinners.remove(i + 1);
+                    } else {
+                        removeView(elementSpinners.get(i));
+                        elementSpinners.remove(i);
+                    }
+                    previousIsNull = true;
+                } else {
+                    previousIsNull = false;
                 }
             } else {
                 //Last must be an empty one.
                 if (nullAllowed && elementSpinners.get(i).getSelection() != null) {
                     addElementSpinner(createElementSpinner());
+                    previousIsNull = false;
+                } else {
+                    previousIsNull = true;
                 }
             }
         }
