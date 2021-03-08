@@ -29,7 +29,6 @@ import com.softwaremagico.tm.pdf.complete.EmptyPdfBodyException;
 import com.softwaremagico.tm.pdf.small.SmallCharacterSheet;
 
 public class SmallPdfVisualizationFragment extends PdfVisualizationFragment {
-    private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static SmallPdfVisualizationFragment newInstance(int index) {
         final SmallPdfVisualizationFragment fragment = new SmallPdfVisualizationFragment();

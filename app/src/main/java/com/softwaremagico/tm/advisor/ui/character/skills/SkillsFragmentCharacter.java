@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SkillsFragmentCharacter extends CharacterCustomFragment {
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private final Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private SkillsCounter skillsCounter;
     private SkillsExtraCounter extraCounter;

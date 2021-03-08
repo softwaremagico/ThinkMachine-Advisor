@@ -41,7 +41,6 @@ import java.util.Locale;
 import java.util.Map;
 
 public class CharacteristicsFragmentCharacter extends CharacterCustomFragment {
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private final Map<CharacteristicName, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private CharacteristicsCounter characteristicsCounter;
     private CharacteristicsExtraCounter extraCounter;

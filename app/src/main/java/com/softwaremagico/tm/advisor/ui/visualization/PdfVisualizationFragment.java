@@ -36,6 +36,7 @@ import java.io.File;
 import java.util.List;
 
 public abstract class PdfVisualizationFragment extends Fragment {
+    protected static final String ARG_SECTION_NUMBER = "section_number";
     private static final int FILE_IDENTIFICATION = 42;
     private File characterSheetAsPdf;
 

@@ -49,7 +49,6 @@ import java.util.List;
 import java.util.Set;
 
 public class TraitsFragmentCharacter extends CharacterCustomFragment {
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private TraitsViewModel mViewModel;
 
     private TraitsCounter traitsCounter;

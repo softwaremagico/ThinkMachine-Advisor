@@ -57,7 +57,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private CharacterInfoViewModel mViewModel;
     private CharacteristicsCounter characteristicsCounter;
     private SkillsCounter skillsCounter;

@@ -46,7 +46,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EquipmentFragmentCharacter extends CharacterCustomFragment {
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private EquipmentViewModel mViewModel;
     private IncrementalElementsLayout<Weapon> meleeWeaponsLayout;
     private IncrementalElementsLayout<Weapon> rangeWeaponsLayout;
