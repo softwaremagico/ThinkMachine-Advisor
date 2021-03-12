@@ -66,6 +66,7 @@
     <string name="counter_skills">SKILLS</string>
     <string name="counter_traits">TRAITS</string>
     <string name="counter_extra">EXTRA</string>
+    <string name="counter_cybernetics">INCOMPAT.</string>
     <string name="duplicated_element_removed">Duplicated element has been removed.</string>
     <string name="settings_about">About...</string>
     <string name="tab_license">Licenses</string>

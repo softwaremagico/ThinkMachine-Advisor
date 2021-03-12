@@ -30,8 +30,8 @@ import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
-import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;
-import com.softwaremagico.tm.advisor.ui.components.counters.TraitsExtraCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.CyberneticsExtraCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.CyberneticsIncompatibilityCounter;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
@@ -47,8 +47,8 @@ import java.util.stream.Collectors;
 public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
     private CyberneticsViewModel mViewModel;
 
-    private TraitsCounter traitsCounter;
-    private TraitsExtraCounter extraCounter;
+    private CyberneticsIncompatibilityCounter incompatibilityCounter;
+    private CyberneticsExtraCounter extraCounter;
 
     private IncrementalElementsLayout<CyberneticDevice> cyberneticLayout;
 
@@ -68,8 +68,8 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
             List<CyberneticDevice> cyberneticDevices = character.getCybernetics().stream().map(SelectedCyberneticDevice::getCyberneticDevice).collect(Collectors.toList());
             cyberneticLayout.setElements(cyberneticDevices);
         }
-        if (traitsCounter != null) {
-            traitsCounter.setCharacter(character);
+        if (incompatibilityCounter != null) {
+            incompatibilityCounter.setCharacter(character);
         }
         if (extraCounter != null) {
             extraCounter.setCharacter(character);
@@ -91,10 +91,10 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.character_traits_fragment, container, false);
+        root = inflater.inflate(R.layout.character_cybernetics_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(CyberneticsViewModel.class);
 
-        traitsCounter = root.findViewById(R.id.traits_counter);
+        incompatibilityCounter = root.findViewById(R.id.incompatibility_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
 
 //        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
@@ -131,7 +131,7 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
                     if (element.getId().equals(Element.DEFAULT_NULL_ID)) {
                         return "";
                     }
-                    return element.getName() + " (" + element.getIncompatibility() + ")";
+                    return element.getName() + " [" + element.getIncompatibility() + "]" + " (" + element.getPoints() + ")";
                 }
 
                 @Override

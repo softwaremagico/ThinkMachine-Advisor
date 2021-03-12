@@ -39,7 +39,7 @@ import com.softwaremagico.tm.advisor.ui.character.traits.TraitsFragmentCharacter
 public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_character_info, R.string.tab_character_description, R.string.tab_character_characteristics, R.string.tab_character_skills, R.string.tab_character_traits, R.string.tab_character_equipment, R.string.tab_character_cybernetics};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_character_info, R.string.tab_character_description, R.string.tab_character_characteristics, R.string.tab_character_skills, R.string.tab_character_traits, R.string.tab_character_cybernetics, R.string.tab_character_equipment};
     private final Context mContext;
     private final SparseArray<Fragment> fragments = new SparseArray<>();
 
@@ -91,12 +91,13 @@ public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
             return TraitsFragmentCharacter.newInstance(position + 1);
         }
 
+
         if (position == 5) {
-            return EquipmentFragmentCharacter.newInstance(position + 1);
+            return CyberneticsFragmentCharacter.newInstance(position + 1);
         }
 
         if (position == 6) {
-            return CyberneticsFragmentCharacter.newInstance(position + 1);
+            return EquipmentFragmentCharacter.newInstance(position + 1);
         }
 
         return null;

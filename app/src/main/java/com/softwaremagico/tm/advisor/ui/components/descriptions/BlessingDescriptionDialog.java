@@ -14,7 +14,7 @@ public class BlessingDescriptionDialog extends ElementDescriptionDialog<Blessing
     @Override
     protected String getDetails(Blessing blessing) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>").append(getString(R.string.cost)).append("</b> ").append(blessing.getCost()).append(" ");
+        stringBuilder.append("<b>").append(getString(R.string.cost)).append("</b> ").append(blessing.getCost()).append("<br>");
         if (!blessing.getBonifications().isEmpty()) {
             stringBuilder.append("<b>").append(ThinkMachineTranslator.getTranslatedText("traits")).append(":</b> ");
         }
