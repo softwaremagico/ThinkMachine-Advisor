@@ -4,15 +4,14 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
+import com.softwaremagico.tm.character.CharacterModificationHandler;
 import com.softwaremagico.tm.character.CharacterPlayer;
-import com.softwaremagico.tm.character.creation.CostCalculatorModificationHandler;
-import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
+import com.softwaremagico.tm.character.cybernetics.Cybernetics;
 
 public class CyberneticsIncompatibilityCounter extends Counter {
     private int gearColor = R.color.counterCyberneticsIncompatibility;
     private int textColor = R.color.counterCyberneticsIncompatibilityText;
-    private CostCalculatorModificationHandler.ICurrentTraitsPointsUpdatedListener listener;
+    private CharacterModificationHandler.ICyberneticDeviceUpdated listener;
 
     public CyberneticsIncompatibilityCounter(Context context) {
         super(context);
@@ -30,11 +29,10 @@ public class CyberneticsIncompatibilityCounter extends Counter {
 
     @Override
     public void setCharacter(CharacterPlayer character) {
-        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeTraitsPointsUpdatedListeners(listener);
-        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addTraitsPointsUpdatedListeners(value -> {
-            setValue(FreeStyleCharacterCreation.getTraitsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentTraitsPoints(), true);
-        });
-        setValue(FreeStyleCharacterCreation.getTraitsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentTraitsPoints(), false);
+        character.getCharacterModificationHandler().removeCyberneticDeviceUpdatedListener(listener);
+        listener = character.getCharacterModificationHandler().addCyberneticDeviceUpdatedListener((value, removed) ->
+                setValue(Cybernetics.getMaxCyberneticIncompatibility(character) - character.getCyberneticsIncompatibility(), true));
+        setValue(Cybernetics.getMaxCyberneticIncompatibility(character) - character.getCyberneticsIncompatibility(), false);
     }
 
     public int getGearColor() {

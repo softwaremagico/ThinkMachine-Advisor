@@ -41,6 +41,7 @@ import com.softwaremagico.tm.character.cybernetics.RequiredCyberneticDevicesExce
 import com.softwaremagico.tm.character.cybernetics.SelectedCyberneticDevice;
 import com.softwaremagico.tm.character.cybernetics.TooManyCyberneticDevicesException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -145,16 +146,18 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
         }
 
         private void setCyberneticDevice(List<ElementSpinner<CyberneticDevice>> spinners) {
+            final List<CyberneticDevice> cyberneticDevices = new ArrayList<>();
             for (final ElementSpinner<CyberneticDevice> spinner : spinners) {
                 if (spinner.getSelection() != null) {
-                    try {
-                        CharacterManager.getSelectedCharacter().addCybernetics(spinner.getSelection());
-                    } catch (TooManyCyberneticDevicesException e) {
-                        SnackbarGenerator.getErrorMessage(this, R.string.message_too_many_cybernetics).show();
-                    } catch (RequiredCyberneticDevicesException e) {
-                        SnackbarGenerator.getErrorMessage(this, R.string.message_required_cybernetic_missing).show();
-                    }
+                    cyberneticDevices.add(spinner.getSelection());
                 }
+            }
+            try {
+                CharacterManager.getSelectedCharacter().setCybernetics(cyberneticDevices);
+            } catch (TooManyCyberneticDevicesException e) {
+                SnackbarGenerator.getErrorMessage(this, R.string.message_too_many_cybernetics).show();
+            } catch (RequiredCyberneticDevicesException e) {
+                SnackbarGenerator.getErrorMessage(this, R.string.message_required_cybernetic_missing).show();
             }
         }
     }
