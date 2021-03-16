@@ -178,4 +178,6 @@
     <string name="description">Character Description:</string>
     <string name="background">The History:</string>
     <string name="selectFaction">Choose a faction, planet and gender first!</string>
+    <string name="incompatibility">Incompatibility</string>
+    <string name="points">Points</string>
 </resources>
