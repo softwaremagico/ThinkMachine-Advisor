@@ -141,7 +141,7 @@ public class CharacteristicsFragmentCharacter extends CharacterCustomFragment {
         }
 
         //Set listeners to counter
-        characteristicsNumberPicker.addValueChangeListener(newValue -> CharacterManager.getSelectedCharacter().setCharacteristic(characteristicDefinition.getCharacteristicName(), newValue));
+        characteristicsNumberPicker.addValueChangeListener(newValue -> CharacterManager.setCharacteristic(characteristicDefinition.getCharacteristicName(), newValue));
 
     }
 

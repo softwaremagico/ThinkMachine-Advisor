@@ -17,6 +17,7 @@ import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.RandomizeCharacter;
 import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
+import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
@@ -44,6 +45,7 @@ public final class CharacterManager {
     private static final Set<CharacterAgeUpdatedListener> characterAgeUpdatedListener = new HashSet<>();
     private static final Set<CharacterPlanetUpdatedListener> characterPlanetUpdatedListener = new HashSet<>();
     private static final Set<CharacterFactionUpdatedListener> characterFactionUpdatedListener = new HashSet<>();
+    private static final Set<CharacterCharacteristicUpdatedListener> characterCharacteristicUpdatedListener = new HashSet<>();
 
     public interface CharacterSelectedListener {
         void selected(CharacterPlayer characterPlayer);
@@ -67,6 +69,10 @@ public final class CharacterManager {
 
     public interface CharacterFactionUpdatedListener {
         void updated(CharacterPlayer characterPlayer);
+    }
+
+    public interface CharacterCharacteristicUpdatedListener {
+        void updated(CharacterPlayer characterPlayer, CharacteristicName characteristic);
     }
 
     private CharacterManager() {
@@ -109,6 +115,12 @@ public final class CharacterManager {
         }
     }
 
+    public static void launchCharacterCharacteristicsUpdatedListeners(CharacterPlayer characterPlayer, CharacteristicName characteristicName) {
+        for (final CharacterCharacteristicUpdatedListener listener : characterCharacteristicUpdatedListener) {
+            listener.updated(characterPlayer, characteristicName);
+        }
+    }
+
     public static void addSelectedCharacterListener(CharacterSelectedListener listener) {
         characterSelectedListener.add(listener);
     }
@@ -133,6 +145,10 @@ public final class CharacterManager {
         characterFactionUpdatedListener.add(listener);
     }
 
+    public static void addCharacterCharacteristicUpdatedListener(CharacterCharacteristicUpdatedListener listener) {
+        characterCharacteristicUpdatedListener.add(listener);
+    }
+
 
     public synchronized static CharacterPlayer getSelectedCharacter() {
         if (characters.isEmpty()) {
@@ -141,11 +157,16 @@ public final class CharacterManager {
         return selectedCharacter;
     }
 
+    public static void setCharacteristic(CharacteristicName characteristicName, int value) {
+        getSelectedCharacter().setCharacteristic(characteristicName, value);
+        launchCharacterCharacteristicsUpdatedListeners(getSelectedCharacter(), characteristicName);
+    }
+
     public static void setRace(Race race) {
         try {
-            CharacterManager.getSelectedCharacter().setRace(race);
-            launchCharacterRaceUpdatedListeners(CharacterManager.getSelectedCharacter());
-            launchCharacterUpdatedListeners(CharacterManager.getSelectedCharacter());
+            getSelectedCharacter().setRace(race);
+            launchCharacterRaceUpdatedListeners(getSelectedCharacter());
+            launchCharacterUpdatedListeners(getSelectedCharacter());
             if (costCalculator != null) {
                 costCalculator.updateCost();
             }
@@ -155,14 +176,14 @@ public final class CharacterManager {
     }
 
     public static void setPlanet(Planet planet) {
-        CharacterManager.getSelectedCharacter().getInfo().setPlanet(planet);
-        launchCharacterPlanetUpdatedListeners(CharacterManager.getSelectedCharacter());
+        getSelectedCharacter().getInfo().setPlanet(planet);
+        launchCharacterPlanetUpdatedListeners(getSelectedCharacter());
     }
 
     public static void setFaction(Faction faction) {
         try {
-            CharacterManager.getSelectedCharacter().setFaction(faction);
-            launchCharacterFactionUpdatedListeners(CharacterManager.getSelectedCharacter());
+            getSelectedCharacter().setFaction(faction);
+            launchCharacterFactionUpdatedListeners(getSelectedCharacter());
         } catch (InvalidFactionException e) {
             AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
         }

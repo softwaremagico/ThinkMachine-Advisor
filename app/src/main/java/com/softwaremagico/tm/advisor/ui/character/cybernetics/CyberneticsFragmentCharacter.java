@@ -26,16 +26,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
-import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.CyberneticAdapter;
-import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
 import com.softwaremagico.tm.advisor.ui.components.counters.CyberneticsExtraCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.CyberneticsIncompatibilityCounter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.CyberneticAdapter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.cybernetics.CyberneticDevice;
 import com.softwaremagico.tm.character.cybernetics.RequiredCyberneticDevicesException;
 import com.softwaremagico.tm.character.cybernetics.SelectedCyberneticDevice;
@@ -98,10 +99,20 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
         incompatibilityCounter = root.findViewById(R.id.incompatibility_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
 
-//        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
-//        CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
+        CharacterManager.addCharacterCharacteristicUpdatedListener((characterPlayer, characteristic) -> {
+            if (characteristic == CharacteristicName.WILL) {
+                incompatibilityCounter.setCharacter(characterPlayer);
+            }
+        });
 
         return root;
+    }
+
+    private void checkTechLevel(List<ElementSpinner<CyberneticDevice>> spinners) {
+        if (spinners.stream().anyMatch(spinner -> spinner.getSelection() != null && spinner.getSelection().getTechLevel() >
+                CharacterManager.getSelectedCharacter().getCharacteristic(CharacteristicName.TECH).getValue())) {
+            SnackbarGenerator.getWarningMessage(root, R.string.message_invalid_tech_level).show();
+        }
     }
 
 
@@ -117,6 +128,7 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
                         SnackbarGenerator.getInfoMessage(root, R.string.message_duplicated_item_removed).show();
                     }
                     setCyberneticDevice(getElementSpinners());
+                    checkTechLevel(getElementSpinners());
                 }
 
                 @Override

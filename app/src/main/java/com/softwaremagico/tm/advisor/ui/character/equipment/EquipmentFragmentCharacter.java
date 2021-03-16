@@ -38,6 +38,8 @@ import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.characteristics.CharacteristicName;
+import com.softwaremagico.tm.character.equipment.Equipment;
 import com.softwaremagico.tm.character.equipment.armours.Armour;
 import com.softwaremagico.tm.character.equipment.armours.InvalidArmourException;
 import com.softwaremagico.tm.character.equipment.shields.InvalidShieldException;
@@ -130,6 +132,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     setShield(getElementSpinners());
+                    checkTechLevel(getElementSpinners());
                 }
 
                 @Override
@@ -167,6 +170,13 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         }
     }
 
+    private <T extends Equipment<T>> void checkTechLevel(List<ElementSpinner<T>> spinners) {
+        if (spinners.stream().anyMatch(spinner -> spinner.getSelection() != null && spinner.getSelection().getTechLevel() >
+                CharacterManager.getSelectedCharacter().getCharacteristic(CharacteristicName.TECH).getValue())) {
+            SnackbarGenerator.getWarningMessage(root, R.string.message_invalid_tech_level).show();
+        }
+    }
+
 
     class ArmourLayout extends IncrementalElementsLayout<Armour> {
         private static final int MAX_ITEMS = 1;
@@ -178,11 +188,13 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     setArmour(getElementSpinners());
+                    checkTechLevel(getElementSpinners());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
                     setArmour(getElementSpinners());
+                    checkTechLevel(getElementSpinners());
                 }
             });
         }
@@ -227,6 +239,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
                         SnackbarGenerator.getInfoMessage(root, R.string.message_duplicated_item_removed).show();
                     }
                     setWeapons(getElementSpinners());
+                    checkTechLevel(getElementSpinners());
                 }
 
                 @Override
