@@ -33,6 +33,7 @@ import com.softwaremagico.tm.advisor.ui.components.descriptions.MeleeWeaponDescr
 import com.softwaremagico.tm.advisor.ui.components.descriptions.RangeWeaponDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.ShieldDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.spinner.SearchableSpinner;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.blessings.Blessing;

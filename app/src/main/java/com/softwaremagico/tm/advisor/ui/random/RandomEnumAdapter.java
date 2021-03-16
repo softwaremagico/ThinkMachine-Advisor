@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
-import com.softwaremagico.tm.advisor.ui.components.EnumAdapter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.EnumAdapter;
 
 import java.util.List;
 

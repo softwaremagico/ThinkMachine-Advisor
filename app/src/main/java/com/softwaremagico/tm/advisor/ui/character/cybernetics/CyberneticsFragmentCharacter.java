@@ -24,10 +24,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
-import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.CyberneticAdapter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
 import com.softwaremagico.tm.advisor.ui.components.counters.CyberneticsExtraCounter;
@@ -125,24 +125,7 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
 
         @Override
         protected ElementAdapter<CyberneticDevice> createElementAdapter() {
-            return new ElementAdapter<CyberneticDevice>(getActivity(), mViewModel.getAvailableCybernetics(), isNullAllowed(), CyberneticDevice.class) {
-
-                @Override
-                public String getElementRepresentation(CyberneticDevice element) {
-                    if (element.getId().equals(Element.DEFAULT_NULL_ID)) {
-                        return "";
-                    }
-                    return element.getName() + " [" + element.getIncompatibility() + "]" + " (" + element.getPoints() + ")";
-                }
-
-                @Override
-                public boolean isEnabled(int position) {
-                    if (getItem(position).getRequirement() != null) {
-                        return CharacterManager.getSelectedCharacter().hasCyberneticDevice(getItem(position).getRequirement());
-                    }
-                    return true;
-                }
-            };
+            return new CyberneticAdapter(getActivity(), mViewModel.getAvailableCybernetics(), isNullAllowed());
         }
 
         private void setCyberneticDevice(List<ElementSpinner<CyberneticDevice>> spinners) {

@@ -27,11 +27,13 @@ import androidx.lifecycle.ViewModelProvider;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
-import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
-import com.softwaremagico.tm.advisor.ui.components.EquipmentAdapter;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
 import com.softwaremagico.tm.advisor.ui.components.counters.FirebirdsCounter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ArmourAdapter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ShieldAdapter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.WeaponAdapter;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
@@ -139,7 +141,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
         @Override
         protected ElementAdapter<Shield> createElementAdapter() {
-            return new EquipmentAdapter<>(getActivity(), mViewModel.getAvailableShields(), isNullAllowed(), Shield.class);
+            return new ShieldAdapter(getActivity(), mViewModel.getAvailableShields(), isNullAllowed());
         }
 
         private void setShield(List<ElementSpinner<Shield>> spinners) {
@@ -187,7 +189,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
         @Override
         protected ElementAdapter<Armour> createElementAdapter() {
-            return new EquipmentAdapter<>(getActivity(), mViewModel.getAvailableArmours(), isNullAllowed(), Armour.class);
+            return new ArmourAdapter(getActivity(), mViewModel.getAvailableArmours(), isNullAllowed());
         }
 
         private void setArmour(List<ElementSpinner<Armour>> spinners) {
@@ -254,7 +256,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
         @Override
         protected ElementAdapter<Weapon> createElementAdapter() {
-            return new EquipmentAdapter<>(getActivity(), mViewModel.getAvailableMeleeWeapons(), isNullAllowed(), Weapon.class);
+            return new WeaponAdapter(getActivity(), mViewModel.getAvailableMeleeWeapons(), isNullAllowed());
         }
 
         @Override
@@ -270,7 +272,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
         @Override
         protected ElementAdapter<Weapon> createElementAdapter() {
-            return new EquipmentAdapter<>(getActivity(), mViewModel.getAvailableRangedWeapons(), isNullAllowed(), Weapon.class);
+            return new WeaponAdapter(getActivity(), mViewModel.getAvailableRangedWeapons(), isNullAllowed());
         }
 
         @Override

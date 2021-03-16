@@ -27,7 +27,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
-import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
 import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;

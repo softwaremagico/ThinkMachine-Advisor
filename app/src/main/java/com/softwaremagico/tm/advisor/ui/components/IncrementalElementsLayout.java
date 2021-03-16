@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import com.softwaremagico.tm.Element;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
