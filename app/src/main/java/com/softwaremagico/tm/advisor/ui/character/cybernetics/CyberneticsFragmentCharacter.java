@@ -113,11 +113,15 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (removeDuplicates()) {
+                        SnackbarGenerator.getInfoMessage(root, R.string.message_duplicated_item_removed).show();
+                    }
                     setCyberneticDevice(getElementSpinners());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
+                    removeDuplicates();
                     setCyberneticDevice(getElementSpinners());
                 }
             });

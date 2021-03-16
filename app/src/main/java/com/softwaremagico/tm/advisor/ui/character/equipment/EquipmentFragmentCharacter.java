@@ -215,7 +215,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         }
     }
 
-    abstract static class WeaponsLayout extends IncrementalElementsLayout<Weapon> {
+    abstract class WeaponsLayout extends IncrementalElementsLayout<Weapon> {
 
         public WeaponsLayout(Context context, boolean nullsAllowed) {
             super(context, nullsAllowed);
@@ -223,11 +223,15 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (removeDuplicates()) {
+                        SnackbarGenerator.getInfoMessage(root, R.string.message_duplicated_item_removed).show();
+                    }
                     setWeapons(getElementSpinners());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
+                    removeDuplicates();
                     setWeapons(getElementSpinners());
                 }
             });

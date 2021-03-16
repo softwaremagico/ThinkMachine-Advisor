@@ -33,6 +33,7 @@
     <string name="message_required_cybernetic_missing">Required cybernetic device is missing.</string>
     <string name="message_invalid_benefice">Invalid benefice.</string>
     <string name="message_invalid_shield_armour_combination">Invalid combination of armor with energy shield.</string>
+    <string name="message_duplicated_item_removed">Duplicated element removed.</string>
     <string name="settings_load">Load</string>
     <string name="settings_save">Save</string>
     <string name="settings_import">Import</string>

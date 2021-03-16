@@ -95,7 +95,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         }
     }
 
-    protected void removeDuplicates() {
+    protected boolean removeDuplicates() {
         int i = 0;
         Set<T> selections = new HashSet<>();
         boolean removed = false;
@@ -114,6 +114,7 @@ public abstract class IncrementalElementsLayout<T extends Element<?>> extends Li
         if (removed) {
             updateContent();
         }
+        return removed;
     }
 
     private void clear() {

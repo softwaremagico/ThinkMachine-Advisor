@@ -125,7 +125,9 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    removeDuplicates();
+                    if (removeDuplicates()) {
+                        SnackbarGenerator.getInfoMessage(root, R.string.message_duplicated_item_removed).show();
+                    }
                     setBlessings(getElementSpinners());
                 }
 
@@ -179,7 +181,9 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    removeDuplicates();
+                    if (removeDuplicates()) {
+                        SnackbarGenerator.getInfoMessage(root, R.string.message_duplicated_item_removed).show();
+                    }
                     setBenefice(getElementSpinners());
                 }
 
@@ -223,7 +227,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         }
 
         @Override
-        protected void removeDuplicates() {
+        protected boolean removeDuplicates() {
             int i = 0;
             Set<BeneficeDefinition> selections = new HashSet<>();
             boolean removed = false;
@@ -242,6 +246,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
             if (removed) {
                 updateContent();
             }
+            return removed;
         }
     }
 
