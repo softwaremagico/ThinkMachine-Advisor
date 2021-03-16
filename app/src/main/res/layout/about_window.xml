@@ -46,4 +46,16 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <TextView
+        android:id="@+id/app_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="v0.0.0"
+        android:textColor="@color/colorContrast"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="@color/colorPrimary"
+        android:textSize="12sp" />
+
 </RelativeLayout>
