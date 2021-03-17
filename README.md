@@ -32,5 +32,8 @@ The app is available on Google Play, and this site is only for hosting the sourc
 - 0.5.2 Added weapons descriptions
 - 0.5.3 Added item search option for selection. 
 
+0.6 Cybernetics added
+- 0.6.1 Added minor noble houses factions
+
 
 
