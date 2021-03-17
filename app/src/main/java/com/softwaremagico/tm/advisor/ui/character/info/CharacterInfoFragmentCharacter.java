@@ -28,9 +28,9 @@ import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
-import com.softwaremagico.tm.advisor.ui.components.ElementAdapter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
-import com.softwaremagico.tm.advisor.ui.components.EnumAdapter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
 import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter;
@@ -57,7 +57,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private CharacterInfoViewModel mViewModel;
     private CharacteristicsCounter characteristicsCounter;
     private SkillsCounter skillsCounter;

@@ -1,10 +1,12 @@
 package com.softwaremagico.tm.advisor.ui.about;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.viewpager.widget.ViewPager;
@@ -24,6 +26,15 @@ public class AboutWindow extends DialogFragment {
         final TabLayout tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
+        //Set version number at the bottom.
+        TextView versionText = view.findViewById(R.id.app_version);
+        try {
+            String versionName = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0).versionName;
+            versionText.setText(versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            versionText.setText("");
+        }
 
         return view;
     }

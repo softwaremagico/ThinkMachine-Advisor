@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 
 public class EnumSpinner extends Component {

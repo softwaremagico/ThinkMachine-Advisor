@@ -18,6 +18,7 @@
     <string name="tab_character_skills">Skills</string>
     <string name="tab_character_traits">Traits</string>
     <string name="tab_character_equipment">Equipment</string>
+    <string name="tab_character_cybernetics">Cybernetics</string>
     <string name="tab_visualization_txt">Text</string>
     <string name="tab_visualization_pdf">PDF</string>
     <string name="tab_visualization_pdf_small">PDF (Small)</string>
@@ -27,9 +28,13 @@
     <string name="navigation_random">Random</string>
     <string name="share">Share</string>
     <string name="share_body">Character \'${CHARACTER_NAME}\' sheet page.</string>
-    <string name="message_too_many_blessings">Exceding the maximum number of blessings allowed.</string>
+    <string name="message_too_many_blessings">Exceeding the maximum number of blessings allowed.</string>
+    <string name="message_too_many_cybernetics">Exceeding the maximum number of cybernetics allowed.</string>
+    <string name="message_required_cybernetic_missing">Required cybernetic device is missing.</string>
     <string name="message_invalid_benefice">Invalid benefice.</string>
     <string name="message_invalid_shield_armour_combination">Invalid combination of armor with energy shield.</string>
+    <string name="message_invalid_tech_level">Some items has a tech level higher that the character.</string>
+    <string name="message_duplicated_item_removed">Duplicated element removed.</string>
     <string name="settings_load">Load</string>
     <string name="settings_save">Save</string>
     <string name="settings_import">Import</string>
@@ -63,6 +68,7 @@
     <string name="counter_skills">SKILLS</string>
     <string name="counter_traits">TRAITS</string>
     <string name="counter_extra">EXTRA</string>
+    <string name="counter_cybernetics">INCOMPAT.</string>
     <string name="duplicated_element_removed">Duplicated element has been removed.</string>
     <string name="settings_about">About...</string>
     <string name="tab_license">Licenses</string>
@@ -172,4 +178,6 @@
     <string name="description">Character Description:</string>
     <string name="background">The History:</string>
     <string name="selectFaction">Choose a faction, planet and gender first!</string>
+    <string name="incompatibility">Incompatibility</string>
+    <string name="points">Points</string>
 </resources>

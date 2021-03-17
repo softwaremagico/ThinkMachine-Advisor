@@ -44,7 +44,6 @@ import java.util.List;
 import java.util.Set;
 
 public class RandomPreferencesFragment extends CharacterCustomFragment {
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private View root;
     private Set<EnumSpinner> optionsAvailable = new HashSet<>();
 

@@ -17,7 +17,6 @@ import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CustomFragment;
 
 public class PrivacyFragment extends CustomFragment {
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private TextView content;
 
     public static PrivacyFragment newInstance(int index) {

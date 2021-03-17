@@ -28,7 +28,6 @@ import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
 
 public class CharacterDescriptionFragmentCharacter extends CharacterCustomFragment {
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private View root;
 
     public static CharacterDescriptionFragmentCharacter newInstance(int index) {

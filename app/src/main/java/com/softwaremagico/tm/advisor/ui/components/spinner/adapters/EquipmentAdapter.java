@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.components;
+package com.softwaremagico.tm.advisor.ui.components.spinner.adapters;
 
 import android.content.Context;
 import android.widget.TextView;

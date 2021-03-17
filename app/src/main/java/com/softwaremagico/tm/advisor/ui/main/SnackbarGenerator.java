@@ -36,7 +36,7 @@ public final class SnackbarGenerator {
     public static Snackbar getWarningMessage(View view, int messageResource) {
         Snackbar snackbar = Snackbar.make(view, messageResource, Snackbar.LENGTH_SHORT);
         snackbar.setActionTextColor(ContextCompat.getColor(view.getContext(), R.color.colorTextMessageError));
-        snackbar.getView().setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorBackgroundMessageError));
+        snackbar.getView().setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorBackgroundMessageWarning));
         return snackbar;
     }
 

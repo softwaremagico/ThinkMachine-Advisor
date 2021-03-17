@@ -10,13 +10,12 @@ import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.character.creation.CostCalculatorModificationHandler;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 
-public class CharacteristicsExtraCounter extends SegmentCounter {
-    private int gearColor = R.color.counterCharacteristics;
-    private int textColor = R.color.counterCharacteristicsText;
+public class CyberneticsExtraCounter extends SegmentCounter {
+    private int gearColor = R.color.counterCybernetics;
+    private int textColor = R.color.counterTraitsText;
     private CostCalculatorModificationHandler.IExtraPointUpdatedListener listener;
 
-
-    public CharacteristicsExtraCounter(Context context) {
+    public CyberneticsExtraCounter(Context context) {
         super(context);
     }
 
@@ -26,7 +25,7 @@ public class CharacteristicsExtraCounter extends SegmentCounter {
         setTag(R.string.counter_extra);
     }
 
-    public CharacteristicsExtraCounter(Context context, AttributeSet attrs) {
+    public CyberneticsExtraCounter(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -34,10 +33,10 @@ public class CharacteristicsExtraCounter extends SegmentCounter {
     public void setCharacter(CharacterPlayer character) {
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeExtraPointsUpdatedListeners(listener);
         listener = CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addExtraPointsUpdatedListeners(() ->
-                setValue(CharacterManager.getCostCalculator().getCurrentCharacteristicExtraPoints() * CostCalculator.CHARACTERISTIC_EXTRA_POINTS_COST,
+                setValue(CharacterManager.getCostCalculator().getCurrentCyberneticsExtraPoints() * CostCalculator.CYBERNETIC_DEVICE_COST,
                         FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), true)
         );
-        setValue(CharacterManager.getCostCalculator().getCurrentCharacteristicExtraPoints() * CostCalculator.CHARACTERISTIC_EXTRA_POINTS_COST,
+        setValue(CharacterManager.getCostCalculator().getCurrentCyberneticsExtraPoints() * CostCalculator.CYBERNETIC_DEVICE_COST,
                 FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), false);
     }
 

@@ -31,9 +31,8 @@ public class SkillsCounter extends Counter {
     @Override
     public void setCharacter(CharacterPlayer character) {
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeSkillsPointsUpdatedListeners(listener);
-        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addSkillsPointsUpdatedListeners(value -> {
-            setValue(FreeStyleCharacterCreation.getSkillsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentSkillsPoints(), true);
-        });
+        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addSkillsPointsUpdatedListeners(value ->
+                setValue(FreeStyleCharacterCreation.getSkillsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentSkillsPoints(), true));
         setValue(FreeStyleCharacterCreation.getSkillsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentSkillsPoints(), false);
     }
 
