@@ -108,8 +108,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                     final TranslatedEditText nameTextEditor = root.findViewById(R.id.character_name);
                     nameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getNameRepresentation());
                 } catch (InvalidXmlElementException | InvalidRandomElementSelectedException e) {
-                    e.printStackTrace();
-                    SnackbarGenerator.getErrorMessage(root, R.string.selectFaction).show();
+                    SnackbarGenerator.getErrorMessage(root, R.string.selectFactionAndMore).show();
                 }
             });
         }
