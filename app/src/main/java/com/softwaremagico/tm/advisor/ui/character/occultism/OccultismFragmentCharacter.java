@@ -38,10 +38,11 @@ import com.softwaremagico.tm.character.occultism.OccultismTypeFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class OccultismFragmentCharacter extends CharacterCustomFragment {
     private OccultismViewModel mViewModel;
-    private final Map<String, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private final Map<OccultismType, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
 
     private OccultismExtraCounter extraCounter;
 
@@ -99,9 +100,21 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
         return root;
     }
 
+
+    private void updateVisibility() {
+        final OccultismType characterOccultismType = CharacterManager.getSelectedCharacter().getOccultismType();
+        translatedNumberPickers.entrySet().forEach(occultismTypeTranslatedNumberPickerEntry -> {
+            if (characterOccultismType == null || Objects.equals(occultismTypeTranslatedNumberPickerEntry.getKey(), characterOccultismType)) {
+                occultismTypeTranslatedNumberPickerEntry.getValue().setVisibility(View.VISIBLE);
+            } else {
+                occultismTypeTranslatedNumberPickerEntry.getValue().setVisibility(View.GONE);
+            }
+        });
+    }
+
     private void createOccultismSelector(LinearLayout linearLayout, OccultismType occultismType) {
         final TranslatedNumberPicker occultismNumberPicker = new TranslatedNumberPicker(getContext(), null);
-        translatedNumberPickers.put(occultismType.getName(), occultismNumberPicker);
+        translatedNumberPickers.put(occultismType, occultismNumberPicker);
         occultismNumberPicker.setLimits(0, 10);
         occultismNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText(occultismType.getId()));
         occultismNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -129,6 +142,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                     AdvisorLog.errorMessage(this.getClass().getName(), e1);
                 }
             }
+            updateVisibility();
         });
 
     }
