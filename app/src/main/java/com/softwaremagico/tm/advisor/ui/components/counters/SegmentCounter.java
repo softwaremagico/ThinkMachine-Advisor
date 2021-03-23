@@ -63,8 +63,8 @@ public abstract class SegmentCounter extends Counter {
                 rotate(-45f * (float) (value - currentValue), gearImage2);
             }
         }
-        setColor();
         setTotalValue(totalValue);
+        setColor();
     }
 
     protected int getTotalValue() {

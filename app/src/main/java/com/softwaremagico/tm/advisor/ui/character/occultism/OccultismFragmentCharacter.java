@@ -123,6 +123,11 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                     SnackbarGenerator.getErrorMessage(root, R.string.selectFaction).show();
                 }
                 occultismNumberPicker.setValue(0);
+                try {
+                    CharacterManager.getSelectedCharacter().setOccultismLevel(occultismType, 0);
+                } catch (InvalidPsiqueLevelException e1) {
+                    AdvisorLog.errorMessage(this.getClass().getName(), e1);
+                }
             }
         });
 

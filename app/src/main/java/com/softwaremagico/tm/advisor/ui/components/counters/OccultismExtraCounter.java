@@ -34,12 +34,12 @@ public class OccultismExtraCounter extends SegmentCounter {
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeExtraPointsUpdatedListeners(listener);
         listener = CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addExtraPointsUpdatedListeners(() ->
                 setValue(CharacterManager.getCostCalculator().getCurrentOccultismLevelExtraPoints() * CostCalculator.PSIQUE_LEVEL_COST +
-                                CharacterManager.getCostCalculator().getCurrentOccultismPowersExtraPoints() * CostCalculator.PATH_LEVEL_COST +
+                                CharacterManager.getCostCalculator().getCurrentOccultismPowersExtraPoints() * CostCalculator.OCCULTISM_POWER_LEVEL_COST +
                                 CharacterManager.getCostCalculator().getCurrentWyrdExtraPoints() * CostCalculator.EXTRA_WYRD_COST,
                         FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), true)
         );
         setValue(CharacterManager.getCostCalculator().getCurrentOccultismLevelExtraPoints() * CostCalculator.PSIQUE_LEVEL_COST +
-                        CharacterManager.getCostCalculator().getCurrentOccultismPowersExtraPoints() * CostCalculator.PATH_LEVEL_COST +
+                        CharacterManager.getCostCalculator().getCurrentOccultismPowersExtraPoints() * CostCalculator.OCCULTISM_POWER_LEVEL_COST +
                         CharacterManager.getCostCalculator().getCurrentWyrdExtraPoints() * CostCalculator.EXTRA_WYRD_COST,
                 FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), false);
     }

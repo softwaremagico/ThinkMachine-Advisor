@@ -180,6 +180,7 @@
     <string name="background">The History:</string>
     <string name="selectFaction">Choose a faction first!</string>
     <string name="selectFactionAndMore">Choose a faction, planet and gender first!</string>
+    <string name="invalidFactionAndRace">Invalid combination between race and faction.</string>
     <string name="incompatibility">Incompatibility</string>
     <string name="points">Points</string>
 </resources>

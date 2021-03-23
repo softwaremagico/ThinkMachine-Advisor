@@ -162,7 +162,7 @@ public final class CharacterManager {
         launchCharacterCharacteristicsUpdatedListeners(getSelectedCharacter(), characteristicName);
     }
 
-    public static void setRace(Race race) {
+    public static void setRace(Race race) throws InvalidRaceException {
         try {
             getSelectedCharacter().setRace(race);
             launchCharacterRaceUpdatedListeners(getSelectedCharacter());
@@ -171,7 +171,11 @@ public final class CharacterManager {
                 costCalculator.updateCost();
             }
         } catch (InvalidRaceException e) {
-            AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
+            if (race == null) {
+                AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
+            } else {
+                throw e;
+            }
         }
     }
 
@@ -180,12 +184,16 @@ public final class CharacterManager {
         launchCharacterPlanetUpdatedListeners(getSelectedCharacter());
     }
 
-    public static void setFaction(Faction faction) {
+    public static void setFaction(Faction faction) throws InvalidFactionException {
         try {
             getSelectedCharacter().setFaction(faction);
             launchCharacterFactionUpdatedListeners(getSelectedCharacter());
         } catch (InvalidFactionException e) {
-            AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
+            if (faction == null) {
+                AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
+            } else {
+                throw e;
+            }
         }
     }
 
