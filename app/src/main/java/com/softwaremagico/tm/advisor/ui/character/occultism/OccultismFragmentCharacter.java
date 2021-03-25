@@ -26,6 +26,7 @@ import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
+import com.softwaremagico.tm.advisor.ui.components.ElementSelector;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
 import com.softwaremagico.tm.advisor.ui.components.counters.OccultismExtraCounter;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
@@ -35,6 +36,7 @@ import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.occultism.InvalidPsiqueLevelException;
 import com.softwaremagico.tm.character.occultism.OccultismPath;
 import com.softwaremagico.tm.character.occultism.OccultismPathFactory;
+import com.softwaremagico.tm.character.occultism.OccultismPower;
 import com.softwaremagico.tm.character.occultism.OccultismType;
 import com.softwaremagico.tm.character.occultism.OccultismTypeFactory;
 
@@ -108,7 +110,14 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
     private void setOccultismPathLayout(OccultismPath occultismPath, LinearLayout rootLayout) {
         LinearLayout occultismLayout = new LinearLayout(getContext());
         occultismLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        occultismLayout.setOrientation(LinearLayout.VERTICAL);
         addSection(occultismPath.getName(), occultismLayout);
+        occultismPath.getOccultismPowers().values().stream().sorted(
+                Comparator.comparing(OccultismPower::getLevel).thenComparing(OccultismPower::getName)).forEach(occultismPower -> {
+            ElementSelector<OccultismPower> occultismPowerSelector = new ElementSelector<>(getContext(), occultismPower);
+            occultismLayout.addView(occultismPowerSelector);
+        });
+        addSpace(rootLayout);
         rootLayout.addView(occultismLayout);
         occultismPathLayout.put(occultismPath, occultismLayout);
     }

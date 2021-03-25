@@ -40,18 +40,14 @@ public abstract class CharacterCustomFragment extends CustomFragment {
     protected abstract void setCharacter(View root, CharacterPlayer character);
 
     protected void addSection(String title, LinearLayout linearLayout) {
-        final TextView textView = new TextView(getContext(), null);
-        textView.setText(title);
-        textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        textView.setTextAppearance(R.style.TextSubtitle);
-
-
-        final View space = new View(getContext(), null);
-        space.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-
         if (linearLayout != null) {
+            final TextView textView = new TextView(getContext(), null);
+            textView.setText(title);
+            textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            textView.setTextAppearance(R.style.TextSubtitle);
+
             linearLayout.addView(textView);
-            linearLayout.addView(space);
+            addSpace(linearLayout, 5);
         }
     }
 
