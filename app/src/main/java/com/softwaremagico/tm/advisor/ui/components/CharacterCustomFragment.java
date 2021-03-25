@@ -61,6 +61,16 @@ public abstract class CharacterCustomFragment extends CustomFragment {
         linearLayout.addView(space);
     }
 
+    protected void setEnabled(boolean enable, ViewGroup vg) {
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            View child = vg.getChildAt(i);
+            child.setEnabled(enable);
+            if (child instanceof ViewGroup) {
+                setEnabled(enable, (ViewGroup) child);
+            }
+        }
+    }
+
 
     protected interface CharacterValueUpdated {
         void valueUpdated(String value);

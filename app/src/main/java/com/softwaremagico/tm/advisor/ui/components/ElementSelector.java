@@ -3,6 +3,7 @@ package com.softwaremagico.tm.advisor.ui.components;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.softwaremagico.tm.Element;
@@ -40,9 +41,22 @@ public class ElementSelector<T extends Element<T>> extends HelpElement<T> {
         tagText.setText(element.getName());
     }
 
+    public void setChecked(boolean checked) {
+        checkBox.setChecked(checked);
+    }
+
     @Override
     public T getSelection() {
         return element;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        checkBox.setEnabled(enabled);
+    }
+
+    public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener) {
+        checkBox.setOnCheckedChangeListener(listener);
     }
 
 }

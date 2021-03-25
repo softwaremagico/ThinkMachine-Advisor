@@ -33,6 +33,7 @@ import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.occultism.InvalidOccultismPowerException;
 import com.softwaremagico.tm.character.occultism.InvalidPsiqueLevelException;
 import com.softwaremagico.tm.character.occultism.OccultismPath;
 import com.softwaremagico.tm.character.occultism.OccultismPathFactory;
@@ -42,13 +43,17 @@ import com.softwaremagico.tm.character.occultism.OccultismTypeFactory;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class OccultismFragmentCharacter extends CharacterCustomFragment {
     private OccultismViewModel mViewModel;
+    private boolean enabled = true;
     private final Map<OccultismType, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private final Map<OccultismPath, LinearLayout> occultismPathLayout = new HashMap<>();
+    private final Map<OccultismPath, Set<ElementSelector<OccultismPower>>> selectors = new HashMap<>();
 
     private OccultismExtraCounter extraCounter;
 
@@ -68,15 +73,22 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
             extraCounter.setCharacter(character);
         }
         try {
-            for (OccultismType occultismType : OccultismTypeFactory.getInstance().getElements(CharacterManager.getSelectedCharacter().getLanguage(),
-                    CharacterManager.getSelectedCharacter().getModuleName())) {
-                if (translatedNumberPickers.get(occultismType.getName()) != null) {
-                    translatedNumberPickers.get(occultismType.getName()).setValue(CharacterManager.getSelectedCharacter().getOccultismLevel(occultismType));
+            for (OccultismType occultismType : OccultismTypeFactory.getInstance().getElements(character.getLanguage(),
+                    character.getModuleName())) {
+                if (translatedNumberPickers.get(occultismType) != null) {
+                    translatedNumberPickers.get(occultismType).setValue(character.getOccultismLevel(occultismType));
                 }
             }
         } catch (InvalidXmlElementException e) {
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }
+        enabled = false;
+        selectors.values().forEach(elementSelectors -> elementSelectors.forEach(occultismPowerElementSelector ->
+                occultismPowerElementSelector.setChecked(character.canAddOccultismPower(occultismPowerElementSelector.getSelection()))));
+        enabled = true;
+
+        enableOccultismPowers();
+        updateVisibility();
     }
 
     @Override
@@ -90,6 +102,8 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                 CharacterManager.getSelectedCharacter().getModuleName()));
 
         setOccultismPaths(rootLayout);
+        enableOccultismPowers();
+        updateVisibility();
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
     }
@@ -112,14 +126,40 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
         occultismLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         occultismLayout.setOrientation(LinearLayout.VERTICAL);
         addSection(occultismPath.getName(), occultismLayout);
+        selectors.put(occultismPath, new HashSet<>());
         occultismPath.getOccultismPowers().values().stream().sorted(
                 Comparator.comparing(OccultismPower::getLevel).thenComparing(OccultismPower::getName)).forEach(occultismPower -> {
             ElementSelector<OccultismPower> occultismPowerSelector = new ElementSelector<>(getContext(), occultismPower);
             occultismLayout.addView(occultismPowerSelector);
+            occultismPowerSelector.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (enabled) {
+                    if (isChecked) {
+                        try {
+                            CharacterManager.getSelectedCharacter().addOccultismPower(occultismPowerSelector.getSelection());
+                        } catch (InvalidOccultismPowerException e) {
+                            occultismPowerSelector.setChecked(false);
+                        }
+                    } else {
+
+                    }
+                    enableOccultismPowers(occultismPath);
+                }
+            });
+            selectors.get(occultismPath).add(occultismPowerSelector);
         });
         addSpace(rootLayout);
         rootLayout.addView(occultismLayout);
         occultismPathLayout.put(occultismPath, occultismLayout);
+    }
+
+    private void enableOccultismPowers() {
+        selectors.keySet().stream().forEach(occultismPath -> enableOccultismPowers(occultismPath));
+    }
+
+    private void enableOccultismPowers(OccultismPath occultismPath) {
+        selectors.get(occultismPath).forEach(occultismPowerElementSelector -> {
+            occultismPowerElementSelector.setEnabled(CharacterManager.getSelectedCharacter().canAddOccultismPower(occultismPowerElementSelector.getSelection()));
+        });
     }
 
 
@@ -184,6 +224,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                 }
             }
             updateVisibility();
+            enableOccultismPowers();
         });
 
     }
