@@ -33,9 +33,12 @@ import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.occultism.InvalidPsiqueLevelException;
+import com.softwaremagico.tm.character.occultism.OccultismPath;
+import com.softwaremagico.tm.character.occultism.OccultismPathFactory;
 import com.softwaremagico.tm.character.occultism.OccultismType;
 import com.softwaremagico.tm.character.occultism.OccultismTypeFactory;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -43,6 +46,7 @@ import java.util.Objects;
 public class OccultismFragmentCharacter extends CharacterCustomFragment {
     private OccultismViewModel mViewModel;
     private final Map<OccultismType, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private final Map<OccultismPath, LinearLayout> occultismPathLayout = new HashMap<>();
 
     private OccultismExtraCounter extraCounter;
 
@@ -82,10 +86,31 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                 CharacterManager.getSelectedCharacter().getModuleName()));
         createOccultismSelector(rootLayout, OccultismTypeFactory.getTheurgy(CharacterManager.getSelectedCharacter().getLanguage(),
                 CharacterManager.getSelectedCharacter().getModuleName()));
-        addSection(ThinkMachineTranslator.getTranslatedText("psi"), rootLayout);
-        addSection(ThinkMachineTranslator.getTranslatedText("theurgy"), rootLayout);
+
+        setOccultismPaths(rootLayout);
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
+
+    private void setOccultismPaths(LinearLayout rootLayout) {
+        try {
+            OccultismPathFactory.getInstance().getElements(CharacterManager.getSelectedCharacter().getLanguage(),
+                    CharacterManager.getSelectedCharacter().getModuleName()).stream().sorted(
+                    Comparator.comparing(OccultismPath::getOccultismType).thenComparing(OccultismPath::getName))
+                    .forEach(
+                            occultismPath -> setOccultismPathLayout(occultismPath, rootLayout)
+                    );
+        } catch (InvalidXmlElementException e) {
+            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        }
+    }
+
+    private void setOccultismPathLayout(OccultismPath occultismPath, LinearLayout rootLayout) {
+        LinearLayout occultismLayout = new LinearLayout(getContext());
+        occultismLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        addSection(occultismPath.getName(), occultismLayout);
+        rootLayout.addView(occultismLayout);
+        occultismPathLayout.put(occultismPath, occultismLayout);
     }
 
 
@@ -108,6 +133,13 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                 occultismTypeTranslatedNumberPickerEntry.getValue().setVisibility(View.VISIBLE);
             } else {
                 occultismTypeTranslatedNumberPickerEntry.getValue().setVisibility(View.GONE);
+            }
+        });
+        occultismPathLayout.entrySet().forEach(occultismPathLinearLayoutEntry -> {
+            if (characterOccultismType == null || Objects.equals(occultismPathLinearLayoutEntry.getKey().getOccultismType(), characterOccultismType)) {
+                occultismPathLinearLayoutEntry.getValue().setVisibility(View.VISIBLE);
+            } else {
+                occultismPathLinearLayoutEntry.getValue().setVisibility(View.GONE);
             }
         });
     }
