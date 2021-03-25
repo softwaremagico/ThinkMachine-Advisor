@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
@@ -35,6 +34,7 @@ import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.occultism.InvalidOccultismPowerException;
 import com.softwaremagico.tm.character.occultism.InvalidPsiqueLevelException;
+import com.softwaremagico.tm.character.occultism.Occultism;
 import com.softwaremagico.tm.character.occultism.OccultismPath;
 import com.softwaremagico.tm.character.occultism.OccultismPathFactory;
 import com.softwaremagico.tm.character.occultism.OccultismPower;
@@ -49,11 +49,11 @@ import java.util.Objects;
 import java.util.Set;
 
 public class OccultismFragmentCharacter extends CharacterCustomFragment {
-    private OccultismViewModel mViewModel;
-    private boolean enabled = true;
     private final Map<OccultismType, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
     private final Map<OccultismPath, LinearLayout> occultismPathLayout = new HashMap<>();
     private final Map<OccultismPath, Set<ElementSelector<OccultismPower>>> selectors = new HashMap<>();
+    private boolean enabled = true;
+    private TranslatedNumberPicker wyrdNumberPicker;
 
     private OccultismExtraCounter extraCounter;
 
@@ -85,10 +85,18 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
         enabled = false;
         selectors.values().forEach(elementSelectors -> elementSelectors.forEach(occultismPowerElementSelector ->
                 occultismPowerElementSelector.setChecked(character.canAddOccultismPower(occultismPowerElementSelector.getSelection()))));
+        if (wyrdNumberPicker != null) {
+            wyrdNumberPicker.setValue(character.getWyrdValue());
+        }
         enabled = true;
 
+        updateContent();
+    }
+
+    private void updateContent() {
         enableOccultismPowers();
         updateVisibility();
+        updateWyrdLimits();
     }
 
     @Override
@@ -100,10 +108,10 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                 CharacterManager.getSelectedCharacter().getModuleName()));
         createOccultismSelector(rootLayout, OccultismTypeFactory.getTheurgy(CharacterManager.getSelectedCharacter().getLanguage(),
                 CharacterManager.getSelectedCharacter().getModuleName()));
+        createWyrdSelector(rootLayout);
 
         setOccultismPaths(rootLayout);
-        enableOccultismPowers();
-        updateVisibility();
+        updateContent();
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
     }
@@ -140,7 +148,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                             occultismPowerSelector.setChecked(false);
                         }
                     } else {
-
+                        CharacterManager.getSelectedCharacter().removeOccultismPower(occultismPowerSelector.getSelection());
                     }
                     enableOccultismPowers(occultismPath);
                 }
@@ -153,13 +161,12 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void enableOccultismPowers() {
-        selectors.keySet().stream().forEach(occultismPath -> enableOccultismPowers(occultismPath));
+        selectors.keySet().forEach(this::enableOccultismPowers);
     }
 
     private void enableOccultismPowers(OccultismPath occultismPath) {
-        selectors.get(occultismPath).forEach(occultismPowerElementSelector -> {
-            occultismPowerElementSelector.setEnabled(CharacterManager.getSelectedCharacter().canAddOccultismPower(occultismPowerElementSelector.getSelection()));
-        });
+        selectors.get(occultismPath).forEach(occultismPowerElementSelector ->
+                occultismPowerElementSelector.setEnabled(CharacterManager.getSelectedCharacter().canAddOccultismPower(occultismPowerElementSelector.getSelection())));
     }
 
 
@@ -167,7 +174,6 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.character_occultism_fragment, container, false);
-        mViewModel = new ViewModelProvider(this).get(OccultismViewModel.class);
 
         extraCounter = root.findViewById(R.id.extra_counter);
 
@@ -223,10 +229,34 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                     AdvisorLog.errorMessage(this.getClass().getName(), e1);
                 }
             }
-            updateVisibility();
-            enableOccultismPowers();
+            updateContent();
         });
+    }
 
+    private void updateWyrdLimits() {
+        if (wyrdNumberPicker != null) {
+            wyrdNumberPicker.setLimits(CharacterManager.getSelectedCharacter().getBasicWyrdValue(), Occultism.MAX_WYRD);
+        }
+    }
+
+    private void createWyrdSelector(LinearLayout linearLayout) {
+        wyrdNumberPicker = new TranslatedNumberPicker(getContext(), null);
+        updateWyrdLimits();
+        wyrdNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText("wyrd"));
+        wyrdNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        wyrdNumberPicker.setPadding(50, 20, 20, 20);
+
+        // Add EditText to LinearLayout
+        if (linearLayout != null) {
+            linearLayout.addView(wyrdNumberPicker);
+        }
+
+        wyrdNumberPicker.setValue(CharacterManager.getSelectedCharacter().getWyrdValue());
+
+        //Set listeners to counter
+        wyrdNumberPicker.addValueChangeListener(newValue ->
+                CharacterManager.getSelectedCharacter().setWyrd(newValue)
+        );
     }
 
 }

@@ -35,5 +35,7 @@ The app is available on Google Play, and this site is only for hosting the sourc
 0.6 Cybernetics added
 - 0.6.1 Added minor noble houses factions
 
+0.7 Occultism
+
 
 
