@@ -67,4 +67,5 @@
     <color name="insufficientMoney">@color/colorWarning</color>
     <color name="unaffordableMoney">@color/colorError</color>
     <color name="correctElement">@color/colorError</color>
+    <color name="insufficientOccultimsLevel">@color/colorError</color>
 </resources>

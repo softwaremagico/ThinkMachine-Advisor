@@ -34,7 +34,6 @@ import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.occultism.InvalidOccultismPowerException;
 import com.softwaremagico.tm.character.occultism.InvalidPsiqueLevelException;
-import com.softwaremagico.tm.character.occultism.Occultism;
 import com.softwaremagico.tm.character.occultism.OccultismPath;
 import com.softwaremagico.tm.character.occultism.OccultismPathFactory;
 import com.softwaremagico.tm.character.occultism.OccultismPower;
@@ -235,7 +234,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
 
     private void updateWyrdLimits() {
         if (wyrdNumberPicker != null) {
-            wyrdNumberPicker.setLimits(CharacterManager.getSelectedCharacter().getBasicWyrdValue(), Occultism.MAX_WYRD);
+            wyrdNumberPicker.setLimits(CharacterManager.getSelectedCharacter().getBasicWyrdValue(), CharacterManager.getSelectedCharacter().getMaxWyrdValue());
         }
     }
 

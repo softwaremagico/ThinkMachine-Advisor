@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.softwaremagico.tm.Element;
@@ -39,6 +40,11 @@ public class ElementSelector<T extends Element<T>> extends HelpElement<T> {
         this.element = element;
         final TextView tagText = findViewById(R.id.translated_tag);
         tagText.setText(element.getName());
+        if (element.getDescription() == null || element.getDescription().isEmpty()) {
+            getHelpButton().setVisibility(ImageView.INVISIBLE);
+        } else {
+            getHelpButton().setVisibility(ImageView.VISIBLE);
+        }
     }
 
     public void setChecked(boolean checked) {
