@@ -201,7 +201,12 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
     private void createOccultismSelector(LinearLayout linearLayout, OccultismType occultismType) {
         final TranslatedNumberPicker occultismNumberPicker = new TranslatedNumberPicker(getContext(), null);
         translatedNumberPickers.put(occultismType, occultismNumberPicker);
-        occultismNumberPicker.setLimits(0, 10);
+        if (occultismType.getId().equals(OccultismTypeFactory.PSI_TAG)) {
+            occultismNumberPicker.setLimits(CharacterManager.getSelectedCharacter().getRace().getPsi(), 10);
+        } else if (occultismType.getId().equals(OccultismTypeFactory.THEURGY_TAG)) {
+            occultismNumberPicker.setLimits(CharacterManager.getSelectedCharacter().getRace().getTheurgy(), 10);
+        }
+
         occultismNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText(occultismType.getId()));
         occultismNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         occultismNumberPicker.setPadding(50, 20, 20, 20);
