@@ -14,11 +14,14 @@ package com.softwaremagico.tm.advisor.persistence;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {CharacterEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {CharacterEntity.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "ThinkMachine Database";
 
@@ -31,11 +34,20 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context,
-                            AppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
+                            AppDatabase.class, DATABASE_NAME).allowMainThreadQueries()
+                            .addMigrations(MIGRATION_1_2).build();
                 }
             }
         }
         return instance;
     }
+
+    private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE " + CharacterEntity.CHARACTER_PLAYER_TABLE + " "
+                    + "ADD COLUMN player TEXT");
+        }
+    };
 }
 

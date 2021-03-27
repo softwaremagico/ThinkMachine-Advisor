@@ -99,6 +99,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         private CharacterEntity characterEntity;
         private final View cardView;
         private final Toolbar characterTitle;
+        private TextView characterPlayer;
         private TextView completeDescription;
         private final TextView sortDescription;
         private final RecyclerView.Adapter adapter;
@@ -111,6 +112,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             completeDescription = cardView.findViewById(R.id.character_description_skills);
             sortDescription = cardView.findViewById(R.id.short_description);
             characterTitle = cardView.findViewById(R.id.character_title);
+            characterPlayer = cardView.findViewById(R.id.character_player);
             detailLayout = cardView.findViewById(R.id.details_layout);
             imageViewExpand = cardView.findViewById(R.id.image_view_expand);
             imageViewExpand.setImageResource(R.drawable.ic_more);
@@ -181,6 +183,12 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                 factionImageView.setMaxWidth(175);
                 factionImageView.setMaxHeight(175);
                 factionImageView.setImageResource(FactionLogoSelection.getLogo(cardView.getContext(), characterEntity.getCharacterPlayer().getFaction()));
+            }
+            if (characterEntity.getPlayer() == null || characterEntity.getPlayer().isEmpty()) {
+                characterPlayer.setVisibility(View.GONE);
+            } else {
+                characterPlayer.setText(characterEntity.getPlayer());
+                characterPlayer.setVisibility(View.VISIBLE);
             }
         }
 

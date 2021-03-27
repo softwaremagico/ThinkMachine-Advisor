@@ -33,12 +33,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:subtitle="Faction"
-            android:title="Character"
             android:titleTextColor="@color/colorPrimaryDark"
             app:popupTheme="@style/Theme.AppCompat.Light"
             app:subtitleTextAppearance="@style/Card.Subtitle"
             app:theme="@style/SmallToolbarCard"
             app:titleTextAppearance="@style/Card.Title" />
+
+        <TextView
+            android:id="@+id/character_player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:textSize="12dp"
+            android:textColor="@color/colorSecondary" />
 
         <LinearLayout
             android:id="@+id/brief_layout"
@@ -53,7 +60,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:adjustViewBounds="true"
-                android:contentDescription="Image.."
                 android:src="@drawable/ic_launcher" />
 
             <TextView
@@ -98,7 +104,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:visibility="gone">
 
             <TextView

@@ -13,6 +13,7 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorSecondary">#554b6b</color>
     <color name="colorSelected">#EDDFFF</color>
     <color name="colorUnselected">#000000</color>
     <color name="colorAccent">#03DAC5</color>
