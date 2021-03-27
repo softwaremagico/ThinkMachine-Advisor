@@ -83,7 +83,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
         }
         enabled = false;
         selectors.values().forEach(elementSelectors -> elementSelectors.forEach(occultismPowerElementSelector ->
-                occultismPowerElementSelector.setChecked(character.canAddOccultismPower(occultismPowerElementSelector.getSelection()))));
+                occultismPowerElementSelector.setChecked(character.hasOccultismPower(occultismPowerElementSelector.getSelection()))));
         if (wyrdNumberPicker != null) {
             wyrdNumberPicker.setValue(character.getWyrdValue());
         }
@@ -93,6 +93,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void updateContent() {
+        updateOccultismLevelRanges();
         enableOccultismPowers();
         updateVisibility();
         updateWyrdLimits();
@@ -151,6 +152,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                     }
                     enableOccultismPowers(occultismPath);
                 }
+                updateVisibility();
             });
             selectors.get(occultismPath).add(occultismPowerSelector);
         });
@@ -173,8 +175,10 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.character_occultism_fragment, container, false);
-
         extraCounter = root.findViewById(R.id.extra_counter);
+
+        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
+        CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
 
         return root;
     }
@@ -198,14 +202,30 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
         });
     }
 
+    private void updateOccultismLevelRanges() {
+        if (CharacterManager.getSelectedCharacter() != null) {
+            updateOccultismLevelRanges(OccultismTypeFactory.getPsi(CharacterManager.getSelectedCharacter().getLanguage(),
+                    CharacterManager.getSelectedCharacter().getModuleName()));
+            updateOccultismLevelRanges(OccultismTypeFactory.getTheurgy(CharacterManager.getSelectedCharacter().getLanguage(),
+                    CharacterManager.getSelectedCharacter().getModuleName()));
+        }
+    }
+
+    private void updateOccultismLevelRanges(OccultismType occultismType) {
+        if (CharacterManager.getSelectedCharacter().getRace() != null) {
+            if (occultismType.getId().equals(OccultismTypeFactory.PSI_TAG) && translatedNumberPickers.get(occultismType) != null) {
+                translatedNumberPickers.get(occultismType).setLimits(CharacterManager.getSelectedCharacter().getRace().getPsi(), 10);
+            } else if (occultismType.getId().equals(OccultismTypeFactory.THEURGY_TAG) && translatedNumberPickers.get(occultismType) != null) {
+                translatedNumberPickers.get(occultismType).setLimits(CharacterManager.getSelectedCharacter().getRace().getTheurgy(), 10);
+            }
+        } else if (translatedNumberPickers.get(occultismType) != null) {
+            translatedNumberPickers.get(occultismType).setLimits(0, 10);
+        }
+    }
+
     private void createOccultismSelector(LinearLayout linearLayout, OccultismType occultismType) {
         final TranslatedNumberPicker occultismNumberPicker = new TranslatedNumberPicker(getContext(), null);
         translatedNumberPickers.put(occultismType, occultismNumberPicker);
-        if (occultismType.getId().equals(OccultismTypeFactory.PSI_TAG)) {
-            occultismNumberPicker.setLimits(CharacterManager.getSelectedCharacter().getRace().getPsi(), 10);
-        } else if (occultismType.getId().equals(OccultismTypeFactory.THEURGY_TAG)) {
-            occultismNumberPicker.setLimits(CharacterManager.getSelectedCharacter().getRace().getTheurgy(), 10);
-        }
 
         occultismNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText(occultismType.getId()));
         occultismNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
