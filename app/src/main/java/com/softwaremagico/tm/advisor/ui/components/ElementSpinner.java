@@ -13,40 +13,21 @@
 package com.softwaremagico.tm.advisor.ui.components;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import androidx.fragment.app.FragmentActivity;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.ui.components.descriptions.ArmourDescriptionDialog;
-import com.softwaremagico.tm.advisor.ui.components.descriptions.BeneficeDescriptionDialog;
-import com.softwaremagico.tm.advisor.ui.components.descriptions.BlessingDescriptionDialog;
-import com.softwaremagico.tm.advisor.ui.components.descriptions.CyberneticDeviceDescriptionDialog;
-import com.softwaremagico.tm.advisor.ui.components.descriptions.ElementDescriptionDialog;
-import com.softwaremagico.tm.advisor.ui.components.descriptions.MeleeWeaponDescriptionDialog;
-import com.softwaremagico.tm.advisor.ui.components.descriptions.RangeWeaponDescriptionDialog;
-import com.softwaremagico.tm.advisor.ui.components.descriptions.ShieldDescriptionDialog;
+import com.softwaremagico.tm.advisor.ui.components.spinner.HelpElement;
 import com.softwaremagico.tm.advisor.ui.components.spinner.SearchableSpinner;
 import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
-import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
-import com.softwaremagico.tm.character.benefices.AvailableBenefice;
-import com.softwaremagico.tm.character.blessings.Blessing;
-import com.softwaremagico.tm.character.cybernetics.CyberneticDevice;
-import com.softwaremagico.tm.character.equipment.armours.Armour;
-import com.softwaremagico.tm.character.equipment.shields.Shield;
-import com.softwaremagico.tm.character.equipment.weapons.Weapon;
 
-public class ElementSpinner<T extends Element<?>> extends Component {
+public class ElementSpinner<T extends Element<T>> extends HelpElement<T> {
 
-    private ImageView helpButton;
-    private SearchableSpinner selector;
+    private SearchableSpinner<T> selector;
 
     public ElementSpinner(Context context) {
         this(context, null);
@@ -62,41 +43,27 @@ public class ElementSpinner<T extends Element<?>> extends Component {
         initComponents(attrs);
     }
 
-    private void initComponents(AttributeSet attrs) {
-        final TextView tagText = findViewById(R.id.translated_tag);
-        final TypedArray attributes = getContext().obtainStyledAttributes(attrs,
-                R.styleable.translated_text, 0, 0);
-        final String tag = attributes.getString(R.styleable.translated_text_translation);
-        if (tag != null) {
-            tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
-        }
-        tagText.setTextAppearance(R.style.CharacterInfo);
-        attributes.recycle();
-
-        helpButton = findViewById(R.id.button_help);
-        if (helpButton != null) {
-            helpButton.setOnClickListener(v -> openDescriptionWindow(getSelection()));
-        }
-
+    @Override
+    protected void initComponents(AttributeSet attrs) {
+        super.initComponents(attrs);
         selector = findViewById(R.id.spinner);
         selector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (selector.getItemAtPosition(0) == null ||
-                        ((Element) selector.getItemAtPosition(0)).getDescription() == null ||
-                        ((Element) selector.getItemAtPosition(0)).getDescription().isEmpty()) {
-                    helpButton.setVisibility(ImageView.INVISIBLE);
+                        ((Element<T>) selector.getItemAtPosition(0)).getDescription() == null ||
+                        ((Element<T>) selector.getItemAtPosition(0)).getDescription().isEmpty()) {
+                    getHelpButton().setVisibility(ImageView.INVISIBLE);
                 } else {
-                    helpButton.setVisibility(ImageView.VISIBLE);
+                    getHelpButton().setVisibility(ImageView.VISIBLE);
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                helpButton.setVisibility(ImageView.INVISIBLE);
+                getHelpButton().setVisibility(ImageView.INVISIBLE);
             }
         });
-
     }
 
     public <E extends Element<?>> void setAdapter(ElementAdapter<E> adapter) {
@@ -112,16 +79,16 @@ public class ElementSpinner<T extends Element<?>> extends Component {
                 if (selector.getItemAtPosition(position) == null ||
                         ((Element<?>) selector.getItemAtPosition(position)).getDescription() == null ||
                         ((Element<?>) selector.getItemAtPosition(position)).getDescription().isEmpty()) {
-                    helpButton.setVisibility(ImageView.INVISIBLE);
+                    getHelpButton().setVisibility(ImageView.INVISIBLE);
                 } else {
-                    helpButton.setVisibility(ImageView.VISIBLE);
+                    getHelpButton().setVisibility(ImageView.VISIBLE);
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 onItemSelectedListener.onNothingSelected(parent);
-                helpButton.setVisibility(ImageView.INVISIBLE);
+                getHelpButton().setVisibility(ImageView.INVISIBLE);
             }
         });
     }
@@ -135,6 +102,7 @@ public class ElementSpinner<T extends Element<?>> extends Component {
         }
     }
 
+    @Override
     public T getSelection() {
         final Spinner selector = findViewById(R.id.spinner);
         final T selectedItem = (T) selector.getSelectedItem();
@@ -143,40 +111,4 @@ public class ElementSpinner<T extends Element<?>> extends Component {
         }
         return selectedItem;
     }
-
-    public <E extends Element<?>> E getSelection(Class<E> elementClass) {
-        final Spinner selector = findViewById(R.id.spinner);
-        final E selectedItem = elementClass.cast(selector.getSelectedItem());
-        if (Element.isNull(selectedItem)) {
-            return null;
-        }
-        return selectedItem;
-    }
-
-
-    protected void openDescriptionWindow(T element) {
-        if (element != null) {
-            if (element instanceof AvailableBenefice) {
-                new BeneficeDescriptionDialog((AvailableBenefice) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
-            } else if (element instanceof Blessing) {
-                new BlessingDescriptionDialog((Blessing) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
-            } else if (element instanceof Shield) {
-                new ShieldDescriptionDialog((Shield) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
-            } else if (element instanceof Armour) {
-                new ArmourDescriptionDialog((Armour) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
-            } else if (element instanceof Weapon) {
-                if (((Weapon) element).isRangedWeapon()) {
-                    new RangeWeaponDescriptionDialog((Weapon) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
-                } else {
-                    new MeleeWeaponDescriptionDialog((Weapon) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
-                }
-            } else if (element instanceof CyberneticDevice) {
-                new CyberneticDeviceDescriptionDialog((CyberneticDevice) element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
-            } else {
-                new ElementDescriptionDialog(element).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "");
-            }
-        }
-    }
-
-
 }

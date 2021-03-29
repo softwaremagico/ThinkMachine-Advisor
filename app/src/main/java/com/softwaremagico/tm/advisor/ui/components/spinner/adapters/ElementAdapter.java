@@ -105,10 +105,13 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
 
         try {
             final T element = getItem(position);
+            final TextView elementName = listItem.findViewById(R.id.selected_item);
             if (element != null) {
-                final TextView elementName = listItem.findViewById(R.id.selected_item);
                 elementName.setText(getElementRepresentation(element));
                 setElementColor(elementName, element, position);
+            } else {
+                //For an strange reason, the searchable list dialog shows a random element for null if text is empty.
+                elementName.setText(" ");
             }
         } catch (IndexOutOfBoundsException e) {
             //Filtered elements.

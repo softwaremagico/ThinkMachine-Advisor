@@ -13,32 +13,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/translated_tag"
-        android:layout_width="wrap_content"
-        android:layout_weight = "0"
-        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_weight = "1"
         android:ellipsize="marquee"
+        android:layout_gravity="center_vertical"
         android:fontFamily="@font/label"
         android:singleLine="true" />
 
-    <com.softwaremagico.tm.advisor.ui.components.spinner.SearchableSpinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight = "1"
+    <CheckBox android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_weight = "0"
+        android:layout_gravity="center_vertical"
         android:singleLine="true"
-        android:theme="@style/InputData" />
+        android:theme="@style/CheckboxData" />
+
 
     <ImageView
         android:id="@+id/button_help"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_weight = "0"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:visibility="invisible"
+        android:singleLine="true"
         android:background="@drawable/ic_help"
         />
 

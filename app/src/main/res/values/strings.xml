@@ -19,6 +19,7 @@
     <string name="tab_character_traits">Traits</string>
     <string name="tab_character_equipment">Equipment</string>
     <string name="tab_character_cybernetics">Cybernetics</string>
+    <string name="tab_character_occultism">Occultism</string>
     <string name="tab_visualization_txt">Text</string>
     <string name="tab_visualization_pdf">PDF</string>
     <string name="tab_visualization_pdf_small">PDF (Small)</string>
@@ -177,7 +178,9 @@
     <string name="properties">Properties</string>
     <string name="description">Character Description:</string>
     <string name="background">The History:</string>
-    <string name="selectFaction">Choose a faction, planet and gender first!</string>
+    <string name="selectFaction">Choose a faction first!</string>
+    <string name="selectFactionAndMore">Choose a faction, planet and gender first!</string>
+    <string name="invalidFactionAndRace">Invalid combination between race and faction.</string>
     <string name="incompatibility">Incompatibility</string>
     <string name="points">Points</string>
 </resources>

@@ -29,6 +29,7 @@ import com.softwaremagico.tm.advisor.ui.character.cybernetics.CyberneticsFragmen
 import com.softwaremagico.tm.advisor.ui.character.description.CharacterDescriptionFragmentCharacter;
 import com.softwaremagico.tm.advisor.ui.character.equipment.EquipmentFragmentCharacter;
 import com.softwaremagico.tm.advisor.ui.character.info.CharacterInfoFragmentCharacter;
+import com.softwaremagico.tm.advisor.ui.character.occultism.OccultismFragmentCharacter;
 import com.softwaremagico.tm.advisor.ui.character.skills.SkillsFragmentCharacter;
 import com.softwaremagico.tm.advisor.ui.character.traits.TraitsFragmentCharacter;
 
@@ -39,7 +40,7 @@ import com.softwaremagico.tm.advisor.ui.character.traits.TraitsFragmentCharacter
 public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_character_info, R.string.tab_character_description, R.string.tab_character_characteristics, R.string.tab_character_skills, R.string.tab_character_traits, R.string.tab_character_cybernetics, R.string.tab_character_equipment};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_character_info, R.string.tab_character_description, R.string.tab_character_characteristics, R.string.tab_character_skills, R.string.tab_character_traits, R.string.tab_character_cybernetics, R.string.tab_character_occultism, R.string.tab_character_equipment};
     private final Context mContext;
     private final SparseArray<Fragment> fragments = new SparseArray<>();
 
@@ -97,6 +98,10 @@ public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
         }
 
         if (position == 6) {
+            return OccultismFragmentCharacter.newInstance(position + 1);
+        }
+
+        if (position == 7) {
             return EquipmentFragmentCharacter.newInstance(position + 1);
         }
 

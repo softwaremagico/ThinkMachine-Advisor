@@ -26,14 +26,7 @@
         android:paddingBottom="10dp"
         android:scrollbars="none">
 
-        <com.softwaremagico.tm.advisor.ui.components.counters.CyberneticsIncompatibilityCounter
-            android:id="@+id/incompatibility_counter"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center" />
-
-        <com.softwaremagico.tm.advisor.ui.components.counters.CyberneticsExtraCounter
+        <com.softwaremagico.tm.advisor.ui.components.counters.OccultismExtraCounter
             android:id="@+id/extra_counter"
             android:layout_width="100dp"
             android:layout_height="match_parent"
@@ -42,7 +35,7 @@
     </LinearLayout>
 
     <ScrollView xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/cybernetic_frame"
+        android:id="@+id/occultism_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

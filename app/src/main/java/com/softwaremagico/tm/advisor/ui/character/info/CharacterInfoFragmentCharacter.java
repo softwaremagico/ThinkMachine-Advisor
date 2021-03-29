@@ -108,8 +108,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                     final TranslatedEditText nameTextEditor = root.findViewById(R.id.character_name);
                     nameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getNameRepresentation());
                 } catch (InvalidXmlElementException | InvalidRandomElementSelectedException e) {
-                    e.printStackTrace();
-                    SnackbarGenerator.getErrorMessage(root, R.string.selectFaction).show();
+                    SnackbarGenerator.getErrorMessage(root, R.string.selectFactionAndMore).show();
                 }
             });
         }
@@ -219,15 +218,20 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (position == 0 || mViewModel.getAvailableRaces().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
-                    CharacterManager.setRace(null);
-                } else {
-                    if (position > 0) {
-                        CharacterManager.setRace(mViewModel.getAvailableRaces().get(position - 1));
-                    } else {
+                try {
+                    if (position == 0 || mViewModel.getAvailableRaces().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
                         CharacterManager.setRace(null);
+                    } else {
+                        if (position > 0) {
+                            CharacterManager.setRace(mViewModel.getAvailableRaces().get(position - 1));
+                        } else {
+                            CharacterManager.setRace(null);
+                        }
+                        updateCounters(CharacterManager.getSelectedCharacter());
                     }
-                    updateCounters(CharacterManager.getSelectedCharacter());
+                } catch (InvalidRaceException e) {
+                    SnackbarGenerator.getErrorMessage(root, R.string.invalidFactionAndRace).show();
+                    raceSelector.setSelection(null);
                 }
             }
 
@@ -251,14 +255,19 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         factionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (position == 0 || mViewModel.getAvailableFactions().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
-                    CharacterManager.setFaction(null);
-                } else {
-                    if (position > 0) {
-                        CharacterManager.setFaction(mViewModel.getAvailableFactions().get(position - 1));
-                    } else {
+                try {
+                    if (position == 0 || mViewModel.getAvailableFactions().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
                         CharacterManager.setFaction(null);
+                    } else {
+                        if (position > 0) {
+                            CharacterManager.setFaction(mViewModel.getAvailableFactions().get(position - 1));
+                        } else {
+                            CharacterManager.setFaction(null);
+                        }
                     }
+                } catch (InvalidFactionException e) {
+                    SnackbarGenerator.getErrorMessage(root, R.string.invalidFactionAndRace).show();
+                    factionsSelector.setSelection(null);
                 }
             }
 

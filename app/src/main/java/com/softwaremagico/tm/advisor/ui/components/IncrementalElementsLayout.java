@@ -29,7 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class IncrementalElementsLayout<T extends Element<?>> extends LinearLayout {
+public abstract class IncrementalElementsLayout<T extends Element<T>> extends LinearLayout {
     private ElementAdapter<T> elementAdapter;
     private final List<ElementSpinner<T>> elementSpinners;
     private boolean enabled = true;

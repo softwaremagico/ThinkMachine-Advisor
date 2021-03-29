@@ -13,6 +13,7 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorSecondary">#554b6b</color>
     <color name="colorSelected">#EDDFFF</color>
     <color name="colorUnselected">#000000</color>
     <color name="colorAccent">#03DAC5</color>
@@ -41,6 +42,8 @@
     <color name="counterCyberneticsText">@color/colorContrast</color>
     <color name="counterCyberneticsIncompatibility">#7b68a4</color>
     <color name="counterCyberneticsIncompatibilityText">@color/colorContrast</color>
+    <color name="counterOccultism">#384E85</color>
+    <color name="counterOccultismText">@color/colorContrast</color>
     <color name="counterFirebirds">#382b48</color>
     <color name="counterFirebirdsText">#382b48</color>
     <color name="counterExtra">#612750</color>
@@ -65,4 +68,5 @@
     <color name="insufficientMoney">@color/colorWarning</color>
     <color name="unaffordableMoney">@color/colorError</color>
     <color name="correctElement">@color/colorError</color>
+    <color name="insufficientOccultimsLevel">@color/colorError</color>
 </resources>

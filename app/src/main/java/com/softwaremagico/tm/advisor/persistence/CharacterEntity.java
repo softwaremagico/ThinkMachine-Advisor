@@ -32,6 +32,9 @@ public class CharacterEntity extends BaseEntity {
     @ColumnInfo(name = "name")
     public String name;
 
+    @ColumnInfo(name = "player")
+    public String player;
+
     @ColumnInfo(name = "race")
     public String race;
 
@@ -60,6 +63,7 @@ public class CharacterEntity extends BaseEntity {
         setName(characterPlayer.getCompleteNameRepresentation());
         setRace(characterPlayer.getRace().getNameRepresentation());
         setFaction(characterPlayer.getFaction().getNameRepresentation());
+        setPlayer(characterPlayer.getInfo().getPlayer());
         try {
             setThreat(ThreatLevel.getThreatLevel(characterPlayer));
         } catch (InvalidXmlElementException e) {
@@ -113,5 +117,13 @@ public class CharacterEntity extends BaseEntity {
 
     public final void setThreat(int threat) {
         this.threat = threat;
+    }
+
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
     }
 }

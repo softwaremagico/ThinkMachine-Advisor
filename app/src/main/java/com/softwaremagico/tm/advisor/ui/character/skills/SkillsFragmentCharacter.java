@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
@@ -65,23 +64,15 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
     protected void initData() {
         final LinearLayout linearLayout = root.findViewById(R.id.skills_container);
         addSection(ThinkMachineTranslator.getTranslatedText("naturalSkills"), linearLayout);
-        try {
-            for (final AvailableSkill skill : CharacterManager.getSelectedCharacter().getNaturalSkills()) {
-                createSkillEditText(root, linearLayout, skill);
-            }
-        } catch (InvalidXmlElementException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        for (final AvailableSkill skill : CharacterManager.getSelectedCharacter().getNaturalSkills()) {
+            createSkillEditText(root, linearLayout, skill);
         }
 
         addSpace(linearLayout);
         addSection(ThinkMachineTranslator.getTranslatedText("learnedSkills"), linearLayout);
 
-        try {
-            for (final AvailableSkill skill : CharacterManager.getSelectedCharacter().getLearnedSkills()) {
-                createSkillEditText(root, linearLayout, skill);
-            }
-        } catch (InvalidXmlElementException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        for (final AvailableSkill skill : CharacterManager.getSelectedCharacter().getLearnedSkills()) {
+            createSkillEditText(root, linearLayout, skill);
         }
         setCharacter(root, CharacterManager.getSelectedCharacter());
     }
