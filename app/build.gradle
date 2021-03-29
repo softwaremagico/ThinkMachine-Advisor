@@ -47,13 +47,13 @@ android {
             storeFile file('../../../Documentos/Android Keys/AndroidKeyStore.jks')
         }
     }
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.softwaremagico.tm.advisor"
         minSdkVersion 24
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 16
         versionName "0.7.0.0"
         setProperty("archivesBaseName", applicationId + "-v" + versionCode)
