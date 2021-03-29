@@ -182,4 +182,6 @@
     <string name="tab_character_occultism">Ocultismo</string>
     <string name="selectFaction">¡Selecciona primero una facción!</string>
     <string name="invalidFactionAndRace">Combinación inválida entre facción y raza.</string>
+    <string name="tab_random_profiles">Perfiles</string>
+    <string name="profiles">Perfiles</string>
 </resources>

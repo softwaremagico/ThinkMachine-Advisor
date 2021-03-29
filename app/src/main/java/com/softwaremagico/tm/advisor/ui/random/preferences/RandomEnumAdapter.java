@@ -1,4 +1,4 @@
-package com.softwaremagico.tm.advisor.ui.random;
+package com.softwaremagico.tm.advisor.ui.random.preferences;
 
 import android.content.Context;
 import android.content.res.Resources;

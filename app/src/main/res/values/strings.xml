@@ -24,6 +24,7 @@
     <string name="tab_visualization_pdf">PDF</string>
     <string name="tab_visualization_pdf_small">PDF (Small)</string>
     <string name="tab_random_preferences">Preferences</string>
+    <string name="tab_random_profiles">Profiles</string>
     <string name="navigation_character">Character</string>
     <string name="navigation_visualization">Visualization</string>
     <string name="navigation_random">Random</string>
@@ -183,4 +184,5 @@
     <string name="invalidFactionAndRace">Invalid combination between race and faction.</string>
     <string name="incompatibility">Incompatibility</string>
     <string name="points">Points</string>
+    <string name="profiles">Profiles</string>
 </resources>

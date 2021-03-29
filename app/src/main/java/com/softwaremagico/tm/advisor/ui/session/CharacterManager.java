@@ -27,6 +27,7 @@ import com.softwaremagico.tm.character.races.Race;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.random.exceptions.DuplicatedPreferenceException;
 import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
+import com.softwaremagico.tm.random.profiles.RandomProfile;
 import com.softwaremagico.tm.random.selectors.IRandomPreference;
 
 import java.util.ArrayList;
@@ -217,6 +218,13 @@ public final class CharacterManager {
     public static void randomizeCharacter(Set<IRandomPreference> randomPreferences) throws InvalidXmlElementException, TooManyBlessingsException,
             DuplicatedPreferenceException, InvalidRandomElementSelectedException {
         final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), 0, randomPreferences.toArray(new IRandomPreference[0]));
+        randomizeCharacter.createCharacter();
+        setSelectedCharacter(getSelectedCharacter());
+    }
+
+    public static void randomizeCharacterUsingProfiles(Set<RandomProfile> randomProfiles) throws InvalidXmlElementException, TooManyBlessingsException,
+            InvalidRandomElementSelectedException, DuplicatedPreferenceException {
+        final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(),randomProfiles.toArray(new RandomProfile[0]));
         randomizeCharacter.createCharacter();
         setSelectedCharacter(getSelectedCharacter());
     }

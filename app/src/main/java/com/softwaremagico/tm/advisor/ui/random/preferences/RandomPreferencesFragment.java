@@ -10,7 +10,7 @@
  *  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  */
 
-package com.softwaremagico.tm.advisor.ui.random;
+package com.softwaremagico.tm.advisor.ui.random.preferences;
 
 import android.content.res.Resources;
 import android.os.Bundle;
