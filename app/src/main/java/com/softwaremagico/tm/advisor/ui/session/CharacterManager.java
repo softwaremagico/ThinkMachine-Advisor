@@ -165,15 +165,13 @@ public final class CharacterManager {
     public static void setRace(Race race) throws InvalidRaceException {
         try {
             getSelectedCharacter().setRace(race);
-            launchCharacterRaceUpdatedListeners(getSelectedCharacter());
-            launchCharacterUpdatedListeners(getSelectedCharacter());
             if (costCalculator != null) {
                 costCalculator.updateCost();
             }
+            launchCharacterRaceUpdatedListeners(getSelectedCharacter());
+            launchCharacterUpdatedListeners(getSelectedCharacter());
         } catch (InvalidRaceException e) {
-            if (race == null) {
-                AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
-            } else {
+            if (race != null) {
                 throw e;
             }
         }
