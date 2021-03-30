@@ -51,6 +51,10 @@ public class ElementSelector<T extends Element<T>> extends HelpElement<T> {
         checkBox.setChecked(checked);
     }
 
+    public boolean isChecked() {
+        return checkBox.isChecked();
+    }
+
     @Override
     public T getSelection() {
         return element;

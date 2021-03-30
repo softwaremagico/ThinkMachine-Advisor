@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 
 public class RandomProfilesFragment extends CharacterCustomFragment {
     private View root;
-    private Set<ElementSelector<RandomProfile>> optionsAvailable = new HashSet<>();
+    private final Set<ElementSelector<RandomProfile>> optionsAvailable = new HashSet<>();
 
     public static RandomProfilesFragment newInstance(int index) {
         final RandomProfilesFragment fragment = new RandomProfilesFragment();
@@ -111,7 +111,7 @@ public class RandomProfilesFragment extends CharacterCustomFragment {
     }
 
     public Set<RandomProfile> getSelectedOptions() {
-        return optionsAvailable.stream().filter(ElementSelector<RandomProfile>::isSelected).map(ElementSelector::getSelection).collect(Collectors.toSet());
+        return optionsAvailable.stream().filter(ElementSelector::isChecked).map(ElementSelector::getSelection).collect(Collectors.toSet());
     }
 
 
