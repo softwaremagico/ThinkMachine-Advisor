@@ -38,5 +38,7 @@ The app is available on Google Play, and this site is only for hosting the sourc
 0.7 Occultism
 - 0.7.1 Occultism path descriptions
 
+0.8 Random Profiles
+
 
 
