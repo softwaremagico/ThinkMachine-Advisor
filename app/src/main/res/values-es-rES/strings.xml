@@ -184,4 +184,15 @@
     <string name="invalidFactionAndRace">Combinación inválida entre facción y raza.</string>
     <string name="tab_random_profiles">Perfiles</string>
     <string name="profiles">Perfiles</string>
+    <string name="profile_age_section">Edad</string>
+    <string name="profile_faction_section">Facción</string>
+    <string name="profile_occupation_section">Dedicación</string>
+    <string name="profile_special_section">Especial</string>
+    <string name="preference_option_any">Cualquiera</string>
+    <string name="npc_servitude_section">Servidumbre</string>
+    <string name="npc_underground_section">Clandestinos</string>
+    <string name="npc_army_section">Ejército</string>
+    <string name="npc_specialforces_section">Fuerzas Especiales</string>
+    <string name="npc_intelligence_section">Inteligencia</string>
+    <string name="tab_random_npc">PNJs</string>
 </resources>

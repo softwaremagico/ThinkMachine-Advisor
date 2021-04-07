@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.random.characters.RandomCharactersFragment;
 import com.softwaremagico.tm.advisor.ui.random.preferences.RandomPreferencesFragment;
 import com.softwaremagico.tm.advisor.ui.random.profile.RandomProfilesFragment;
 
@@ -31,7 +32,7 @@ import com.softwaremagico.tm.advisor.ui.random.profile.RandomProfilesFragment;
 public class RandomSectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_random_preferences, R.string.tab_random_profiles};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_random_preferences, R.string.tab_random_profiles, R.string.tab_random_npc};
     private final Context mContext;
 
     public RandomSectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -49,6 +50,10 @@ public class RandomSectionsPagerAdapter extends FragmentPagerAdapter {
 
         if (position == 1) {
             return RandomProfilesFragment.newInstance(position + 1);
+        }
+
+        if (position == 2) {
+            return RandomCharactersFragment.newInstance(position + 1);
         }
 
         return null;

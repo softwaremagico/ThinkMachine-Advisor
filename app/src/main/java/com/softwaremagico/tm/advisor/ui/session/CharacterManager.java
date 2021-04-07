@@ -16,7 +16,6 @@ import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.RandomizeCharacter;
-import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.character.factions.Faction;
@@ -27,7 +26,8 @@ import com.softwaremagico.tm.character.races.Race;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.random.exceptions.DuplicatedPreferenceException;
 import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
-import com.softwaremagico.tm.random.profiles.RandomProfile;
+import com.softwaremagico.tm.random.predefined.characters.Npc;
+import com.softwaremagico.tm.random.predefined.profile.RandomProfile;
 import com.softwaremagico.tm.random.selectors.IRandomPreference;
 
 import java.util.ArrayList;
@@ -215,16 +215,22 @@ public final class CharacterManager {
         setSelectedCharacter(characterPlayer);
     }
 
-    public static void randomizeCharacter(Set<IRandomPreference> randomPreferences) throws InvalidXmlElementException, TooManyBlessingsException,
+    public static void randomizeCharacter(Set<IRandomPreference> randomPreferences) throws InvalidXmlElementException,
             DuplicatedPreferenceException, InvalidRandomElementSelectedException {
         final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), 0, randomPreferences.toArray(new IRandomPreference[0]));
         randomizeCharacter.createCharacter();
         setSelectedCharacter(getSelectedCharacter());
     }
 
-    public static void randomizeCharacterUsingProfiles(Set<RandomProfile> randomProfiles) throws InvalidXmlElementException, TooManyBlessingsException,
-            InvalidRandomElementSelectedException, DuplicatedPreferenceException {
-        final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(),randomProfiles.toArray(new RandomProfile[0]));
+    public static void randomizeCharacterUsingProfiles(Set<RandomProfile> randomProfiles) throws InvalidXmlElementException, InvalidRandomElementSelectedException {
+        final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), randomProfiles.toArray(new RandomProfile[0]));
+        randomizeCharacter.createCharacter();
+        setSelectedCharacter(getSelectedCharacter());
+    }
+
+    public static void randomizeCharacterUsingNpc(Set<Npc> randomProfiles) throws InvalidXmlElementException,
+            InvalidRandomElementSelectedException {
+        final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), randomProfiles.toArray(new Npc[0]));
         randomizeCharacter.createCharacter();
         setSelectedCharacter(getSelectedCharacter());
     }

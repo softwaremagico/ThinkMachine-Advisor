@@ -25,6 +25,7 @@
     <string name="tab_visualization_pdf_small">PDF (Small)</string>
     <string name="tab_random_preferences">Preferences</string>
     <string name="tab_random_profiles">Profiles</string>
+    <string name="tab_random_npc">NPCs</string>
     <string name="navigation_character">Character</string>
     <string name="navigation_visualization">Visualization</string>
     <string name="navigation_random">Random</string>
@@ -174,6 +175,7 @@
     <string name="preference_option_space_citizen">Space Citizen</string>
     <string name="preference_option_maximal">Maximal</string>
     <string name="preference_option_warlord">Warlord</string>
+    <string name="preference_option_any">Any</string>
     <string name="cost">Cost</string>
     <string name="close">Close</string>
     <string name="properties">Properties</string>
@@ -185,4 +187,14 @@
     <string name="incompatibility">Incompatibility</string>
     <string name="points">Points</string>
     <string name="profiles">Profiles</string>
+    <string name="profile_age_section">Age</string>
+    <string name="profile_faction_section">Factions</string>
+    <string name="profile_occupation_section">Occupation</string>
+    <string name="profile_special_section">Special</string>
+    <string name="npc_servitude_section">Servitude</string>
+    <string name="npc_underground_section">Underground</string>
+    <string name="npc_army_section">Army</string>
+    <string name="npc_specialforces_section">Special Forces</string>
+    <string name="npc_intelligence_section">Intelligence</string>
 </resources>
+
