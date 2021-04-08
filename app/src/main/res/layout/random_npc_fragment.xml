@@ -15,23 +15,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.random.preferences.RandomPreferencesFragment">
+    tools:context=".ui.random.characters.RandomCharactersFragment">
 
     <ScrollView
-        android:id="@+id/preferences_frame"
+        android:id="@+id/npc_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        tools:context=".ui.random.preferences.RandomPreferencesFragment">
+        tools:context=".ui.random.characters.RandomCharactersFragment">
 
         <LinearLayout
-            android:id="@+id/preferences_container"
+            android:id="@+id/npc_container"
             style="@style/TextSubtitleLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:scrollbars="vertical">
-
         </LinearLayout>
 
     </ScrollView>

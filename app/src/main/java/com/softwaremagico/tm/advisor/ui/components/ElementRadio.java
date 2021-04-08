@@ -2,38 +2,38 @@ package com.softwaremagico.tm.advisor.ui.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.spinner.HelpElement;
 
-public class ElementSelector<T extends Element<T>> extends HelpElement<T> {
-    private CheckBox checkBox;
+public class ElementRadio<T extends Element<T>> extends HelpElement<T> {
+    private RadioButton radioButton;
     private T element;
 
-    public ElementSelector(Context context, T element) {
+    public ElementRadio(Context context, T element) {
         this(context, null, element);
     }
 
-    public ElementSelector(Context context, AttributeSet attrs, T element) {
+    public ElementRadio(Context context, AttributeSet attrs, T element) {
         super(context, attrs);
         setElement(element);
     }
 
     @Override
     protected void init(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.element_selector, this);
+        inflate(context, R.layout.element_radio, this);
         initComponents(attrs);
     }
 
     @Override
     protected void initComponents(AttributeSet attrs) {
         super.initComponents(attrs);
-        checkBox = findViewById(R.id.checkbox);
+        radioButton = findViewById(R.id.radio);
     }
 
     public void setElement(T element) {
@@ -48,11 +48,11 @@ public class ElementSelector<T extends Element<T>> extends HelpElement<T> {
     }
 
     public void setChecked(boolean checked) {
-        checkBox.setChecked(checked);
+        radioButton.setChecked(checked);
     }
 
     public boolean isChecked() {
-        return checkBox.isChecked();
+        return radioButton.isChecked();
     }
 
     @Override
@@ -62,11 +62,11 @@ public class ElementSelector<T extends Element<T>> extends HelpElement<T> {
 
     @Override
     public void setEnabled(boolean enabled) {
-        checkBox.setEnabled(enabled);
+        radioButton.setEnabled(enabled);
     }
 
     public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener) {
-        checkBox.setOnCheckedChangeListener(listener);
+        radioButton.setOnCheckedChangeListener(listener);
     }
 
 }

@@ -209,6 +209,15 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
                     }
                     return element.getName() + " [" + element.getSpecialization().getName() + "]" + " (" + element.getCost() + ")";
                 }
+
+                @Override
+                public boolean isEnabled(int position) {
+                    return getItem(position).getBeneficeDefinition() == null ||
+                            getItem(position).getBeneficeDefinition().getRestrictedFactionGroup() == null ||
+                            (CharacterManager.getSelectedCharacter().getFaction() != null &&
+                                    getItem(position).getBeneficeDefinition().getRestrictedFactionGroup() ==
+                                            CharacterManager.getSelectedCharacter().getFaction().getFactionGroup());
+                }
             };
         }
 

@@ -10,7 +10,7 @@
  *  You should have received a copy of the GNU General Public License along with this Program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  */
 
-package com.softwaremagico.tm.advisor.ui.random;
+package com.softwaremagico.tm.advisor.ui.random.preferences;
 
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -32,7 +32,6 @@ import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
-import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
 import com.softwaremagico.tm.random.exceptions.DuplicatedPreferenceException;
 import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
 import com.softwaremagico.tm.random.selectors.IRandomPreference;
@@ -127,7 +126,7 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
                 try {
                     CharacterManager.randomizeCharacter(getSelectedOptions());
                     SnackbarGenerator.getInfoMessage(root, R.string.message_random_character_success).show();
-                } catch (InvalidXmlElementException | TooManyBlessingsException | DuplicatedPreferenceException | InvalidRandomElementSelectedException e) {
+                } catch (InvalidXmlElementException | DuplicatedPreferenceException | InvalidRandomElementSelectedException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.message_random_character_error).show();
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
