@@ -195,4 +195,6 @@
     <string name="npc_specialforces_section">Fuerzas Especiales</string>
     <string name="npc_intelligence_section">Inteligencia</string>
     <string name="tab_random_npc">PNJs</string>
+    <string name="preference_cashpreferences">Metálico</string>
+    <string name="preference_combatactionspreferences">Acciones de Combate</string>
 </resources>

@@ -110,6 +110,8 @@
     <string name="preference_racepreferences">Race</string>
     <string name="preference_specializationpreferences">Specialization Level</string>
     <string name="preference_statuspreferences">Status</string>
+    <string name="preference_cashpreferences">Cash</string>
+    <string name="preference_combatactionspreferences">Combat Actions</string>
     <string name="preference_option_human">Human</string>
     <string name="preference_option_nobility">Nobility</string>
     <string name="preference_option_obun">Ur-Obun</string>
