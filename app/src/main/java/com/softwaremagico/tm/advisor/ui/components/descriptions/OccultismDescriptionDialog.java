@@ -38,7 +38,7 @@ public class OccultismDescriptionDialog extends ElementDescriptionDialog<Occulti
                 "<td style=\"text-align:center\">" + (power.getDuration() != null ? power.getDuration().getName() : "") + "</td>" +
                 "<td style=\"text-align:center\">" + (power.getComponentsRepresentation().length() > 0 ?
                 power.getComponentsRepresentation() : "--") + "</td>" +
-                "<td style=\"text-align:center\">" + power.getCost() + "</td>" +
+                "<td style=\"text-align:center\">" + (power.getCost() != null ? power.getCost() : "") + "</td>" +
                 "</tr>" +
                 "</table>"
                 ;

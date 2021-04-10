@@ -1,7 +1,7 @@
-<img src="./images/ThinkMachine_logo_fenix.svg" width="400" alt="Think Machine" align="middle"> 
+<img src="./images/ThinkMachine_logo_fenix.svg" width="800" alt="Think Machine" align="middle"> 
 
 # Think Machine: Advisor
-
+[![Supported Languages](https://img.shields.io/badge/Supported-%F0%9F%87%AA%F0%9F%87%B8%20%F0%9F%87%AC%F0%9F%87%A7languages-blue.svg)](https://github.com/softwaremagico/ThinkMachine-Advisor/blob/master/app/src/main/res/values/strings.xml)
 [![GNU GPL 3.0 License](https://img.shields.io/badge/license-GNU_GPL_3.0-brightgreen.svg)](https://github.com/softwaremagico/ThinkMachine-Advisor/blob/master/GNU_LICENSE)
 [![Issues](https://img.shields.io/github/issues/softwaremagico/ThinkMachine-Advisor.svg)](https://github.com/softwaremagico/ThinkMachine-Advisor/issues)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/y/softwaremagico/ThinkMachine-Advisor)](https://github.com/softwaremagico/ThinkMachine-Advisor)
@@ -37,6 +37,9 @@ The app is available on Google Play, and this site is only for hosting the sourc
 
 0.7 Occultism
 - 0.7.1 Occultism path descriptions
+
+0.8 Random Profiles
+- 0.8.1 Random NPCs
 
 
 

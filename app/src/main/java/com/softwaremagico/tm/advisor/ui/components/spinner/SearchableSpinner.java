@@ -126,13 +126,13 @@ public class SearchableSpinner<E extends Element<E>> extends androidx.appcompat.
     }
 
     private Activity scanForActivity(Context cont) {
-        if (cont == null)
+        if (cont == null) {
             return null;
-        else if (cont instanceof Activity)
+        } else if (cont instanceof Activity) {
             return (Activity) cont;
-        else if (cont instanceof ContextWrapper)
+        } else if (cont instanceof ContextWrapper) {
             return scanForActivity(((ContextWrapper) cont).getBaseContext());
-
+        }
         return null;
     }
 
