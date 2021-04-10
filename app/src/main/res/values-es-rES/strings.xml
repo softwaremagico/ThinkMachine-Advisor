@@ -182,4 +182,7 @@
     <string name="tab_character_occultism">Ocultismo</string>
     <string name="selectFaction">¡Selecciona primero una facción!</string>
     <string name="invalidFactionAndRace">Combinación inválida entre facción y raza.</string>
+    <string name="preference_option_fight">Pelea</string>
+    <string name="preference_option_melee">Lucha</string>
+    <string name="preference_option_ranged">A Distancia</string>
 </resources>

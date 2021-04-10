@@ -173,6 +173,9 @@
     <string name="preference_option_space_citizen">Space Citizen</string>
     <string name="preference_option_maximal">Maximal</string>
     <string name="preference_option_warlord">Warlord</string>
+    <string name="preference_option_melee">Melee</string>
+    <string name="preference_option_fight">Fight</string>
+    <string name="preference_option_ranged">Ranged</string>
     <string name="cost">Cost</string>
     <string name="close">Close</string>
     <string name="properties">Properties</string>
