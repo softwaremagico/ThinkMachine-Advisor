@@ -200,4 +200,6 @@
     <string name="tab_random_npc">PNJs</string>
     <string name="preference_cashpreferences">Metálico</string>
     <string name="preference_combatactionspreferences">Acciones de Combate</string>
+    <string name="npc_navy_section">Marina</string>
+    <string name="npc_airforce_section">Fuerzas Aéreas</string>
 </resources>

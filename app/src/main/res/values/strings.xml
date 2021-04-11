@@ -199,6 +199,8 @@
     <string name="npc_servitude_section">Servitude</string>
     <string name="npc_underground_section">Underground</string>
     <string name="npc_army_section">Army</string>
+    <string name="npc_navy_section">Navy</string>
+    <string name="npc_airforce_section">Aire Force</string>
     <string name="npc_specialforces_section">Special Forces</string>
     <string name="npc_intelligence_section">Intelligence</string>
 </resources>
