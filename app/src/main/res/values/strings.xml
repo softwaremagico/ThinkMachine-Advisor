@@ -202,6 +202,7 @@
     <string name="npc_navy_section">Navy</string>
     <string name="npc_airforce_section">Aire Force</string>
     <string name="npc_specialforces_section">Special Forces</string>
+    <string name="npc_spacelegions_section">Space Legions</string>
     <string name="npc_intelligence_section">Intelligence</string>
 </resources>
 
