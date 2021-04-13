@@ -38,6 +38,7 @@
     <string name="message_invalid_shield_armour_combination">Invalid combination of armor with energy shield.</string>
     <string name="message_invalid_tech_level">Some items has a tech level higher that the character.</string>
     <string name="message_duplicated_item_removed">Duplicated element removed.</string>
+    <string name="message_missing_required_skills">Some skills are required before assigning ranks to this skill.</string>
     <string name="settings_load">Load</string>
     <string name="settings_save">Save</string>
     <string name="settings_import">Import</string>

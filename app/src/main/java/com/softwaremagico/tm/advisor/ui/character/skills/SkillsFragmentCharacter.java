@@ -27,11 +27,13 @@ import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedNumberPicker;
 import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.SkillsExtraCounter;
+import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 import com.softwaremagico.tm.character.skills.AvailableSkill;
+import com.softwaremagico.tm.character.skills.InvalidRanksException;
 import com.softwaremagico.tm.character.skills.InvalidSkillException;
 import com.softwaremagico.tm.character.skills.SkillDefinition;
 
@@ -131,6 +133,9 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
                 CharacterManager.getSelectedCharacter().setSkillRank(skill, newValue);
             } catch (InvalidSkillException e) {
                 AdvisorLog.errorMessage(this.getClass().getName(), e);
+            } catch (InvalidRanksException e) {
+                SnackbarGenerator.getInfoMessage(root, R.string.message_duplicated_item_removed).show();
+                skillNumberPicker.setValue(CharacterManager.getSelectedCharacter().getSkillAssignedRanks(skill));
             }
         });
     }

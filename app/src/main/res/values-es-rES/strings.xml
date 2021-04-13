@@ -203,4 +203,5 @@
     <string name="npc_navy_section">Marina</string>
     <string name="npc_airforce_section">Fuerzas Aéreas</string>
     <string name="npc_spacelegions_section">Legiones Espaciales</string>
+    <string name="message_missing_required_skills">"Se requiere de algunas habilitades antes de asignar rangos a esta habilidad. "</string>
 </resources>
