@@ -199,6 +199,7 @@
     <string name="profile_faction_section">Factions</string>
     <string name="profile_occupation_section">Occupation</string>
     <string name="profile_special_section">Special</string>
+    <string name="profile_xenos_section">Xenos</string>
     <string name="npc_servitude_section">Servitude</string>
     <string name="npc_underground_section">Underground</string>
     <string name="npc_army_section">Army</string>

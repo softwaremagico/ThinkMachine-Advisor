@@ -208,4 +208,5 @@
     <string name="preference_combatactionsgrouppreferences">Preferencia de Acciones de Combate</string>
     <string name="npc_weirdforces_section">Unidades Extrañas</string>
     <string name="npc_xenos_section">Xenos</string>
+    <string name="profile_xenos_section">Xenos</string>
 </resources>
