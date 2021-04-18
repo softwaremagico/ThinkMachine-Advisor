@@ -51,6 +51,10 @@ public abstract class CharacterCustomFragment extends CustomFragment {
         }
     }
 
+    protected void addFinalSpace(LinearLayout linearLayout) {
+        addSpace(linearLayout, 150);
+    }
+
     protected void addSpace(LinearLayout linearLayout) {
         addSpace(linearLayout, 30);
     }

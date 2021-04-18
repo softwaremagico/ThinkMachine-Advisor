@@ -88,6 +88,8 @@ public class RandomCharactersFragment extends CharacterCustomFragment {
             addSpace(linearLayout);
         });
 
+        addFinalSpace(linearLayout);
+
         setCharacter(root, CharacterManager.getSelectedCharacter());
     }
 

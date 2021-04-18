@@ -154,8 +154,8 @@ dependencies {
     implementation group: 'com.softwaremagico', name: 'think-machine-pdf', version: '0.10.0-SNAPSHOT'
     implementation group: 'com.softwaremagico', name: 'think-machine-random', version: '0.10.0-SNAPSHOT'
     implementation 'org.slf4j:slf4j-api:1.7.30'
-    implementation 'androidx.navigation:navigation-fragment:2.3.4'
-    implementation 'androidx.navigation:navigation-ui:2.3.4'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
     implementation group: 'com.github.barteksc', name: 'android-pdf-viewer', version: '3.2.0-beta.1'
 
@@ -163,6 +163,6 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.2.6"
 
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.0"
 
 }

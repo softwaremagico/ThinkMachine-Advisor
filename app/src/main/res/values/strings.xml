@@ -94,8 +94,9 @@
     <string name="preference_cyberneticpointspreferences">Cybernetic Points</string>
     <string name="preference_cybernetictotaldevicespreferences">Number of Cybernetic Devices</string>
     <string name="preference_cyberneticvisibilitypreferences">Cybernetic Devices Visibility</string>
-    <string name="preference_psiquelevelpreferences">Psique Level</string>
-    <string name="preference_psiquepathlevelpreferences">Psique Paths</string>
+    <string name="preference_occultismtypepreferences">Occultism Type</string>
+    <string name="preference_occultismlevelpreferences">Occultism Level</string>
+    <string name="preference_occultismpathlevelpreferences">Occultism Paths</string>
     <string name="preference_blessingnumberpreferences">Blessings Number</string>
     <string name="preference_characteristicspreferences">Characteristics</string>
     <string name="preference_cursenumberpreferences">Curses</string>
@@ -113,6 +114,7 @@
     <string name="preference_statuspreferences">Status</string>
     <string name="preference_cashpreferences">Cash</string>
     <string name="preference_combatactionspreferences">Combat Actions</string>
+    <string name="preference_combatactionsgrouppreferences">Combat Actions Preference</string>
     <string name="preference_option_human">Human</string>
     <string name="preference_option_nobility">Nobility</string>
     <string name="preference_option_obun">Ur-Obun</string>
@@ -205,5 +207,7 @@
     <string name="npc_specialforces_section">Special Forces</string>
     <string name="npc_spacelegions_section">Space Legions</string>
     <string name="npc_intelligence_section">Intelligence</string>
+    <string name="npc_weirdforces_section">Weird Forces</string>
+    <string name="npc_xenos_section">Xenos</string>
 </resources>
 

@@ -4,7 +4,10 @@ import com.softwaremagico.tm.random.selectors.AgePreferences;
 import com.softwaremagico.tm.random.selectors.ArmourPreferences;
 import com.softwaremagico.tm.random.selectors.BlessingNumberPreferences;
 import com.softwaremagico.tm.random.selectors.BlessingPreferences;
+import com.softwaremagico.tm.random.selectors.CashPreferences;
 import com.softwaremagico.tm.random.selectors.CharacteristicsPreferences;
+import com.softwaremagico.tm.random.selectors.CombatActionsGroupPreferences;
+import com.softwaremagico.tm.random.selectors.CombatActionsPreferences;
 import com.softwaremagico.tm.random.selectors.CombatPreferences;
 import com.softwaremagico.tm.random.selectors.CurseNumberPreferences;
 import com.softwaremagico.tm.random.selectors.CyberneticPointsPreferences;
@@ -15,8 +18,9 @@ import com.softwaremagico.tm.random.selectors.ExtraBeneficesNumberPreferences;
 import com.softwaremagico.tm.random.selectors.FactionPreferences;
 import com.softwaremagico.tm.random.selectors.IRandomPreference;
 import com.softwaremagico.tm.random.selectors.NamesPreferences;
-import com.softwaremagico.tm.random.selectors.PsiqueLevelPreferences;
-import com.softwaremagico.tm.random.selectors.PsiquePathLevelPreferences;
+import com.softwaremagico.tm.random.selectors.OccultismLevelPreferences;
+import com.softwaremagico.tm.random.selectors.OccultismPathLevelPreferences;
+import com.softwaremagico.tm.random.selectors.OccultismTypePreference;
 import com.softwaremagico.tm.random.selectors.RacePreferences;
 import com.softwaremagico.tm.random.selectors.ShieldPreferences;
 import com.softwaremagico.tm.random.selectors.SkillGroupPreferences;
@@ -29,8 +33,9 @@ import com.softwaremagico.tm.random.selectors.WeaponsPreferences;
 public enum PreferenceGroup {
 
     CHARACTER_DESCRIPTION(RacePreferences.class, FactionPreferences.class, AgePreferences.class,
-            CombatPreferences.class, DifficultLevelPreferences.class, SpecializationPreferences.class,
-            NamesPreferences.class, StatusPreferences.class),
+            CombatPreferences.class, CombatActionsPreferences.class, CombatActionsGroupPreferences.class,
+            DifficultLevelPreferences.class, SpecializationPreferences.class,
+            NamesPreferences.class, StatusPreferences.class, CashPreferences.class),
 
     CHARACTER_CREATION(CharacteristicsPreferences.class, SkillGroupPreferences.class, TraitCostPreferences.class,
             BlessingPreferences.class, BlessingNumberPreferences.class, CurseNumberPreferences.class, ExtraBeneficesNumberPreferences.class),
@@ -39,7 +44,7 @@ public enum PreferenceGroup {
 
     CYBERNETICS(CyberneticPointsPreferences.class, CyberneticTotalDevicesPreferences.class, CyberneticVisibilityPreferences.class),
 
-    PSI(PsiqueLevelPreferences.class, PsiquePathLevelPreferences.class);
+    PSI(OccultismTypePreference.class, OccultismLevelPreferences.class, OccultismPathLevelPreferences.class);
 
 
     private final Class<? extends IRandomPreference>[] randomPreferences;

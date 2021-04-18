@@ -79,8 +79,9 @@
     <string name="preference_cyberneticpointspreferences">Puntos en Cibernética</string>
     <string name="preference_cybernetictotaldevicespreferences">Número de dispositivos Cibernéticos</string>
     <string name="preference_cyberneticvisibilitypreferences">Visibilidad de la Cibernética</string>
-    <string name="preference_psiquelevelpreferences">Nivel de Psique</string>
-    <string name="preference_psiquepathlevelpreferences">Caminos del Psique</string>
+    <string name="preference_occultismtypepreferences">Typo de Ocultismo</string>
+    <string name="preference_occultismlevelpreferences">Nivel de Ocultismo</string>
+    <string name="preference_occultismpathlevelpreferences">Caminos del Ocultismo</string>
     <string name="preference_blessingnumberpreferences">Numbero de Bendiciones</string>
     <string name="preference_characteristicspreferences">Características</string>
     <string name="preference_cursenumberpreferences">Maldiciones</string>
@@ -204,4 +205,7 @@
     <string name="npc_airforce_section">Fuerzas Aéreas</string>
     <string name="npc_spacelegions_section">Legiones Espaciales</string>
     <string name="message_missing_required_skills">"Se requiere de algunas habilitades antes de asignar rangos a esta habilidad. "</string>
+    <string name="preference_combatactionsgrouppreferences">Preferencia de Acciones de Combate</string>
+    <string name="npc_weirdforces_section">Unidades Extrañas</string>
+    <string name="npc_xenos_section">Xenos</string>
 </resources>

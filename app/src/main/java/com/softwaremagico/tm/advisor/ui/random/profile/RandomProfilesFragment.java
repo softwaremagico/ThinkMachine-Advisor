@@ -80,6 +80,8 @@ public class RandomProfilesFragment extends CharacterCustomFragment {
             addSpace(linearLayout);
         });
 
+        addFinalSpace(linearLayout);
+
         setCharacter(root, CharacterManager.getSelectedCharacter());
     }
 

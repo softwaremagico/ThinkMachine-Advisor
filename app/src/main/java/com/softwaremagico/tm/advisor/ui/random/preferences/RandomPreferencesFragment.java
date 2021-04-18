@@ -95,6 +95,7 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
                 AdvisorLog.severe(this.getClass().getName(), "Preference group '" + preferenceGroup.name() + "' has no translation '" +
                         getGroupPreferenceStringResource(preferenceGroup) + "'.");
             }
+            addFinalSpace(linearLayout);
         }
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
