@@ -36,12 +36,14 @@ public class OccultismExtraCounter extends SegmentCounter {
                 setValue(CharacterManager.getCostCalculator().getCurrentOccultismLevelExtraPoints() * CostCalculator.PSIQUE_LEVEL_COST +
                                 CharacterManager.getCostCalculator().getCurrentOccultismPowersExtraPoints() * CostCalculator.OCCULTISM_POWER_LEVEL_COST +
                                 CharacterManager.getCostCalculator().getCurrentWyrdExtraPoints() * CostCalculator.EXTRA_WYRD_COST,
-                        FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), true)
+                        FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge(), character.getRace())
+                                - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), true)
         );
         setValue(CharacterManager.getCostCalculator().getCurrentOccultismLevelExtraPoints() * CostCalculator.PSIQUE_LEVEL_COST +
                         CharacterManager.getCostCalculator().getCurrentOccultismPowersExtraPoints() * CostCalculator.OCCULTISM_POWER_LEVEL_COST +
                         CharacterManager.getCostCalculator().getCurrentWyrdExtraPoints() * CostCalculator.EXTRA_WYRD_COST,
-                FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), false);
+                FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge(), character.getRace())
+                        - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), false);
     }
 
     public int getGearColor() {

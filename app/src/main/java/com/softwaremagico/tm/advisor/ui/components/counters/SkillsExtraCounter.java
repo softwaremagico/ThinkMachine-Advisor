@@ -34,10 +34,12 @@ public class SkillsExtraCounter extends SegmentCounter {
         CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeExtraPointsUpdatedListeners(listener);
         listener = CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addExtraPointsUpdatedListeners(() ->
                 setValue(CharacterManager.getCostCalculator().getCurrentSkillsExtraPoints() * CostCalculator.SKILL_EXTRA_POINTS_COST,
-                        FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), true)
+                        FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge(), character.getRace())
+                                - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), true)
         );
         setValue(CharacterManager.getCostCalculator().getCurrentSkillsExtraPoints() * CostCalculator.SKILL_EXTRA_POINTS_COST,
-                FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge()) - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), false);
+                FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge(), character.getRace())
+                        - Math.max(0, CharacterManager.getCostCalculator().getTotalExtraCost()), false);
     }
 
     public int getGearColor() {
