@@ -50,9 +50,9 @@ public class ElementSpinner<T extends Element<T>> extends HelpElement<T> {
         selector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (selector.getItemAtPosition(0) == null ||
-                        ((Element<T>) selector.getItemAtPosition(0)).getDescription() == null ||
-                        ((Element<T>) selector.getItemAtPosition(0)).getDescription().isEmpty()) {
+                if (selector.getItemAtPosition(position) == null ||
+                        ((Element<T>) selector.getItemAtPosition(position)).getDescription() == null ||
+                        ((Element<T>) selector.getItemAtPosition(position)).getDescription().isEmpty()) {
                     getHelpButton().setVisibility(ImageView.INVISIBLE);
                 } else {
                     getHelpButton().setVisibility(ImageView.VISIBLE);
