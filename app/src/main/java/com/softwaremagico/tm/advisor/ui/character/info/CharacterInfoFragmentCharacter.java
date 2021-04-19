@@ -28,9 +28,7 @@ import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
-import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
-import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
 import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter;
@@ -38,6 +36,8 @@ import com.softwaremagico.tm.advisor.ui.components.counters.ExtraCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.FirebirdsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
@@ -214,7 +214,14 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         final ElementSpinner<Race> raceSelector = root.findViewById(R.id.character_race);
         List<Race> options = new ArrayList<>(mViewModel.getAvailableRaces());
         options.add(0, null);
-        raceSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Race.class));
+        raceSelector.setAdapter(new ElementAdapter<Race>(getActivity(), options, false, Race.class) {
+            @Override
+            public boolean isEnabled(int position) {
+                return CharacterManager.getSelectedCharacter().getFaction() == null || getItem(position) == null ||
+                        CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces() == null ||
+                        CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces().contains(getItem(position));
+            }
+        });
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -251,13 +258,23 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         final ElementSpinner<Faction> factionsSelector = root.findViewById(R.id.character_faction);
         List<Faction> options = new ArrayList<>(mViewModel.getAvailableFactions());
         options.add(0, null);
-        factionsSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Faction.class));
+        factionsSelector.setAdapter(new ElementAdapter<Faction>(getActivity(), options, false, Faction.class) {
+            @Override
+            public boolean isEnabled(int position) {
+                return CharacterManager.getSelectedCharacter().getRace() == null || getItem(position) == null || getItem(position).getRestrictedToRaces() == null ||
+                        getItem(position).getRestrictedToRaces().contains(CharacterManager.getSelectedCharacter().getRace());
+            }
+        });
         factionsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 try {
                     if (position == 0 || mViewModel.getAvailableFactions().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
-                        CharacterManager.setFaction(null);
+                        try {
+                            CharacterManager.setFaction(null);
+                        } catch (InvalidFactionException e) {
+                            //Nothing
+                        }
                     } else {
                         if (position > 0) {
                             CharacterManager.setFaction(mViewModel.getAvailableFactions().get(position - 1));
