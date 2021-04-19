@@ -27,11 +27,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
-import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.IncrementalElementsLayout;
 import com.softwaremagico.tm.advisor.ui.components.counters.TraitsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.TraitsExtraCounter;
+import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.ElementAdapter;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
@@ -70,10 +70,10 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
         if (blessingsLayout != null) {
-            blessingsLayout.setElements(character.getSelectedBlessings());
+            blessingsLayout.setElements(character.getSelectedBlessings(), character.getDefaultBlessings());
         }
         if (beneficesLayout != null) {
-            beneficesLayout.setElements(character.getSelectedBenefices());
+            beneficesLayout.setElements(character.getSelectedBenefices(), character.getDefaultBenefices());
         }
         if (traitsCounter != null) {
             traitsCounter.setCharacter(character);

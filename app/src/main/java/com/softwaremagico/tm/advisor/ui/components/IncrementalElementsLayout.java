@@ -31,6 +31,7 @@ import java.util.Set;
 
 public abstract class IncrementalElementsLayout<T extends Element<T>> extends LinearLayout {
     private ElementAdapter<T> elementAdapter;
+    private final List<ElementSpinner<T>> defaultElementSpinners;
     private final List<ElementSpinner<T>> elementSpinners;
     private boolean enabled = true;
     private final boolean nullAllowed;
@@ -51,6 +52,7 @@ public abstract class IncrementalElementsLayout<T extends Element<T>> extends Li
         this.nullAllowed = nullAllowed;
         this.maxElements = maxElements;
         elementSpinners = new ArrayList<>();
+        defaultElementSpinners = new ArrayList<>();
         listeners = new HashSet<>();
         setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -95,17 +97,17 @@ public abstract class IncrementalElementsLayout<T extends Element<T>> extends Li
         }
     }
 
-    protected boolean removeDuplicates() {
+    private boolean removeDuplicates(List<ElementSpinner<T>> spinnerList) {
         int i = 0;
         Set<T> selections = new HashSet<>();
         boolean removed = false;
-        while (i < elementSpinners.size()) {
-            if (elementSpinners.get(i).getSelection() != null) {
-                if (!selections.contains(elementSpinners.get(i).getSelection())) {
-                    selections.add(elementSpinners.get(i).getSelection());
+        while (i < spinnerList.size()) {
+            if (spinnerList.get(i).getSelection() != null) {
+                if (!selections.contains(spinnerList.get(i).getSelection())) {
+                    selections.add(spinnerList.get(i).getSelection());
                 } else {
-                    removeView(elementSpinners.get(i));
-                    elementSpinners.remove(i);
+                    removeView(spinnerList.get(i));
+                    spinnerList.remove(i);
                     removed = true;
                 }
             }
@@ -117,20 +119,35 @@ public abstract class IncrementalElementsLayout<T extends Element<T>> extends Li
         return removed;
     }
 
+    protected boolean removeDuplicates() {
+        return removeDuplicates(elementSpinners);
+    }
+
     private void clear() {
         removeAllViewsInLayout();
         elementSpinners.clear();
+        defaultElementSpinners.clear();
     }
 
     public void setElement(T element) {
         final List<T> elements = new ArrayList<>();
         elements.add(element);
-        setElements(elements);
+        addElements(elements);
     }
 
     public void setElements(Collection<T> elements) {
+        setElements(elements, new HashSet<>());
+    }
+
+    public void setElements(Collection<T> elements, Collection<T> defaultElements) {
         enabled = false;
         clear();
+        addDefaults(defaultElements);
+        addElements(elements);
+        enabled = true;
+    }
+
+    private void addElements(Collection<T> elements) {
         for (final T element : elements) {
             final ElementSpinner<T> spinner = createElementSpinner();
             spinner.setSelection(element);
@@ -140,11 +157,22 @@ public abstract class IncrementalElementsLayout<T extends Element<T>> extends Li
         if (nullAllowed) {
             addElementSpinner(createElementSpinner());
         }
-        enabled = true;
     }
 
     public List<ElementSpinner<T>> getElementSpinners() {
         return elementSpinners;
+    }
+
+    private void addDefaults(Collection<T> elements) {
+        elements.stream().sorted().forEach(element -> {
+            final ElementSpinner<T> spinner = createElementSpinner();
+            spinner.setSelection(element);
+            super.addView(spinner);
+            setElementSpinnerProperties(spinner);
+            spinner.setEnabled(false);
+            defaultElementSpinners.add(spinner);
+        });
+        removeDuplicates(defaultElementSpinners);
     }
 
     private void addElementSpinner(ElementSpinner<T> spinner) {
@@ -181,7 +209,7 @@ public abstract class IncrementalElementsLayout<T extends Element<T>> extends Li
                 LayoutParams.WRAP_CONTENT));
     }
 
-    public final ElementSpinner<T> createElementSpinner() {
+    private ElementSpinner<T> createElementSpinner() {
         final ElementSpinner<T> selector = new ElementSpinner<>(getContext());
         selector.setAdapter(getElementAdapter());
         return selector;

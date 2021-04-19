@@ -111,4 +111,10 @@ public class ElementSpinner<T extends Element<T>> extends HelpElement<T> {
         }
         return selectedItem;
     }
+
+    @Override
+    public void setEnabled(boolean enabled){
+        final Spinner selector = findViewById(R.id.spinner);
+        selector.setEnabled(enabled);
+    }
 }
