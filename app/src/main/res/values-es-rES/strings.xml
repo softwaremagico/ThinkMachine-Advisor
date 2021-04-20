@@ -163,7 +163,7 @@
     <string name="preference_option_warlord">Señor de la Guerra</string>
     <string name="preference_option_control">Control</string>
     <string name="message_random_character_success">Personaje finalizado aleatoriamente.</string>
-    <string name="message_random_character_error">!El personaje no ha podido finalizarse aleatoriamente¡</string>
+    <string name="message_random_character_error">¡El personaje no ha podido finalizarse aleatoriamente!</string>
     <string name="cost">Coste</string>
     <string name="close">Cerrar</string>
     <string name="properties">Propiedades</string>
@@ -209,4 +209,9 @@
     <string name="npc_weirdforces_section">Unidades Extrañas</string>
     <string name="npc_xenos_section">Xenos</string>
     <string name="profile_xenos_section">Xenos</string>
+    <string name="npc_guerrilla_section">Guerrilla</string>
+    <string name="message_random_character_already_started">El personaje ya se ha iniciado. Se perderá cualquier cambio.</string>
+    <string name="action_proceed">Continuar.</string>
+    <string name="message_random_character_already_finished">El personaje ya ha sido finalizado.</string>
+    <string name="action_new">Crear uno nuevo.</string>
 </resources>

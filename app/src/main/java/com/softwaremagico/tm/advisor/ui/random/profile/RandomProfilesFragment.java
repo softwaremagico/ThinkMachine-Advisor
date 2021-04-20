@@ -30,6 +30,7 @@ import com.softwaremagico.tm.advisor.ui.components.ElementSelector;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.creation.CharacterProgressionStatus;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
 import com.softwaremagico.tm.random.predefined.profile.RandomProfile;
@@ -99,20 +100,28 @@ public class RandomProfilesFragment extends CharacterCustomFragment {
         root = inflater.inflate(R.layout.random_profiles_fragment, container, false);
 
         final FloatingActionButton fab = root.findViewById(R.id.random);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    CharacterManager.randomizeCharacterUsingProfiles(getSelectedOptions());
-                    SnackbarGenerator.getInfoMessage(root, R.string.message_random_character_success).show();
-                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException e) {
-                    SnackbarGenerator.getErrorMessage(root, R.string.message_random_character_error).show();
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
-                }
+        fab.setOnClickListener(view -> {
+            if (CharacterManager.getCostCalculator().getStatus().ordinal() > CharacterProgressionStatus.IN_PROGRESS.ordinal()) {
+                SnackbarGenerator.getWarningMessage(root, R.string.message_random_character_already_finished,
+                        R.string.action_new, action -> {
+                            generateCharacter();
+                        }).show();
+            } else {
+                generateCharacter();
             }
         });
 
         return root;
+    }
+
+    private void generateCharacter() {
+        try {
+            CharacterManager.randomizeCharacterUsingProfiles(getSelectedOptions());
+            SnackbarGenerator.getInfoMessage(root, R.string.message_random_character_success).show();
+        } catch (InvalidXmlElementException | InvalidRandomElementSelectedException e) {
+            SnackbarGenerator.getErrorMessage(root, R.string.message_random_character_error).show();
+            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        }
     }
 
     public Set<RandomProfile> getSelectedOptions() {

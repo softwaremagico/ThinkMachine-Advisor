@@ -34,9 +34,13 @@ public class TabSheetVisualizationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.character_visualization_fragment, container, false);
-        final VisualizationSectionsPagerAdapter characterSectionsPagerAdapter = new VisualizationSectionsPagerAdapter(getContext(), getChildFragmentManager());
+        final VisualizationSectionsPagerAdapter characterSheetsPagerAdapter = new VisualizationSectionsPagerAdapter(getContext(), getChildFragmentManager());
         final ViewPager viewPager = view.findViewById(R.id.view_pager);
-        viewPager.setAdapter(characterSectionsPagerAdapter);
+        viewPager.setAdapter(characterSheetsPagerAdapter);
+
+        //Avoid refreshing of fragments. We will update them manually.
+        viewPager.setOffscreenPageLimit(characterSheetsPagerAdapter.getCount());
+
         final TabLayout tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         return view;

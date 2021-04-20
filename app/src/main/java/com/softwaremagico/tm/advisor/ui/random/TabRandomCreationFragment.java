@@ -37,6 +37,10 @@ public class TabRandomCreationFragment extends Fragment {
         final RandomSectionsPagerAdapter randomSectionsPagerAdapter = new RandomSectionsPagerAdapter(getContext(), getChildFragmentManager());
         final ViewPager viewPager = view.findViewById(R.id.view_pager);
         viewPager.setAdapter(randomSectionsPagerAdapter);
+
+        //Avoid refreshing of fragments. We will update them manually.
+        viewPager.setOffscreenPageLimit(randomSectionsPagerAdapter.getCount());
+
         final TabLayout tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         return view;

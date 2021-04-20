@@ -46,6 +46,8 @@
     <string name="message_character_saved_successfully">Character saved.</string>
     <string name="message_character_saved_error">Character save error!</string>
     <string name="message_random_character_success">Character finished randomly.</string>
+    <string name="message_random_character_already_started">Character has been started already. All changes will be lost.</string>
+    <string name="message_random_character_already_finished">Character is already finished.</string>
     <string name="message_random_character_error">Character cannot be randomly finished!</string>
     <string name="loading">Loading ...</string>
     <string name="character_card_details">Details ...</string>
@@ -204,11 +206,14 @@
     <string name="npc_underground_section">Underground</string>
     <string name="npc_army_section">Army</string>
     <string name="npc_navy_section">Navy</string>
-    <string name="npc_airforce_section">Aire Force</string>
+    <string name="npc_airforce_section">Air Force</string>
+    <string name="npc_guerrilla_section">Guerrilla</string>
     <string name="npc_specialforces_section">Special Forces</string>
     <string name="npc_spacelegions_section">Space Legions</string>
     <string name="npc_intelligence_section">Intelligence</string>
     <string name="npc_weirdforces_section">Weird Forces</string>
     <string name="npc_xenos_section">Xenos</string>
+    <string name="action_proceed">Proceed.</string>
+    <string name="action_new">Create new.</string>
 </resources>
 
