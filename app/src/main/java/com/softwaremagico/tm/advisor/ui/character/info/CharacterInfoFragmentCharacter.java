@@ -217,9 +217,15 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         raceSelector.setAdapter(new ElementAdapter<Race>(getActivity(), options, false, Race.class) {
             @Override
             public boolean isEnabled(int position) {
-                return CharacterManager.getSelectedCharacter().getFaction() == null || getItem(position) == null ||
-                        CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces() == null ||
-                        CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces().contains(getItem(position));
+                //Faction limitations
+                return getItem(position) == null ||
+                        ((CharacterManager.getSelectedCharacter().getFaction() == null ||
+                                CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces() == null ||
+                                CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces().contains(getItem(position))) &&
+
+                                //Planet limitations
+                                getItem(position).getPlanets().isEmpty() || CharacterManager.getSelectedCharacter().getInfo().getPlanet() == null ||
+                                getItem(position).getPlanets().contains(CharacterManager.getSelectedCharacter().getInfo().getPlanet()));
             }
         });
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -303,7 +309,14 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         final ElementSpinner<Planet> planetSelector = root.findViewById(R.id.character_planet);
         List<Planet> options = new ArrayList<>(mViewModel.getAvailablePlanets());
         options.add(0, null);
-        planetSelector.setAdapter(new ElementAdapter<>(getActivity(), options, false, Planet.class));
+        planetSelector.setAdapter(new ElementAdapter<Planet>(getActivity(), options, false, Planet.class) {
+            @Override
+            public boolean isEnabled(int position) {
+                return CharacterManager.getSelectedCharacter().getRace() == null ||
+                        CharacterManager.getSelectedCharacter().getRace().getPlanets().isEmpty() ||
+                        CharacterManager.getSelectedCharacter().getRace().getPlanets().contains(getItem(position));
+            }
+        });
         planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {

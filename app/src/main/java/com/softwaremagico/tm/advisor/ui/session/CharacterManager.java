@@ -164,18 +164,12 @@ public final class CharacterManager {
     }
 
     public static void setRace(Race race) throws InvalidRaceException {
-        try {
-            getSelectedCharacter().setRace(race);
-            if (costCalculator != null) {
-                costCalculator.updateCost();
-            }
-            launchCharacterRaceUpdatedListeners(getSelectedCharacter());
-            launchCharacterUpdatedListeners(getSelectedCharacter());
-        } catch (InvalidRaceException e) {
-            if (race != null) {
-                throw e;
-            }
+        getSelectedCharacter().setRace(race);
+        if (costCalculator != null) {
+            costCalculator.updateCost();
         }
+        launchCharacterRaceUpdatedListeners(getSelectedCharacter());
+        launchCharacterUpdatedListeners(getSelectedCharacter());
     }
 
     public static void setPlanet(Planet planet) {
