@@ -202,6 +202,7 @@
     <string name="profile_occupation_section">Occupation</string>
     <string name="profile_special_section">Special</string>
     <string name="profile_xenos_section">Xenos</string>
+    <string name="profile_barbarian_section">Barbarian</string>
     <string name="npc_servitude_section">Servitude</string>
     <string name="npc_underground_section">Underground</string>
     <string name="npc_army_section">Army</string>
@@ -213,6 +214,7 @@
     <string name="npc_intelligence_section">Intelligence</string>
     <string name="npc_weirdforces_section">Weird Forces</string>
     <string name="npc_xenos_section">Xenos</string>
+    <string name="npc_barbarian_section">Barbarian</string>
     <string name="action_proceed">Proceed.</string>
     <string name="action_new">Create new.</string>
 </resources>

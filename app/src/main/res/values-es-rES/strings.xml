@@ -214,4 +214,6 @@
     <string name="action_proceed">Continuar.</string>
     <string name="message_random_character_already_finished">El personaje ya ha sido finalizado.</string>
     <string name="action_new">Crear uno nuevo.</string>
+    <string name="npc_barbarian_section">Bárbaros</string>
+    <string name="profile_barbarian_section">Bárbaros</string>
 </resources>
