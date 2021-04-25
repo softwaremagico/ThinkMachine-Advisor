@@ -38,16 +38,13 @@ import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.benefices.BeneficeDefinition;
-import com.softwaremagico.tm.character.benefices.BeneficeGroup;
 import com.softwaremagico.tm.character.benefices.InvalidBeneficeException;
 import com.softwaremagico.tm.character.blessings.Blessing;
-import com.softwaremagico.tm.character.blessings.BlessingGroup;
 import com.softwaremagico.tm.character.blessings.TooManyBlessingsException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 public class TraitsFragmentCharacter extends CharacterCustomFragment {
@@ -156,7 +153,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
 
                 @Override
                 public boolean isEnabled(int position) {
-                    return getItem(position).getBlessingGroup() != BlessingGroup.RESTRICTED;
+                    return !getItem(position).isRestricted();
                 }
             };
         }
@@ -220,8 +217,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
                             (CharacterManager.getSelectedCharacter().getFaction() != null &&
                                     getItem(position).getBeneficeDefinition().getRestrictedFactionGroup() ==
                                             CharacterManager.getSelectedCharacter().getFaction().getFactionGroup())) &&
-                            (getItem(position).getBeneficeDefinition() == null ||
-                                    !Objects.equals(getItem(position).getBeneficeDefinition().getGroup(), BeneficeGroup.RESTRICTED));
+                            !getItem(position).isRestricted();
                 }
             };
         }

@@ -32,6 +32,8 @@ public class CyberneticAdapter extends ElementAdapter<CyberneticDevice> {
             } else if (CharacterManager.getSelectedCharacter().getCyberneticsIncompatibility() + cyberneticDevice.getIncompatibility() > Cybernetics
                     .getMaxCyberneticIncompatibility(CharacterManager.getSelectedCharacter())) {
                 elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.unaffordableMoney));
+            } else if (!cyberneticDevice.isOfficial()) {
+                elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.unofficialElement));
             } else {
                 elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.colorNormal));
             }

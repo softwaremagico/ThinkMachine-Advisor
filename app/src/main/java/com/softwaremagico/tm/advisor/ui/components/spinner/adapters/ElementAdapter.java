@@ -13,7 +13,6 @@
 package com.softwaremagico.tm.advisor.ui.components.spinner.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
@@ -79,9 +79,13 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
 
     protected void setElementColor(TextView elementRepresentation, T element, int position) {
         if (isEnabled(position)) {
-            elementRepresentation.setTextColor(Color.BLACK);
+            if (!element.isOfficial()) {
+                elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.unofficialElement));
+            } else {
+                elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.colorNormal));
+            }
         } else {
-            elementRepresentation.setTextColor(Color.LTGRAY);
+            elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.colorDisabled));
         }
     }
 
