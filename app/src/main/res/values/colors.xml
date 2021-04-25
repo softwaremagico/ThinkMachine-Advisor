@@ -69,5 +69,5 @@
     <color name="unaffordableMoney">@color/colorError</color>
     <color name="correctElement">@color/colorError</color>
     <color name="insufficientOccultimsLevel">@color/colorError</color>
-    <color name="unofficialElement">#943461</color>
+    <color name="unofficialElement">#c96d35</color>
 </resources>
