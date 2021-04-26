@@ -13,7 +13,6 @@
 package com.softwaremagico.tm.advisor.ui.session;
 
 import com.softwaremagico.tm.InvalidXmlElementException;
-import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.RandomizeCharacter;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
@@ -178,16 +177,8 @@ public final class CharacterManager {
     }
 
     public static void setFaction(Faction faction) throws InvalidFactionException {
-        try {
-            getSelectedCharacter().setFaction(faction);
-            launchCharacterFactionUpdatedListeners(getSelectedCharacter());
-        } catch (InvalidFactionException e) {
-            if (faction == null) {
-                AdvisorLog.errorMessage(CharacterManager.class.getName(), e);
-            } else {
-                throw e;
-            }
-        }
+        getSelectedCharacter().setFaction(faction);
+        launchCharacterFactionUpdatedListeners(getSelectedCharacter());
     }
 
     public static CostCalculator getCostCalculator() {
