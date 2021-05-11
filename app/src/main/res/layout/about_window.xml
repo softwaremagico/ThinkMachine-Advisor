@@ -50,12 +50,14 @@
         android:id="@+id/app_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="v0.0.0"
+        android:text="@string/default_version"
         android:textColor="@color/colorContrast"
         android:layout_alignParentBottom="true"
         android:padding="10dp"
         android:gravity="center"
         android:background="@color/colorPrimary"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:clickable="true"
+        android:focusable="true" />
 
 </RelativeLayout>

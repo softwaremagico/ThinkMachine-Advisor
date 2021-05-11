@@ -35,6 +35,7 @@ public class AboutWindow extends DialogFragment {
         } catch (PackageManager.NameNotFoundException e) {
             versionText.setText("");
         }
+        versionText.setOnClickListener(v -> dismiss());
 
         return view;
     }
