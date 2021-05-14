@@ -32,8 +32,8 @@ import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.RestrictedElementException;
 import com.softwaremagico.tm.character.creation.CharacterProgressionStatus;
-import com.softwaremagico.tm.random.exceptions.DuplicatedPreferenceException;
 import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
 import com.softwaremagico.tm.random.selectors.IRandomPreference;
 
@@ -140,7 +140,7 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
         try {
             CharacterManager.randomizeCharacter(getSelectedOptions());
             SnackbarGenerator.getInfoMessage(root, R.string.message_random_character_success).show();
-        } catch (InvalidXmlElementException | DuplicatedPreferenceException | InvalidRandomElementSelectedException e) {
+        } catch (InvalidXmlElementException | InvalidRandomElementSelectedException | RestrictedElementException e) {
             SnackbarGenerator.getErrorMessage(root, R.string.message_random_character_error).show();
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }

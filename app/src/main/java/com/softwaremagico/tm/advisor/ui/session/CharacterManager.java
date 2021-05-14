@@ -24,7 +24,6 @@ import com.softwaremagico.tm.character.planets.Planet;
 import com.softwaremagico.tm.character.races.InvalidRaceException;
 import com.softwaremagico.tm.character.races.Race;
 import com.softwaremagico.tm.file.modules.ModuleManager;
-import com.softwaremagico.tm.random.exceptions.DuplicatedPreferenceException;
 import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
 import com.softwaremagico.tm.random.predefined.characters.Npc;
 import com.softwaremagico.tm.random.predefined.profile.RandomProfile;
@@ -202,20 +201,21 @@ public final class CharacterManager {
     }
 
     public static void randomizeCharacter(Set<IRandomPreference> randomPreferences) throws InvalidXmlElementException,
-            DuplicatedPreferenceException, InvalidRandomElementSelectedException {
+            InvalidRandomElementSelectedException, RestrictedElementException {
         final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), 0, randomPreferences.toArray(new IRandomPreference[0]));
         randomizeCharacter.createCharacter();
         setSelectedCharacter(getSelectedCharacter());
     }
 
-    public static void randomizeCharacterUsingProfiles(Set<RandomProfile> randomProfiles) throws InvalidXmlElementException, InvalidRandomElementSelectedException {
+    public static void randomizeCharacterUsingProfiles(Set<RandomProfile> randomProfiles) throws InvalidXmlElementException, InvalidRandomElementSelectedException,
+            RestrictedElementException {
         final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), randomProfiles.toArray(new RandomProfile[0]));
         randomizeCharacter.createCharacter();
         setSelectedCharacter(getSelectedCharacter());
     }
 
     public static void randomizeCharacterUsingNpc(Set<Npc> randomProfiles) throws InvalidXmlElementException,
-            InvalidRandomElementSelectedException {
+            InvalidRandomElementSelectedException, RestrictedElementException {
         final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), randomProfiles.toArray(new Npc[0]));
         randomizeCharacter.createCharacter();
         setSelectedCharacter(getSelectedCharacter());

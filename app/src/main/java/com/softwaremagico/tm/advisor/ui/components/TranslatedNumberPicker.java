@@ -26,8 +26,6 @@ import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 
-import java.util.Objects;
-
 public class TranslatedNumberPicker extends Component {
     private int oldValue = 0;
     private int selectedValue = 0;
@@ -49,9 +47,7 @@ public class TranslatedNumberPicker extends Component {
         if (element == null) {
             return;
         }
-        picker.setEnabled((element.getRestrictedToRaces().isEmpty() || element.getRestrictedToRaces().contains(CharacterManager.getSelectedCharacter().getRace()))
-                && (element.getRestrictedToFactionGroup() == null && Objects.equals(element.getRestrictedToFactionGroup(),
-                CharacterManager.getSelectedCharacter().getFaction().getFactionGroup())));
+        picker.setEnabled(!element.isRestricted(CharacterManager.getSelectedCharacter()));
     }
 
     protected void refreshElementColor() {
@@ -59,7 +55,7 @@ public class TranslatedNumberPicker extends Component {
             return;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (element.isRestricted() || element.isRestricted(CharacterManager.getSelectedCharacter())){
+            if (element.isRestricted() || element.isRestricted(CharacterManager.getSelectedCharacter())) {
                 picker.setTextColor(ContextCompat.getColor(getContext(), R.color.restricted));
             } else if (!element.isOfficial()) {
                 picker.setTextColor(ContextCompat.getColor(getContext(), R.color.unofficialElement));

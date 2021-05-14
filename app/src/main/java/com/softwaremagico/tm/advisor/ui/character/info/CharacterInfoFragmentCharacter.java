@@ -108,7 +108,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                     randomName.assign();
                     final TranslatedEditText nameTextEditor = root.findViewById(R.id.character_name);
                     nameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getNameRepresentation());
-                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException e) {
+                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException | RestrictedElementException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.selectFactionAndMore).show();
                 }
             });
@@ -128,8 +128,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                     } else {
                         surnameTextEditor.setText("");
                     }
-                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException e) {
-                    e.printStackTrace();
+                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException | RestrictedElementException e) {
+                    AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
             });
         }
