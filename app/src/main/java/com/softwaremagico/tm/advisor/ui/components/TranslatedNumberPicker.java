@@ -14,24 +14,59 @@ package com.softwaremagico.tm.advisor.ui.components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
+
+import java.util.Objects;
 
 public class TranslatedNumberPicker extends Component {
     private int oldValue = 0;
     private int selectedValue = 0;
     private NumberPicker picker;
+    private Element<?> element;
 
-    public TranslatedNumberPicker(Context context, AttributeSet attrs) {
+    public TranslatedNumberPicker(Context context, AttributeSet attrs, Element<?> element) {
         super(context, attrs);
+        this.element = element;
+        refreshElementColor();
+        setEnabled();
     }
 
     public interface OnValueChanged {
         void update(int newValue);
+    }
+
+    protected void setEnabled() {
+        if (element == null) {
+            return;
+        }
+        picker.setEnabled((element.getRestrictedToRaces().isEmpty() || element.getRestrictedToRaces().contains(CharacterManager.getSelectedCharacter().getRace()))
+                && (element.getRestrictedToFactionGroup() == null && Objects.equals(element.getRestrictedToFactionGroup(),
+                CharacterManager.getSelectedCharacter().getFaction().getFactionGroup())));
+    }
+
+    protected void refreshElementColor() {
+        if (element == null) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (element.isRestricted() || element.isRestricted(CharacterManager.getSelectedCharacter())){
+                picker.setTextColor(ContextCompat.getColor(getContext(), R.color.restricted));
+            } else if (!element.isOfficial()) {
+                picker.setTextColor(ContextCompat.getColor(getContext(), R.color.unofficialElement));
+            } else {
+                picker.setTextColor(ContextCompat.getColor(getContext(), R.color.colorNormal));
+            }
+        }
     }
 
     @Override
@@ -100,6 +135,11 @@ public class TranslatedNumberPicker extends Component {
             picker.setMaxValue(maximum);
             picker.setMinValue(minimum);
         }
+    }
+
+    public void update() {
+        setEnabled();
+        refreshElementColor();
     }
 
 }

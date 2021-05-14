@@ -14,6 +14,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.character.races.Race;
+
+import java.util.stream.Collectors;
 
 public class ElementDescriptionDialog<T extends Element<T>> extends DialogFragment {
     protected static final String TABLE_STYLE = "border:1px solid black;margin-left:auto;margin-right:auto;font-size:60%";
@@ -49,11 +52,31 @@ public class ElementDescriptionDialog<T extends Element<T>> extends DialogFragme
         return "<p>" + element.getDescription() + "</p>";
     }
 
+    private String getRestrictions(T element) {
+        StringBuilder restrictions = new StringBuilder();
+        if (element.getRestrictedToRaces() != null && !element.getRestrictedToRaces().isEmpty()) {
+            restrictions.append("<p><b>").append(getString(R.string.restricted_races)).append("</b> ")
+                    .append(element.getRestrictedToRaces().stream().map(Race::getName)
+                            .collect(Collectors.joining(", "))).append("</p>");
+        }
+        if (element.getRestrictedToFactionGroup() != null) {
+            restrictions.append("<p><b>").append(getContext().getResources().getIdentifier("preference_option_" +
+                    element.getRestrictedToFactionGroup().name().toLowerCase(), "string", getContext().getPackageName()))
+                    .append("</b> ").append(element.getRestrictedToFactionGroup()).append("</p>");
+        }
+        if (element.isRestricted()) {
+            restrictions.append("<p><b><font color=\"" + getColor(R.color.restricted) + "\">").append(getString(R.string.restricted))
+                    .append("</font></b></p>");
+        }
+        return restrictions.toString();
+    }
+
     private String setContent(T element) {
         return "<html><body style='text-align:justify;font-size:14px;'>" +
                 getHeader(element) +
                 getBody(element) +
                 getDetails(element) +
+                getRestrictions(element) +
                 "</body></html>";
     }
 

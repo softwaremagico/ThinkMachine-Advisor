@@ -31,6 +31,7 @@ import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.RestrictedElementException;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 import com.softwaremagico.tm.character.skills.AvailableSkill;
 import com.softwaremagico.tm.character.skills.InvalidRanksException;
@@ -58,6 +59,7 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
     public void setCharacter(View root, CharacterPlayer character) {
         updateSkillsLimits(character);
         refreshSkillsValues(character);
+        refreshSkillsColors();
         skillsCounter.setCharacter(character);
         extraCounter.setCharacter(character);
     }
@@ -87,11 +89,11 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
         skillsCounter = root.findViewById(R.id.skills_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
 
-        CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> updateSkillsLimits(characterPlayer));
+        CharacterManager.addCharacterRaceUpdatedListener(this::updateSkillsLimits);
         CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
 
-        CharacterManager.addCharacterFactionUpdatedListener(characterPlayer -> updateDynamicSkills(characterPlayer));
-        CharacterManager.addCharacterPlanetUpdatedListener(characterPlayer -> updateDynamicSkills(characterPlayer));
+        CharacterManager.addCharacterFactionUpdatedListener(this::updateDynamicSkills);
+        CharacterManager.addCharacterPlanetUpdatedListener(this::updateDynamicSkills);
 
         return root;
     }
@@ -115,7 +117,7 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createSkillEditText(View root, LinearLayout linearLayout, AvailableSkill skill) {
-        final TranslatedNumberPicker skillNumberPicker = new TranslatedNumberPicker(getContext(), null);
+        final TranslatedNumberPicker skillNumberPicker = new TranslatedNumberPicker(getContext(), null, skill);
         translatedNumberPickers.put(skill, skillNumberPicker);
         skillNumberPicker.setLabel(skill.getCompleteName());
         skillNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -132,10 +134,14 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
             try {
                 CharacterManager.getSelectedCharacter().setSkillRank(skill, newValue);
             } catch (InvalidSkillException e) {
+                SnackbarGenerator.getErrorMessage(root, R.string.message_duplicated_item_removed).show();
                 AdvisorLog.errorMessage(this.getClass().getName(), e);
             } catch (InvalidRanksException e) {
                 SnackbarGenerator.getInfoMessage(root, R.string.message_duplicated_item_removed).show();
                 skillNumberPicker.setValue(CharacterManager.getSelectedCharacter().getSkillAssignedRanks(skill));
+            } catch (RestrictedElementException e) {
+                SnackbarGenerator.getErrorMessage(root, R.string.message_restricted_element).show();
+                skillNumberPicker.setValue(0);
             }
         });
     }
@@ -162,4 +168,9 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
         }
     }
 
+    public void refreshSkillsColors() {
+        for (final Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
+            skillComponent.getValue().update();
+        }
+    }
 }

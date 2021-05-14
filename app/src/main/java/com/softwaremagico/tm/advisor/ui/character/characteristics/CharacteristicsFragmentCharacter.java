@@ -125,7 +125,7 @@ public class CharacteristicsFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createCharacteristicsEditText(LinearLayout linearLayout, CharacteristicDefinition characteristicDefinition) {
-        final TranslatedNumberPicker characteristicsNumberPicker = new TranslatedNumberPicker(getContext(), null);
+        final TranslatedNumberPicker characteristicsNumberPicker = new TranslatedNumberPicker(getContext(), null, null);
         translatedNumberPickers.put(characteristicDefinition.getCharacteristicName(), characteristicsNumberPicker);
         characteristicsNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText(characteristicDefinition.getId()));
         characteristicsNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

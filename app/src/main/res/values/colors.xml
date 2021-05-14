@@ -64,6 +64,7 @@
     <color name="threatHigh">#a20c06</color>
     <color name="threatExtreme">#6e0309</color>
 
+    <color name="restricted">@color/colorError</color>
     <color name="insufficientTechnology">@color/colorError</color>
     <color name="insufficientMoney">@color/colorWarning</color>
     <color name="unaffordableMoney">@color/colorError</color>

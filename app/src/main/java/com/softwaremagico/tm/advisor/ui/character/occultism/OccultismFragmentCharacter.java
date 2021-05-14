@@ -224,7 +224,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createOccultismSelector(LinearLayout linearLayout, OccultismType occultismType) {
-        final TranslatedNumberPicker occultismNumberPicker = new TranslatedNumberPicker(getContext(), null);
+        final TranslatedNumberPicker occultismNumberPicker = new TranslatedNumberPicker(getContext(), null, occultismType);
         translatedNumberPickers.put(occultismType, occultismNumberPicker);
 
         occultismNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText(occultismType.getId()));
@@ -264,7 +264,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createWyrdSelector(LinearLayout linearLayout) {
-        wyrdNumberPicker = new TranslatedNumberPicker(getContext(), null);
+        wyrdNumberPicker = new TranslatedNumberPicker(getContext(), null, null);
         updateWyrdLimits();
         wyrdNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText("wyrd"));
         wyrdNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

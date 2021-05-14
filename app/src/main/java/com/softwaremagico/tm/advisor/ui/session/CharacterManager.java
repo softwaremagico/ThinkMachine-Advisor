@@ -15,6 +15,7 @@ package com.softwaremagico.tm.advisor.ui.session;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.RandomizeCharacter;
+import com.softwaremagico.tm.character.RestrictedElementException;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.character.factions.Faction;
@@ -162,7 +163,7 @@ public final class CharacterManager {
         launchCharacterCharacteristicsUpdatedListeners(getSelectedCharacter(), characteristicName);
     }
 
-    public static void setRace(Race race) throws InvalidRaceException {
+    public static void setRace(Race race) throws InvalidRaceException, RestrictedElementException {
         getSelectedCharacter().setRace(race);
         if (costCalculator != null) {
             costCalculator.updateCost();
@@ -176,7 +177,7 @@ public final class CharacterManager {
         launchCharacterPlanetUpdatedListeners(getSelectedCharacter());
     }
 
-    public static void setFaction(Faction faction) throws InvalidFactionException {
+    public static void setFaction(Faction faction) throws InvalidFactionException, RestrictedElementException {
         getSelectedCharacter().setFaction(faction);
         launchCharacterFactionUpdatedListeners(getSelectedCharacter());
     }

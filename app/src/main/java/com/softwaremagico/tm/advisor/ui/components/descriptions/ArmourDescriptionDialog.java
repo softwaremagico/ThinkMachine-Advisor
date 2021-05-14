@@ -52,7 +52,7 @@ public class ArmourDescriptionDialog extends ElementDescriptionDialog<Armour> {
                 "</tr>" +
                 "</table>");
         if (!armour.getAllowedShields().isEmpty()) {
-            stringBuilder.append("<br><b>" + ThinkMachineTranslator.getTranslatedText("shield") + ":</b> ");
+            stringBuilder.append("<br><b>").append(ThinkMachineTranslator.getTranslatedText("shield")).append(":</b> ");
             String separator = "";
             for (Shield shield : armour.getAllowedShields()) {
                 stringBuilder.append(separator);
@@ -61,7 +61,7 @@ public class ArmourDescriptionDialog extends ElementDescriptionDialog<Armour> {
             }
         }
         if (!armour.getSpecifications().isEmpty()) {
-            stringBuilder.append("<br><b>" + ThinkMachineTranslator.getTranslatedText("othersTable") + ":</b> ");
+            stringBuilder.append("<br><b>").append(ThinkMachineTranslator.getTranslatedText("othersTable")).append(":</b> ");
             String separator = "";
             for (ArmourSpecification specification : armour.getSpecifications()) {
                 stringBuilder.append(separator);
@@ -73,7 +73,7 @@ public class ArmourDescriptionDialog extends ElementDescriptionDialog<Armour> {
             }
         }
         if (!armour.getDamageTypes().isEmpty()) {
-            stringBuilder.append("<br><b>" + getString(R.string.properties) + ":</b> ");
+            stringBuilder.append("<br><b>").append(getString(R.string.properties)).append(":</b> ");
             String separator = "";
             for (DamageType damageType : armour.getDamageTypes()) {
                 stringBuilder.append(separator);
@@ -81,11 +81,8 @@ public class ArmourDescriptionDialog extends ElementDescriptionDialog<Armour> {
                 separator = ", ";
             }
         }
-        stringBuilder.append("<br><b>" + getString(R.string.cost) + "</b> " +
-                (costProhibited ? "<font color=\"" + getColor(R.color.unaffordableMoney) + "\">" :
-                        (costLimited ? "<font color=\"" + getColor(R.color.insufficientMoney) + "\">" : "")) +
-                armour.getCost() +
-                (costLimited || costProhibited ? "</font>" : "") + " " + ThinkMachineTranslator.getTranslatedText("firebirds"));
+        stringBuilder.append("<br><b>").append(getString(R.string.cost)).append("</b> ").append(costProhibited ? "<font color=\"" + getColor(R.color.unaffordableMoney) + "\">" :
+                (costLimited ? "<font color=\"" + getColor(R.color.insufficientMoney) + "\">" : "")).append(armour.getCost()).append(costLimited || costProhibited ? "</font>" : "").append(" ").append(ThinkMachineTranslator.getTranslatedText("firebirds"));
         return stringBuilder.toString();
     }
 }

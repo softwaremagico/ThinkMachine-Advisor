@@ -44,6 +44,7 @@ import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.Gender;
 import com.softwaremagico.tm.character.RandomName;
 import com.softwaremagico.tm.character.RandomSurname;
+import com.softwaremagico.tm.character.RestrictedElementException;
 import com.softwaremagico.tm.character.Surname;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
@@ -242,7 +243,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                         }
                         updateCounters(CharacterManager.getSelectedCharacter());
                     }
-                } catch (InvalidRaceException e) {
+                } catch (InvalidRaceException | RestrictedElementException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.invalidFactionAndRace).show();
                     raceSelector.setSelection(null);
                 }
@@ -252,7 +253,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             public void onNothingSelected(AdapterView<?> parentView) {
                 try {
                     CharacterManager.getSelectedCharacter().setRace(null);
-                } catch (InvalidRaceException e) {
+                } catch (InvalidRaceException | RestrictedElementException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
                 updateCounters(CharacterManager.getSelectedCharacter());
@@ -288,7 +289,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                             CharacterManager.setFaction(null);
                         }
                     }
-                } catch (InvalidFactionException e) {
+                } catch (InvalidFactionException | RestrictedElementException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.invalidFactionAndRace).show();
                     factionsSelector.setSelection(null);
                 }
@@ -298,7 +299,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             public void onNothingSelected(AdapterView<?> parentView) {
                 try {
                     CharacterManager.getSelectedCharacter().setFaction(null);
-                } catch (InvalidFactionException e) {
+                } catch (InvalidFactionException | RestrictedElementException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
             }

@@ -38,6 +38,7 @@
     <string name="message_invalid_shield_armour_combination">Invalid combination of armor with energy shield.</string>
     <string name="message_invalid_tech_level">Some items has a tech level higher that the character.</string>
     <string name="message_duplicated_item_removed">Duplicated element removed.</string>
+    <string name="message_restricted_element">This element is restricted for your character.</string>
     <string name="message_missing_required_skills">Some skills are required before assigning ranks to this skill.</string>
     <string name="settings_load">Load</string>
     <string name="settings_save">Save</string>
@@ -218,5 +219,8 @@
     <string name="action_proceed">Proceed.</string>
     <string name="action_new">Create new.</string>
     <string name="default_version" translatable="false">v0.0.0</string>
+    <string name="restricted">Restricted</string>
+    <string name="restricted_races">Restricted to races:</string>
+    <string name="restricted_factions">Restricted to factions:</string>
 </resources>
 
