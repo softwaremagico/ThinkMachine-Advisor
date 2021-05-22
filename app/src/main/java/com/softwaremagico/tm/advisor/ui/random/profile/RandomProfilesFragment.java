@@ -26,6 +26,7 @@ import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
+import com.softwaremagico.tm.advisor.ui.components.ElementRadio;
 import com.softwaremagico.tm.advisor.ui.components.ElementSelector;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
@@ -37,14 +38,18 @@ import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedExcep
 import com.softwaremagico.tm.random.predefined.profile.RandomProfile;
 import com.softwaremagico.tm.random.predefined.profile.RandomProfileFactory;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class RandomProfilesFragment extends CharacterCustomFragment {
     private View root;
     private final Set<ElementSelector<RandomProfile>> optionsAvailable = new HashSet<>();
+    private final Map<String, Set<ElementSelector<RandomProfile>>> optionsAvailableByGroup = new HashMap<>();
 
     public static RandomProfilesFragment newInstance(int index) {
         final RandomProfilesFragment fragment = new RandomProfilesFragment();
@@ -68,6 +73,7 @@ public class RandomProfilesFragment extends CharacterCustomFragment {
 
         RandomProfileFactory.getInstance().getGroups(Locale.getDefault().getLanguage(),
                 ModuleManager.DEFAULT_MODULE).stream().sorted().forEach(group -> {
+            optionsAvailableByGroup.computeIfAbsent(group, g -> new HashSet<>());
             try {
                 addSection(getContext().getResources().getString(getContext().getResources().getIdentifier(getOptionTranslation(group), "string",
                         getContext().getPackageName())), linearLayout);
@@ -76,8 +82,16 @@ public class RandomProfilesFragment extends CharacterCustomFragment {
             }
             RandomProfileFactory.getInstance().getByGroup(group).stream().sorted().forEach(randomProfile -> {
                 ElementSelector<RandomProfile> randomProfileSelector = new ElementSelector<>(getContext(), randomProfile);
+                randomProfileSelector.setOnCheckedChangeListener((compoundButton, checked) -> {
+                    //Unselect all other radio buttons.
+                    if (checked && !Objects.equals(group, "specials")) {
+                        optionsAvailableByGroup.get(group).stream().filter(npcElementRadio -> !Objects.equals(npcElementRadio, randomProfileSelector)).
+                                forEach(npcElementRadio -> npcElementRadio.setChecked(false));
+                    }
+                });
                 linearLayout.addView(randomProfileSelector);
                 optionsAvailable.add(randomProfileSelector);
+                optionsAvailableByGroup.get(group).add(randomProfileSelector);
             });
             addSpace(linearLayout);
         });

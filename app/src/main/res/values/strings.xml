@@ -187,6 +187,8 @@
     <string name="preference_option_fight">Fight</string>
     <string name="preference_option_ranged">Ranged</string>
     <string name="preference_option_any">Any</string>
+    <string name="preference_option_psi">Psi</string>
+    <string name="preference_option_theurgy">Theurgy</string>
     <string name="cost">Cost</string>
     <string name="close">Close</string>
     <string name="properties">Properties</string>
@@ -201,7 +203,7 @@
     <string name="profile_age_section">Age</string>
     <string name="profile_faction_section">Factions</string>
     <string name="profile_occupation_section">Occupation</string>
-    <string name="profile_special_section">Special</string>
+    <string name="profile_specials_section">Special</string>
     <string name="profile_xenos_section">Xenos</string>
     <string name="profile_barbarian_section">Barbarian</string>
     <string name="npc_servitude_section">Servitude</string>

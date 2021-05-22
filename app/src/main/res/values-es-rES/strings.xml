@@ -191,7 +191,7 @@
     <string name="profile_age_section">Edad</string>
     <string name="profile_faction_section">Facción</string>
     <string name="profile_occupation_section">Dedicación</string>
-    <string name="profile_special_section">Especial</string>
+    <string name="profile_specials_section">Especial</string>
     <string name="preference_option_any">Cualquiera</string>
     <string name="npc_servitude_section">Servidumbre</string>
     <string name="npc_underground_section">Clandestinos</string>
@@ -220,4 +220,6 @@
     <string name="restricted_factions">Restringido a las facciones:</string>
     <string name="restricted">Restringido</string>
     <string name="message_restricted_element">Este elemento está restringido para tu personaje.</string>
+    <string name="preference_option_psi">Psí</string>
+    <string name="preference_option_theurgy">Teúrgia</string>
 </resources>

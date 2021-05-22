@@ -20,7 +20,7 @@ import com.softwaremagico.tm.random.selectors.IRandomPreference;
 import com.softwaremagico.tm.random.selectors.NamesPreferences;
 import com.softwaremagico.tm.random.selectors.OccultismLevelPreferences;
 import com.softwaremagico.tm.random.selectors.OccultismPathLevelPreferences;
-import com.softwaremagico.tm.random.selectors.OccultismTypePreference;
+import com.softwaremagico.tm.random.selectors.OccultismTypePreferences;
 import com.softwaremagico.tm.random.selectors.RacePreferences;
 import com.softwaremagico.tm.random.selectors.ShieldPreferences;
 import com.softwaremagico.tm.random.selectors.SkillGroupPreferences;
@@ -44,7 +44,7 @@ public enum PreferenceGroup {
 
     CYBERNETICS(CyberneticPointsPreferences.class, CyberneticTotalDevicesPreferences.class, CyberneticVisibilityPreferences.class),
 
-    PSI(OccultismTypePreference.class, OccultismLevelPreferences.class, OccultismPathLevelPreferences.class);
+    PSI(OccultismTypePreferences.class, OccultismLevelPreferences.class, OccultismPathLevelPreferences.class);
 
 
     private final Class<? extends IRandomPreference>[] randomPreferences;
