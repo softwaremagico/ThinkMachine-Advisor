@@ -26,7 +26,6 @@ import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
-import com.softwaremagico.tm.advisor.ui.components.ElementRadio;
 import com.softwaremagico.tm.advisor.ui.components.ElementSelector;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
@@ -119,6 +118,7 @@ public class RandomProfilesFragment extends CharacterCustomFragment {
             if (CharacterManager.getCostCalculator().getStatus().ordinal() > CharacterProgressionStatus.IN_PROGRESS.ordinal()) {
                 SnackbarGenerator.getWarningMessage(root, R.string.message_random_character_already_finished,
                         R.string.action_new, action -> {
+                            CharacterManager.addNewCharacter();
                             generateCharacter();
                         }).show();
             } else {
