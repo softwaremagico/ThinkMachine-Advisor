@@ -11,6 +11,28 @@ This is an Android based application for the use of [ThinkMachine](https://softw
 
 The app is available on Google Play, and this site is only for hosting the source code of the application. If you are interested only on the use of this application as a standard user, please search it on Google Play.
 
+Some examples of the application:
+
+[<img src="./screenshots/CharacterDefinition.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+[<img src="./screenshots/Description.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+[<img src="./screenshots/Characteristics.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+
+[<img src="./screenshots/DescriptionWindow.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor)
+[<img src="./screenshots/Psi.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+[<img src="./screenshots/FilterWeapons.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+
+[<img src="./screenshots/RandomOptions.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+[<img src="./screenshots/RandomPredefinedOptions.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+[<img src="./screenshots/NpcGenerator.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+
+[<img src="./screenshots/TextView.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+[<img src="./screenshots/CompletePdfView.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+[<img src="./screenshots/SmallPdfView.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+
+[<img src="./screenshots/LoadCharacter.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+[<img src="./screenshots/GoogleDrive.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor)
+[<img src="./screenshots/LoadCharacter.png" width="250"/>](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor) 
+
 ## Roadmap
 
 0.1 Basic Character Sheet generation.
