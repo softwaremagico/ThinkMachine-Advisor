@@ -206,6 +206,7 @@
     <string name="profile_specials_section">Special</string>
     <string name="profile_xenos_section">Xenos</string>
     <string name="profile_barbarian_section">Barbarian</string>
+    <string name="npc_faction_section">Factions</string>
     <string name="npc_servitude_section">Servitude</string>
     <string name="npc_underground_section">Underground</string>
     <string name="npc_army_section">Army</string>
@@ -218,6 +219,7 @@
     <string name="npc_weirdforces_section">Weird Forces</string>
     <string name="npc_xenos_section">Xenos</string>
     <string name="npc_barbarian_section">Barbarian</string>
+    <string name="npc_secondaryguild_section">Secondary Guilds</string>
     <string name="action_proceed">Proceed.</string>
     <string name="action_new">Create new.</string>
     <string name="default_version" translatable="false">v0.0.0</string>
