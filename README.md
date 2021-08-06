@@ -7,9 +7,9 @@
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/y/softwaremagico/ThinkMachine-Advisor)](https://github.com/softwaremagico/ThinkMachine-Advisor)
 [![GitHub last commit](https://img.shields.io/github/last-commit/softwaremagico/ThinkMachine-Advisor)](https://github.com/softwaremagico/ThinkMachine-Advisor)
 
-This is an Android based application for the use of [ThinkMachine](https://softwaremagico.github.io/ThinkMachine/) Java library.  That means that this is a mobile Android application developed to help the user to create character sheets for the Fading Suns revised edition.
+This is an Android based application that includes [ThinkMachine](https://softwaremagico.github.io/ThinkMachine/) Java library.  That means that this is a mobile Android application developed to help the user (Game Masters or Players) to create character sheets for the Fading Suns revised edition.
 
-The app is available on Google Play, and this site is only for hosting the source code of the application. If you are interested only on the use of this application as a standard user, please search it on Google Play.
+The app is available on Google Play, and this site is only for hosting the source code of the application. If you are only interested on the use of this application as a standard user, please download from  [Google Play](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor).
 
 Some examples of the application:
 
@@ -62,6 +62,7 @@ Some examples of the application:
 
 0.8 Random Profiles
 - 0.8.1 Random NPCs
-
+- 0.8.2 Added Aliens from Player Companion
+- 0.8.3 Added Minor Guilds from Player Companion
 
 
