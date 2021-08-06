@@ -1,4 +1,4 @@
-<img src="./images/ThinkMachine_logo_fenix.png" width="800" alt="Think Machine" align="middle"> 
+<img src="./images/think_machine_logo_fenix.png" width="800" alt="Think Machine" align="middle"> 
 
 # Think Machine: Advisor
 [![Supported Languages](https://img.shields.io/badge/Supported-%F0%9F%87%AA%F0%9F%87%B8%20%F0%9F%87%AC%F0%9F%87%A7languages-blue.svg)](https://github.com/softwaremagico/ThinkMachine-Advisor/blob/master/app/src/main/res/values/strings.xml)
