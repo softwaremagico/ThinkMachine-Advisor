@@ -37,10 +37,6 @@ import com.softwaremagico.tm.character.occultism.OccultismPower;
 public abstract class HelpElement<T extends Element<T>> extends ElementComponent<T> {
     private ImageView helpButton;
 
-    public interface SetElementColor {
-        void setColor(int color);
-    }
-
     public HelpElement(Context context) {
         this(context, null);
     }
