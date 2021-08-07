@@ -30,7 +30,7 @@ public class EquipmentAdapter<T extends Equipment<?>> extends ElementAdapter<T> 
                 elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.unaffordableMoney));
             } else if (CharacterManager.getSelectedCharacter().getMoney() < element.getCost()) {
                 elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.insufficientMoney));
-            } if (!element.isOfficial()) {
+            } else if (!element.isOfficial()) {
                 elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.unofficialElement));
             } else {
                 elementRepresentation.setTextColor(ContextCompat.getColor(getContext(), R.color.colorNormal));
