@@ -16,6 +16,7 @@ import com.softwaremagico.tm.random.selectors.CyberneticVisibilityPreferences;
 import com.softwaremagico.tm.random.selectors.DifficultLevelPreferences;
 import com.softwaremagico.tm.random.selectors.ExtraBeneficesNumberPreferences;
 import com.softwaremagico.tm.random.selectors.FactionPreferences;
+import com.softwaremagico.tm.random.selectors.GenderPreferences;
 import com.softwaremagico.tm.random.selectors.IRandomPreference;
 import com.softwaremagico.tm.random.selectors.NamesPreferences;
 import com.softwaremagico.tm.random.selectors.OccultismLevelPreferences;
@@ -32,7 +33,7 @@ import com.softwaremagico.tm.random.selectors.WeaponsPreferences;
 
 public enum PreferenceGroup {
 
-    CHARACTER_DESCRIPTION(RacePreferences.class, FactionPreferences.class, AgePreferences.class,
+    CHARACTER_DESCRIPTION(RacePreferences.class, FactionPreferences.class, AgePreferences.class, GenderPreferences.class,
             CombatPreferences.class, CombatActionsPreferences.class, CombatActionsGroupPreferences.class,
             DifficultLevelPreferences.class, SpecializationPreferences.class,
             NamesPreferences.class, StatusPreferences.class, CashPreferences.class),

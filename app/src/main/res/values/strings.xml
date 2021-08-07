@@ -118,6 +118,13 @@
     <string name="preference_cashpreferences">Cash</string>
     <string name="preference_combatactionspreferences">Combat Actions</string>
     <string name="preference_combatactionsgrouppreferences">Combat Actions Preference</string>
+    <string name="preference_genderpreferences">Gender</string>
+    <string name="preference_option_male">Male</string>
+    <string name="preference_option_female">Female</string>
+    <string name="preference_option_probably_male">Probably Male</string>
+    <string name="preference_option_probably_female">Probably Female</string>
+    <string name="preference_option_usually_male">Usually Male</string>
+    <string name="preference_option_usually_female">Usually Female</string>
     <string name="preference_option_human">Human</string>
     <string name="preference_option_nobility">Nobility</string>
     <string name="preference_option_obun">Ur-Obun</string>
@@ -158,6 +165,7 @@
     <string name="preference_option_very_hard">Very Hard</string>
     <string name="preference_option_church">Church</string>
     <string name="preference_option_guild">Guild</string>
+    <string name="preference_option_minor_guild">Minor Guild</string>
     <string name="preference_option_xeno">Xeno</string>
     <string name="preference_option_few">Few</string>
     <string name="preference_option_good">Good</string>
