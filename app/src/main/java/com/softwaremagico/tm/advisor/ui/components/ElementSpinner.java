@@ -51,8 +51,8 @@ public class ElementSpinner<T extends Element<T>> extends HelpElement<T> {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (selector.getItemAtPosition(position) == null ||
-                        ((Element<T>) selector.getItemAtPosition(position)).getDescription() == null ||
-                        ((Element<T>) selector.getItemAtPosition(position)).getDescription().isEmpty()) {
+                        ((T) selector.getItemAtPosition(position)).getDescription() == null ||
+                        ((T) selector.getItemAtPosition(position)).getDescription().isEmpty()) {
                     getHelpButton().setVisibility(ImageView.INVISIBLE);
                 } else {
                     getHelpButton().setVisibility(ImageView.VISIBLE);
@@ -77,8 +77,8 @@ public class ElementSpinner<T extends Element<T>> extends HelpElement<T> {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 onItemSelectedListener.onItemSelected(parent, view, position, id);
                 if (selector.getItemAtPosition(position) == null ||
-                        ((Element<?>) selector.getItemAtPosition(position)).getDescription() == null ||
-                        ((Element<?>) selector.getItemAtPosition(position)).getDescription().isEmpty()) {
+                        ((T) selector.getItemAtPosition(position)).getDescription() == null ||
+                        ((T) selector.getItemAtPosition(position)).getDescription().isEmpty()) {
                     getHelpButton().setVisibility(ImageView.INVISIBLE);
                 } else {
                     getHelpButton().setVisibility(ImageView.VISIBLE);
@@ -104,7 +104,6 @@ public class ElementSpinner<T extends Element<T>> extends HelpElement<T> {
 
     @Override
     public T getSelection() {
-        final Spinner selector = findViewById(R.id.spinner);
         final T selectedItem = (T) selector.getSelectedItem();
         if (Element.isNull(selectedItem)) {
             return null;

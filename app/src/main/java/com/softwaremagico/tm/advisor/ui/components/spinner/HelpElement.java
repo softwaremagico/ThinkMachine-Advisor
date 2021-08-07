@@ -2,15 +2,19 @@ package com.softwaremagico.tm.advisor.ui.components.spinner;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.Component;
+import com.softwaremagico.tm.advisor.ui.components.ElementComponent;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.ArmourDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.BeneficeDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.BlessingDescriptionDialog;
@@ -20,6 +24,7 @@ import com.softwaremagico.tm.advisor.ui.components.descriptions.MeleeWeaponDescr
 import com.softwaremagico.tm.advisor.ui.components.descriptions.OccultismDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.RangeWeaponDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.ShieldDescriptionDialog;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.blessings.Blessing;
@@ -29,8 +34,12 @@ import com.softwaremagico.tm.character.equipment.shields.Shield;
 import com.softwaremagico.tm.character.equipment.weapons.Weapon;
 import com.softwaremagico.tm.character.occultism.OccultismPower;
 
-public abstract class HelpElement<T extends Element<T>> extends Component {
+public abstract class HelpElement<T extends Element<T>> extends ElementComponent<T> {
     private ImageView helpButton;
+
+    public interface SetElementColor {
+        void setColor(int color);
+    }
 
     public HelpElement(Context context) {
         this(context, null);

@@ -45,6 +45,7 @@ public class ElementSelector<T extends Element<T>> extends HelpElement<T> {
         } else {
             getHelpButton().setVisibility(ImageView.VISIBLE);
         }
+        refreshElementColor(element, tagText::setTextColor);
     }
 
     public void setChecked(boolean checked) {
