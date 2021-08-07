@@ -44,7 +44,7 @@ public abstract class ElementComponent<T extends Element<T>> extends Component {
             } else if (!element.isOfficial()) {
                 colorSetter.setColor(ContextCompat.getColor(getContext(), R.color.unofficialElement));
             } else {
-                colorSetter.setColor(ContextCompat.getColor(getContext(), R.color.colorNormal));
+           //     colorSetter.setColor(ContextCompat.getColor(getContext(), R.color.colorNormal));
             }
         }
     }
