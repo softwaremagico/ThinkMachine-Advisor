@@ -225,6 +225,9 @@
     <string name="npc_secondaryguild_section">Gremios Menores</string>
     <string name="npc_faction_section">Facciones</string>
     <string name="preference_option_minor_guild">Gremio Menor</string>
+    <string name="preference_option_knightly_orders">Ordenes Caballerescas</string>
+    <string name="npc_minorchurch_section">Ordenes Religiosas Menores</string>
+    <string name="preference_option_minor_church">Ordenes Religiosas Menores</string>
     <string name="preference_genderpreferences">Género</string>
     <string name="preference_option_male">Varón</string>
     <string name="preference_option_female">Mujer</string>
@@ -232,4 +235,5 @@
     <string name="preference_option_probably_female">Probablemente Mujer</string>
     <string name="preference_option_usually_male">Usualmente Hombre</string>
     <string name="preference_option_usually_female">Usualmente Mujer</string>
+    <string name="npc_knightlyorders_section">Ordenes Caballerescas</string>
 </resources>

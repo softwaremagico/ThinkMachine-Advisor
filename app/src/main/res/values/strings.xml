@@ -166,6 +166,7 @@
     <string name="preference_option_church">Church</string>
     <string name="preference_option_guild">Guild</string>
     <string name="preference_option_minor_guild">Minor Guild</string>
+    <string name="preference_option_knightly_orders">Knightly Orders</string>
     <string name="preference_option_xeno">Xeno</string>
     <string name="preference_option_few">Few</string>
     <string name="preference_option_good">Good</string>
@@ -228,6 +229,9 @@
     <string name="npc_xenos_section">Xenos</string>
     <string name="npc_barbarian_section">Barbarian</string>
     <string name="npc_secondaryguild_section">Minor Guilds</string>
+    <string name="npc_knightlyorders_section">Knightly Orders</string>
+    <string name="npc_minorchurch_section">Minor Religious Orders</string>
+    <string name="preference_option_minor_church">Minor Religious Orders</string>
     <string name="action_proceed">Proceed.</string>
     <string name="action_new">Create new.</string>
     <string name="default_version" translatable="false">v0.0.0</string>
