@@ -46,6 +46,7 @@ import com.softwaremagico.tm.character.RandomName;
 import com.softwaremagico.tm.character.RandomSurname;
 import com.softwaremagico.tm.character.RestrictedElementException;
 import com.softwaremagico.tm.character.Surname;
+import com.softwaremagico.tm.character.UnofficialElementNotAllowedException;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
 import com.softwaremagico.tm.character.planets.Planet;
@@ -110,6 +111,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                     nameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getNameRepresentation());
                 } catch (InvalidXmlElementException | InvalidRandomElementSelectedException | RestrictedElementException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.selectFactionAndMore).show();
+                } catch (UnofficialElementNotAllowedException e) {
+                    SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
                 }
             });
         }
@@ -130,6 +133,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                     }
                 } catch (InvalidXmlElementException | InvalidRandomElementSelectedException | RestrictedElementException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
+                } catch (UnofficialElementNotAllowedException e) {
+                    SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
                 }
             });
         }
@@ -246,6 +251,9 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                 } catch (InvalidRaceException | RestrictedElementException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.invalidFactionAndRace).show();
                     raceSelector.setSelection(null);
+                } catch (UnofficialElementNotAllowedException e) {
+                    SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
+                    raceSelector.setSelection(null);
                 }
             }
 
@@ -253,7 +261,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             public void onNothingSelected(AdapterView<?> parentView) {
                 try {
                     CharacterManager.getSelectedCharacter().setRace(null);
-                } catch (InvalidRaceException | RestrictedElementException e) {
+                } catch (InvalidRaceException | RestrictedElementException | UnofficialElementNotAllowedException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
                 updateCounters(CharacterManager.getSelectedCharacter());
@@ -292,6 +300,9 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                 } catch (InvalidFactionException | RestrictedElementException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.invalidFactionAndRace).show();
                     factionsSelector.setSelection(null);
+                } catch (UnofficialElementNotAllowedException e) {
+                    SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
+                    factionsSelector.setSelection(null);
                 }
             }
 
@@ -299,7 +310,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             public void onNothingSelected(AdapterView<?> parentView) {
                 try {
                     CharacterManager.getSelectedCharacter().setFaction(null);
-                } catch (InvalidFactionException | RestrictedElementException e) {
+                } catch (InvalidFactionException | RestrictedElementException | UnofficialElementNotAllowedException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
             }

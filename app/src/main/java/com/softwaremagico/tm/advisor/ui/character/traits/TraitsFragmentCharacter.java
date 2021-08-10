@@ -36,6 +36,7 @@ import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.UnofficialElementNotAllowedException;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.benefices.BeneficeDefinition;
 import com.softwaremagico.tm.character.benefices.InvalidBeneficeException;
@@ -169,6 +170,8 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
                 CharacterManager.getSelectedCharacter().setBlessings(blessings);
             } catch (TooManyBlessingsException e) {
                 SnackbarGenerator.getErrorMessage(this, R.string.message_too_many_blessings).show();
+            } catch (UnofficialElementNotAllowedException e) {
+                SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
             }
         }
     }
@@ -233,6 +236,8 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
                 CharacterManager.getSelectedCharacter().setBenefices(benefices);
             } catch (InvalidBeneficeException e) {
                 SnackbarGenerator.getErrorMessage(this, R.string.message_invalid_benefice).show();
+            } catch (UnofficialElementNotAllowedException e) {
+                SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
             }
         }
 

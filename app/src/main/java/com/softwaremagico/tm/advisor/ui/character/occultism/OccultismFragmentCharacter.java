@@ -32,6 +32,7 @@ import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.UnofficialElementNotAllowedException;
 import com.softwaremagico.tm.character.occultism.InvalidOccultismPowerException;
 import com.softwaremagico.tm.character.occultism.InvalidPsiqueLevelException;
 import com.softwaremagico.tm.character.occultism.OccultismPath;
@@ -145,6 +146,9 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                         try {
                             CharacterManager.getSelectedCharacter().addOccultismPower(occultismPowerSelector.getSelection());
                         } catch (InvalidOccultismPowerException e) {
+                            occultismPowerSelector.setChecked(false);
+                        } catch (UnofficialElementNotAllowedException e) {
+                            SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
                             occultismPowerSelector.setChecked(false);
                         }
                     } else {

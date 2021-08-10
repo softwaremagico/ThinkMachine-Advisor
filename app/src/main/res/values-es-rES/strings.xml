@@ -178,6 +178,7 @@
     <string name="counter_cybernetics">INCOMPAT.</string>
     <string name="message_duplicated_item_removed">Se ha eliminado un elemento duplicado.</string>
     <string name="message_invalid_tech_level">Algunos elementos tienen un nivel tecnológico superior al del personaje.</string>
+    <string name="message_unofficial_element_not_allowed">Los elementos no oficiales no están permitidos en este personaje. Comprueba la configuración para habilitarlos.</string>
     <string name="incompatibility">Incompatibilidad</string>
     <string name="points">Puntos</string>
     <string name="tab_character_occultism">Ocultismo</string>

@@ -32,6 +32,7 @@ import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.RestrictedElementException;
+import com.softwaremagico.tm.character.UnofficialElementNotAllowedException;
 import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 import com.softwaremagico.tm.character.skills.AvailableSkill;
 import com.softwaremagico.tm.character.skills.InvalidRanksException;
@@ -142,6 +143,8 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
             } catch (RestrictedElementException e) {
                 SnackbarGenerator.getErrorMessage(root, R.string.message_restricted_element).show();
                 skillNumberPicker.setValue(0);
+            } catch (UnofficialElementNotAllowedException e) {
+                SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
             }
         });
     }

@@ -38,6 +38,7 @@ import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.UnofficialElementNotAllowedException;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.equipment.Equipment;
 import com.softwaremagico.tm.character.equipment.armours.Armour;
@@ -157,7 +158,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
             if (shields.isEmpty()) {
                 try {
                     CharacterManager.getSelectedCharacter().setShield(null);
-                } catch (InvalidShieldException e) {
+                } catch (InvalidShieldException | UnofficialElementNotAllowedException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
             } else {
@@ -165,6 +166,8 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
                     CharacterManager.getSelectedCharacter().setShield(shields.get(0));
                 } catch (InvalidShieldException e) {
                     SnackbarGenerator.getErrorMessage(this, R.string.message_invalid_shield_armour_combination).show();
+                } catch (UnofficialElementNotAllowedException e) {
+                    SnackbarGenerator.getErrorMessage(this, R.string.message_unofficial_element_not_allowed).show();
                 }
             }
         }
@@ -214,7 +217,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
             if (armours.isEmpty()) {
                 try {
                     CharacterManager.getSelectedCharacter().setArmour(null);
-                } catch (InvalidArmourException e) {
+                } catch (InvalidArmourException | UnofficialElementNotAllowedException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
             } else {
@@ -222,6 +225,8 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
                     CharacterManager.getSelectedCharacter().setArmour(armours.get(0));
                 } catch (InvalidArmourException e) {
                     SnackbarGenerator.getErrorMessage(this, R.string.message_invalid_shield_armour_combination).show();
+                } catch (UnofficialElementNotAllowedException e) {
+                    SnackbarGenerator.getErrorMessage(this, R.string.message_unofficial_element_not_allowed).show();
                 }
             }
         }
@@ -278,7 +283,11 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
         @Override
         protected void assignWeapons(List<Weapon> weapons) {
-            CharacterManager.getSelectedCharacter().setMeleeWeapons(weapons);
+            try {
+                CharacterManager.getSelectedCharacter().setMeleeWeapons(weapons);
+            } catch (UnofficialElementNotAllowedException e) {
+                SnackbarGenerator.getErrorMessage(this, R.string.message_unofficial_element_not_allowed).show();
+            }
         }
     }
 
@@ -294,7 +303,11 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
         @Override
         protected void assignWeapons(List<Weapon> weapons) {
-            CharacterManager.getSelectedCharacter().setRangedWeapons(weapons);
+            try {
+                CharacterManager.getSelectedCharacter().setRangedWeapons(weapons);
+            } catch (UnofficialElementNotAllowedException e) {
+                SnackbarGenerator.getErrorMessage(this, R.string.message_unofficial_element_not_allowed).show();
+            }
         }
     }
 

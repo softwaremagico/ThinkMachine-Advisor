@@ -16,6 +16,7 @@ import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.RandomizeCharacter;
 import com.softwaremagico.tm.character.RestrictedElementException;
+import com.softwaremagico.tm.character.UnofficialElementNotAllowedException;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.character.factions.Faction;
@@ -162,7 +163,7 @@ public final class CharacterManager {
         launchCharacterCharacteristicsUpdatedListeners(getSelectedCharacter(), characteristicName);
     }
 
-    public static void setRace(Race race) throws InvalidRaceException, RestrictedElementException {
+    public static void setRace(Race race) throws InvalidRaceException, RestrictedElementException, UnofficialElementNotAllowedException {
         getSelectedCharacter().setRace(race);
         if (costCalculator != null) {
             costCalculator.updateCost();
@@ -176,7 +177,7 @@ public final class CharacterManager {
         launchCharacterPlanetUpdatedListeners(getSelectedCharacter());
     }
 
-    public static void setFaction(Faction faction) throws InvalidFactionException, RestrictedElementException {
+    public static void setFaction(Faction faction) throws InvalidFactionException, RestrictedElementException, UnofficialElementNotAllowedException {
         getSelectedCharacter().setFaction(faction);
         launchCharacterFactionUpdatedListeners(getSelectedCharacter());
     }
@@ -201,21 +202,21 @@ public final class CharacterManager {
     }
 
     public static void randomizeCharacter(Set<IRandomPreference> randomPreferences) throws InvalidXmlElementException,
-            InvalidRandomElementSelectedException, RestrictedElementException {
+            InvalidRandomElementSelectedException, RestrictedElementException, UnofficialElementNotAllowedException {
         final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), 0, randomPreferences.toArray(new IRandomPreference[0]));
         randomizeCharacter.createCharacter();
         setSelectedCharacter(getSelectedCharacter());
     }
 
     public static void randomizeCharacterUsingProfiles(Set<RandomProfile> randomProfiles) throws InvalidXmlElementException, InvalidRandomElementSelectedException,
-            RestrictedElementException {
+            RestrictedElementException, UnofficialElementNotAllowedException {
         final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), randomProfiles.toArray(new RandomProfile[0]));
         randomizeCharacter.createCharacter();
         setSelectedCharacter(getSelectedCharacter());
     }
 
     public static void randomizeCharacterUsingNpc(Set<Npc> randomProfiles) throws InvalidXmlElementException,
-            InvalidRandomElementSelectedException, RestrictedElementException {
+            InvalidRandomElementSelectedException, RestrictedElementException, UnofficialElementNotAllowedException {
         final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), randomProfiles.toArray(new Npc[0]));
         randomizeCharacter.createCharacter();
         setSelectedCharacter(getSelectedCharacter());

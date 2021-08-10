@@ -50,6 +50,7 @@
     <string name="message_random_character_already_started">Character has been started already. All changes will be lost.</string>
     <string name="message_random_character_already_finished">Character is already finished.</string>
     <string name="message_random_character_error">Character cannot be randomly finished!</string>
+    <string name="message_unofficial_element_not_allowed">Non-official elements are not allowed on this character. Check the settings for enabling it.</string>
     <string name="loading">Loading ...</string>
     <string name="character_card_details">Details ...</string>
     <string name="character_delete">Delete</string>

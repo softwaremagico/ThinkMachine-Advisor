@@ -36,8 +36,10 @@ import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.UnofficialElementNotAllowedException;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.cybernetics.CyberneticDevice;
+import com.softwaremagico.tm.character.cybernetics.InvalidCyberneticDeviceException;
 import com.softwaremagico.tm.character.cybernetics.RequiredCyberneticDevicesException;
 import com.softwaremagico.tm.character.cybernetics.SelectedCyberneticDevice;
 import com.softwaremagico.tm.character.cybernetics.TooManyCyberneticDevicesException;
@@ -159,6 +161,8 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
                 setCharacter(rootLayout, CharacterManager.getSelectedCharacter());
             } catch (RequiredCyberneticDevicesException e) {
                 SnackbarGenerator.getErrorMessage(this, R.string.message_required_cybernetic_missing).show();
+            } catch (UnofficialElementNotAllowedException e) {
+                SnackbarGenerator.getErrorMessage(this, R.string.message_unofficial_element_not_allowed).show();
             }
         }
     }
