@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
@@ -40,7 +41,9 @@ import com.softwaremagico.tm.character.skills.InvalidSkillException;
 import com.softwaremagico.tm.character.skills.SkillDefinition;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SkillsFragmentCharacter extends CharacterCustomFragment {
     private final Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
@@ -69,14 +72,24 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
     protected void initData() {
         final LinearLayout linearLayout = root.findViewById(R.id.skills_container);
         addSection(ThinkMachineTranslator.getTranslatedText("naturalSkills"), linearLayout);
-        for (final AvailableSkill skill : CharacterManager.getSelectedCharacter().getNaturalSkills()) {
+        List<AvailableSkill> naturalSkills = CharacterManager.getSelectedCharacter().getNaturalSkills();
+        //Remove non-official elements if needed.
+        if (CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
+           naturalSkills = naturalSkills.stream().filter(Element::isOfficial).collect(Collectors.toList());
+        }
+        for (final AvailableSkill skill : naturalSkills) {
             createSkillEditText(root, linearLayout, skill);
         }
 
         addSpace(linearLayout);
         addSection(ThinkMachineTranslator.getTranslatedText("learnedSkills"), linearLayout);
 
-        for (final AvailableSkill skill : CharacterManager.getSelectedCharacter().getLearnedSkills()) {
+        List<AvailableSkill> learnedSkills = CharacterManager.getSelectedCharacter().getLearnedSkills();
+        //Remove non-official elements if needed.
+        if (CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
+           learnedSkills = learnedSkills.stream().filter(Element::isOfficial).collect(Collectors.toList());
+        }
+        for (final AvailableSkill skill : learnedSkills) {
             createSkillEditText(root, linearLayout, skill);
         }
         setCharacter(root, CharacterManager.getSelectedCharacter());

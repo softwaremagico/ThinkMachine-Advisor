@@ -26,10 +26,13 @@ import androidx.core.content.ContextCompat;
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
     private List<T> elements;
@@ -159,7 +162,11 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
 
             if (originalElements == null) {
                 synchronized (this) {
-                    originalElements = new ArrayList<>(elements);
+                    if (CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
+                        originalElements = elements.stream().filter(e -> e == null || e.isOfficial()).collect(Collectors.toList());
+                    } else {
+                        originalElements = new ArrayList<>(elements);
+                    }
                 }
             }
 

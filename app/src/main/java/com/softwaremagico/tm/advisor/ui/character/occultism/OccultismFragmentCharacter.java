@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
@@ -44,9 +45,11 @@ import com.softwaremagico.tm.character.occultism.OccultismTypeFactory;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class OccultismFragmentCharacter extends CharacterCustomFragment {
     private final Map<OccultismType, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
@@ -119,8 +122,13 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
 
     private void setOccultismPaths(LinearLayout rootLayout) {
         try {
-            OccultismPathFactory.getInstance().getElements(CharacterManager.getSelectedCharacter().getLanguage(),
-                    CharacterManager.getSelectedCharacter().getModuleName()).stream().sorted(
+            List<OccultismPath> occultismPaths = OccultismPathFactory.getInstance().getElements(CharacterManager.getSelectedCharacter().getLanguage(),
+                    CharacterManager.getSelectedCharacter().getModuleName()).stream().filter(Objects::nonNull).collect(Collectors.toList());
+            //Remove non-official elements if needed.
+            if (CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
+                occultismPaths = occultismPaths.stream().filter(Element::isOfficial).collect(Collectors.toList());
+            }
+            occultismPaths.stream().sorted(
                     Comparator.comparing(OccultismPath::getOccultismType).thenComparing(OccultismPath::getName))
                     .forEach(
                             occultismPath -> setOccultismPathLayout(occultismPath, rootLayout)
