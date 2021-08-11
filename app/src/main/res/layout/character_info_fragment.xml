@@ -16,20 +16,20 @@
     android:id="@+id/equipment_frame"
     style="@style/LayoutPadding"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:scrollbars="vertical"
     tools:context=".ui.character.info.CharacterInfoFragmentCharacter">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:divider="?android:dividerHorizontal"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
@@ -51,7 +51,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <com.softwaremagico.tm.advisor.ui.components.TranslatedEditText
@@ -159,8 +159,30 @@
                 android:layout_gravity="fill"
                 android:gravity="center" />
 
-
         </GridLayout>
+
+        <View style="@style/Divider.Horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/official_selector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/allow_nonofficial" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/restricted_selector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/allow_restricted" />
+
+        </LinearLayout>
 
 
     </LinearLayout>

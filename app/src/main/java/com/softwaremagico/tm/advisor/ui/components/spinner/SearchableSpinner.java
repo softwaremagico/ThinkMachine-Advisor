@@ -114,6 +114,10 @@ public class SearchableSpinner<E extends Element<E>> extends androidx.appcompat.
         }
     }
 
+    public void notifyDataSetChanged() {
+        arrayAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onSearchableItemClicked(E item, int position) {
         setSelection(items.indexOf(item));

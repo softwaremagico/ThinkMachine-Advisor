@@ -21,6 +21,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.Element;
@@ -44,9 +45,10 @@ import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.Gender;
 import com.softwaremagico.tm.character.RandomName;
 import com.softwaremagico.tm.character.RandomSurname;
-import com.softwaremagico.tm.character.RestrictedElementException;
 import com.softwaremagico.tm.character.Surname;
-import com.softwaremagico.tm.character.UnofficialElementNotAllowedException;
+import com.softwaremagico.tm.character.exceptions.RestrictedElementException;
+import com.softwaremagico.tm.character.exceptions.UnofficialCharacterException;
+import com.softwaremagico.tm.character.exceptions.UnofficialElementNotAllowedException;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
 import com.softwaremagico.tm.character.planets.Planet;
@@ -66,6 +68,11 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     private ExtraCounter extraCounter;
     private FirebirdsCounter firebirdsCounter;
     private View root;
+    private SwitchCompat nonOfficialEnabled;
+    private SwitchCompat restrictionsIgnored;
+    private ElementSpinner<Race> raceSelector;
+    private ElementSpinner<Faction> factionsSelector;
+    private ElementSpinner<Planet> planetSelector;
 
     public static CharacterInfoFragmentCharacter newInstance(int index) {
         final CharacterInfoFragmentCharacter fragment = new CharacterInfoFragmentCharacter();
@@ -93,9 +100,9 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
         });
         createGenderSpinner(root);
-        createRaceSpinner(root);
-        createFactionSpinner(root);
-        createPlanetSpinner(root);
+        createRaceSpinner(true);
+        createFactionSpinner(true);
+        createPlanetSpinner(true);
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
 
@@ -138,6 +145,35 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                 }
             });
         }
+
+
+        nonOfficialEnabled.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            final boolean oldValue = CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed();
+            try {
+                CharacterManager.getSelectedCharacter().checkIsOfficial();
+                CharacterManager.getSelectedCharacter().getSettings().setOnlyOfficialAllowed(!isChecked);
+                if (oldValue != CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
+                    CharacterManager.updateSettings();
+                }
+            } catch (UnofficialCharacterException e) {
+                SnackbarGenerator.getErrorMessage(root, R.string.message_setting_unofficial_not_changed).show();
+                CharacterManager.getSelectedCharacter().getSettings().setOnlyOfficialAllowed(false);
+            }
+        });
+
+        restrictionsIgnored.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            final boolean oldValue = CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored();
+            try {
+                CharacterManager.getSelectedCharacter().checkIsNotRestricted();
+                CharacterManager.getSelectedCharacter().getSettings().setRestrictionsIgnored(isChecked);
+                if (oldValue != CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored()) {
+                    CharacterManager.updateSettings();
+                }
+            } catch (UnofficialCharacterException e) {
+                SnackbarGenerator.getErrorMessage(root, R.string.message_setting_restriction_not_changed).show();
+                CharacterManager.getSelectedCharacter().getSettings().setRestrictionsIgnored(true);
+            }
+        });
     }
 
     @Override
@@ -146,16 +182,30 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         root = inflater.inflate(R.layout.character_info_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(CharacterInfoViewModel.class);
 
+        raceSelector = root.findViewById(R.id.character_race);
+        factionsSelector = root.findViewById(R.id.character_faction);
+        planetSelector = root.findViewById(R.id.character_planet);
+
         characteristicsCounter = root.findViewById(R.id.characteristics_counter);
         skillsCounter = root.findViewById(R.id.skills_counter);
         traitsCounter = root.findViewById(R.id.traits_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
         firebirdsCounter = root.findViewById(R.id.firebirds_counter);
 
+        nonOfficialEnabled = root.findViewById(R.id.official_selector);
+        restrictionsIgnored = root.findViewById(R.id.restricted_selector);
+
         CharacterManager.addCharacterRaceUpdatedListener(this::updateCounters);
         CharacterManager.addCharacterAgeUpdatedListener(this::updateCounters);
+        CharacterManager.addCharacterSettingsUpdateListeners(this::updateFilteredContent);
 
         return root;
+    }
+
+    private void updateFilteredContent(CharacterPlayer characterPlayer) {
+        createRaceSpinner(!characterPlayer.getSettings().isOnlyOfficialAllowed());
+        createFactionSpinner(!characterPlayer.getSettings().isOnlyOfficialAllowed());
+        createPlanetSpinner(!characterPlayer.getSettings().isOnlyOfficialAllowed());
     }
 
     @Override
@@ -176,6 +226,10 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         } else {
             ageTextEditor.setText("");
         }
+
+        nonOfficialEnabled.setChecked(character != null && !character.getSettings().isOnlyOfficialAllowed());
+        restrictionsIgnored.setChecked(character != null && character.getSettings().isRestrictionsIgnored());
+
         final ElementSpinner<Race> raceSelector = root.findViewById(R.id.character_race);
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
         final ElementSpinner<Faction> factionsSelector = root.findViewById(R.id.character_faction);
@@ -216,9 +270,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         });
     }
 
-    private void createRaceSpinner(View root) {
-        final ElementSpinner<Race> raceSelector = root.findViewById(R.id.character_race);
-        List<Race> options = new ArrayList<>(mViewModel.getAvailableRaces());
+    private void createRaceSpinner(boolean nonOfficial) {
+        List<Race> options = new ArrayList<>(mViewModel.getAvailableRaces(nonOfficial));
         options.add(0, null);
         raceSelector.setAdapter(new ElementAdapter<Race>(getActivity(), options, false, Race.class) {
             @Override
@@ -238,11 +291,11 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 try {
-                    if (position == 0 || mViewModel.getAvailableRaces().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
+                    if (position == 0 || mViewModel.getAvailableRaces(nonOfficial).get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
                         CharacterManager.setRace(null);
                     } else {
                         if (position > 0) {
-                            CharacterManager.setRace(mViewModel.getAvailableRaces().get(position - 1));
+                            CharacterManager.setRace(mViewModel.getAvailableRaces(nonOfficial).get(position - 1));
                         } else {
                             CharacterManager.setRace(null);
                         }
@@ -269,9 +322,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         });
     }
 
-    private void createFactionSpinner(View root) {
-        final ElementSpinner<Faction> factionsSelector = root.findViewById(R.id.character_faction);
-        List<Faction> options = new ArrayList<>(mViewModel.getAvailableFactions());
+    private void createFactionSpinner(boolean nonOfficial) {
+        List<Faction> options = new ArrayList<>(mViewModel.getAvailableFactions(nonOfficial));
         options.add(0, null);
         factionsSelector.setAdapter(new ElementAdapter<Faction>(getActivity(), options, false, Faction.class) {
             @Override
@@ -284,7 +336,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 try {
-                    if (position == 0 || mViewModel.getAvailableFactions().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
+                    if (position == 0 || mViewModel.getAvailableFactions(nonOfficial).get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
                         try {
                             CharacterManager.setFaction(null);
                         } catch (InvalidFactionException e) {
@@ -292,7 +344,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                         }
                     } else {
                         if (position > 0) {
-                            CharacterManager.setFaction(mViewModel.getAvailableFactions().get(position - 1));
+                            CharacterManager.setFaction(mViewModel.getAvailableFactions(nonOfficial).get(position - 1));
                         } else {
                             CharacterManager.setFaction(null);
                         }
@@ -317,9 +369,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         });
     }
 
-    private void createPlanetSpinner(View root) {
-        final ElementSpinner<Planet> planetSelector = root.findViewById(R.id.character_planet);
-        List<Planet> options = new ArrayList<>(mViewModel.getAvailablePlanets());
+    private void createPlanetSpinner(boolean nonOfficial) {
+        List<Planet> options = new ArrayList<>(mViewModel.getAvailablePlanets(nonOfficial));
         options.add(0, null);
         planetSelector.setAdapter(new ElementAdapter<Planet>(getActivity(), options, false, Planet.class) {
             @Override
@@ -332,11 +383,11 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (position == 0 || mViewModel.getAvailablePlanets().get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
+                if (position == 0 || mViewModel.getAvailablePlanets(nonOfficial).get(position - 1).getId().equals(Element.DEFAULT_NULL_ID)) {
                     CharacterManager.setPlanet(null);
                 } else {
                     if (position > 0) {
-                        CharacterManager.setPlanet(mViewModel.getAvailablePlanets().get(position - 1));
+                        CharacterManager.setPlanet(mViewModel.getAvailablePlanets(nonOfficial).get(position - 1));
                     } else {
                         CharacterManager.setPlanet(null);
                     }

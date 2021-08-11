@@ -15,10 +15,10 @@ package com.softwaremagico.tm.advisor.ui.session;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.RandomizeCharacter;
-import com.softwaremagico.tm.character.RestrictedElementException;
-import com.softwaremagico.tm.character.UnofficialElementNotAllowedException;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.creation.CostCalculator;
+import com.softwaremagico.tm.character.exceptions.RestrictedElementException;
+import com.softwaremagico.tm.character.exceptions.UnofficialElementNotAllowedException;
 import com.softwaremagico.tm.character.factions.Faction;
 import com.softwaremagico.tm.character.factions.InvalidFactionException;
 import com.softwaremagico.tm.character.planets.Planet;
@@ -47,6 +47,7 @@ public final class CharacterManager {
     private static final Set<CharacterPlanetUpdatedListener> characterPlanetUpdatedListener = new HashSet<>();
     private static final Set<CharacterFactionUpdatedListener> characterFactionUpdatedListener = new HashSet<>();
     private static final Set<CharacterCharacteristicUpdatedListener> characterCharacteristicUpdatedListener = new HashSet<>();
+    private static final Set<CharacterSettingsUpdatedListener> characterSettingsUpdatedListeners = new HashSet<>();
 
     public interface CharacterSelectedListener {
         void selected(CharacterPlayer characterPlayer);
@@ -76,8 +77,22 @@ public final class CharacterManager {
         void updated(CharacterPlayer characterPlayer, CharacteristicName characteristic);
     }
 
+    public interface CharacterSettingsUpdatedListener {
+        void updated(CharacterPlayer characterPlayer);
+    }
+
     private CharacterManager() {
 
+    }
+
+    public static void updateSettings(){
+        launchCharacterSettingsUpdateListeners(getSelectedCharacter());
+    }
+
+    public static void launchCharacterSettingsUpdateListeners(CharacterPlayer characterPlayer) {
+        for (final CharacterSettingsUpdatedListener listener : characterSettingsUpdatedListeners) {
+            listener.updated(characterPlayer);
+        }
     }
 
     public static void launchSelectedCharacterListeners(CharacterPlayer characterPlayer) {
@@ -120,6 +135,10 @@ public final class CharacterManager {
         for (final CharacterCharacteristicUpdatedListener listener : characterCharacteristicUpdatedListener) {
             listener.updated(characterPlayer, characteristicName);
         }
+    }
+
+    public static void addCharacterSettingsUpdateListeners(CharacterSettingsUpdatedListener listener) {
+        characterSettingsUpdatedListeners.add(listener);
     }
 
     public static void addSelectedCharacterListener(CharacterSelectedListener listener) {

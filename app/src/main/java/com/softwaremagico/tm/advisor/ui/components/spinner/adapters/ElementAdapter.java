@@ -31,7 +31,6 @@ import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
@@ -184,6 +183,9 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
                 final String prefixString = removeDiacriticalMarks(prefix.toString().toLowerCase());
 
                 for (T element : originalElements) {
+                    if (element == null) {
+                        continue;
+                    }
                     String name = removeDiacriticalMarks(element.getName().toLowerCase());
                     if (name.startsWith(prefixString)) {
                         elementList.add(element);

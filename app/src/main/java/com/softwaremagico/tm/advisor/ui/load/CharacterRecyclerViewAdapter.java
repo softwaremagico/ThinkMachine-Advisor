@@ -34,7 +34,7 @@ import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
 import com.softwaremagico.tm.advisor.ui.animations.ExpandAndCollapseViewUtil;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
-import com.softwaremagico.tm.character.InvalidGeneratedCharacter;
+import com.softwaremagico.tm.character.exceptions.InvalidGeneratedCharacter;
 import com.softwaremagico.tm.character.creation.CostCalculator;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.txt.CharacterSheet;

@@ -14,6 +14,7 @@ package com.softwaremagico.tm.advisor.ui.character.info;
 
 import androidx.lifecycle.ViewModel;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.character.Gender;
 import com.softwaremagico.tm.character.factions.Faction;
@@ -29,32 +30,52 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class CharacterInfoViewModel extends ViewModel {
     private List<Gender> genders;
 
 
-    public List<Faction> getAvailableFactions() {
+    public List<Faction> getAvailableFactions(boolean nonOfficial) {
         try {
-            return FactionsFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+            if (nonOfficial) {
+                return FactionsFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)
+                        .stream().filter(Objects::nonNull).collect(Collectors.toList());
+            } else {
+                return FactionsFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)
+                        .stream().filter(Objects::nonNull).filter(Element::isOfficial).collect(Collectors.toList());
+            }
         } catch (InvalidXmlElementException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }
         return new ArrayList<>();
     }
 
-    public List<Planet> getAvailablePlanets() {
+    public List<Planet> getAvailablePlanets(boolean nonOfficial) {
         try {
-            return PlanetFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+            if (nonOfficial) {
+                return PlanetFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)
+                        .stream().filter(Objects::nonNull).collect(Collectors.toList());
+            } else {
+                return PlanetFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)
+                        .stream().filter(Objects::nonNull).filter(Element::isOfficial).collect(Collectors.toList());
+            }
         } catch (InvalidXmlElementException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }
         return new ArrayList<>();
     }
 
-    public List<Race> getAvailableRaces() {
+    public List<Race> getAvailableRaces(boolean nonOfficial) {
         try {
-            return RaceFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+            if (nonOfficial) {
+                return RaceFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)
+                        .stream().filter(Objects::nonNull).collect(Collectors.toList());
+            } else {
+                return RaceFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)
+                        .stream().filter(Objects::nonNull).filter(Element::isOfficial).collect(Collectors.toList());
+            }
         } catch (InvalidXmlElementException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }

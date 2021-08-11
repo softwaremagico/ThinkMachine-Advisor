@@ -51,6 +51,8 @@
     <string name="message_random_character_already_finished">Character is already finished.</string>
     <string name="message_random_character_error">Character cannot be randomly finished!</string>
     <string name="message_unofficial_element_not_allowed">Non-official elements are not allowed on this character. Check the settings for enabling it.</string>
+    <string name="message_setting_unofficial_not_changed">Character is using some unofficial elements. Setting cannot be changed.</string>
+    <string name="message_setting_restriction_not_changed">Character is using some restricted elements. Setting cannot be changed.</string>
     <string name="loading">Loading ...</string>
     <string name="character_card_details">Details ...</string>
     <string name="character_delete">Delete</string>
@@ -239,5 +241,7 @@
     <string name="restricted">Restricted</string>
     <string name="restricted_races">Restricted to races:</string>
     <string name="restricted_factions">Restricted to factions:</string>
+    <string name="allow_nonofficial">Enable non-official features</string>
+    <string name="allow_restricted">Ignore restrictions</string>
 </resources>
 

@@ -237,4 +237,8 @@
     <string name="preference_option_usually_male">Usualmente Hombre</string>
     <string name="preference_option_usually_female">Usualmente Mujer</string>
     <string name="npc_knightlyorders_section">Ordenes Caballerescas</string>
+    <string name="allow_nonofficial">Habilitar características no oficiales</string>
+    <string name="allow_restricted">Ignorar restricciones del personaje</string>
+    <string name="message_setting_unofficial_not_changed">El personaje está usando algunos elementos no oficiales. La configuración no puede ser cambiada.</string>
+    <string name="message_setting_restriction_not_changed">El personaje está usando algunos elementos restringidos. La configuración no puede ser cambiada.</string>
 </resources>

@@ -116,4 +116,8 @@ public class ElementSpinner<T extends Element<T>> extends HelpElement<T> {
         final Spinner selector = findViewById(R.id.spinner);
         selector.setEnabled(enabled);
     }
+
+    public void notifyDataSetChanged() {
+        selector.notifyDataSetChanged();
+    }
 }
