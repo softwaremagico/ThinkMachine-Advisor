@@ -186,6 +186,16 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         factionsSelector = root.findViewById(R.id.character_faction);
         planetSelector = root.findViewById(R.id.character_planet);
 
+/*        if (CharacterManager.isStarted()) {
+            createRaceSpinner(!CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed());
+            createFactionSpinner(!CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed());
+            createPlanetSpinner(!CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed());
+        } else {
+            createRaceSpinner(true);
+            createFactionSpinner(true);
+            createPlanetSpinner(true);
+        } */
+
         characteristicsCounter = root.findViewById(R.id.characteristics_counter);
         skillsCounter = root.findViewById(R.id.skills_counter);
         traitsCounter = root.findViewById(R.id.traits_counter);
@@ -197,15 +207,33 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
         CharacterManager.addCharacterRaceUpdatedListener(this::updateCounters);
         CharacterManager.addCharacterAgeUpdatedListener(this::updateCounters);
-        CharacterManager.addCharacterSettingsUpdateListeners(this::updateFilteredContent);
+        CharacterManager.addCharacterSettingsUpdateListeners(this::updateData);
 
         return root;
     }
 
-    private void updateFilteredContent(CharacterPlayer characterPlayer) {
-        createRaceSpinner(!characterPlayer.getSettings().isOnlyOfficialAllowed());
-        createFactionSpinner(!characterPlayer.getSettings().isOnlyOfficialAllowed());
-        createPlanetSpinner(!characterPlayer.getSettings().isOnlyOfficialAllowed());
+    private void updateData(CharacterPlayer characterPlayer) {
+        if (getContext() != null) {
+            //Avoid to set a different value when changing the ElementAdapter.
+            raceSelector.setOnItemSelectedListener(null);
+            factionsSelector.setOnItemSelectedListener(null);
+            planetSelector.setOnItemSelectedListener(null);
+
+            //Storing old selected value.
+            final Race selectedRace = raceSelector.getSelection();
+            final Faction selectedFaction = factionsSelector.getSelection();
+            final Planet selectedPlanet = planetSelector.getSelection();
+
+            //Create new adapter with the new settings.
+            createRaceSpinner(!characterPlayer.getSettings().isOnlyOfficialAllowed());
+            createFactionSpinner(!characterPlayer.getSettings().isOnlyOfficialAllowed());
+            createPlanetSpinner(!characterPlayer.getSettings().isOnlyOfficialAllowed());
+
+            //Recovering old selected value.
+            raceSelector.setSelection(selectedRace);
+            factionsSelector.setSelection(selectedFaction);
+            planetSelector.setSelection(selectedPlanet);
+        }
     }
 
     @Override
@@ -238,6 +266,10 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
 
         updateCounters(character);
+
+        createRaceSpinner(!character.getSettings().isOnlyOfficialAllowed());
+        createFactionSpinner(!character.getSettings().isOnlyOfficialAllowed());
+        createPlanetSpinner(!character.getSettings().isOnlyOfficialAllowed());
     }
 
     private void updateCounters(CharacterPlayer character) {

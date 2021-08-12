@@ -85,7 +85,7 @@ public final class CharacterManager {
 
     }
 
-    public static void updateSettings(){
+    public static void updateSettings() {
         launchCharacterSettingsUpdateListeners(getSelectedCharacter());
     }
 
@@ -169,6 +169,10 @@ public final class CharacterManager {
         characterCharacteristicUpdatedListener.add(listener);
     }
 
+    public static boolean isStarted() {
+        return !characters.isEmpty();
+    }
+
 
     public synchronized static CharacterPlayer getSelectedCharacter() {
         if (characters.isEmpty()) {
@@ -202,6 +206,9 @@ public final class CharacterManager {
     }
 
     public static CostCalculator getCostCalculator() {
+        if (costCalculator == null) {
+            addNewCharacter();
+        }
         return costCalculator;
     }
 

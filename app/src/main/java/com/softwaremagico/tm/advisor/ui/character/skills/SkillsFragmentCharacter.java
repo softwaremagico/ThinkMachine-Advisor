@@ -70,12 +70,16 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
 
     @Override
     protected void initData() {
-        final LinearLayout linearLayout = root.findViewById(R.id.skills_container);
+        addContent(root.findViewById(R.id.skills_container));
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
+
+    private void addContent(LinearLayout linearLayout) {
         addSection(ThinkMachineTranslator.getTranslatedText("naturalSkills"), linearLayout);
         List<AvailableSkill> naturalSkills = CharacterManager.getSelectedCharacter().getNaturalSkills();
         //Remove non-official elements if needed.
         if (CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
-           naturalSkills = naturalSkills.stream().filter(Element::isOfficial).collect(Collectors.toList());
+            naturalSkills = naturalSkills.stream().filter(Element::isOfficial).collect(Collectors.toList());
         }
         for (final AvailableSkill skill : naturalSkills) {
             createSkillEditText(root, linearLayout, skill);
@@ -87,12 +91,11 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
         List<AvailableSkill> learnedSkills = CharacterManager.getSelectedCharacter().getLearnedSkills();
         //Remove non-official elements if needed.
         if (CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
-           learnedSkills = learnedSkills.stream().filter(Element::isOfficial).collect(Collectors.toList());
+            learnedSkills = learnedSkills.stream().filter(Element::isOfficial).collect(Collectors.toList());
         }
         for (final AvailableSkill skill : learnedSkills) {
             createSkillEditText(root, linearLayout, skill);
         }
-        setCharacter(root, CharacterManager.getSelectedCharacter());
     }
 
 
@@ -108,8 +111,18 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
 
         CharacterManager.addCharacterFactionUpdatedListener(this::updateDynamicSkills);
         CharacterManager.addCharacterPlanetUpdatedListener(this::updateDynamicSkills);
+        CharacterManager.addCharacterSettingsUpdateListeners(this::updateData);
 
         return root;
+    }
+
+    private void updateData(CharacterPlayer characterPlayer) {
+        if (getContext() != null) {
+            final LinearLayout linearLayout = root.findViewById(R.id.skills_container);
+            linearLayout.removeAllViews();
+            addContent(linearLayout);
+            setCharacter(root, CharacterManager.getSelectedCharacter());
+        }
     }
 
     private void updateDynamicSkills(CharacterPlayer characterPlayer) {
