@@ -96,6 +96,11 @@ public class RandomCharactersFragment extends CharacterCustomFragment {
         setCharacter(root, CharacterManager.getSelectedCharacter());
     }
 
+    @Override
+    protected void updateSettings(CharacterPlayer characterPlayer) {
+        // Nothing yet.
+    }
+
     private String getOptionTranslation(String groupName) {
         return "npc_" + groupName.toLowerCase() + "_section";
     }

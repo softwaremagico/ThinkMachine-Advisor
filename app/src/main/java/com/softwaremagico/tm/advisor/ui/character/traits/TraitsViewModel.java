@@ -14,6 +14,7 @@ package com.softwaremagico.tm.advisor.ui.character.traits;
 
 import androidx.lifecycle.ViewModel;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.benefices.AvailableBeneficeFactory;
@@ -25,22 +26,36 @@ import com.softwaremagico.tm.log.MachineLog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TraitsViewModel extends ViewModel {
 
 
-    public List<Blessing> getAvailableBlessings() {
+    public List<Blessing> getAvailableBlessings(boolean nonOfficial) {
         try {
-            return BlessingFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+            if (nonOfficial) {
+                return BlessingFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE).
+                        stream().filter(Objects::nonNull).collect(Collectors.toList());
+            } else {
+                return BlessingFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE).
+                        stream().filter(Objects::nonNull).filter(Element::isOfficial).collect(Collectors.toList());
+            }
         } catch (InvalidXmlElementException | NullPointerException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }
         return new ArrayList<>();
     }
 
-    public List<AvailableBenefice> getAvailableBenefices() {
+    public List<AvailableBenefice> getAvailableBenefices(boolean nonOfficial) {
         try {
-            return new ArrayList<>(AvailableBeneficeFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE));
+            if (nonOfficial) {
+                return new ArrayList<>(AvailableBeneficeFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).
+                        stream().filter(Objects::nonNull).collect(Collectors.toList());
+            } else {
+                return new ArrayList<>(AvailableBeneficeFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).
+                        stream().filter(Objects::nonNull).filter(Element::isOfficial).collect(Collectors.toList());
+            }
         } catch (InvalidXmlElementException | NullPointerException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }

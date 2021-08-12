@@ -211,15 +211,20 @@ public abstract class IncrementalElementsLayout<T extends Element<T>> extends Li
 
     private ElementSpinner<T> createElementSpinner() {
         final ElementSpinner<T> selector = new ElementSpinner<>(getContext());
-        selector.setAdapter(getElementAdapter());
+        selector.setAdapter(getElementAdapter(true));
         return selector;
     }
 
-    protected abstract ElementAdapter<T> createElementAdapter();
+    public void updateElementAdapter(boolean nonOfficial) {
+        elementAdapter = createElementAdapter(nonOfficial);
+        elementSpinners.forEach(elementSpinner -> elementSpinner.setAdapter(elementAdapter));
+    }
 
-    protected ElementAdapter<T> getElementAdapter() {
+    protected abstract ElementAdapter<T> createElementAdapter(boolean nonOfficial);
+
+    private ElementAdapter<T> getElementAdapter(boolean nonOfficial) {
         if (elementAdapter == null) {
-            elementAdapter = createElementAdapter();
+            elementAdapter = createElementAdapter(nonOfficial);
         }
         return elementAdapter;
     }

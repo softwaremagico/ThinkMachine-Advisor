@@ -111,17 +111,18 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
 
         CharacterManager.addCharacterFactionUpdatedListener(this::updateDynamicSkills);
         CharacterManager.addCharacterPlanetUpdatedListener(this::updateDynamicSkills);
-        CharacterManager.addCharacterSettingsUpdateListeners(this::updateData);
+        CharacterManager.addCharacterSettingsUpdateListeners(this::updateSettings);
 
         return root;
     }
 
-    private void updateData(CharacterPlayer characterPlayer) {
+    @Override
+    protected void updateSettings(CharacterPlayer characterPlayer) {
         if (getContext() != null) {
             final LinearLayout linearLayout = root.findViewById(R.id.skills_container);
             linearLayout.removeAllViews();
             addContent(linearLayout);
-            setCharacter(root, CharacterManager.getSelectedCharacter());
+            setCharacter(root, characterPlayer);
         }
     }
 

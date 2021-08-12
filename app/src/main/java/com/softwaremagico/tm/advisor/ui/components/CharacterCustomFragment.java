@@ -124,5 +124,7 @@ public abstract class CharacterCustomFragment extends CustomFragment {
         });
     }
 
+    protected abstract void updateSettings(CharacterPlayer characterPlayer);
+
 
 }

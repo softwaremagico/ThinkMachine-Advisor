@@ -88,12 +88,10 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         final LinearLayout rootLayout = root.findViewById(R.id.root_container);
 
         addSection(ThinkMachineTranslator.getTranslatedText("blessingTable"), rootLayout);
-        blessingsLayout = new BlessingLayout(getContext(), true);
         rootLayout.addView(blessingsLayout);
         addSpace(rootLayout);
 
         addSection(ThinkMachineTranslator.getTranslatedText("beneficesTable"), rootLayout);
-        beneficesLayout = new BeneficesLayout(getContext(), true);
         rootLayout.addView(beneficesLayout);
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
@@ -106,16 +104,27 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         root = inflater.inflate(R.layout.character_traits_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(TraitsViewModel.class);
 
+        beneficesLayout = new BeneficesLayout(getContext(), true);
+        blessingsLayout = new BlessingLayout(getContext(), true);
+
         traitsCounter = root.findViewById(R.id.traits_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
 
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterFactionUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
+        CharacterManager.addCharacterSettingsUpdateListeners(this::updateSettings);
 
         return root;
     }
 
+    @Override
+    protected void updateSettings(CharacterPlayer characterPlayer) {
+        if (getContext() != null) {
+            blessingsLayout.updateElementAdapter(!characterPlayer.getSettings().isOnlyOfficialAllowed());
+            beneficesLayout.updateElementAdapter(!characterPlayer.getSettings().isOnlyOfficialAllowed());
+        }
+    }
 
     class BlessingLayout extends IncrementalElementsLayout<Blessing> {
         private static final int MAX_BENEFICES = 7;
@@ -141,8 +150,8 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         }
 
         @Override
-        protected ElementAdapter<Blessing> createElementAdapter() {
-            return new ElementAdapter<Blessing>(getActivity(), mViewModel.getAvailableBlessings(), isNullAllowed(), Blessing.class) {
+        protected ElementAdapter<Blessing> createElementAdapter(boolean nonOfficial) {
+            return new ElementAdapter<Blessing>(getActivity(), mViewModel.getAvailableBlessings(nonOfficial), isNullAllowed(), Blessing.class) {
 
                 @Override
                 public String getElementRepresentation(Blessing element) {
@@ -199,8 +208,8 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         }
 
         @Override
-        protected ElementAdapter<AvailableBenefice> createElementAdapter() {
-            return new ElementAdapter<AvailableBenefice>(getActivity(), mViewModel.getAvailableBenefices(), isNullAllowed(), AvailableBenefice.class) {
+        protected ElementAdapter<AvailableBenefice> createElementAdapter(boolean nonOfficial) {
+            return new ElementAdapter<AvailableBenefice>(getActivity(), mViewModel.getAvailableBenefices(nonOfficial), isNullAllowed(), AvailableBenefice.class) {
 
                 @Override
                 public String getElementRepresentation(AvailableBenefice element) {

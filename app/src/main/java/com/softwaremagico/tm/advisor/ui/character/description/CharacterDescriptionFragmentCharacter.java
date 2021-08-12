@@ -75,4 +75,9 @@ public class CharacterDescriptionFragmentCharacter extends CharacterCustomFragme
         characterBackground.setText(character.getInfo().getBackgroundDecription());
     }
 
+    @Override
+    protected void updateSettings(CharacterPlayer characterPlayer) {
+        //Nothing changes.
+    }
+
 }

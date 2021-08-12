@@ -103,6 +103,11 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
         setCharacter(root, CharacterManager.getSelectedCharacter());
     }
 
+    @Override
+    protected void updateSettings(CharacterPlayer characterPlayer) {
+        // Nothing yet.
+    }
+
     public static <T extends Enum<T>> T getInstance(final String value, final Class<T> enumClass) {
         return Enum.valueOf(enumClass, value);
     }

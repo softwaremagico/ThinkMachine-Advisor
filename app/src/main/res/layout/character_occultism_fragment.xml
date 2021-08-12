@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        tools:context=".ui.character.cybernetics.CyberneticsFragmentCharacter">
+        tools:context=".ui.character.occultism.OccultismFragmentCharacter">
 
         <LinearLayout
             android:id="@+id/root_container"

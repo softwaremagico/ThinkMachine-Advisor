@@ -90,6 +90,12 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
         setCharacter(root, CharacterManager.getSelectedCharacter());
     }
 
+    @Override
+    protected void updateSettings(CharacterPlayer characterPlayer) {
+        if (getContext() != null) {
+            cyberneticLayout.updateElementAdapter(!characterPlayer.getSettings().isOnlyOfficialAllowed());
+        }
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -141,8 +147,8 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
         }
 
         @Override
-        protected ElementAdapter<CyberneticDevice> createElementAdapter() {
-            return new CyberneticAdapter(getActivity(), mViewModel.getAvailableCybernetics(), isNullAllowed());
+        protected ElementAdapter<CyberneticDevice> createElementAdapter(boolean nonOfficial) {
+            return new CyberneticAdapter(getActivity(), mViewModel.getAvailableCybernetics(nonOfficial), isNullAllowed());
         }
 
         private void setCyberneticDevice(List<ElementSpinner<CyberneticDevice>> spinners) {

@@ -145,4 +145,9 @@ public class CharacteristicsFragmentCharacter extends CharacterCustomFragment {
 
     }
 
+    @Override
+    protected void updateSettings(CharacterPlayer characterPlayer) {
+        //Nothing changes.
+    }
+
 }

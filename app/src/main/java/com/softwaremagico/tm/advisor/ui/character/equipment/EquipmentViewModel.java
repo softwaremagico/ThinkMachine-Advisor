@@ -14,6 +14,7 @@ package com.softwaremagico.tm.advisor.ui.character.equipment;
 
 import androidx.lifecycle.ViewModel;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.character.equipment.armours.Armour;
 import com.softwaremagico.tm.character.equipment.armours.ArmourFactory;
@@ -27,12 +28,20 @@ import com.softwaremagico.tm.log.MachineLog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class EquipmentViewModel extends ViewModel {
 
-    public List<Weapon> getAvailableMeleeWeapons() {
+    public List<Weapon> getAvailableMeleeWeapons(boolean nonOfficial) {
         try {
-            return WeaponFactory.getInstance().getMeleeWeapons(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+            if (nonOfficial) {
+                return WeaponFactory.getInstance().getMeleeWeapons(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE).
+                        stream().filter(Objects::nonNull).collect(Collectors.toList());
+            } else {
+                return WeaponFactory.getInstance().getMeleeWeapons(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE).
+                        stream().filter(Objects::nonNull).filter(Element::isOfficial).collect(Collectors.toList());
+            }
         } catch (InvalidXmlElementException | NullPointerException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }
@@ -40,28 +49,45 @@ public class EquipmentViewModel extends ViewModel {
     }
 
 
-
-    public List<Weapon> getAvailableRangedWeapons() {
+    public List<Weapon> getAvailableRangedWeapons(boolean nonOfficial) {
         try {
-            return WeaponFactory.getInstance().getRangedWeapons(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+            if (nonOfficial) {
+                return WeaponFactory.getInstance().getRangedWeapons(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE).
+                        stream().filter(Objects::nonNull).collect(Collectors.toList());
+            } else {
+                return WeaponFactory.getInstance().getRangedWeapons(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE).
+                        stream().filter(Objects::nonNull).filter(Element::isOfficial).collect(Collectors.toList());
+            }
         } catch (InvalidXmlElementException | NullPointerException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }
         return new ArrayList<>();
     }
 
-    public List<Armour> getAvailableArmours() {
+    public List<Armour> getAvailableArmours(boolean nonOfficial) {
         try {
-            return new ArrayList<>(ArmourFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE));
+            if (nonOfficial) {
+                return new ArrayList<>(ArmourFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).
+                        stream().filter(Objects::nonNull).collect(Collectors.toList());
+            } else {
+                return new ArrayList<>(ArmourFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).
+                        stream().filter(Objects::nonNull).filter(Element::isOfficial).collect(Collectors.toList());
+            }
         } catch (InvalidXmlElementException | NullPointerException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }
         return new ArrayList<>();
     }
 
-    public List<Shield> getAvailableShields() {
+    public List<Shield> getAvailableShields(boolean nonOfficial) {
         try {
-            return new ArrayList<>(ShieldFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE));
+            if (nonOfficial) {
+                return new ArrayList<>(ShieldFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).
+                        stream().filter(Objects::nonNull).collect(Collectors.toList());
+            } else {
+                return new ArrayList<>(ShieldFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).
+                        stream().filter(Objects::nonNull).filter(Element::isOfficial).collect(Collectors.toList());
+            }
         } catch (InvalidXmlElementException | NullPointerException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }

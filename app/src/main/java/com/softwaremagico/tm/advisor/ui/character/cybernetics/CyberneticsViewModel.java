@@ -14,6 +14,7 @@ package com.softwaremagico.tm.advisor.ui.character.cybernetics;
 
 import androidx.lifecycle.ViewModel;
 
+import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.character.cybernetics.CyberneticDevice;
 import com.softwaremagico.tm.character.cybernetics.CyberneticDeviceFactory;
@@ -23,13 +24,21 @@ import com.softwaremagico.tm.log.MachineLog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class CyberneticsViewModel extends ViewModel {
 
 
-    public List<CyberneticDevice> getAvailableCybernetics() {
+    public List<CyberneticDevice> getAvailableCybernetics(boolean nonOfficial) {
         try {
-            return CyberneticDeviceFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+            if (nonOfficial) {
+                return CyberneticDeviceFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE).
+                        stream().filter(Objects::nonNull).collect(Collectors.toList());
+            } else {
+                return CyberneticDeviceFactory.getInstance().getElements(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE).
+                        stream().filter(Objects::nonNull).filter(Element::isOfficial).collect(Collectors.toList());
+            }
         } catch (InvalidXmlElementException | NullPointerException e) {
             MachineLog.errorMessage(this.getClass().getName(), e);
         }

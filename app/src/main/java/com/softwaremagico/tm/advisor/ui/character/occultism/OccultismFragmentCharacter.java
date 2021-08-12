@@ -20,8 +20,8 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
@@ -37,7 +37,6 @@ import com.softwaremagico.tm.character.exceptions.UnofficialElementNotAllowedExc
 import com.softwaremagico.tm.character.occultism.InvalidOccultismPowerException;
 import com.softwaremagico.tm.character.occultism.InvalidPsiqueLevelException;
 import com.softwaremagico.tm.character.occultism.OccultismPath;
-import com.softwaremagico.tm.character.occultism.OccultismPathFactory;
 import com.softwaremagico.tm.character.occultism.OccultismPower;
 import com.softwaremagico.tm.character.occultism.OccultismType;
 import com.softwaremagico.tm.character.occultism.OccultismTypeFactory;
@@ -49,14 +48,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class OccultismFragmentCharacter extends CharacterCustomFragment {
-    private final Map<OccultismType, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private OccultismViewModel mViewModel;
+
+
+    private final Map<OccultismType, TranslatedNumberPicker<OccultismType>> translatedNumberPickers = new HashMap<>();
     private final Map<OccultismPath, LinearLayout> occultismPathLayout = new HashMap<>();
     private final Map<OccultismPath, Set<ElementSelector<OccultismPower>>> selectors = new HashMap<>();
     private boolean enabled = true;
-    private TranslatedNumberPicker wyrdNumberPicker;
+    private TranslatedNumberPicker<?> wyrdNumberPicker;
 
     private OccultismExtraCounter extraCounter;
 
@@ -107,6 +108,23 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
     protected void initData() {
         final LinearLayout rootLayout = root.findViewById(R.id.root_container);
 
+        addContent(rootLayout, CharacterManager.getSelectedCharacter());
+        updateContent();
+
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
+
+    @Override
+    protected void updateSettings(CharacterPlayer characterPlayer) {
+        if (getContext() != null) {
+            final LinearLayout linearLayout = root.findViewById(R.id.root_container);
+            linearLayout.removeAllViews();
+            addContent(linearLayout, characterPlayer);
+            setCharacter(root, characterPlayer);
+        }
+    }
+
+    private void addContent(LinearLayout rootLayout, CharacterPlayer characterPlayer) {
         addSection(ThinkMachineTranslator.getTranslatedText("occultism"), rootLayout);
         createOccultismSelector(rootLayout, OccultismTypeFactory.getPsi(CharacterManager.getSelectedCharacter().getLanguage(),
                 CharacterManager.getSelectedCharacter().getModuleName()));
@@ -114,28 +132,16 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
                 CharacterManager.getSelectedCharacter().getModuleName()));
         createWyrdSelector(rootLayout);
 
-        setOccultismPaths(rootLayout);
-        updateContent();
-
-        setCharacter(root, CharacterManager.getSelectedCharacter());
+        setOccultismPaths(rootLayout, characterPlayer);
     }
 
-    private void setOccultismPaths(LinearLayout rootLayout) {
-        try {
-            List<OccultismPath> occultismPaths = OccultismPathFactory.getInstance().getElements(CharacterManager.getSelectedCharacter().getLanguage(),
-                    CharacterManager.getSelectedCharacter().getModuleName()).stream().filter(Objects::nonNull).collect(Collectors.toList());
-            //Remove non-official elements if needed.
-            if (CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
-                occultismPaths = occultismPaths.stream().filter(Element::isOfficial).collect(Collectors.toList());
-            }
-            occultismPaths.stream().sorted(
-                    Comparator.comparing(OccultismPath::getOccultismType).thenComparing(OccultismPath::getName))
-                    .forEach(
-                            occultismPath -> setOccultismPathLayout(occultismPath, rootLayout)
-                    );
-        } catch (InvalidXmlElementException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        }
+    private void setOccultismPaths(LinearLayout rootLayout, CharacterPlayer characterPlayer) {
+        List<OccultismPath> occultismPaths = mViewModel.getAvailableOccultismPath(!characterPlayer.getSettings().isOnlyOfficialAllowed());
+        occultismPaths.stream().sorted(
+                Comparator.comparing(OccultismPath::getOccultismType).thenComparing(OccultismPath::getName))
+                .forEach(
+                        occultismPath -> setOccultismPathLayout(occultismPath, rootLayout)
+                );
     }
 
     private void setOccultismPathLayout(OccultismPath occultismPath, LinearLayout rootLayout) {
@@ -187,10 +193,13 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.character_occultism_fragment, container, false);
+        mViewModel = new ViewModelProvider(this).get(OccultismViewModel.class);
+
         extraCounter = root.findViewById(R.id.extra_counter);
 
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
+        CharacterManager.addCharacterSettingsUpdateListeners(this::updateSettings);
 
         return root;
     }
@@ -236,7 +245,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createOccultismSelector(LinearLayout linearLayout, OccultismType occultismType) {
-        final TranslatedNumberPicker occultismNumberPicker = new TranslatedNumberPicker(getContext(), null, occultismType);
+        final TranslatedNumberPicker<OccultismType> occultismNumberPicker = new TranslatedNumberPicker<>(getContext(), null, occultismType);
         translatedNumberPickers.put(occultismType, occultismNumberPicker);
 
         occultismNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText(occultismType.getId()));

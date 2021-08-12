@@ -156,8 +156,10 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                     CharacterManager.updateSettings();
                 }
             } catch (UnofficialCharacterException e) {
-                SnackbarGenerator.getErrorMessage(root, R.string.message_setting_unofficial_not_changed).show();
-                CharacterManager.getSelectedCharacter().getSettings().setOnlyOfficialAllowed(false);
+                if (isChecked) {
+                    SnackbarGenerator.getErrorMessage(root, R.string.message_setting_unofficial_not_changed).show();
+                    CharacterManager.getSelectedCharacter().getSettings().setOnlyOfficialAllowed(false);
+                }
             }
         });
 
@@ -169,9 +171,11 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                 if (oldValue != CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored()) {
                     CharacterManager.updateSettings();
                 }
-            } catch (UnofficialCharacterException e) {
-                SnackbarGenerator.getErrorMessage(root, R.string.message_setting_restriction_not_changed).show();
-                CharacterManager.getSelectedCharacter().getSettings().setRestrictionsIgnored(true);
+            } catch (RestrictedElementException e) {
+                if (!isChecked) {
+                    SnackbarGenerator.getErrorMessage(root, R.string.message_setting_restriction_not_changed).show();
+                    CharacterManager.getSelectedCharacter().getSettings().setRestrictionsIgnored(true);
+                }
             }
         });
     }
@@ -186,16 +190,6 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         factionsSelector = root.findViewById(R.id.character_faction);
         planetSelector = root.findViewById(R.id.character_planet);
 
-/*        if (CharacterManager.isStarted()) {
-            createRaceSpinner(!CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed());
-            createFactionSpinner(!CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed());
-            createPlanetSpinner(!CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed());
-        } else {
-            createRaceSpinner(true);
-            createFactionSpinner(true);
-            createPlanetSpinner(true);
-        } */
-
         characteristicsCounter = root.findViewById(R.id.characteristics_counter);
         skillsCounter = root.findViewById(R.id.skills_counter);
         traitsCounter = root.findViewById(R.id.traits_counter);
@@ -207,12 +201,13 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
         CharacterManager.addCharacterRaceUpdatedListener(this::updateCounters);
         CharacterManager.addCharacterAgeUpdatedListener(this::updateCounters);
-        CharacterManager.addCharacterSettingsUpdateListeners(this::updateData);
+        CharacterManager.addCharacterSettingsUpdateListeners(this::updateSettings);
 
         return root;
     }
 
-    private void updateData(CharacterPlayer characterPlayer) {
+    @Override
+    protected void updateSettings(CharacterPlayer characterPlayer) {
         if (getContext() != null) {
             //Avoid to set a different value when changing the ElementAdapter.
             raceSelector.setOnItemSelectedListener(null);
@@ -267,9 +262,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
         updateCounters(character);
 
-        createRaceSpinner(!character.getSettings().isOnlyOfficialAllowed());
-        createFactionSpinner(!character.getSettings().isOnlyOfficialAllowed());
-        createPlanetSpinner(!character.getSettings().isOnlyOfficialAllowed());
+        updateSettings(character);
     }
 
     private void updateCounters(CharacterPlayer character) {
