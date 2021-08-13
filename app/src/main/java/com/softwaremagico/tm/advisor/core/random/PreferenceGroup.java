@@ -26,7 +26,7 @@ import com.softwaremagico.tm.random.selectors.RacePreferences;
 import com.softwaremagico.tm.random.selectors.ShieldPreferences;
 import com.softwaremagico.tm.random.selectors.SkillGroupPreferences;
 import com.softwaremagico.tm.random.selectors.SpecializationPreferences;
-import com.softwaremagico.tm.random.selectors.StatusPreferences;
+import com.softwaremagico.tm.random.selectors.RankPreferences;
 import com.softwaremagico.tm.random.selectors.TechnologicalPreferences;
 import com.softwaremagico.tm.random.selectors.TraitCostPreferences;
 import com.softwaremagico.tm.random.selectors.WeaponsPreferences;
@@ -36,7 +36,7 @@ public enum PreferenceGroup {
     CHARACTER_DESCRIPTION(RacePreferences.class, FactionPreferences.class, AgePreferences.class, GenderPreferences.class,
             CombatPreferences.class, CombatActionsPreferences.class, CombatActionsGroupPreferences.class,
             DifficultLevelPreferences.class, SpecializationPreferences.class,
-            NamesPreferences.class, StatusPreferences.class, CashPreferences.class),
+            NamesPreferences.class, RankPreferences.class, CashPreferences.class),
 
     CHARACTER_CREATION(CharacteristicsPreferences.class, SkillGroupPreferences.class, TraitCostPreferences.class,
             BlessingPreferences.class, BlessingNumberPreferences.class, CurseNumberPreferences.class, ExtraBeneficesNumberPreferences.class),

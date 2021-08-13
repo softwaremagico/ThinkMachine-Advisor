@@ -64,5 +64,6 @@ Some examples of the application:
 - 0.8.1 Random NPCs
 - 0.8.2 Added Aliens from Player Companion
 - 0.8.3 Added Minor Guilds from Player Companion
+- 0.8.4 Added Minor Church Orders and other Psi Powers
 
 

@@ -11,7 +11,7 @@
   -->
 
 <resources>
-    <declare-styleable name="translated_text">
+    <declare-styleable name="TranslatedEditText">
         <attr name="translation" format="string" localization="suggested" />
     </declare-styleable>
     <declare-styleable name="SearchableSpinner">

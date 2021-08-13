@@ -22,7 +22,7 @@
         android:singleLine="true"
         android:ellipsize="marquee"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:fontFamily="@font/label"
         android:gravity="center_vertical"
         />
@@ -31,7 +31,7 @@
         android:id="@+id/input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/translated_tag"
+        android:layout_toEndOf="@id/translated_tag"
         android:singleLine="true"
         android:fontFamily="@font/selection"
         />

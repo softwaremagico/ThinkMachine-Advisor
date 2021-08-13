@@ -14,12 +14,9 @@ package com.softwaremagico.tm.advisor.ui.components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-
-import androidx.core.content.ContextCompat;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
@@ -58,8 +55,8 @@ public class TranslatedNumberPicker<T extends Element<T>> extends ElementCompone
     private void initComponents(AttributeSet attrs) {
         final TextView tagText = findViewById(R.id.translated_tag);
         final TypedArray attributes = getContext().obtainStyledAttributes(attrs,
-                R.styleable.translated_text, 0, 0);
-        final String tag = attributes.getString(R.styleable.translated_text_translation);
+                R.styleable.TranslatedEditText, 0, 0);
+        final String tag = attributes.getString(R.styleable.TranslatedEditText_translation);
         if (tag != null) {
             tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
         }

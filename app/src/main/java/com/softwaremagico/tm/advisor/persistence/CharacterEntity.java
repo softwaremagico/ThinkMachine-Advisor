@@ -61,8 +61,12 @@ public class CharacterEntity extends BaseEntity {
         updateTime = new Timestamp(new Date().getTime());
         setJson(CharacterJsonManager.toJson(characterPlayer));
         setName(characterPlayer.getCompleteNameRepresentation());
-        setRace(characterPlayer.getRace().getNameRepresentation());
-        setFaction(characterPlayer.getFaction().getNameRepresentation());
+        if (characterPlayer.getRace() != null) {
+            setRace(characterPlayer.getRace().getNameRepresentation());
+        }
+        if (characterPlayer.getFaction() != null) {
+            setFaction(characterPlayer.getFaction().getNameRepresentation());
+        }
         setPlayer(characterPlayer.getInfo().getPlayer());
         try {
             setThreat(ThreatLevel.getThreatLevel(characterPlayer));

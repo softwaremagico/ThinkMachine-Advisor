@@ -2,18 +2,14 @@ package com.softwaremagico.tm.advisor.ui.components.spinner;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.ui.components.Component;
 import com.softwaremagico.tm.advisor.ui.components.ElementComponent;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.ArmourDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.BeneficeDescriptionDialog;
@@ -24,7 +20,6 @@ import com.softwaremagico.tm.advisor.ui.components.descriptions.MeleeWeaponDescr
 import com.softwaremagico.tm.advisor.ui.components.descriptions.OccultismDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.RangeWeaponDescriptionDialog;
 import com.softwaremagico.tm.advisor.ui.components.descriptions.ShieldDescriptionDialog;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.benefices.AvailableBenefice;
 import com.softwaremagico.tm.character.blessings.Blessing;
@@ -48,8 +43,8 @@ public abstract class HelpElement<T extends Element<T>> extends ElementComponent
     protected void initComponents(AttributeSet attrs) {
         final TextView tagText = findViewById(R.id.translated_tag);
         final TypedArray attributes = getContext().obtainStyledAttributes(attrs,
-                R.styleable.translated_text, 0, 0);
-        final String tag = attributes.getString(R.styleable.translated_text_translation);
+                R.styleable.TranslatedEditText, 0, 0);
+        final String tag = attributes.getString(R.styleable.TranslatedEditText_translation);
         if (tag != null) {
             tagText.setText(ThinkMachineTranslator.getTranslatedText(tag) + " ");
         }

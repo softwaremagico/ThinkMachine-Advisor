@@ -96,7 +96,7 @@
     <string name="preference_namespreferences">Nombres</string>
     <string name="preference_racepreferences">Raza</string>
     <string name="preference_specializationpreferences">Nivel de Especialización</string>
-    <string name="preference_statuspreferences">Status</string>
+    <string name="preference_rankpreferences">Rango</string>
     <string name="preference_option_human">Humano</string>
     <string name="preference_option_nobility">Nobleza</string>
     <string name="preference_option_obun">Ur-Obun</string>
