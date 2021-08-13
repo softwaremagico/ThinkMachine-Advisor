@@ -70,4 +70,9 @@ public class ElementSelector<T extends Element<T>> extends HelpElement<T> {
         checkBox.setOnCheckedChangeListener(listener);
     }
 
+    @Override
+    public String toString() {
+        return element != null ? element.toString() : "null";
+    }
+
 }

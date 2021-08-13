@@ -302,7 +302,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             @Override
             public boolean isEnabled(int position) {
                 //Faction limitations
-                return getItem(position) == null ||
+                return getItem(position) == null || CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored() ||
                         ((CharacterManager.getSelectedCharacter().getFaction() == null ||
                                 CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces() == null ||
                                 CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces().contains(getItem(position))) &&
@@ -353,7 +353,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         factionsSelector.setAdapter(new ElementAdapter<Faction>(getActivity(), options, false, Faction.class) {
             @Override
             public boolean isEnabled(int position) {
-                return CharacterManager.getSelectedCharacter().getRace() == null || getItem(position) == null || getItem(position).getRestrictedToRaces() == null ||
+                return CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored() || CharacterManager.getSelectedCharacter().getRace() == null ||
+                        getItem(position) == null || getItem(position).getRestrictedToRaces() == null ||
                         getItem(position).getRestrictedToRaces().contains(CharacterManager.getSelectedCharacter().getRace());
             }
         });
@@ -400,7 +401,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         planetSelector.setAdapter(new ElementAdapter<Planet>(getActivity(), options, false, Planet.class) {
             @Override
             public boolean isEnabled(int position) {
-                return CharacterManager.getSelectedCharacter().getRace() == null ||
+                return CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored() ||
+                        CharacterManager.getSelectedCharacter().getRace() == null ||
                         CharacterManager.getSelectedCharacter().getRace().getPlanets().isEmpty() ||
                         CharacterManager.getSelectedCharacter().getRace().getPlanets().contains(getItem(position));
             }

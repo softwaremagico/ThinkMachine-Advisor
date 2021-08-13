@@ -163,7 +163,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
 
                 @Override
                 public boolean isEnabled(int position) {
-                    return !getItem(position).isRestricted();
+                    return CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored() || !getItem(position).isRestricted();
                 }
             };
         }
@@ -224,12 +224,13 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
 
                 @Override
                 public boolean isEnabled(int position) {
-                    return (getItem(position).getBeneficeDefinition() == null ||
-                            getItem(position).getBeneficeDefinition().getRestrictedToFactionGroup() == null ||
-                            (CharacterManager.getSelectedCharacter().getFaction() != null &&
-                                    getItem(position).getBeneficeDefinition().getRestrictedToFactionGroup() ==
-                                            CharacterManager.getSelectedCharacter().getFaction().getRestrictedToFactionGroup())) &&
-                            !getItem(position).isRestricted();
+                    return CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored() ||
+                            (getItem(position).getBeneficeDefinition() == null ||
+                                    getItem(position).getBeneficeDefinition().getRestrictedToFactionGroup() == null ||
+                                    (CharacterManager.getSelectedCharacter().getFaction() != null &&
+                                            getItem(position).getBeneficeDefinition().getRestrictedToFactionGroup() ==
+                                                    CharacterManager.getSelectedCharacter().getFaction().getRestrictedToFactionGroup())) &&
+                                    !getItem(position).isRestricted();
                 }
             };
         }

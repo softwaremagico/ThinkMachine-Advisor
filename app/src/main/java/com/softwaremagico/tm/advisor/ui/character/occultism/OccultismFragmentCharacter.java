@@ -197,6 +197,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
 
         extraCounter = root.findViewById(R.id.extra_counter);
 
+        CharacterManager.addCharacterFactionUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterSettingsUpdateListeners(this::updateSettings);
