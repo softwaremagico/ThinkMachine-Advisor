@@ -163,7 +163,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
 
                 @Override
                 public boolean isEnabled(int position) {
-                    return CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored() || !getItem(position).isRestricted();
+                    return !CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked() || !getItem(position).isRestricted();
                 }
             };
         }
@@ -224,7 +224,7 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
 
                 @Override
                 public boolean isEnabled(int position) {
-                    return CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored() ||
+                    return !CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked() ||
                             (getItem(position).getBeneficeDefinition() == null ||
                                     getItem(position).getBeneficeDefinition().getRestrictedToFactionGroup() == null ||
                                     (CharacterManager.getSelectedCharacter().getFaction() != null &&

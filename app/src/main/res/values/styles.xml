@@ -68,6 +68,13 @@
         <item name="android:padding">15sp</item>
     </style>
 
+    <style name="SettingsTitle" parent="@android:style/Widget.TextView">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:paddingBottom">15sp</item>
+    </style>
+
     <style name="CharacterInfo" parent="@android:style/Widget.TextView">
         <item name="android:textStyle">bold</item>
     </style>

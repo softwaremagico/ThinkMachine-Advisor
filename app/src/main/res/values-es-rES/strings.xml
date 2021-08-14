@@ -241,4 +241,6 @@
     <string name="allow_restricted">Ignorar restricciones del personaje</string>
     <string name="message_setting_unofficial_not_changed">El personaje está usando algunos elementos no oficiales. La configuración no puede ser cambiada.</string>
     <string name="message_setting_restriction_not_changed">El personaje está usando algunos elementos restringidos. La configuración no puede ser cambiada.</string>
+    <string name="settings_global">Ajustes Generales</string>
+    <string name="setting_title_new_characters">Nuevos Personajes</string>
 </resources>

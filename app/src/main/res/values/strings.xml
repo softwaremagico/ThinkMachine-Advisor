@@ -44,6 +44,7 @@
     <string name="settings_save">Save</string>
     <string name="settings_import">Import</string>
     <string name="settings_export">Export</string>
+    <string name="settings_global">Global Settings</string>
     <string name="message_character_saved_successfully">Character saved.</string>
     <string name="message_character_saved_error">Character save error!</string>
     <string name="message_random_character_success">Character finished randomly.</string>
@@ -243,5 +244,6 @@
     <string name="restricted_factions">Restricted to factions:</string>
     <string name="allow_nonofficial">Enable non-official features</string>
     <string name="allow_restricted">Ignore restrictions</string>
+    <string name="setting_title_new_characters">New Characters</string>
 </resources>
 

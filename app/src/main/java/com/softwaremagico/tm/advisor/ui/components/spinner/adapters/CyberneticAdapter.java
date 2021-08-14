@@ -53,7 +53,7 @@ public class CyberneticAdapter extends ElementAdapter<CyberneticDevice> {
     @Override
     public boolean isEnabled(int position) {
         if (getItem(position).getRequirement() != null) {
-            return CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored() ||
+            return !CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked() ||
                     CharacterManager.getSelectedCharacter().hasCyberneticDevice(getItem(position).getRequirement());
         }
         return true;

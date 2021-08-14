@@ -21,7 +21,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {CharacterEntity.class}, version = 2, exportSchema = false)
+@Database(entities = {CharacterEntity.class, SettingsEntity.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "ThinkMachine Database";
 
@@ -29,13 +29,15 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract CharacterEntityDao getCharacterEntityDao();
 
+    public abstract SettingsEntityDao getSettingsEntityDao();
+
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {
             synchronized (AppDatabase.class) {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context,
                             AppDatabase.class, DATABASE_NAME).allowMainThreadQueries()
-                            .addMigrations(MIGRATION_1_2).build();
+                            .addMigrations(MIGRATION_1_2).addMigrations(MIGRATION_2_3).build();
                 }
             }
         }
@@ -47,6 +49,15 @@ public abstract class AppDatabase extends RoomDatabase {
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE " + CharacterEntity.CHARACTER_PLAYER_TABLE + " "
                     + "ADD COLUMN player TEXT");
+        }
+    };
+
+    private static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS " + SettingsEntity.SETTINGS_TABLE + " "
+                    + "(`creation_time` INTEGER DEFAULT CURRENT_TIMESTAMP, `update_time` INTEGER DEFAULT CURRENT_TIMESTAMP, `only_official_allowed` BOOLEAN, `restrictions_checked` BOOLEAN, " +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)");
         }
     };
 }

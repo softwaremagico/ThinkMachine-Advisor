@@ -58,7 +58,7 @@ public class RandomCharactersFragment extends CharacterCustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-
+        //No character selected on this view.
     }
 
     @Override
@@ -118,9 +118,7 @@ public class RandomCharactersFragment extends CharacterCustomFragment {
         fab.setOnClickListener(view -> {
             if (CharacterManager.getCostCalculator().getStatus().ordinal() > CharacterProgressionStatus.NOT_STARTED.ordinal()) {
                 SnackbarGenerator.getWarningMessage(root, R.string.message_random_character_already_started,
-                        R.string.action_proceed, action -> {
-                            generateCharacter();
-                        }).show();
+                        R.string.action_proceed, action -> generateCharacter()).show();
             } else {
                 generateCharacter();
             }

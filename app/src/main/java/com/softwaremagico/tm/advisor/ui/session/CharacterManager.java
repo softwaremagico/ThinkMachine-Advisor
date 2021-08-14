@@ -13,6 +13,7 @@
 package com.softwaremagico.tm.advisor.ui.session;
 
 import com.softwaremagico.tm.InvalidXmlElementException;
+import com.softwaremagico.tm.advisor.persistence.SettingsHandler;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.RandomizeCharacter;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
@@ -223,6 +224,7 @@ public final class CharacterManager {
 
     public static void addNewCharacter() {
         final CharacterPlayer characterPlayer = new CharacterPlayer(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+        characterPlayer.getSettings().copy(SettingsHandler.getSettingsEntity().get());
         characters.add(characterPlayer);
         setSelectedCharacter(characterPlayer);
     }

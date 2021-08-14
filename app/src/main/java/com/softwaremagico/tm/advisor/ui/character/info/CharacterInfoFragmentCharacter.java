@@ -164,17 +164,17 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         });
 
         restrictionsIgnored.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            final boolean oldValue = CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored();
+            final boolean oldValue = CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked();
             try {
                 CharacterManager.getSelectedCharacter().checkIsNotRestricted();
-                CharacterManager.getSelectedCharacter().getSettings().setRestrictionsIgnored(isChecked);
-                if (oldValue != CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored()) {
+                CharacterManager.getSelectedCharacter().getSettings().setRestrictionsChecked(!isChecked);
+                if (oldValue != CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked()) {
                     CharacterManager.updateSettings();
                 }
             } catch (RestrictedElementException e) {
-                if (!isChecked) {
+                if (isChecked) {
                     SnackbarGenerator.getErrorMessage(root, R.string.message_setting_restriction_not_changed).show();
-                    CharacterManager.getSelectedCharacter().getSettings().setRestrictionsIgnored(true);
+                    CharacterManager.getSelectedCharacter().getSettings().setRestrictionsChecked(false);
                 }
             }
         });
@@ -251,7 +251,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         }
 
         nonOfficialEnabled.setChecked(character != null && !character.getSettings().isOnlyOfficialAllowed());
-        restrictionsIgnored.setChecked(character != null && character.getSettings().isRestrictionsIgnored());
+        restrictionsIgnored.setChecked(character != null && !character.getSettings().isRestrictionsChecked());
 
         final ElementSpinner<Race> raceSelector = root.findViewById(R.id.character_race);
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
@@ -302,7 +302,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             @Override
             public boolean isEnabled(int position) {
                 //Faction limitations
-                return getItem(position) == null || CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored() ||
+                return getItem(position) == null || !CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked() ||
                         ((CharacterManager.getSelectedCharacter().getFaction() == null ||
                                 CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces() == null ||
                                 CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces().contains(getItem(position))) &&
@@ -353,7 +353,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         factionsSelector.setAdapter(new ElementAdapter<Faction>(getActivity(), options, false, Faction.class) {
             @Override
             public boolean isEnabled(int position) {
-                return CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored() || CharacterManager.getSelectedCharacter().getRace() == null ||
+                return !CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked() || CharacterManager.getSelectedCharacter().getRace() == null ||
                         getItem(position) == null || getItem(position).getRestrictedToRaces() == null ||
                         getItem(position).getRestrictedToRaces().contains(CharacterManager.getSelectedCharacter().getRace());
             }
@@ -401,7 +401,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         planetSelector.setAdapter(new ElementAdapter<Planet>(getActivity(), options, false, Planet.class) {
             @Override
             public boolean isEnabled(int position) {
-                return CharacterManager.getSelectedCharacter().getSettings().isRestrictionsIgnored() ||
+                return !CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked() ||
                         CharacterManager.getSelectedCharacter().getRace() == null ||
                         CharacterManager.getSelectedCharacter().getRace().getPlanets().isEmpty() ||
                         CharacterManager.getSelectedCharacter().getRace().getPlanets().contains(getItem(position));

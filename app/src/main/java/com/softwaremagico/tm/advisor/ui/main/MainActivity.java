@@ -18,7 +18,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,7 +38,9 @@ import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.core.FileUtils;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.persistence.CharacterHandler;
+import com.softwaremagico.tm.advisor.persistence.SettingsHandler;
 import com.softwaremagico.tm.advisor.ui.about.AboutWindow;
+import com.softwaremagico.tm.advisor.ui.about.SettingsWindow;
 import com.softwaremagico.tm.advisor.ui.load.LoadCharacter;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
@@ -53,6 +54,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PICK_TMA_FILE = 0;
@@ -65,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        SettingsHandler.setSettingsEntity(this.getBaseContext());
+
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -96,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.settings_new:
                 newCharacter();
+                return true;
+            case R.id.settings_global_settings:
+                globalSettings();
                 return true;
             case R.id.settings_export_file:
                 try {
@@ -182,16 +190,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveCurrentCharacter(View parentLayout) {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    CharacterHandler.getInstance().save(getApplicationContext(), CharacterManager.getSelectedCharacter());
-                    SnackbarGenerator.getInfoMessage(parentLayout, R.string.message_character_saved_successfully).show();
-                } catch (Exception e) {
-                    SnackbarGenerator.getErrorMessage(parentLayout, R.string.message_character_saved_error).show();
-                    MachineLog.errorMessage(this.getClass().getName(), e);
-                }
+        Executors.newSingleThreadExecutor().execute(() -> {
+            try {
+                CharacterHandler.getInstance().save(getApplicationContext(), CharacterManager.getSelectedCharacter());
+                SnackbarGenerator.getInfoMessage(parentLayout, R.string.message_character_saved_successfully).show();
+            } catch (Exception e) {
+                SnackbarGenerator.getErrorMessage(parentLayout, R.string.message_character_saved_error).show();
+                MachineLog.errorMessage(this.getClass().getName(), e);
             }
         });
     }
@@ -219,5 +224,9 @@ public class MainActivity extends AppCompatActivity {
             transaction.add(android.R.id.content, loadCharacter)
                     .addToBackStack(null).commit();
         }
+    }
+
+    private void globalSettings() {
+        new SettingsWindow().show(getSupportFragmentManager(), "");
     }
 }

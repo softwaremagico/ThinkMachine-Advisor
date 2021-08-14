@@ -32,8 +32,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
-
 @RunWith(AndroidJUnit4ClassRunner.class)
 public class CharacterEntityReadWriteTest {
     private static final String LANGUAGE = "en";
@@ -48,7 +46,7 @@ public class CharacterEntityReadWriteTest {
     }
 
     @After
-    public void closeDb() throws IOException {
+    public void closeDb() {
         appDatabase.close();
     }
 
@@ -69,7 +67,7 @@ public class CharacterEntityReadWriteTest {
         Assert.assertNotNull(storedCharacterEntity);
         Assert.assertEquals(storedCharacterEntity.getCreationTime(), characterEntity.getCreationTime());
         Assert.assertEquals(storedCharacterEntity.getJson(), characterEntity.getJson());
-        Assert.assertEquals(storedCharacterEntity.getCharacterPlayer().getComparationId(), characterEntity.getCharacterPlayer().getComparationId());
+        Assert.assertEquals(storedCharacterEntity.getCharacterPlayer().getComparisonId(), characterEntity.getCharacterPlayer().getComparisonId());
 
         //Check that if we insert a second time, only one is inserted.
         characterEntityDao.persist(characterEntity);
