@@ -70,19 +70,21 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-        if (meleeWeaponsLayout != null) {
-            meleeWeaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
+        if (getContext() != null) {
+            if (meleeWeaponsLayout != null) {
+                meleeWeaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
+            }
+            if (rangeWeaponsLayout != null) {
+                rangeWeaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
+            }
+            if (armoursLayout != null) {
+                armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedArmour());
+            }
+            if (shieldsLayout != null) {
+                shieldsLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedShield());
+            }
+            firebirdsCounter.setCharacter(character);
         }
-        if (rangeWeaponsLayout != null) {
-            rangeWeaponsLayout.setElements(CharacterManager.getSelectedCharacter().getSelectedWeapons());
-        }
-        if (armoursLayout != null) {
-            armoursLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedArmour());
-        }
-        if (shieldsLayout != null) {
-            shieldsLayout.setElement(CharacterManager.getSelectedCharacter().getSelectedShield());
-        }
-        firebirdsCounter.setCharacter(character);
     }
 
     @Override
@@ -129,6 +131,9 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
         root = inflater.inflate(R.layout.character_equipment_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(EquipmentViewModel.class);
         firebirdsCounter = root.findViewById(R.id.firebirds_counter);
+
+        CharacterManager.addSelectedCharacterListener(characterPlayer -> setCharacter(root, characterPlayer));
+
         return root;
     }
 

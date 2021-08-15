@@ -54,25 +54,30 @@ public class CharacterDescriptionFragmentCharacter extends CharacterCustomFragme
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.character_description_fragment, container, false);
+
+        CharacterManager.addSelectedCharacterListener(characterPlayer -> setCharacter(root, characterPlayer));
+
         return root;
     }
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-        final TranslatedEditText playerTextEditor = root.findViewById(R.id.character_player);
-        playerTextEditor.setText(character.getInfo().getPlayer());
-        final TranslatedEditText hairTextEditor = root.findViewById(R.id.character_hair);
-        hairTextEditor.setText(character.getInfo().getHair());
-        final TranslatedEditText eyesTextEditor = root.findViewById(R.id.character_eyes);
-        eyesTextEditor.setText(character.getInfo().getEyes());
-        final TranslatedEditText complexionTextEditor = root.findViewById(R.id.character_complexion);
-        complexionTextEditor.setText(character.getInfo().getComplexion());
-        final TranslatedEditText weightTextEditor = root.findViewById(R.id.character_weight);
-        weightTextEditor.setText(character.getInfo().getWeight());
-        final EditText characterDescription = root.findViewById(R.id.character_description);
-        characterDescription.setText(character.getInfo().getCharacterDescription());
-        final EditText characterBackground = root.findViewById(R.id.character_background);
-        characterBackground.setText(character.getInfo().getBackgroundDecription());
+        if (getContext() != null) {
+            final TranslatedEditText playerTextEditor = root.findViewById(R.id.character_player);
+            playerTextEditor.setText(character.getInfo().getPlayer());
+            final TranslatedEditText hairTextEditor = root.findViewById(R.id.character_hair);
+            hairTextEditor.setText(character.getInfo().getHair());
+            final TranslatedEditText eyesTextEditor = root.findViewById(R.id.character_eyes);
+            eyesTextEditor.setText(character.getInfo().getEyes());
+            final TranslatedEditText complexionTextEditor = root.findViewById(R.id.character_complexion);
+            complexionTextEditor.setText(character.getInfo().getComplexion());
+            final TranslatedEditText weightTextEditor = root.findViewById(R.id.character_weight);
+            weightTextEditor.setText(character.getInfo().getWeight());
+            final EditText characterDescription = root.findViewById(R.id.character_description);
+            characterDescription.setText(character.getInfo().getCharacterDescription());
+            final EditText characterBackground = root.findViewById(R.id.character_background);
+            characterBackground.setText(character.getInfo().getBackgroundDecription());
+        }
     }
 
     @Override

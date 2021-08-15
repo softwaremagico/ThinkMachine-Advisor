@@ -111,6 +111,7 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
 
         CharacterManager.addCharacterFactionUpdatedListener(this::updateDynamicSkills);
         CharacterManager.addCharacterPlanetUpdatedListener(this::updateDynamicSkills);
+        CharacterManager.addSelectedCharacterListener(this::updateDynamicSkills);
         CharacterManager.addCharacterSettingsUpdateListeners(this::updateSettings);
 
         return root;

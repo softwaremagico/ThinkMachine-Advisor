@@ -69,17 +69,19 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-        if (blessingsLayout != null) {
-            blessingsLayout.setElements(character.getSelectedBlessings(), character.getDefaultBlessings());
-        }
-        if (beneficesLayout != null) {
-            beneficesLayout.setElements(character.getSelectedBenefices(), character.getDefaultBenefices());
-        }
-        if (traitsCounter != null) {
-            traitsCounter.setCharacter(character);
-        }
-        if (extraCounter != null) {
-            extraCounter.setCharacter(character);
+        if (getContext() != null) {
+            if (blessingsLayout != null) {
+                blessingsLayout.setElements(character.getSelectedBlessings(), character.getDefaultBlessings());
+            }
+            if (beneficesLayout != null) {
+                beneficesLayout.setElements(character.getSelectedBenefices(), character.getDefaultBenefices());
+            }
+            if (traitsCounter != null) {
+                traitsCounter.setCharacter(character);
+            }
+            if (extraCounter != null) {
+                extraCounter.setCharacter(character);
+            }
         }
     }
 
@@ -113,17 +115,15 @@ public class TraitsFragmentCharacter extends CharacterCustomFragment {
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterFactionUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
-        CharacterManager.addCharacterSettingsUpdateListeners(this::updateSettings);
+        CharacterManager.addSelectedCharacterListener(characterPlayer -> setCharacter(root, characterPlayer));
+        CharacterManager.addCharacterSettingsUpdateListeners(characterPlayer -> setCharacter(root, characterPlayer));
 
         return root;
     }
 
     @Override
     protected void updateSettings(CharacterPlayer characterPlayer) {
-        if (getContext() != null) {
-            blessingsLayout.updateElementAdapter(!characterPlayer.getSettings().isOnlyOfficialAllowed());
-            beneficesLayout.updateElementAdapter(!characterPlayer.getSettings().isOnlyOfficialAllowed());
-        }
+        //Done setting the character
     }
 
     class BlessingLayout extends IncrementalElementsLayout<Blessing> {

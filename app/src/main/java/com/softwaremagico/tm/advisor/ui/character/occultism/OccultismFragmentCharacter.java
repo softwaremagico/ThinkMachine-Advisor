@@ -73,28 +73,30 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-        if (extraCounter != null) {
-            extraCounter.setCharacter(character);
-        }
-        try {
-            for (OccultismType occultismType : OccultismTypeFactory.getInstance().getElements(character.getLanguage(),
-                    character.getModuleName())) {
-                if (translatedNumberPickers.get(occultismType) != null) {
-                    translatedNumberPickers.get(occultismType).setValue(character.getOccultismLevel(occultismType));
-                }
+        if (getContext() != null) {
+            if (extraCounter != null) {
+                extraCounter.setCharacter(character);
             }
-        } catch (InvalidXmlElementException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        }
-        enabled = false;
-        selectors.values().forEach(elementSelectors -> elementSelectors.forEach(occultismPowerElementSelector ->
-                occultismPowerElementSelector.setChecked(character.hasOccultismPower(occultismPowerElementSelector.getSelection()))));
-        if (wyrdNumberPicker != null) {
-            wyrdNumberPicker.setValue(character.getWyrdValue());
-        }
-        enabled = true;
+            try {
+                for (OccultismType occultismType : OccultismTypeFactory.getInstance().getElements(character.getLanguage(),
+                        character.getModuleName())) {
+                    if (translatedNumberPickers.get(occultismType) != null) {
+                        translatedNumberPickers.get(occultismType).setValue(character.getOccultismLevel(occultismType));
+                    }
+                }
+            } catch (InvalidXmlElementException e) {
+                AdvisorLog.errorMessage(this.getClass().getName(), e);
+            }
+            enabled = false;
+            selectors.values().forEach(elementSelectors -> elementSelectors.forEach(occultismPowerElementSelector ->
+                    occultismPowerElementSelector.setChecked(character.hasOccultismPower(occultismPowerElementSelector.getSelection()))));
+            if (wyrdNumberPicker != null) {
+                wyrdNumberPicker.setValue(character.getWyrdValue());
+            }
+            enabled = true;
 
-        updateContent();
+            updateContent();
+        }
     }
 
     private void updateContent() {
@@ -200,6 +202,7 @@ public class OccultismFragmentCharacter extends CharacterCustomFragment {
         CharacterManager.addCharacterFactionUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
+        CharacterManager.addSelectedCharacterListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterSettingsUpdateListeners(this::updateSettings);
 
         return root;

@@ -73,6 +73,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     private ElementSpinner<Race> raceSelector;
     private ElementSpinner<Faction> factionsSelector;
     private ElementSpinner<Planet> planetSelector;
+    private boolean updatingCharacter = false;
 
     public static CharacterInfoFragmentCharacter newInstance(int index) {
         final CharacterInfoFragmentCharacter fragment = new CharacterInfoFragmentCharacter();
@@ -91,7 +92,9 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                 if (!Objects.equals(CharacterManager.getSelectedCharacter().getInfo().getAge() + "", value)) {
                     CharacterManager.getSelectedCharacter().getInfo().setAge(Integer.parseInt(value));
                     //Force to update all costs.
-                    CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
+                    if (!updatingCharacter) {
+                        CharacterManager.launchCharacterAgeUpdatedListeners(CharacterManager.getSelectedCharacter());
+                    }
                 }
             } catch (NumberFormatException e) {
                 CharacterManager.getSelectedCharacter().getInfo().setAge(null);
@@ -202,6 +205,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         CharacterManager.addCharacterRaceUpdatedListener(this::updateCounters);
         CharacterManager.addCharacterAgeUpdatedListener(this::updateCounters);
         CharacterManager.addCharacterSettingsUpdateListeners(this::updateSettings);
+        CharacterManager.addSelectedCharacterListener(characterPlayer -> setCharacter(root, characterPlayer));
 
         return root;
     }
@@ -233,6 +237,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
+        updatingCharacter = true;
         final TranslatedEditText nameTextEditor = root.findViewById(R.id.character_name);
         nameTextEditor.setText(character.getInfo().getNameRepresentation());
         final TranslatedEditText surnameTextEditor = root.findViewById(R.id.character_surname);
@@ -263,6 +268,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         updateCounters(character);
 
         updateSettings(character);
+
+        updatingCharacter = false;
     }
 
     private void updateCounters(CharacterPlayer character) {
@@ -324,7 +331,9 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                         } else {
                             CharacterManager.setRace(null);
                         }
-                        updateCounters(CharacterManager.getSelectedCharacter());
+                        if (!updatingCharacter) {
+                            updateCounters(CharacterManager.getSelectedCharacter());
+                        }
                     }
                 } catch (InvalidRaceException | RestrictedElementException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.invalidFactionAndRace).show();

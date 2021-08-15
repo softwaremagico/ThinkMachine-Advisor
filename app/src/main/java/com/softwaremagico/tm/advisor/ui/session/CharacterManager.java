@@ -49,6 +49,7 @@ public final class CharacterManager {
     private static final Set<CharacterFactionUpdatedListener> characterFactionUpdatedListener = new HashSet<>();
     private static final Set<CharacterCharacteristicUpdatedListener> characterCharacteristicUpdatedListener = new HashSet<>();
     private static final Set<CharacterSettingsUpdatedListener> characterSettingsUpdatedListeners = new HashSet<>();
+    private static boolean updatingCharacter = false;
 
     public interface CharacterSelectedListener {
         void selected(CharacterPlayer characterPlayer);
@@ -91,50 +92,66 @@ public final class CharacterManager {
     }
 
     public static void launchCharacterSettingsUpdateListeners(CharacterPlayer characterPlayer) {
-        for (final CharacterSettingsUpdatedListener listener : characterSettingsUpdatedListeners) {
-            listener.updated(characterPlayer);
+        if (!updatingCharacter) {
+            for (final CharacterSettingsUpdatedListener listener : characterSettingsUpdatedListeners) {
+                listener.updated(characterPlayer);
+            }
         }
     }
 
     public static void launchSelectedCharacterListeners(CharacterPlayer characterPlayer) {
+        updatingCharacter = true;
         for (final CharacterSelectedListener listener : characterSelectedListener) {
             listener.selected(characterPlayer);
         }
+        updatingCharacter = false;
     }
 
     private static void launchCharacterUpdatedListeners(CharacterPlayer characterPlayer) {
-        for (final CharacterUpdatedListener listener : characterUpdatedListener) {
-            listener.updated(characterPlayer);
+        if (!updatingCharacter) {
+            for (final CharacterUpdatedListener listener : characterUpdatedListener) {
+                listener.updated(characterPlayer);
+            }
         }
     }
 
     private static void launchCharacterRaceUpdatedListeners(CharacterPlayer characterPlayer) {
-        for (final CharacterRaceUpdatedListener listener : characterRaceUpdatedListener) {
-            listener.updated(characterPlayer);
+        if (!updatingCharacter) {
+            for (final CharacterRaceUpdatedListener listener : characterRaceUpdatedListener) {
+                listener.updated(characterPlayer);
+            }
         }
     }
 
     public static void launchCharacterAgeUpdatedListeners(CharacterPlayer characterPlayer) {
-        for (final CharacterAgeUpdatedListener listener : characterAgeUpdatedListener) {
-            listener.updated(characterPlayer);
+        if (!updatingCharacter) {
+            for (final CharacterAgeUpdatedListener listener : characterAgeUpdatedListener) {
+                listener.updated(characterPlayer);
+            }
         }
     }
 
     public static void launchCharacterPlanetUpdatedListeners(CharacterPlayer characterPlayer) {
-        for (final CharacterPlanetUpdatedListener listener : characterPlanetUpdatedListener) {
-            listener.updated(characterPlayer);
+        if (!updatingCharacter) {
+            for (final CharacterPlanetUpdatedListener listener : characterPlanetUpdatedListener) {
+                listener.updated(characterPlayer);
+            }
         }
     }
 
     public static void launchCharacterFactionUpdatedListeners(CharacterPlayer characterPlayer) {
-        for (final CharacterFactionUpdatedListener listener : characterFactionUpdatedListener) {
-            listener.updated(characterPlayer);
+        if (!updatingCharacter) {
+            for (final CharacterFactionUpdatedListener listener : characterFactionUpdatedListener) {
+                listener.updated(characterPlayer);
+            }
         }
     }
 
     public static void launchCharacterCharacteristicsUpdatedListeners(CharacterPlayer characterPlayer, CharacteristicName characteristicName) {
-        for (final CharacterCharacteristicUpdatedListener listener : characterCharacteristicUpdatedListener) {
-            listener.updated(characterPlayer, characteristicName);
+        if (!updatingCharacter) {
+            for (final CharacterCharacteristicUpdatedListener listener : characterCharacteristicUpdatedListener) {
+                listener.updated(characterPlayer, characteristicName);
+            }
         }
     }
 

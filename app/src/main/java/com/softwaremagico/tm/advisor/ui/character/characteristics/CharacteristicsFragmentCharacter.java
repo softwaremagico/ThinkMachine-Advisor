@@ -41,7 +41,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class CharacteristicsFragmentCharacter extends CharacterCustomFragment {
-    private final Map<CharacteristicName, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private final Map<CharacteristicName, TranslatedNumberPicker<CharacteristicDefinition>> translatedNumberPickers = new HashMap<>();
     private CharacteristicsCounter characteristicsCounter;
     private CharacteristicsExtraCounter extraCounter;
     private View root;
@@ -102,13 +102,14 @@ public class CharacteristicsFragmentCharacter extends CharacterCustomFragment {
 
         CharacterManager.addCharacterRaceUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
         CharacterManager.addCharacterAgeUpdatedListener(characterPlayer -> setCharacter(root, characterPlayer));
+        CharacterManager.addSelectedCharacterListener(characterPlayer -> setCharacter(root, characterPlayer));
 
         return root;
     }
 
     public void updateCharacteristicsLimits(CharacterPlayer characterPlayer) {
         if (characterPlayer != null && characterPlayer.getRace() != null) {
-            for (final Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
+            for (final Map.Entry<CharacteristicName, TranslatedNumberPicker<CharacteristicDefinition>> characteristicComponent : translatedNumberPickers.entrySet()) {
                 characteristicComponent.getValue().setLimits(CharacterManager.getSelectedCharacter().getStartingValue(characteristicComponent.getKey()),
                         FreeStyleCharacterCreation.getMaxInitialCharacteristicsValues(characteristicComponent.getKey(),
                                 CharacterManager.getSelectedCharacter().getInfo().getAge(), CharacterManager.getSelectedCharacter().getRace()));
@@ -118,14 +119,14 @@ public class CharacteristicsFragmentCharacter extends CharacterCustomFragment {
 
     public void refreshCharacteristicValues(CharacterPlayer characterPlayer) {
         if (characterPlayer != null && characterPlayer.getRace() != null) {
-            for (final Map.Entry<CharacteristicName, TranslatedNumberPicker> characteristicComponent : translatedNumberPickers.entrySet()) {
+            for (final Map.Entry<CharacteristicName, TranslatedNumberPicker<CharacteristicDefinition>> characteristicComponent : translatedNumberPickers.entrySet()) {
                 characteristicComponent.getValue().setValue(CharacterManager.getSelectedCharacter().getValue(characteristicComponent.getKey()));
             }
         }
     }
 
     private void createCharacteristicsEditText(LinearLayout linearLayout, CharacteristicDefinition characteristicDefinition) {
-        final TranslatedNumberPicker characteristicsNumberPicker = new TranslatedNumberPicker(getContext(), null, null);
+        final TranslatedNumberPicker<CharacteristicDefinition> characteristicsNumberPicker = new TranslatedNumberPicker<>(getContext(), null, null);
         translatedNumberPickers.put(characteristicDefinition.getCharacteristicName(), characteristicsNumberPicker);
         characteristicsNumberPicker.setLabel(ThinkMachineTranslator.getTranslatedText(characteristicDefinition.getId()));
         characteristicsNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

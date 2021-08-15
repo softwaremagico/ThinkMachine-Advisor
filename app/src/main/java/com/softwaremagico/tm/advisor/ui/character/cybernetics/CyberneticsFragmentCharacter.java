@@ -67,15 +67,17 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
 
     @Override
     public void setCharacter(View root, CharacterPlayer character) {
-        if (cyberneticLayout != null) {
-            List<CyberneticDevice> cyberneticDevices = character.getCybernetics().stream().map(SelectedCyberneticDevice::getCyberneticDevice).collect(Collectors.toList());
-            cyberneticLayout.setElements(cyberneticDevices);
-        }
-        if (incompatibilityCounter != null) {
-            incompatibilityCounter.setCharacter(character);
-        }
-        if (extraCounter != null) {
-            extraCounter.setCharacter(character);
+        if (getContext() != null) {
+            if (cyberneticLayout != null) {
+                List<CyberneticDevice> cyberneticDevices = character.getCybernetics().stream().map(SelectedCyberneticDevice::getCyberneticDevice).collect(Collectors.toList());
+                cyberneticLayout.setElements(cyberneticDevices);
+            }
+            if (incompatibilityCounter != null) {
+                incompatibilityCounter.setCharacter(character);
+            }
+            if (extraCounter != null) {
+                extraCounter.setCharacter(character);
+            }
         }
     }
 
@@ -111,6 +113,8 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
                 incompatibilityCounter.setCharacter(characterPlayer);
             }
         });
+
+        CharacterManager.addSelectedCharacterListener(characterPlayer -> setCharacter(root, characterPlayer));
 
         return root;
     }
