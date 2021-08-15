@@ -20,31 +20,32 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
+import com.softwaremagico.tm.advisor.persistence.SettingsHandler;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
 import com.softwaremagico.tm.advisor.ui.components.ElementRadio;
 import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.creation.CharacterProgressionStatus;
 import com.softwaremagico.tm.character.exceptions.RestrictedElementException;
 import com.softwaremagico.tm.character.exceptions.UnofficialElementNotAllowedException;
-import com.softwaremagico.tm.character.creation.CharacterProgressionStatus;
-import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
 import com.softwaremagico.tm.random.predefined.characters.Npc;
-import com.softwaremagico.tm.random.predefined.characters.NpcFactory;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class RandomCharactersFragment extends CharacterCustomFragment {
+    private RandomCharactersViewModel mViewModel;
+
     private View root;
     private final Set<ElementRadio<Npc>> optionsAvailable = new HashSet<>();
 
@@ -63,20 +64,25 @@ public class RandomCharactersFragment extends CharacterCustomFragment {
 
     @Override
     protected void initData() {
+        populateNpcs();
+        setCharacter(root, CharacterManager.getSelectedCharacter());
+    }
+
+    private void populateNpcs() {
         final LinearLayout linearLayout = root.findViewById(R.id.npc_container);
-        if (linearLayout == null) {
+        if (linearLayout == null || getContext() == null) {
             return;
         }
+        linearLayout.removeAllViews();
 
-        NpcFactory.getInstance().getGroups(Locale.getDefault().getLanguage(),
-                ModuleManager.DEFAULT_MODULE).stream().sorted().forEach(group -> {
+        mViewModel.getNpcGroups(!SettingsHandler.getSettingsEntity().isOnlyOfficialAllowed()).stream().sorted().forEach(group -> {
             try {
                 addSection(getContext().getResources().getString(getContext().getResources().getIdentifier(getOptionTranslation(group), "string",
                         getContext().getPackageName())), linearLayout);
             } catch (Exception e) {
                 addSection(group, linearLayout);
             }
-            NpcFactory.getInstance().getByGroup(group).stream().sorted().forEach(npc -> {
+            mViewModel.getAvailableNpcs(!SettingsHandler.getSettingsEntity().isOnlyOfficialAllowed(), group).stream().sorted().forEach(npc -> {
                 ElementRadio<Npc> randomProfileSelector = new ElementRadio<>(getContext(), npc);
                 linearLayout.addView(randomProfileSelector);
                 optionsAvailable.add(randomProfileSelector);
@@ -92,8 +98,6 @@ public class RandomCharactersFragment extends CharacterCustomFragment {
         });
 
         addFinalSpace(linearLayout);
-
-        setCharacter(root, CharacterManager.getSelectedCharacter());
     }
 
     @Override
@@ -113,6 +117,7 @@ public class RandomCharactersFragment extends CharacterCustomFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.random_npc_fragment, container, false);
+        mViewModel = new ViewModelProvider(this).get(RandomCharactersViewModel.class);
 
         final FloatingActionButton fab = root.findViewById(R.id.random);
         fab.setOnClickListener(view -> {
@@ -123,6 +128,8 @@ public class RandomCharactersFragment extends CharacterCustomFragment {
                 generateCharacter();
             }
         });
+
+        SettingsHandler.addSettingsUpdateListeners(this::populateNpcs);
 
         return root;
     }

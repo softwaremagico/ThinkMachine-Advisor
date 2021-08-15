@@ -14,9 +14,29 @@ package com.softwaremagico.tm.advisor.persistence;
 
 import android.content.Context;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public final class SettingsHandler {
     private static volatile SettingsHandler instance;
     private static SettingsEntity settingsEntity;
+
+
+    private static final Set<SettingsUpdatedListener> settingsUpdatedListeners = new HashSet<>();
+
+    public interface SettingsUpdatedListener {
+        void updated();
+    }
+
+    public static void launchSettingsUpdateListeners() {
+        for (final SettingsUpdatedListener listener : settingsUpdatedListeners) {
+            listener.updated();
+        }
+    }
+
+    public static void addSettingsUpdateListeners(SettingsUpdatedListener listener) {
+        settingsUpdatedListeners.add(listener);
+    }
 
     public static SettingsHandler getInstance() {
         if (instance == null) {
@@ -34,6 +54,7 @@ public final class SettingsHandler {
     }
 
     public static void save(Context context, SettingsEntity settingsEntity) {
+        launchSettingsUpdateListeners();
         if (SettingsHandler.settingsEntity == null) {
             AppDatabase.getInstance(context).getSettingsEntityDao().persist(settingsEntity);
             SettingsHandler.settingsEntity = settingsEntity;
