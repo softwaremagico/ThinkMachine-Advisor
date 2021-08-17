@@ -163,34 +163,32 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
 
         nonOfficialEnabled.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            final boolean oldValue = CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed();
-            try {
-                CharacterManager.getSelectedCharacter().checkIsOfficial();
-                CharacterManager.getSelectedCharacter().getSettings().setOnlyOfficialAllowed(!isChecked);
-                if (oldValue != CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
-                    CharacterManager.updateSettings();
-                }
-            } catch (UnofficialCharacterException e) {
-                if (isChecked) {
+            if (!isChecked) {
+                try {
+                    CharacterManager.getSelectedCharacter().checkIsOfficial();
+                    CharacterManager.getSelectedCharacter().getSettings().setOnlyOfficialAllowed(!isChecked);
+                } catch (UnofficialCharacterException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.message_setting_unofficial_not_changed).show();
                     CharacterManager.getSelectedCharacter().getSettings().setOnlyOfficialAllowed(false);
+                    nonOfficialEnabled.setChecked(true);
                 }
+            } else {
+                CharacterManager.getSelectedCharacter().getSettings().setOnlyOfficialAllowed(!isChecked);
             }
         });
 
         restrictionsIgnored.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            final boolean oldValue = CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked();
-            try {
-                CharacterManager.getSelectedCharacter().checkIsNotRestricted();
-                CharacterManager.getSelectedCharacter().getSettings().setRestrictionsChecked(!isChecked);
-                if (oldValue != CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked()) {
-                    CharacterManager.updateSettings();
-                }
-            } catch (RestrictedElementException e) {
-                if (isChecked) {
+            if (!isChecked) {
+                try {
+                    CharacterManager.getSelectedCharacter().checkIsNotRestricted();
+                    CharacterManager.getSelectedCharacter().getSettings().setRestrictionsChecked(!isChecked);
+                } catch (RestrictedElementException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.message_setting_restriction_not_changed).show();
                     CharacterManager.getSelectedCharacter().getSettings().setRestrictionsChecked(false);
+                    restrictionsIgnored.setChecked(true);
                 }
+            } else {
+                CharacterManager.getSelectedCharacter().getSettings().setRestrictionsChecked(!isChecked);
             }
         });
     }
