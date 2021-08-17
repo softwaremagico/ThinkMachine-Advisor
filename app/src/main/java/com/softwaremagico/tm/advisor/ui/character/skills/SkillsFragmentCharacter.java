@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
@@ -32,9 +33,9 @@ import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.CharacterPlayer;
+import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 import com.softwaremagico.tm.character.exceptions.RestrictedElementException;
 import com.softwaremagico.tm.character.exceptions.UnofficialElementNotAllowedException;
-import com.softwaremagico.tm.character.creation.FreeStyleCharacterCreation;
 import com.softwaremagico.tm.character.skills.AvailableSkill;
 import com.softwaremagico.tm.character.skills.InvalidRanksException;
 import com.softwaremagico.tm.character.skills.InvalidSkillException;
@@ -46,6 +47,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SkillsFragmentCharacter extends CharacterCustomFragment {
+    private SkillsViewModel mViewModel;
+
     private final Map<AvailableSkill, TranslatedNumberPicker<AvailableSkill>> translatedNumberPickers = new HashMap<>();
     private SkillsCounter skillsCounter;
     private SkillsExtraCounter extraCounter;
@@ -77,11 +80,8 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
 
     private void addContent(LinearLayout linearLayout) {
         addSection(ThinkMachineTranslator.getTranslatedText("naturalSkills"), linearLayout);
-        List<AvailableSkill> naturalSkills = CharacterManager.getSelectedCharacter().getNaturalSkills();
-        //Remove non-official elements if needed.
-        if (CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
-            naturalSkills = naturalSkills.stream().filter(Element::isOfficial).collect(Collectors.toList());
-        }
+        List<AvailableSkill> naturalSkills = mViewModel.getNaturalSkills(!CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed());
+
         for (final AvailableSkill skill : naturalSkills) {
             createSkillEditText(root, linearLayout, skill);
         }
@@ -89,7 +89,7 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
         addSpace(linearLayout);
         addSection(ThinkMachineTranslator.getTranslatedText("learnedSkills"), linearLayout);
 
-        List<AvailableSkill> learnedSkills = CharacterManager.getSelectedCharacter().getLearnedSkills();
+        List<AvailableSkill> learnedSkills = mViewModel.getLearnedSkills(!CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed());
         //Remove non-official elements if needed.
         if (CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
             learnedSkills = learnedSkills.stream().filter(Element::isOfficial).collect(Collectors.toList());
@@ -104,6 +104,8 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.character_skills_fragment, container, false);
+        mViewModel = new ViewModelProvider(this).get(SkillsViewModel.class);
+
         skillsCounter = root.findViewById(R.id.skills_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
 

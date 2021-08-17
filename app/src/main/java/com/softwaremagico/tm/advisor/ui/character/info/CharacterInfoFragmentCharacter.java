@@ -167,6 +167,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                 try {
                     CharacterManager.getSelectedCharacter().checkIsOfficial();
                     CharacterManager.getSelectedCharacter().getSettings().setOnlyOfficialAllowed(!isChecked);
+                    CharacterManager.updateSettings();
                 } catch (UnofficialCharacterException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.message_setting_unofficial_not_changed).show();
                     CharacterManager.getSelectedCharacter().getSettings().setOnlyOfficialAllowed(false);
@@ -182,6 +183,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                 try {
                     CharacterManager.getSelectedCharacter().checkIsNotRestricted();
                     CharacterManager.getSelectedCharacter().getSettings().setRestrictionsChecked(!isChecked);
+                    CharacterManager.updateSettings();
                 } catch (RestrictedElementException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.message_setting_restriction_not_changed).show();
                     CharacterManager.getSelectedCharacter().getSettings().setRestrictionsChecked(false);
