@@ -44,7 +44,6 @@ import com.softwaremagico.tm.advisor.ui.about.SettingsWindow;
 import com.softwaremagico.tm.advisor.ui.load.LoadCharacter;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
-import com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.json.InvalidJsonException;
@@ -65,13 +64,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         Translator.setLanguage(Locale.getDefault().getLanguage());
+        //Preload all data in a secondary thread.
+        com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        new Thread(() -> ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).start();
-
 
         SettingsHandler.setSettingsEntity(this.getBaseContext());
 
@@ -84,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        //Preload all random data in a secondary thread.
+        new Thread(() -> com.softwaremagico.tm.cache.ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).start();
     }
 
     @Override

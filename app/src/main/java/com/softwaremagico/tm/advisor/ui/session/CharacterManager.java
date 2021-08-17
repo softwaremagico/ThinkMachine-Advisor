@@ -239,11 +239,15 @@ public final class CharacterManager {
         launchSelectedCharacterListeners(characterPlayer);
     }
 
-    public static void addNewCharacter() {
+    private static CharacterPlayer createNewCharacter() {
         final CharacterPlayer characterPlayer = new CharacterPlayer(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
         characterPlayer.getSettings().copy(SettingsHandler.getSettingsEntity().get());
         characters.add(characterPlayer);
-        setSelectedCharacter(characterPlayer);
+        return characterPlayer;
+    }
+
+    public static void addNewCharacter() {
+        setSelectedCharacter(createNewCharacter());
     }
 
     public static void randomizeCharacter(Set<IRandomPreference> randomPreferences) throws InvalidXmlElementException,
@@ -262,9 +266,10 @@ public final class CharacterManager {
 
     public static void randomizeCharacterUsingNpc(Set<Npc> randomProfiles) throws InvalidXmlElementException,
             InvalidRandomElementSelectedException, RestrictedElementException, UnofficialElementNotAllowedException {
-        final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(getSelectedCharacter(), randomProfiles.toArray(new Npc[0]));
+        CharacterPlayer characterPlayer = createNewCharacter();
+        final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(characterPlayer, randomProfiles.toArray(new Npc[0]));
         randomizeCharacter.createCharacter();
-        setSelectedCharacter(getSelectedCharacter());
+        setSelectedCharacter(characterPlayer);
     }
 
 }

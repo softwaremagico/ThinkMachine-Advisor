@@ -120,6 +120,7 @@
                 android:ellipsize="marquee"
                 android:fontFamily="@font/label"
                 android:singleLine="true"
+                android:textStyle="bold"
                 android:text="@string/description" />
 
             <EditText
@@ -151,6 +152,7 @@
                 android:ellipsize="marquee"
                 android:fontFamily="@font/label"
                 android:singleLine="true"
+                android:textStyle="bold"
                 android:text="@string/background" />
 
             <EditText

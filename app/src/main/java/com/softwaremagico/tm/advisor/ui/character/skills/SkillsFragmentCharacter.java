@@ -46,7 +46,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SkillsFragmentCharacter extends CharacterCustomFragment {
-    private final Map<AvailableSkill, TranslatedNumberPicker> translatedNumberPickers = new HashMap<>();
+    private final Map<AvailableSkill, TranslatedNumberPicker<AvailableSkill>> translatedNumberPickers = new HashMap<>();
     private SkillsCounter skillsCounter;
     private SkillsExtraCounter extraCounter;
     private View root;
@@ -66,6 +66,7 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
         refreshSkillsColors();
         skillsCounter.setCharacter(character);
         extraCounter.setCharacter(character);
+        updateDynamicSkills(character);
     }
 
     @Override
@@ -128,14 +129,14 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void updateDynamicSkills(CharacterPlayer characterPlayer) {
-        for (Map.Entry<AvailableSkill, TranslatedNumberPicker> skillsEntry : translatedNumberPickers.entrySet()) {
-            if (skillsEntry.getKey().getId().equalsIgnoreCase(SkillDefinition.PLANETARY_LORE_ID)) {
+        for (Map.Entry<AvailableSkill, TranslatedNumberPicker<AvailableSkill>> skillsEntry : translatedNumberPickers.entrySet()) {
+            if (skillsEntry.getKey().getSkillDefinition().getId().equalsIgnoreCase(SkillDefinition.PLANETARY_LORE_ID)) {
                 if (characterPlayer.getInfo().getPlanet() != null) {
                     skillsEntry.getValue().setLabel(skillsEntry.getKey().getName() + " [" + characterPlayer.getInfo().getPlanet().getName() + "]");
                 } else {
                     skillsEntry.getValue().setLabel(skillsEntry.getKey().getCompleteName());
                 }
-            } else if (skillsEntry.getKey().getId().equalsIgnoreCase(SkillDefinition.FACTION_LORE_ID)) {
+            } else if (skillsEntry.getKey().getSkillDefinition().getId().equalsIgnoreCase(SkillDefinition.FACTION_LORE_ID)) {
                 if (characterPlayer.getFaction() != null) {
                     skillsEntry.getValue().setLabel(skillsEntry.getKey().getName() + " [" + characterPlayer.getFaction().getName() + "]");
                 } else {
@@ -146,7 +147,7 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createSkillEditText(View root, LinearLayout linearLayout, AvailableSkill skill) {
-        final TranslatedNumberPicker skillNumberPicker = new TranslatedNumberPicker(getContext(), null, skill);
+        final TranslatedNumberPicker<AvailableSkill> skillNumberPicker = new TranslatedNumberPicker<>(getContext(), null, skill);
         translatedNumberPickers.put(skill, skillNumberPicker);
         skillNumberPicker.setLabel(skill.getCompleteName());
         skillNumberPicker.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -180,7 +181,7 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
 
     private void updateSkillsLimits(CharacterPlayer character) {
         if (character != null && character.getRace() != null) {
-            for (final Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
+            for (final Map.Entry<AvailableSkill, TranslatedNumberPicker<AvailableSkill>> skillComponent : translatedNumberPickers.entrySet()) {
                 if (skillComponent.getKey().getSkillDefinition().isNatural()) {
                     skillComponent.getValue().setLimits(FreeStyleCharacterCreation.getMinInitialNaturalSkillsValues(character.getInfo().getAge()),
                             FreeStyleCharacterCreation.getMaxInitialSkillsValues(character.getInfo().getAge()));
@@ -193,14 +194,14 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
 
     public void refreshSkillsValues(CharacterPlayer characterPlayer) {
         if (CharacterManager.getSelectedCharacter().getRace() != null) {
-            for (final Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
+            for (final Map.Entry<AvailableSkill, TranslatedNumberPicker<AvailableSkill>> skillComponent : translatedNumberPickers.entrySet()) {
                 skillComponent.getValue().setValue(characterPlayer.getSkillAssignedRanks(skillComponent.getKey()));
             }
         }
     }
 
     public void refreshSkillsColors() {
-        for (final Map.Entry<AvailableSkill, TranslatedNumberPicker> skillComponent : translatedNumberPickers.entrySet()) {
+        for (final Map.Entry<AvailableSkill, TranslatedNumberPicker<AvailableSkill>> skillComponent : translatedNumberPickers.entrySet()) {
             skillComponent.getValue().update();
         }
     }
