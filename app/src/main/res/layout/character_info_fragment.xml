@@ -159,6 +159,15 @@
                 android:layout_gravity="fill"
                 android:gravity="center" />
 
+            <com.softwaremagico.tm.advisor.ui.components.counters.CyberneticsIncompatibilityCounter
+                android:id="@+id/cybernetic_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:visibility="gone"
+                android:gravity="center" />
+
         </GridLayout>
 
         <View style="@style/Divider.Horizontal" />

@@ -18,6 +18,9 @@ import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.RandomizeCharacter;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.creation.CostCalculator;
+import com.softwaremagico.tm.character.cybernetics.CyberneticDevice;
+import com.softwaremagico.tm.character.cybernetics.RequiredCyberneticDevicesException;
+import com.softwaremagico.tm.character.cybernetics.TooManyCyberneticDevicesException;
 import com.softwaremagico.tm.character.exceptions.RestrictedElementException;
 import com.softwaremagico.tm.character.exceptions.UnofficialElementNotAllowedException;
 import com.softwaremagico.tm.character.factions.Faction;
@@ -32,6 +35,7 @@ import com.softwaremagico.tm.random.predefined.profile.RandomProfile;
 import com.softwaremagico.tm.random.selectors.IRandomPreference;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -49,6 +53,7 @@ public final class CharacterManager {
     private static final Set<CharacterFactionUpdatedListener> characterFactionUpdatedListener = new HashSet<>();
     private static final Set<CharacterCharacteristicUpdatedListener> characterCharacteristicUpdatedListener = new HashSet<>();
     private static final Set<CharacterSettingsUpdatedListener> characterSettingsUpdatedListeners = new HashSet<>();
+    private static final Set<CyberneticDeviceUpdatedListener> cyberneticDeviceUpdatedListeners = new HashSet<>();
     private static boolean updatingCharacter = false;
 
     public interface CharacterSelectedListener {
@@ -80,6 +85,10 @@ public final class CharacterManager {
     }
 
     public interface CharacterSettingsUpdatedListener {
+        void updated(CharacterPlayer characterPlayer);
+    }
+
+    public interface CyberneticDeviceUpdatedListener {
         void updated(CharacterPlayer characterPlayer);
     }
 
@@ -155,6 +164,14 @@ public final class CharacterManager {
         }
     }
 
+    public static void launchCyberneticDeviceUpdatedListeners(CharacterPlayer characterPlayer) {
+        if (!updatingCharacter) {
+            for (final CyberneticDeviceUpdatedListener listener : cyberneticDeviceUpdatedListeners) {
+                listener.updated(characterPlayer);
+            }
+        }
+    }
+
     public static void addCharacterSettingsUpdateListeners(CharacterSettingsUpdatedListener listener) {
         characterSettingsUpdatedListeners.add(listener);
     }
@@ -185,6 +202,10 @@ public final class CharacterManager {
 
     public static void addCharacterCharacteristicUpdatedListener(CharacterCharacteristicUpdatedListener listener) {
         characterCharacteristicUpdatedListener.add(listener);
+    }
+
+    public static void addCyberneticDeviceUpdatedListeners(CyberneticDeviceUpdatedListener listener) {
+        cyberneticDeviceUpdatedListeners.add(listener);
     }
 
     public static boolean isStarted() {
@@ -270,6 +291,12 @@ public final class CharacterManager {
         final RandomizeCharacter randomizeCharacter = new RandomizeCharacter(characterPlayer, randomProfiles.toArray(new Npc[0]));
         randomizeCharacter.createCharacter();
         setSelectedCharacter(characterPlayer);
+    }
+
+    public static void setCybernetics(Collection<CyberneticDevice> cyberneticDevices) throws UnofficialElementNotAllowedException, TooManyCyberneticDevicesException,
+            RequiredCyberneticDevicesException {
+        CharacterManager.getSelectedCharacter().setCybernetics(cyberneticDevices);
+        launchCyberneticDeviceUpdatedListeners(CharacterManager.getSelectedCharacter());
     }
 
 }

@@ -33,6 +33,7 @@ import com.softwaremagico.tm.advisor.ui.components.ElementSpinner;
 import com.softwaremagico.tm.advisor.ui.components.EnumSpinner;
 import com.softwaremagico.tm.advisor.ui.components.TranslatedEditText;
 import com.softwaremagico.tm.advisor.ui.components.counters.CharacteristicsCounter;
+import com.softwaremagico.tm.advisor.ui.components.counters.CyberneticsIncompatibilityCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.ExtraCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.FirebirdsCounter;
 import com.softwaremagico.tm.advisor.ui.components.counters.SkillsCounter;
@@ -46,6 +47,7 @@ import com.softwaremagico.tm.character.Gender;
 import com.softwaremagico.tm.character.RandomName;
 import com.softwaremagico.tm.character.RandomSurname;
 import com.softwaremagico.tm.character.Surname;
+import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.exceptions.RestrictedElementException;
 import com.softwaremagico.tm.character.exceptions.UnofficialCharacterException;
 import com.softwaremagico.tm.character.exceptions.UnofficialElementNotAllowedException;
@@ -66,6 +68,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     private SkillsCounter skillsCounter;
     private TraitsCounter traitsCounter;
     private ExtraCounter extraCounter;
+    private CyberneticsIncompatibilityCounter cyberneticsIncompatibilityCounter;
     private FirebirdsCounter firebirdsCounter;
     private View root;
     private SwitchCompat nonOfficialEnabled;
@@ -209,6 +212,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         skillsCounter = root.findViewById(R.id.skills_counter);
         traitsCounter = root.findViewById(R.id.traits_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
+        cyberneticsIncompatibilityCounter = root.findViewById(R.id.cybernetic_counter);
         firebirdsCounter = root.findViewById(R.id.firebirds_counter);
 
         nonOfficialEnabled = root.findViewById(R.id.official_selector);
@@ -217,9 +221,23 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         CharacterManager.addCharacterRaceUpdatedListener(this::updateCounters);
         CharacterManager.addCharacterAgeUpdatedListener(this::updateCounters);
         CharacterManager.addCharacterSettingsUpdateListeners(this::updateSettings);
+        CharacterManager.addCharacterCharacteristicUpdatedListener((characterPlayer, characteristic) -> {
+            if (characteristic == CharacteristicName.WILL) {
+                cyberneticsIncompatibilityCounter.setCharacter(characterPlayer);
+            }
+        });
+        CharacterManager.addCyberneticDeviceUpdatedListeners(this::showCyberneticCounter);
         CharacterManager.addSelectedCharacterListener(characterPlayer -> setCharacter(root, characterPlayer));
 
         return root;
+    }
+
+    protected void showCyberneticCounter(CharacterPlayer characterPlayer) {
+        if (characterPlayer == null || characterPlayer.getCybernetics().isEmpty()) {
+            cyberneticsIncompatibilityCounter.setVisibility(View.GONE);
+        } else {
+            cyberneticsIncompatibilityCounter.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -281,6 +299,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
         updateSettings(character);
 
+        showCyberneticCounter(character);
+
         updatingCharacter = false;
     }
 
@@ -289,6 +309,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         extraCounter.setCharacter(character);
         skillsCounter.setCharacter(character);
         traitsCounter.setCharacter(character);
+        cyberneticsIncompatibilityCounter.setCharacter(character);
         firebirdsCounter.setCharacter(character);
     }
 

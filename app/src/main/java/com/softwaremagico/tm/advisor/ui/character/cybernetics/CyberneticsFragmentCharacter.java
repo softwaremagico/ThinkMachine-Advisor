@@ -163,7 +163,7 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
                 }
             }
             try {
-                CharacterManager.getSelectedCharacter().setCybernetics(cyberneticDevices);
+                CharacterManager.setCybernetics(cyberneticDevices);
             } catch (TooManyCyberneticDevicesException e) {
                 SnackbarGenerator.getErrorMessage(this, R.string.message_too_many_cybernetics).show();
                 final LinearLayout rootLayout = root.findViewById(R.id.root_container);
