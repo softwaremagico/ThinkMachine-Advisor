@@ -85,8 +85,16 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
     @Override
     protected void initData() {
-        updateTranslatedTextField(root, R.id.character_name, value -> CharacterManager.getSelectedCharacter().getInfo().setNames(value));
-        updateTranslatedTextField(root, R.id.character_surname, value -> CharacterManager.getSelectedCharacter().getInfo().setSurname(value));
+        updateTranslatedTextField(root, R.id.character_name, value -> {
+            if (!updatingCharacter) {
+                CharacterManager.getSelectedCharacter().getInfo().setNames(value);
+            }
+        });
+        updateTranslatedTextField(root, R.id.character_surname, value -> {
+            if (!updatingCharacter) {
+                CharacterManager.getSelectedCharacter().getInfo().setSurname(value);
+            }
+        });
         updateTranslatedTextField(root, R.id.character_age, value -> {
             try {
                 if (!Objects.equals(CharacterManager.getSelectedCharacter().getInfo().getAge() + "", value)) {
@@ -112,6 +120,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         ImageView randomNameButton = root.findViewById(R.id.button_random_name);
         if (randomNameButton != null) {
             randomNameButton.setOnClickListener(v -> {
+                updatingCharacter = true;
                 CharacterManager.getSelectedCharacter().getInfo().setNames(new ArrayList<>());
                 final RandomName randomName;
                 try {
@@ -124,12 +133,14 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                 } catch (UnofficialElementNotAllowedException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
                 }
+                updatingCharacter = false;
             });
         }
 
         ImageView randomSurnameButton = root.findViewById(R.id.button_random_surname);
         if (randomSurnameButton != null) {
             randomSurnameButton.setOnClickListener(v -> {
+                updatingCharacter = true;
                 CharacterManager.getSelectedCharacter().getInfo().setSurname((Surname) null);
                 final RandomSurname randomSurname;
                 try {
@@ -142,10 +153,11 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                         surnameTextEditor.setText("");
                     }
                 } catch (InvalidXmlElementException | InvalidRandomElementSelectedException | RestrictedElementException e) {
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
+                    SnackbarGenerator.getErrorMessage(root, R.string.selectFactionAndMore).show();
                 } catch (UnofficialElementNotAllowedException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
                 }
+                updatingCharacter = false;
             });
         }
 

@@ -44,6 +44,8 @@ import com.softwaremagico.tm.advisor.ui.about.SettingsWindow;
 import com.softwaremagico.tm.advisor.ui.load.LoadCharacter;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
+import com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer;
+import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.json.InvalidJsonException;
 import com.softwaremagico.tm.language.Translator;
@@ -67,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        new Thread(() -> ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).start();
+
 
         SettingsHandler.setSettingsEntity(this.getBaseContext());
 
