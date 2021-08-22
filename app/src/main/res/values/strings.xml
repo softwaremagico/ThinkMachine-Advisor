@@ -232,7 +232,7 @@
     <string name="npc_weirdforces_section">Weird Forces</string>
     <string name="npc_xenos_section">Xenos</string>
     <string name="npc_barbarian_section">Barbarian</string>
-    <string name="npc_secondaryguild_section">Minor Guilds</string>
+    <string name="npc_minorguild_section">Minor Guilds</string>
     <string name="npc_knightlyorders_section">Knightly Orders</string>
     <string name="npc_minorchurch_section">Minor Religious Orders</string>
     <string name="preference_option_minor_church">Minor Religious Orders</string>

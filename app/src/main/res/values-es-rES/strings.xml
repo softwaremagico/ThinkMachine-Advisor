@@ -223,7 +223,7 @@
     <string name="message_restricted_element">Este elemento está restringido para tu personaje.</string>
     <string name="preference_option_psi">Psí</string>
     <string name="preference_option_theurgy">Teúrgia</string>
-    <string name="npc_secondaryguild_section">Gremios Menores</string>
+    <string name="npc_minorguild_section">Gremios Menores</string>
     <string name="npc_faction_section">Facciones</string>
     <string name="preference_option_minor_guild">Gremio Menor</string>
     <string name="preference_option_knightly_orders">Ordenes Caballerescas</string>
