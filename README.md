@@ -66,4 +66,6 @@ Some examples of the application:
 - 0.8.3 Added Minor Guilds from Player Companion
 - 0.8.4 Added Minor Church Orders and other Psi Powers
 
+0.9 Stability and Performance improvements. 
+
 
