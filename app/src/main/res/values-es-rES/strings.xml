@@ -114,14 +114,14 @@
     <string name="preference_option_medium">Medio</string>
     <string name="preference_option_high">Alto</string>
     <string name="preference_option_very_high">Muy Alto</string>
-    <string name="preference_option_fair">Justo</string>
+    <string name="preference_option_fair">Medio</string>
     <string name="preference_option_appearance">Apariencia</string>
     <string name="preference_option_behaviour">Comportamiento</string>
     <string name="preference_option_injuries">Heridas</string>
     <string name="preference_option_knacks">Mañas</string>
     <string name="preference_option_reputation">Reputación</string>
     <string name="preference_option_size">Tamaño</string>
-    <string name="preference_option_mind">Mind</string>
+    <string name="preference_option_mind">Mente</string>
     <string name="preference_option_body">Cuerpo</string>
     <string name="preference_option_spirit">Espíritu</string>
     <string name="preference_option_peaceful">Pacífico</string>

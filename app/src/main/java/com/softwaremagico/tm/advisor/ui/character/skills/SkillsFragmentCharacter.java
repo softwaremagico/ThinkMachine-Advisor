@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.components.CharacterCustomFragment;
@@ -44,7 +43,6 @@ import com.softwaremagico.tm.character.skills.SkillDefinition;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class SkillsFragmentCharacter extends CharacterCustomFragment {
     private SkillsViewModel mViewModel;
@@ -90,10 +88,6 @@ public class SkillsFragmentCharacter extends CharacterCustomFragment {
         addSection(ThinkMachineTranslator.getTranslatedText("learnedSkills"), linearLayout);
 
         List<AvailableSkill> learnedSkills = mViewModel.getLearnedSkills(!CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed());
-        //Remove non-official elements if needed.
-        if (CharacterManager.getSelectedCharacter().getSettings().isOnlyOfficialAllowed()) {
-            learnedSkills = learnedSkills.stream().filter(Element::isOfficial).collect(Collectors.toList());
-        }
         for (final AvailableSkill skill : learnedSkills) {
             createSkillEditText(root, linearLayout, skill);
         }

@@ -57,10 +57,6 @@ public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
         return fragment;
     }
 
-    Fragment getRegisteredFragment(int position) {
-        return fragments.get(position);
-    }
-
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         fragments.remove(position);
