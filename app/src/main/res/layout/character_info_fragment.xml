@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
+            android:paddingTop="15dp"
             android:paddingBottom="15dp"
             android:paddingLeft="-10dp"
             android:useDefaultMargins="true">

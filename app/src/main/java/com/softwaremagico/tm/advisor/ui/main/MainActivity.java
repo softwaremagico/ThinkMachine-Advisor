@@ -44,6 +44,8 @@ import com.softwaremagico.tm.advisor.ui.about.SettingsWindow;
 import com.softwaremagico.tm.advisor.ui.load.LoadCharacter;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
+import com.softwaremagico.tm.advisor.utils.ClassManager;
+import com.softwaremagico.tm.cache.RandomPreferenceClassLoader;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.json.InvalidJsonException;
@@ -85,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        //Reflections cannot load the RandomPreference classes needed for gson importer. We load here and add to the gson importer.
+        RandomPreferenceClassLoader.addClasses(ClassManager.getClassesOfPackage(getApplicationContext(), ClassManager.THINK_MACHINE_BASE_PACKAGE));
         //Preload all random data in a secondary thread.
         new Thread(() -> com.softwaremagico.tm.cache.ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE)).start();
     }
