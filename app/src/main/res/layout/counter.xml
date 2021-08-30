@@ -44,7 +44,6 @@
         android:layout_gravity="center_vertical"
         android:maxLines="1"
         android:ellipsize="end"
-        android:gravity="center"
-        android:text="characteristics" />
+        android:gravity="center" />
 
 </RelativeLayout>
