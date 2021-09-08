@@ -195,8 +195,13 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         private String createStatusText(CharacterEntity characterEntity) {
             final CostCalculator costCalculator = new CostCalculator(characterEntity.getCharacterPlayer());
             final StringBuilder stringBuilder = new StringBuilder(100);
-            stringBuilder.append(characterEntity.getCharacterPlayer().getFaction().getName()).append(" (")
-                    .append(characterEntity.getCharacterPlayer().getRace().getName()).append(")<br>");
+            if (characterEntity.getCharacterPlayer().getFaction() != null) {
+                stringBuilder.append(characterEntity.getCharacterPlayer().getFaction().getName());
+            }
+            if (characterEntity.getCharacterPlayer().getRace() != null) {
+                stringBuilder.append(" (").append(characterEntity.getCharacterPlayer().getRace().getName()).append(")");
+            }
+            stringBuilder.append("<br>");
             //Status label.
             stringBuilder.append(itemView.getContext().getString(R.string.character_progression_status)).append(" <font color=\"").append(CharacterStatusHandler.getStatusColor(cardView.getContext(), costCalculator.getStatus()))
                     .append("\"><b>").append(itemView.getContext().getString(CharacterStatusHandler.translateStatus(costCalculator.getStatus()))).append("</b></font><br>");
