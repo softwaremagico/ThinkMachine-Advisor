@@ -67,9 +67,7 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         Translator.setLanguage(Locale.getDefault().getLanguage());
         //Preload all data in a secondary thread.
-        new Thread(() -> {
-            com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
-        }).start();
+        com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
 
         super.onCreate(savedInstanceState);
 

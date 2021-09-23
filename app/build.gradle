@@ -47,15 +47,15 @@ android {
             storeFile file('../../../Documentos/Android Keys/AndroidKeyStore.jks')
         }
     }
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.softwaremagico.tm.advisor"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 37
-        versionName "0.9.11"
+        versionCode 38
+        versionName "0.9.12"
         setProperty("archivesBaseName", applicationId + "-v" + versionCode)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
