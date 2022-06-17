@@ -26,6 +26,7 @@ public class FirebirdsCounter extends Component {
     private CostCalculatorModificationHandler.ICurrentFirebirdSpendListener listener;
     private CostCalculatorModificationHandler.IInitialFirebirdsUpdated initialListener;
     private NumberFormat decimalFormat = new DecimalFormat("##.##");
+    private boolean unitHidden = false;
 
 
     public FirebirdsCounter(Context context) {
@@ -49,7 +50,11 @@ public class FirebirdsCounter extends Component {
     }
 
     public void setValue(float value, boolean animation) {
-        valueText.setText(String.format("%s %s", decimalFormat.format(value), getResources().getString(R.string.firebird_abbrev)));
+        if (isUnitHidden()) {
+            valueText.setText(String.format("%s", decimalFormat.format(value)));
+        } else {
+            valueText.setText(String.format("%s %s", decimalFormat.format(value), getResources().getString(R.string.firebird_abbrev)));
+        }
         if (animation) {
             if (currentValue != value) {
                 rotate(45f * (float) (value - currentValue) / 50, coinImage);
@@ -97,5 +102,13 @@ public class FirebirdsCounter extends Component {
         animation.setFillAfter(true);
         animation.setDuration(DURATION);
         gearImage.startAnimation(animation);
+    }
+
+    public boolean isUnitHidden() {
+        return unitHidden;
+    }
+
+    public void setUnitHidden(boolean unitHidden) {
+        this.unitHidden = unitHidden;
     }
 }

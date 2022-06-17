@@ -210,6 +210,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
         traitsCounter = root.findViewById(R.id.traits_counter);
         extraCounter = root.findViewById(R.id.extra_counter);
         firebirdsCounter = root.findViewById(R.id.firebirds_counter);
+        firebirdsCounter.setUnitHidden(true);
 
         nonOfficialEnabled = root.findViewById(R.id.official_selector);
         restrictionsIgnored = root.findViewById(R.id.restricted_selector);
