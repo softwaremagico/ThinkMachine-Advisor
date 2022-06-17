@@ -248,7 +248,7 @@ public class EquipmentFragmentCharacter extends CharacterCustomFragment {
 
     abstract class WeaponsLayout extends IncrementalElementsLayout<Weapon> {
 
-        public WeaponsLayout(Context context, boolean nullsAllowed) {
+        protected WeaponsLayout(Context context, boolean nullsAllowed) {
             super(context, nullsAllowed);
 
             setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

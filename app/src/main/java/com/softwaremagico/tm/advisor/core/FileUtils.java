@@ -9,6 +9,7 @@ import android.provider.OpenableColumns;
 import android.webkit.MimeTypeMap;
 
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
+import com.softwaremagico.tm.log.MachineLog;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,6 +24,10 @@ import java.util.Objects;
 public final class FileUtils {
     public static final String CHARACTER_FILE_EXTENSION = ".tma";
     private static final String GOOGLE_DRIVE_HOST = "com.google.android.apps.docs.storage";
+
+    private FileUtils() {
+
+    }
 
     public static String readFile(final Context context, Uri uri) {
         //Get the text file
@@ -56,7 +61,9 @@ public final class FileUtils {
             AdvisorLog.errorMessage(FileUtils.class.getName(), e);
         }
         if (deleteOnRead) {
-            file.delete();
+            if (file.delete()) {
+                MachineLog.debug(FileUtils.class.getName(), "File deleted");
+            }
         }
         return text.toString();
     }
@@ -71,7 +78,6 @@ public final class FileUtils {
     public static File downloadFile(final Context context, final Uri uri) {
         ContentResolver contentResolver = context.getContentResolver();
         try {
-            String mimeType = contentResolver.getType(uri);
             Cursor returnCursor =
                     contentResolver.query(uri, null, null, new String[]{
                             MimeTypeMap.getSingleton().getExtensionFromMimeType("jpg")}, null);
@@ -79,7 +85,6 @@ public final class FileUtils {
             int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
             returnCursor.moveToFirst();
             String fileName = returnCursor.getString(nameIndex);
-            String fileSize = Long.toString(returnCursor.getLong(sizeIndex));
             InputStream inputStream = contentResolver.openInputStream(uri);
             returnCursor.close();
 

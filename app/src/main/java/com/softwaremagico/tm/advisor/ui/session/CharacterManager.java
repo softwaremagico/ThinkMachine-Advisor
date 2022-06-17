@@ -251,7 +251,7 @@ public final class CharacterManager {
         return costCalculator;
     }
 
-    public static void setSelectedCharacter(CharacterPlayer characterPlayer) {
+    public synchronized static void setSelectedCharacter(CharacterPlayer characterPlayer) {
         if (!characters.contains(characterPlayer)) {
             characters.add(characterPlayer);
         }

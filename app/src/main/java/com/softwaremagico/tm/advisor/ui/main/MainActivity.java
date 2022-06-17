@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.settings_about:
                 new AboutWindow().show(getSupportFragmentManager(), "");
+                return super.onOptionsItemSelected(menuItem);
             default:
                 return super.onOptionsItemSelected(menuItem);
         }

@@ -119,13 +119,6 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
         return root;
     }
 
-    private void checkTechLevel(List<ElementSpinner<CyberneticDevice>> spinners) {
-        if (spinners.stream().anyMatch(spinner -> spinner.getSelection() != null && spinner.getSelection().getTechLevel() >
-                CharacterManager.getSelectedCharacter().getCharacteristic(CharacteristicName.TECH).getValue())) {
-            SnackbarGenerator.getWarningMessage(root, R.string.message_invalid_tech_level).show();
-        }
-    }
-
 
     class CyberneticLayout extends IncrementalElementsLayout<CyberneticDevice> {
 
@@ -148,6 +141,13 @@ public class CyberneticsFragmentCharacter extends CharacterCustomFragment {
                     setCyberneticDevice(getElementSpinners());
                 }
             });
+        }
+
+        private void checkTechLevel(List<ElementSpinner<CyberneticDevice>> spinners) {
+            if (spinners.stream().anyMatch(spinner -> spinner.getSelection() != null && spinner.getSelection().getTechLevel() >
+                    CharacterManager.getSelectedCharacter().getCharacteristic(CharacteristicName.TECH).getValue())) {
+                SnackbarGenerator.getWarningMessage(root, R.string.message_invalid_tech_level).show();
+            }
         }
 
         @Override

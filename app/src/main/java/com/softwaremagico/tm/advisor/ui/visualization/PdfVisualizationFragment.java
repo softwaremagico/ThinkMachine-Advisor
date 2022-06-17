@@ -31,6 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
+import com.softwaremagico.tm.log.MachineLog;
 
 import java.io.File;
 import java.util.List;
@@ -97,7 +98,9 @@ public abstract class PdfVisualizationFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == FILE_IDENTIFICATION && characterSheetAsPdf != null) {
-            characterSheetAsPdf.delete();
+            if (characterSheetAsPdf.delete()) {
+                MachineLog.debug(this.getClass().getName(), "File deleted");
+            }
         }
     }
 }

@@ -267,14 +267,11 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             ageTextEditor.setText("");
         }
 
-        nonOfficialEnabled.setChecked(character != null && !character.getSettings().isOnlyOfficialAllowed());
-        restrictionsIgnored.setChecked(character != null && !character.getSettings().isRestrictionsChecked());
+        nonOfficialEnabled.setChecked(!character.getSettings().isOnlyOfficialAllowed());
+        restrictionsIgnored.setChecked(!character.getSettings().isRestrictionsChecked());
 
-        final ElementSpinner<Race> raceSelector = root.findViewById(R.id.character_race);
         raceSelector.setSelection(CharacterManager.getSelectedCharacter().getRace());
-        final ElementSpinner<Faction> factionsSelector = root.findViewById(R.id.character_faction);
         factionsSelector.setSelection(CharacterManager.getSelectedCharacter().getFaction());
-        final ElementSpinner<Planet> planetSelector = root.findViewById(R.id.character_planet);
         planetSelector.setSelection(CharacterManager.getSelectedCharacter().getInfo().getPlanet());
 
         updateCounters(character);
