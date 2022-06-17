@@ -26,8 +26,8 @@ import com.softwaremagico.tm.advisor.R;
 
 public abstract class SegmentCounter extends Counter {
     private static final int DURATION = 500;
-    private int gear2Color = R.color.counterExtra;
-    private int text2Color = R.color.counterExtraText;
+    private final int gear2Color = R.color.counterExtra;
+    private final int text2Color = R.color.counterExtraText;
     private ImageView gearImage2;
     private TextView valueText2;
     private int totalValue;
@@ -64,7 +64,7 @@ public abstract class SegmentCounter extends Counter {
             }
         }
         setTotalValue(totalValue);
-        setColor();
+        setCustomColor();
     }
 
     protected int getTotalValue() {
@@ -75,7 +75,7 @@ public abstract class SegmentCounter extends Counter {
         this.totalValue = totalValue;
     }
 
-    private void setColor() {
+    private void setCustomColor() {
         if (getTotalValue() < 0) {
             valueText2.setTextColor(ContextCompat.getColor(getContext(), R.color.colorContrast));
             gearImage2.setColorFilter(ContextCompat.getColor(getContext(), R.color.counterError), android.graphics.PorterDuff.Mode.SRC_IN);
