@@ -6,6 +6,10 @@
 [![Issues](https://img.shields.io/github/issues/softwaremagico/ThinkMachine-Advisor.svg)](https://github.com/softwaremagico/ThinkMachine-Advisor/issues)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/y/softwaremagico/ThinkMachine-Advisor)](https://github.com/softwaremagico/ThinkMachine-Advisor)
 [![GitHub last commit](https://img.shields.io/github/last-commit/softwaremagico/ThinkMachine-Advisor)](https://github.com/softwaremagico/ThinkMachine-Advisor)
+[![SonarCloud Rating](https://sonarcloud.io/api/project_badges/measure?project=softwaremagico_ThinkMachine-Advisor&metric=sqale_rating)](https://sonarcloud.io/component_measures?id=softwaremagico_ThinkMachine-Advisor&metric=sqale_rating&view=list)
+[![SonarCloud Bugs](https://sonarcloud.io/api/project_badges/measure?project=softwaremagico_ThinkMachine-Advisor&metric=bugs)](https://sonarcloud.io/component_measures/metric/reliability_rating/list?id=softwaremagico_ThinkMachine-Advisor)
+[![SonarCloud Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=softwaremagico_ThinkMachine-Advisor&metric=vulnerabilities)](https://sonarcloud.io/component_measures/metric/security_rating/list?id=softwaremagico_ThinkMachine-Advisor)
+
 
 This is an Android based application that includes [ThinkMachine](https://softwaremagico.github.io/ThinkMachine/) Java library.  That means that this is a mobile Android application developed to help the user (Game Masters or Players) to create character sheets for the Fading Suns revised edition.
 
