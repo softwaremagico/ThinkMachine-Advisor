@@ -72,4 +72,6 @@ Some examples of the application:
 
 0.9 Stability and Performance improvements. 
 
+0.10 Bug review
+
 
