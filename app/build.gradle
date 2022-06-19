@@ -54,8 +54,8 @@ android {
         applicationId "com.softwaremagico.tm.advisor"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 39
-        versionName "0.9.13"
+        versionCode 40
+        versionName "0.10.3"
         setProperty("archivesBaseName", applicationId + "-v" + versionCode)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
