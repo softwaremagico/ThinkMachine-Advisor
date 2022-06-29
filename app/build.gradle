@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Softwaremagico
+ *  Copyright (C) 2022 Softwaremagico
  *
  *  This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero  <softwaremagico@gmail.com> Valencia (Spain).
  *
@@ -59,7 +59,6 @@ android {
         setProperty("archivesBaseName", applicationId + "-v" + versionCode)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.beta
         testFunctionalTest true
     }
 
@@ -153,7 +152,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation group: 'com.softwaremagico', name: 'think-machine-pdf', version: '0.10.3'
     implementation group: 'com.softwaremagico', name: 'think-machine-random', version: '0.10.3'
-    implementation 'org.slf4j:slf4j-api:1.7.30'
+    implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'androidx.navigation:navigation-fragment:2.4.2'
     implementation 'androidx.navigation:navigation-ui:2.4.2'
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
