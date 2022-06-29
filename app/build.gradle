@@ -19,32 +19,39 @@ android {
     ndkVersion "22.1.7171670"
 
     signingConfigs {
+        def keystoreFileConfig = rootProject.file('../../../Documentos/Android Keys/keystore.config')
         release {
             Properties keystoreProps = new Properties()
-            keystoreProps.load(new FileInputStream(file('../../../Documentos/Android Keys/keystore.config')))
+            if (keystoreFileConfig.exists()) {
+                keystoreProps.load(new FileInputStream(keystoreFileConfig))
 
-            keyAlias keystoreProps['keyAlias']
-            keyPassword keystoreProps['keyPassword']
-            storePassword keystoreProps['storePassword']
-            storeFile file('../../../Documentos/Android Keys/AndroidKeyStore.jks')
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
+                storePassword keystoreProps['storePassword']
+                storeFile file('../../../Documentos3/Android Keys/AndroidKeyStore.jks')
+            }
         }
         beta {
             Properties keystoreProps = new Properties()
-            keystoreProps.load(new FileInputStream(file('../../../Documentos/Android Keys/keystore.config')))
+            if (keystoreFileConfig.exists()) {
+                keystoreProps.load(new FileInputStream(file(keystoreFileConfig)))
 
-            keyAlias keystoreProps['keyAlias']
-            keyPassword keystoreProps['keyPassword']
-            storePassword keystoreProps['storePassword']
-            storeFile file('../../../Documentos/Android Keys/AndroidKeyStore.jks')
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
+                storePassword keystoreProps['storePassword']
+                storeFile file('../../../Documentos5/Android Keys/AndroidKeyStore.jks')
+            }
         }
         alpha {
             Properties keystoreProps = new Properties()
-            keystoreProps.load(new FileInputStream(file('../../../Documentos/Android Keys/keystore.config')))
+            if (keystoreFileConfig.exists()) {
+                keystoreProps.load(new FileInputStream(file(keystoreFileConfig)))
 
-            keyAlias keystoreProps['keyAlias']
-            keyPassword keystoreProps['keyPassword']
-            storePassword keystoreProps['storePassword']
-            storeFile file('../../../Documentos/Android Keys/AndroidKeyStore.jks')
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
+                storePassword keystoreProps['storePassword']
+                storeFile file('../../../Documentos/Android Keys/AndroidKeyStore.jks')
+            }
         }
     }
     compileSdkVersion 31
