@@ -62,7 +62,7 @@ public class SettingsEntityReadWriteTest {
         Assert.assertNotNull(storedSettingsEntity);
         Assert.assertEquals(storedSettingsEntity.getCreationTime(), settingsEntity.getCreationTime());
         Assert.assertEquals(storedSettingsEntity.isOnlyOfficialAllowed(), settingsEntity.isOnlyOfficialAllowed());
-        Assert.assertEquals(storedSettingsEntity.isRestrictionsIgnored(), settingsEntity.isRestrictionsIgnored());
+        Assert.assertEquals(storedSettingsEntity.isRestrictionsChecked(), settingsEntity.isRestrictionsChecked());
 
         //Check that if we insert a second time, only one is inserted.
         settingsEntityDao.persist(settingsEntity);
