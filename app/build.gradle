@@ -19,7 +19,7 @@ android {
     ndkVersion "22.1.7171670"
 
     signingConfigs {
-        def keystoreFileConfig = rootProject.file('../../../Documentos/Android Keys/keystore.config')
+        File keystoreFileConfig = rootProject.file('../../Documentos/Android Keys/keystore.config')
         release {
             Properties keystoreProps = new Properties()
             if (keystoreFileConfig.exists()) {
@@ -28,7 +28,7 @@ android {
                 keyAlias keystoreProps['keyAlias']
                 keyPassword keystoreProps['keyPassword']
                 storePassword keystoreProps['storePassword']
-                storeFile file('../../../Documentos3/Android Keys/AndroidKeyStore.jks')
+                storeFile file('../../../Documentos/Android Keys/AndroidKeyStore.jks')
             }
         }
         beta {
@@ -39,7 +39,7 @@ android {
                 keyAlias keystoreProps['keyAlias']
                 keyPassword keystoreProps['keyPassword']
                 storePassword keystoreProps['storePassword']
-                storeFile file('../../../Documentos5/Android Keys/AndroidKeyStore.jks')
+                storeFile file('../../../Documentos/Android Keys/AndroidKeyStore.jks')
             }
         }
         alpha {
