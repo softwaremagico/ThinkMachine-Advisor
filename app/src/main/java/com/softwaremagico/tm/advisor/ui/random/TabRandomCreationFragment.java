@@ -28,6 +28,8 @@ public class TabRandomCreationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // https://stackoverflow.com/questions/68342930/setretaininstance-is-deprecated-what-is-alternative
+        //setRetainInstance(true);
     }
 
     @Override
