@@ -18,7 +18,6 @@ import android.util.AttributeSet;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.components.spinner.adapters.EnumAdapter;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
@@ -64,8 +63,12 @@ public class EnumSpinner extends Component {
     }
 
     public <T> void setSelection(T selected) {
-        final Spinner selector = findViewById(R.id.spinner);
-        selector.setSelection(((EnumAdapter<T>) selector.getAdapter()).indexOf(selected));
+        if (selected != null) {
+            final Spinner selector = findViewById(R.id.spinner);
+            if (selector != null) {
+                selector.setSelection(((EnumAdapter<T>) selector.getAdapter()).indexOf(selected));
+            }
+        }
     }
 
     public <T> T getSelectedItem() {
