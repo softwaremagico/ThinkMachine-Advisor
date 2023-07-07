@@ -128,7 +128,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                     randomName.assign();
                     final TranslatedEditText nameTextEditor = root.findViewById(R.id.character_name);
                     nameTextEditor.setText(CharacterManager.getSelectedCharacter().getInfo().getNameRepresentation());
-                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException | RestrictedElementException e) {
+                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException |
+                         RestrictedElementException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.selectFactionAndMore).show();
                 } catch (UnofficialElementNotAllowedException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
@@ -152,7 +153,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
                     } else {
                         surnameTextEditor.setText("");
                     }
-                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException | RestrictedElementException e) {
+                } catch (InvalidXmlElementException | InvalidRandomElementSelectedException |
+                         RestrictedElementException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.selectFactionAndMore).show();
                 } catch (UnofficialElementNotAllowedException e) {
                     SnackbarGenerator.getErrorMessage(root, R.string.message_unofficial_element_not_allowed).show();
@@ -358,7 +360,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             public void onNothingSelected(AdapterView<?> parentView) {
                 try {
                     CharacterManager.getSelectedCharacter().setRace(null);
-                } catch (InvalidRaceException | RestrictedElementException | UnofficialElementNotAllowedException e) {
+                } catch (InvalidRaceException | RestrictedElementException |
+                         UnofficialElementNotAllowedException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
                 updateCounters(CharacterManager.getSelectedCharacter());
@@ -407,7 +410,8 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             public void onNothingSelected(AdapterView<?> parentView) {
                 try {
                     CharacterManager.getSelectedCharacter().setFaction(null);
-                } catch (InvalidFactionException | RestrictedElementException | UnofficialElementNotAllowedException e) {
+                } catch (InvalidFactionException | RestrictedElementException |
+                         UnofficialElementNotAllowedException e) {
                     AdvisorLog.errorMessage(this.getClass().getName(), e);
                 }
             }

@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.softwaremagico.tm.advisor.R;
@@ -35,15 +35,42 @@ public class TabRandomCreationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.random_creation_fragment, container, false);
-        final RandomSectionsPagerAdapter randomSectionsPagerAdapter = new RandomSectionsPagerAdapter(getContext(), getChildFragmentManager());
-        final ViewPager viewPager = view.findViewById(R.id.view_pager);
+        final RandomSectionsPagerAdapter randomSectionsPagerAdapter = new RandomSectionsPagerAdapter(getActivity());
+        final ViewPager2 viewPager = view.findViewById(R.id.view_pager);
         viewPager.setAdapter(randomSectionsPagerAdapter);
 
         //Avoid refreshing of fragments. We will update them manually.
-        viewPager.setOffscreenPageLimit(randomSectionsPagerAdapter.getCount());
+        viewPager.setOffscreenPageLimit(randomSectionsPagerAdapter.getItemCount());
 
         final TabLayout tabs = view.findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
+        for(int titleIndex: RandomSectionsPagerAdapter.TAB_TITLES){
+            tabs.addTab(tabs.newTab().setText(titleIndex));
+        }
+
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                tabs.selectTab(tabs.getTabAt(position));
+            }
+        });
+
         return view;
     }
 

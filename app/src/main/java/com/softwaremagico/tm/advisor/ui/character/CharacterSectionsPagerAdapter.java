@@ -12,16 +12,13 @@
 
 package com.softwaremagico.tm.advisor.ui.character;
 
-import android.content.Context;
 import android.util.SparseArray;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.ui.character.characteristics.CharacteristicsFragmentCharacter;
@@ -37,35 +34,20 @@ import com.softwaremagico.tm.advisor.ui.character.traits.TraitsFragmentCharacter
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
+public class CharacterSectionsPagerAdapter extends FragmentStateAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_character_info, R.string.tab_character_description, R.string.tab_character_characteristics, R.string.tab_character_skills, R.string.tab_character_traits, R.string.tab_character_cybernetics, R.string.tab_character_occultism, R.string.tab_character_equipment};
-    private final Context mContext;
+    public static final int[] TAB_TITLES = new int[]{R.string.tab_character_info, R.string.tab_character_description, R.string.tab_character_characteristics, R.string.tab_character_skills, R.string.tab_character_traits, R.string.tab_character_cybernetics, R.string.tab_character_occultism, R.string.tab_character_equipment};
+
     private final SparseArray<Fragment> fragments = new SparseArray<>();
 
-    CharacterSectionsPagerAdapter(Context context, FragmentManager fm) {
-        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        mContext = context;
+    CharacterSectionsPagerAdapter(FragmentActivity fa) {
+        super(fa);
     }
 
-    @Override
     @NonNull
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        final Fragment fragment = (Fragment) super.instantiateItem(container, position);
-        fragments.put(position, fragment);
-        return fragment;
-    }
-
     @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        fragments.remove(position);
-        super.destroyItem(container, position, object);
-    }
-
-    @Override
-    @NonNull
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         if (position == 0) {
@@ -104,14 +86,8 @@ public class CharacterSectionsPagerAdapter extends FragmentPagerAdapter {
         return null;
     }
 
-    @Nullable
     @Override
-    public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
-    }
-
-    @Override
-    public int getCount() {
+    public int getItemCount() {
         return TAB_TITLES.length;
     }
 }

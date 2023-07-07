@@ -12,14 +12,11 @@
 
 package com.softwaremagico.tm.advisor.ui.about;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.softwaremagico.tm.advisor.R;
 
@@ -27,20 +24,18 @@ import com.softwaremagico.tm.advisor.R;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class AboutPagerAdapter extends FragmentPagerAdapter {
+public class AboutPagerAdapter extends FragmentStateAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_about, R.string.tab_license, R.string.tab_privacy};
-    private final Context mContext;
 
-    public AboutPagerAdapter(Context context, FragmentManager fm) {
-        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        mContext = context;
+    public AboutPagerAdapter(FragmentActivity fa) {
+        super(fa);
     }
 
     @Override
     @NonNull
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         if (position == 0) {
@@ -56,14 +51,8 @@ public class AboutPagerAdapter extends FragmentPagerAdapter {
         return null;
     }
 
-    @Nullable
     @Override
-    public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
-    }
-
-    @Override
-    public int getCount() {
+    public int getItemCount() {
         return TAB_TITLES.length;
     }
 }

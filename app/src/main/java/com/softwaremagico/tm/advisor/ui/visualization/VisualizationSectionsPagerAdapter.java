@@ -12,13 +12,10 @@
 
 package com.softwaremagico.tm.advisor.ui.visualization;
 
-import android.content.Context;
-
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.softwaremagico.tm.advisor.R;
 
@@ -26,19 +23,17 @@ import com.softwaremagico.tm.advisor.R;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class VisualizationSectionsPagerAdapter extends FragmentPagerAdapter {
+public class VisualizationSectionsPagerAdapter extends FragmentStateAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_visualization_txt, R.string.tab_visualization_pdf, R.string.tab_visualization_pdf_small};
-    private final Context mContext;
+    public static final int[] TAB_TITLES = new int[]{R.string.tab_visualization_txt, R.string.tab_visualization_pdf, R.string.tab_visualization_pdf_small};
 
-    public VisualizationSectionsPagerAdapter(Context context, FragmentManager fm) {
-        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        mContext = context;
+    public VisualizationSectionsPagerAdapter(FragmentActivity fa) {
+        super(fa);
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         if (position == 0) {
@@ -54,14 +49,8 @@ public class VisualizationSectionsPagerAdapter extends FragmentPagerAdapter {
         return null;
     }
 
-    @Nullable
     @Override
-    public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
-    }
-
-    @Override
-    public int getCount() {
+    public int getItemCount() {
         return TAB_TITLES.length;
     }
 }
