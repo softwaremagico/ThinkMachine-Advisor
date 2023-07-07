@@ -49,13 +49,13 @@ public final class FileUtils {
         StringBuilder text = new StringBuilder();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line;
 
-            while ((line = br.readLine()) != null) {
-                text.append(line);
+                while ((line = br.readLine()) != null) {
+                    text.append(line);
+                }
             }
-            br.close();
         } catch (IOException e) {
             AdvisorLog.warning(FileUtils.class.getName(), "Accessing to file '" + path + "'");
             AdvisorLog.errorMessage(FileUtils.class.getName(), e);

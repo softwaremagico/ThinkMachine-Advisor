@@ -74,5 +74,9 @@ Some examples of the application:
 0.9 Stability and Performance improvements. 
 
 0.10 Bug review
+- 0.10.1 Bug fixing
+- 0.10.2 Bug fixing
+- 0.10.3 Bug fixing
+- 0.10.4 Adapted to Android 13
 
 
