@@ -29,7 +29,7 @@ public class OccultismDescriptionDialog extends ElementDescriptionDialog<Occulti
                 "</tr>" +
                 "<tr>" +
                 "<td style=\"text-align:center\">" +
-                (levelLimited ? "<font color=\"" + getColor(R.color.insufficientOccultimsLevel) + "\">" : "") +
+                (levelLimited ? "<font color=\"" + getColor(R.color.insufficientOccultismLevel) + "\">" : "") +
                 power.getLevel() +
                 (levelLimited ? "</font>" : "") +
                 "</td>" +

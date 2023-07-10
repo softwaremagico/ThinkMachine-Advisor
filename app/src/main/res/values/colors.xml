@@ -27,7 +27,7 @@
     <color name="colorTextMessageOk">@color/colorContrast</color>
     <color name="colorBackgroundMessageOk">#382b48</color>
     <color name="colorTextMessageWarning">#000000</color>
-    <color name="colorBackgroundMessageWarning">#FF9800</color>
+    <color name="colorBackgroundMessageWarning">#B60042</color>
     <color name="colorTextMessageError">@color/colorContrast</color>
     <color name="colorBackgroundMessageError">#6e0309</color>
 
@@ -69,6 +69,6 @@
     <color name="insufficientMoney">@color/colorWarning</color>
     <color name="unaffordableMoney">@color/colorError</color>
     <color name="correctElement">@color/colorError</color>
-    <color name="insufficientOccultimsLevel">@color/colorError</color>
-    <color name="unofficialElement">#c96d35</color>
+    <color name="insufficientOccultismLevel">@color/colorError</color>
+    <color name="unofficialElement">@color/colorWarning</color>
 </resources>
