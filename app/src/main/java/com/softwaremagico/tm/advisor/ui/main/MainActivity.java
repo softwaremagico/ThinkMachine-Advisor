@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 importJson();
                 return true;
             case R.id.settings_remove_character:
-                removeSelectedCharacter();
+                removeSelectedCharacter(parentLayout);
                 return true;
             case R.id.settings_about:
                 new AboutWindow().show(getSupportFragmentManager(), "");
@@ -252,8 +252,11 @@ public class MainActivity extends AppCompatActivity {
         CharacterManager.addNewCharacter();
     }
 
-    private void removeSelectedCharacter(){
-        CharacterManager.removeSelectedCharacter();
+    private void removeSelectedCharacter(View parentLayout) {
+        SnackbarGenerator.getWarningMessage(parentLayout, R.string.remove_character_warning,
+                R.string.remove, action -> {
+                    CharacterManager.removeSelectedCharacter();
+                }).show();
     }
 
     private void showDialog() {

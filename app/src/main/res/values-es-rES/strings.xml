@@ -245,4 +245,7 @@
     <string name="message_setting_restriction_not_changed">El personaje está usando algunos elementos restringidos. La configuración no puede ser cambiada.</string>
     <string name="settings_global">Ajustes Generales</string>
     <string name="setting_title_new_characters">Nuevos Personajes</string>
+    <string name="remove_character_warning">¿Estás seguro de que quieres eliminar el personaje seleccionado?</string>
+    <string name="accept">Acceptar</string>
+    <string name="remove">Eliminar</string>
 </resources>

@@ -247,5 +247,8 @@
     <string name="allow_nonofficial">Enable non-official features</string>
     <string name="allow_restricted">Ignore restrictions</string>
     <string name="setting_title_new_characters">New Characters</string>
+    <string name="remove_character_warning">Are you sure you want to delete the selected character?</string>
+    <string name="accept">Accept</string>
+    <string name="remove">Remove</string>
 </resources>
 
