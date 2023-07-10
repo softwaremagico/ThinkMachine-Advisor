@@ -22,6 +22,20 @@ public class AboutWindow extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about_window, container, false);
 
+        if (getDialog() != null) {
+            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
+            //Set version number at the bottom.
+            TextView versionText = view.findViewById(R.id.app_version);
+            try {
+                String versionName = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0).versionName;
+                versionText.setText(versionName);
+            } catch (PackageManager.NameNotFoundException e) {
+                versionText.setText("");
+            }
+            versionText.setOnClickListener(v -> dismiss());
+        }
+
 
         return view;
     }
@@ -59,19 +73,6 @@ public class AboutWindow extends DialogFragment {
                 tabs.selectTab(tabs.getTabAt(position));
             }
         });
-
-
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-
-        //Set version number at the bottom.
-        TextView versionText = view.findViewById(R.id.app_version);
-        try {
-            String versionName = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0).versionName;
-            versionText.setText(versionName);
-        } catch (PackageManager.NameNotFoundException e) {
-            versionText.setText("");
-        }
-        versionText.setOnClickListener(v -> dismiss());
     }
 
 }

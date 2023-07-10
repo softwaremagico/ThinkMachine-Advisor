@@ -132,9 +132,12 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
             if (CharacterManager.getCostCalculator().getStatus().ordinal() > CharacterProgressionStatus.IN_PROGRESS.ordinal()) {
                 SnackbarGenerator.getWarningMessage(root, R.string.message_random_character_already_finished,
                         R.string.action_new, action -> {
+                            // Store settings to redo option if needed.
+                            CharacterManager.addNewCharacter();
                             generateCharacter();
                         }).show();
             } else {
+                // Store settings to redo option if needed.
                 generateCharacter();
             }
         });
@@ -146,7 +149,8 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
         try {
             CharacterManager.randomizeCharacter(getSelectedOptions());
             SnackbarGenerator.getInfoMessage(root, R.string.message_random_character_success).show();
-        } catch (InvalidXmlElementException | InvalidRandomElementSelectedException | RestrictedElementException | UnofficialElementNotAllowedException e) {
+        } catch (InvalidXmlElementException | InvalidRandomElementSelectedException |
+                 RestrictedElementException | UnofficialElementNotAllowedException e) {
             SnackbarGenerator.getErrorMessage(root, R.string.message_random_character_error).show();
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }

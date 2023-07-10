@@ -138,7 +138,8 @@ public class RandomCharactersFragment extends CharacterCustomFragment {
         try {
             CharacterManager.randomizeCharacterUsingNpc(getSelectedOptions());
             SnackbarGenerator.getInfoMessage(root, R.string.message_random_character_success).show();
-        } catch (InvalidXmlElementException | InvalidRandomElementSelectedException | RestrictedElementException | UnofficialElementNotAllowedException e) {
+        } catch (InvalidXmlElementException | InvalidRandomElementSelectedException |
+                 RestrictedElementException | UnofficialElementNotAllowedException e) {
             SnackbarGenerator.getErrorMessage(root, R.string.message_random_character_error).show();
             AdvisorLog.errorMessage(this.getClass().getName(), e);
         }
