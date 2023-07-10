@@ -256,6 +256,10 @@ public final class CharacterManager {
         if (!characters.contains(characterPlayer)) {
             characters.add(characterPlayer);
         }
+        selectedCharacter(characterPlayer);
+    }
+
+    private synchronized static void selectedCharacter(CharacterPlayer characterPlayer) {
         selectedCharacter = characterPlayer;
         costCalculator = new CostCalculator(selectedCharacter);
         launchSelectedCharacterListeners(characterPlayer);
@@ -271,6 +275,15 @@ public final class CharacterManager {
 
     public static void addNewCharacter() {
         setSelectedCharacter(createNewCharacter());
+    }
+
+    public static void removeSelectedCharacter() {
+        characters.remove(getSelectedCharacter());
+        if (!characters.isEmpty()) {
+            setSelectedCharacter(characters.get(0));
+        }else{
+            addNewCharacter();
+        }
     }
 
     public static void randomizeCharacter(Set<IRandomPreference> randomPreferences) throws InvalidXmlElementException,
@@ -299,6 +312,10 @@ public final class CharacterManager {
             RequiredCyberneticDevicesException {
         CharacterManager.getSelectedCharacter().setCybernetics(cyberneticDevices);
         launchCyberneticDeviceUpdatedListeners(CharacterManager.getSelectedCharacter());
+    }
+
+    public static List<CharacterPlayer> getCharacters() {
+        return characters;
     }
 
 }

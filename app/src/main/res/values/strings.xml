@@ -82,6 +82,8 @@
     <string name="counter_cybernetics">INCOMPAT.</string>
     <string name="duplicated_element_removed">Duplicated element has been removed.</string>
     <string name="settings_about">About...</string>
+    <string name="settings_remove">Remove</string>
+    <string name="character_name_empty">EMPTY</string>
     <string name="tab_license">Licenses</string>
     <string name="tab_about">About</string>
     <string name="tab_privacy">Privacy</string>

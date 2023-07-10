@@ -26,6 +26,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.core.view.MenuCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -46,6 +47,7 @@ import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
 import com.softwaremagico.tm.advisor.utils.ClassManager;
 import com.softwaremagico.tm.cache.RandomPreferenceClassSearcher;
+import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.file.modules.ModuleManager;
 import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.json.InvalidJsonException;
@@ -61,6 +63,8 @@ import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PICK_TMA_FILE = 0;
+    private static final int CHARACTERS_SELECTOR_GROUP = 10;
+    private static final int CHARACTERS_INDEX = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
+        MenuCompat.setGroupDividerEnabled(menu, true);
         return true;
     }
 
@@ -127,13 +132,42 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings_import_file:
                 importJson();
                 return true;
+            case R.id.settings_remove_character:
+                removeSelectedCharacter();
+                return true;
             case R.id.settings_about:
                 new AboutWindow().show(getSupportFragmentManager(), "");
                 return super.onOptionsItemSelected(menuItem);
             default:
-                return super.onOptionsItemSelected(menuItem);
+                //Select an existing character
+                if (menuItem.getItemId() >= CHARACTERS_INDEX) {
+                    CharacterManager.setSelectedCharacter(CharacterManager.getCharacters()
+                            .get(menuItem.getItemId() - CHARACTERS_INDEX));
+                    return true;
+                } else {
+                    return super.onOptionsItemSelected(menuItem);
+                }
         }
     }
+
+    /**
+     * Gets called every time the user presses the menu button.
+     * Use if your menu is dynamic.
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        final List<CharacterPlayer> existingCharacters = CharacterManager.getCharacters();
+        menu.removeGroup(CHARACTERS_SELECTOR_GROUP);
+        for (int i = 0; i < existingCharacters.size(); i++) {
+            String name = existingCharacters.get(i).getCompleteNameRepresentation();
+            if (name.isEmpty()) {
+                name = "<<" + getString(R.string.character_name_empty) + ">>";
+            }
+            menu.add(CHARACTERS_SELECTOR_GROUP, CHARACTERS_INDEX + i, i, name);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
 
     private void importJson() {
         Intent chooseFile;
@@ -216,6 +250,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void newCharacter() {
         CharacterManager.addNewCharacter();
+    }
+
+    private void removeSelectedCharacter(){
+        CharacterManager.removeSelectedCharacter();
     }
 
     private void showDialog() {

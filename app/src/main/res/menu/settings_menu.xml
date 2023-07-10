@@ -13,45 +13,55 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/settings_save"
-        android:icon="@drawable/ic_character_save"
-        android:title="@string/settings_save"
-        app:showAsAction="ifRoom" />
+    <group android:id="@+id/settings">
+        <item
+            android:id="@+id/settings_save"
+            android:icon="@drawable/ic_character_save"
+            android:title="@string/settings_save"
+            app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/settings_load"
-        android:icon="@drawable/ic_character_load"
-        android:title="@string/settings_load"
-        app:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/settings_load"
+            android:icon="@drawable/ic_character_load"
+            android:title="@string/settings_load"
+            app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/settings_new"
-        android:icon="@drawable/ic_character_full"
-        android:title="@string/settings_new"
-        app:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/settings_new"
+            android:icon="@drawable/ic_character_full"
+            android:title="@string/settings_new"
+            app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/settings_import_file"
-        android:icon="@drawable/ic_character_icon"
-        android:title="@string/settings_import"
-        app:showAsAction="never" />
+        <item
+            android:id="@+id/settings_export_file"
+            android:icon="@drawable/ic_character_icon"
+            android:title="@string/settings_export"
+            app:showAsAction="never" />
 
-    <item
-        android:id="@+id/settings_export_file"
-        android:icon="@drawable/ic_character_icon"
-        android:title="@string/settings_export"
-        app:showAsAction="never" />
+        <item
+            android:id="@+id/settings_import_file"
+            android:icon="@drawable/ic_character_icon"
+            android:title="@string/settings_import"
+            app:showAsAction="never" />
 
-    <item
-        android:id="@+id/settings_global_settings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings_global"
-        app:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/settings_remove_character"
+            android:icon="@drawable/ic_character_remove"
+            android:title="@string/settings_remove"
+            app:showAsAction="never" />
 
-    <item
-        android:id="@+id/settings_about"
-        android:icon="@drawable/ic_help"
-        android:title="@string/settings_about"
-        app:showAsAction="never" />
+        <item
+            android:id="@+id/settings_global_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings_global"
+            app:showAsAction="ifRoom" />
+    </group>
+
+    <group android:id="@+id/about">
+        <item
+            android:id="@+id/settings_about"
+            android:icon="@drawable/ic_help"
+            android:title="@string/settings_about"
+            app:showAsAction="never" />
+    </group>
 </menu>

@@ -59,6 +59,8 @@
     <string name="counter_extra">EXTRA</string>
     <string name="duplicated_element_removed">El elemento duplicado ha sido eliminado.</string>
     <string name="settings_about">Acerca de...</string>
+    <string name="settings_remove">Eliminar</string>
+    <string name="character_name_empty">VACIO</string>
     <string name="tab_license">Licencias</string>
     <string name="tab_about">Acerca de</string>
     <string name="tab_privacy">Privacidad</string>
