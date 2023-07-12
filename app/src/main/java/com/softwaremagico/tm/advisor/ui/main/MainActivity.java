@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         Translator.setLanguage(Locale.getDefault().getLanguage());
-        //Preload all data in a secondary thread.
-        com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer.loadAllFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
+        //Preload all data on splash screen
+        com.softwaremagico.tm.file.modules.ModuleLoaderEnforcer.loadBasicFactories(Locale.getDefault().getLanguage(), ModuleManager.DEFAULT_MODULE);
 
         super.onCreate(savedInstanceState);
 
