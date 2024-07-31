@@ -12,7 +12,7 @@
 [![SonarCloud Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=softwaremagico_ThinkMachine-Advisor&metric=vulnerabilities)](https://sonarcloud.io/component_measures/metric/security_rating/list?id=softwaremagico_ThinkMachine-Advisor)
 
 
-This is an Android based application that includes [ThinkMachine](https://softwaremagico.github.io/ThinkMachine/) Java library.  That means that this is a mobile Android application developed to help the user (Game Masters or Players) to create character sheets for the Fading Suns revised edition.
+This is an Android based application that includes [ThinkMachine 3E](https://softwaremagico.github.io/ThinkMachine/) Java library.  That means that this is a mobile Android application developed to help the user (Game Masters or Players) to create character sheets for the Fading Suns revised edition.
 
 The app is available on Google Play, and this site is only for hosting the source code of the application. If you are only interested on the use of this application as a standard user, please download from  [Google Play](https://play.google.com/store/apps/details?id=com.softwaremagico.tm.advisor).
 
