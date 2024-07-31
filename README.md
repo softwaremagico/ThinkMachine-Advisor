@@ -1,6 +1,6 @@
 <img src="./images/think_machine_logo_fenix.png" width="800" alt="Think Machine" align="middle"> 
 
-# Think Machine: Advisor
+# Think Machine: Advisor (3E)
 [![Supported Languages](https://img.shields.io/badge/Supported-%F0%9F%87%AA%F0%9F%87%B8%20%F0%9F%87%AC%F0%9F%87%A7languages-blue.svg)](https://github.com/softwaremagico/ThinkMachine-Advisor/blob/master/app/src/main/res/values/strings.xml)
 [![GNU GPL 3.0 License](https://img.shields.io/badge/license-GNU_GPL_3.0-brightgreen.svg)](https://github.com/softwaremagico/ThinkMachine-Advisor/blob/master/GNU_LICENSE)
 [![Issues](https://img.shields.io/github/issues/softwaremagico/ThinkMachine-Advisor.svg)](https://github.com/softwaremagico/ThinkMachine-Advisor/issues)
