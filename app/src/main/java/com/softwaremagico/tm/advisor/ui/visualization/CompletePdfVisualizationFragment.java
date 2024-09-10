@@ -45,17 +45,7 @@ public class CompletePdfVisualizationFragment extends PdfVisualizationFragment {
 
     @Override
     protected byte[] generatePdf() {
-        final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
-        try {
-            return (characterSheet.generate());
-        } catch (EmptyPdfBodyException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        } catch (DocumentException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        } catch (InvalidXmlElementException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        }
-        return new byte[0];
+        return mViewModel.generateCompletePdf();
     }
 
     @Override

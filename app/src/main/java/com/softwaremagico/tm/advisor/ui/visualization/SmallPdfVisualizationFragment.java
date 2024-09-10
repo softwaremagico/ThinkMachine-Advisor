@@ -20,12 +20,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.itextpdf.text.DocumentException;
-import com.softwaremagico.tm.InvalidXmlElementException;
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
-import com.softwaremagico.tm.pdf.complete.EmptyPdfBodyException;
 import com.softwaremagico.tm.pdf.small.SmallCharacterSheet;
 
 public class SmallPdfVisualizationFragment extends PdfVisualizationFragment {
@@ -45,17 +41,7 @@ public class SmallPdfVisualizationFragment extends PdfVisualizationFragment {
 
     @Override
     protected byte[] generatePdf() {
-        final SmallCharacterSheet characterSheet = new SmallCharacterSheet(CharacterManager.getSelectedCharacter());
-        try {
-            return (characterSheet.generate());
-        } catch (EmptyPdfBodyException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        } catch (DocumentException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        } catch (InvalidXmlElementException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
-        }
-        return new byte[0];
+        return mViewModel.generateSmallPdf();
     }
 
     @Override

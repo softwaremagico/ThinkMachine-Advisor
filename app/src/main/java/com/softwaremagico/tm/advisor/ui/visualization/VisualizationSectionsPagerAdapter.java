@@ -19,6 +19,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.softwaremagico.tm.advisor.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
@@ -27,6 +30,7 @@ public class VisualizationSectionsPagerAdapter extends FragmentStateAdapter {
 
     @StringRes
     public static final int[] TAB_TITLES = new int[]{R.string.tab_visualization_txt, R.string.tab_visualization_pdf, R.string.tab_visualization_pdf_small};
+    private static List<Fragment> fragments = new ArrayList<>();
 
     public VisualizationSectionsPagerAdapter(FragmentActivity fa) {
         super(fa);
@@ -37,13 +41,19 @@ public class VisualizationSectionsPagerAdapter extends FragmentStateAdapter {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         if (position == 0) {
-            return TextVisualizationFragment.newInstance(position + 1);
+            Fragment fragment = TextVisualizationFragment.newInstance(position + 1);
+            fragments.add(fragment);
+            return fragment;
         }
         if (position == 1) {
-            return CompletePdfVisualizationFragment.newInstance(position + 1);
+            Fragment fragment = CompletePdfVisualizationFragment.newInstance(position + 1);
+            fragments.add(fragment);
+            return fragment;
         }
         if (position == 2) {
-            return SmallPdfVisualizationFragment.newInstance(position + 1);
+            Fragment fragment = SmallPdfVisualizationFragment.newInstance(position + 1);
+            fragments.add(fragment);
+            return fragment;
         }
 
         return null;
@@ -52,5 +62,19 @@ public class VisualizationSectionsPagerAdapter extends FragmentStateAdapter {
     @Override
     public int getItemCount() {
         return TAB_TITLES.length;
+    }
+
+    /**
+     * Forces the refresh of a fragment when the view is selected again. Used when changing a character setting, and going back to the txt or pdf views.
+     *
+     * @param position
+     */
+    public void refreshFragment(int position) {
+        if (position < fragments.size()) {
+            Fragment fragment = fragments.get(position);
+            if (fragment instanceof VisualizationFragment) {
+                ((VisualizationFragment) fragment).updateData();
+            }
+        }
     }
 }

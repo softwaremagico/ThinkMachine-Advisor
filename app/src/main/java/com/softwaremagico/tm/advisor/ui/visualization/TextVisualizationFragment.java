@@ -23,6 +23,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
@@ -33,8 +34,10 @@ import com.softwaremagico.tm.txt.CharacterSheet;
 
 import java.io.IOException;
 
-public class TextVisualizationFragment extends Fragment {
+public class TextVisualizationFragment extends Fragment implements VisualizationFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private CharacterTxtViewModel mViewModel;
+    private TextView txtDetails;
 
     public static TextVisualizationFragment newInstance(int index) {
         final TextVisualizationFragment fragment = new TextVisualizationFragment();
@@ -48,10 +51,9 @@ public class TextVisualizationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.visualization_text_fragment, container, false);
+        mViewModel = new ViewModelProvider(this).get(CharacterTxtViewModel.class);
 
-        final TextView txtDetails = root.findViewById(R.id.character_text);
-        final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
-        txtDetails.setText(characterSheet.toString());
+        txtDetails = root.findViewById(R.id.character_text);
         txtDetails.setMovementMethod(new ScrollingMovementMethod());
 
         final FloatingActionButton fab = root.findViewById(R.id.share);
@@ -69,6 +71,10 @@ public class TextVisualizationFragment extends Fragment {
         return root;
     }
 
+    protected void initData() {
+        txtDetails.setText(mViewModel.generateText());
+    }
+
     protected void shareText() throws IOException {
         final Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
@@ -80,5 +86,10 @@ public class TextVisualizationFragment extends Fragment {
         shareIntent.putExtra(Intent.EXTRA_TEXT, TextVariablesManager.replace(getString(R.string.share_body) + "\n\n" + characterSheet.toString()));
         //final Intent chooser = Intent.createChooser(shareIntent, "Share File");
         startActivity(shareIntent);
+    }
+
+    @Override
+    public void updateData() {
+        initData();
     }
 }

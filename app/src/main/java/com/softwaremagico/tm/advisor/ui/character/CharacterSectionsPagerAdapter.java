@@ -39,8 +39,6 @@ public class CharacterSectionsPagerAdapter extends FragmentStateAdapter {
     @StringRes
     public static final int[] TAB_TITLES = new int[]{R.string.tab_character_info, R.string.tab_character_description, R.string.tab_character_characteristics, R.string.tab_character_skills, R.string.tab_character_traits, R.string.tab_character_cybernetics, R.string.tab_character_occultism, R.string.tab_character_equipment};
 
-    private final SparseArray<Fragment> fragments = new SparseArray<>();
-
     CharacterSectionsPagerAdapter(FragmentActivity fa) {
         super(fa);
     }

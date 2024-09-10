@@ -68,6 +68,7 @@ public class TabSheetVisualizationFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 tabs.selectTab(tabs.getTabAt(position));
+                characterSheetsPagerAdapter.refreshFragment(position);
             }
         });
 

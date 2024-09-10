@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void exportJson(View view) throws IOException {
         final File exportsPath = new File(view.getContext().getCacheDir(), "export");
-        File characterExport = new File(exportsPath, CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
+        File characterExport = new File(exportsPath, !CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().isEmpty() ?
                 CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet." + FileUtils.CHARACTER_FILE_EXTENSION :
                 "export_sheet." + FileUtils.CHARACTER_FILE_EXTENSION);
         final Uri contentUri = FileProvider.getUriForFile(view.getContext(), "com.softwaremagico.tm.advisor", characterExport);
@@ -254,9 +254,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void removeSelectedCharacter(View parentLayout) {
         SnackbarGenerator.getWarningMessage(parentLayout, R.string.remove_character_warning,
-                R.string.remove, action -> {
-                    CharacterManager.removeSelectedCharacter();
-                }).show();
+                R.string.remove, action -> CharacterManager.removeSelectedCharacter()).show();
     }
 
     private void showDialog() {
