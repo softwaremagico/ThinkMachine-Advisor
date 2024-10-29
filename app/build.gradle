@@ -59,9 +59,9 @@ android {
     defaultConfig {
         applicationId "com.softwaremagico.tm.advisor"
         minSdk 31
-        targetSdkVersion 34
-        versionCode 49
-        versionName '3.1.1'
+        targetSdkVersion 35
+        versionCode 50
+        versionName '3.1.2'
         setProperty("archivesBaseName", applicationId + "-v" + versionCode)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -159,8 +159,8 @@ dependencies {
     implementation group: 'com.softwaremagico', name: 'think-machine-pdf', version: '[3.0.0, 3.1.0]'
     implementation group: 'com.softwaremagico', name: 'think-machine-random', version: '[3.0.0, 3.1.0]'
     implementation 'org.slf4j:slf4j-api:1.7.36'
-    implementation 'androidx.navigation:navigation-fragment:2.8.0'
-    implementation 'androidx.navigation:navigation-ui:2.8.0'
+    implementation 'androidx.navigation:navigation-fragment:2.8.3'
+    implementation 'androidx.navigation:navigation-ui:2.8.3'
     implementation 'com.google.guava:guava:29.0-android'
     implementation 'com.github.andob:android-awt:1.0.0'
 
