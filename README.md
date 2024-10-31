@@ -18,7 +18,7 @@ The app is available on Google Play, and this site is only for hosting the sourc
 
 
 <p align="center">
-	<img src="https://github.com/softwaremagico/KendoTournamentManager/wiki/images/ClubList.gif" width="800" alt="Club List"> 
+	<img src="https://github.com/softwaremagico/ThinkMachine-Advisor/blob/master/images/qr-code.svg" width="250" alt="Google Play"> 
 </p>
 
 
