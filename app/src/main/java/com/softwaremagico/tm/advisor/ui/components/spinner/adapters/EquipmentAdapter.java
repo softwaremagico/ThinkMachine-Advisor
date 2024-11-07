@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 
 import com.softwaremagico.tm.Element;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.character.Numbers;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
 import com.softwaremagico.tm.character.equipment.Equipment;
@@ -45,6 +46,6 @@ public class EquipmentAdapter<T extends Equipment<?>> extends ElementAdapter<T> 
         if (element.getId().equals(Element.DEFAULT_NULL_ID)) {
             return "";
         }
-        return element.getName() + " (" + element.getCost() + " " + getContext().getResources().getString(R.string.firebird_abbrev) + ")";
+        return element.getName() + " (" + Numbers.PRICE_FORMAT.format(element.getCost()) + " " + getContext().getResources().getString(R.string.firebird_abbrev) + ")";
     }
 }

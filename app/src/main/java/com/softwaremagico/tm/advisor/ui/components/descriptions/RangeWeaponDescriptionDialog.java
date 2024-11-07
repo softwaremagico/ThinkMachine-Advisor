@@ -1,6 +1,7 @@
 package com.softwaremagico.tm.advisor.ui.components.descriptions;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.character.Numbers;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
@@ -60,7 +61,7 @@ public class RangeWeaponDescriptionDialog extends WeaponDescriptionDialog {
                 "<br><b>" + getString(R.string.cost) + "</b> " +
                 (costProhibited ? "<font color=\"" + getColor(R.color.unaffordableMoney) + "\">" :
                         (costLimited ? "<font color=\"" + getColor(R.color.insufficientMoney) + "\">" : "")) +
-                weapon.getCost() +
+                Numbers.PRICE_FORMAT.format(weapon.getCost()) +
                 (costLimited || costProhibited ? "</font>" : "") +
                 " " + ThinkMachineTranslator.getTranslatedText("firebirds"));
         return stringBuilder.toString();

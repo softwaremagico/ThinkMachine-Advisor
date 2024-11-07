@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.character.Numbers;
 import com.softwaremagico.tm.advisor.ui.components.Component;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.CharacterPlayer;
@@ -25,7 +26,6 @@ public class FirebirdsCounter extends Component {
     private float currentValue = 0;
     private CostCalculatorModificationHandler.ICurrentFirebirdSpendListener listener;
     private CostCalculatorModificationHandler.IInitialFirebirdsUpdated initialListener;
-    private NumberFormat decimalFormat = new DecimalFormat("##.##");
     private boolean unitHidden = false;
 
 
@@ -51,13 +51,13 @@ public class FirebirdsCounter extends Component {
 
     public void setValue(float value, boolean animation) {
         if (isUnitHidden()) {
-            valueText.setText(String.format("%s", decimalFormat.format(value)));
+            valueText.setText(String.format("%s", Numbers.PRICE_FORMAT.format(value)));
         } else {
-            valueText.setText(String.format("%s %s", decimalFormat.format(value), getResources().getString(R.string.firebird_abbrev)));
+            valueText.setText(String.format("%s %s", Numbers.PRICE_FORMAT.format(value), getResources().getString(R.string.firebird_abbrev)));
         }
         if (animation) {
             if (currentValue != value) {
-                rotate(45f * (float) (value - currentValue) / 50, coinImage);
+                rotate(45f * (value - currentValue) / 50, coinImage);
             }
         }
         setCurrentValue(value);

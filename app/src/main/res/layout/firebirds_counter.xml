@@ -16,7 +16,7 @@
     android:layout_width="80dp"
     android:layout_height="55dp"
     android:orientation="vertical"
-    tools:context=".ui.components.counters.Counter">
+    tools:context=".ui.components.counters.FirebirdsCounter">
 
     <ImageView
         android:id="@+id/coin"

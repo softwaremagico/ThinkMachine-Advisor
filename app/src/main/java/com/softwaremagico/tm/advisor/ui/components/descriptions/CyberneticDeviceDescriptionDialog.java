@@ -1,6 +1,7 @@
 package com.softwaremagico.tm.advisor.ui.components.descriptions;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.character.Numbers;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
@@ -75,7 +76,7 @@ public class CyberneticDeviceDescriptionDialog extends ElementDescriptionDialog<
                 append(cyberneticDevice.getTechLevel()).append(techLimited ? "</font>" : "").append("<br><b>").
                 append(getString(R.string.incompatibility)).append(": </b>").append(cyberneticDevice.getIncompatibility()).append("<br><b>").
                 append(getString(R.string.points)).append(": </b>").append(cyberneticDevice.getPoints()).append("<br><b>").
-                append(getString(R.string.cost)).append(": </b> ").append(cyberneticDevice.getCost()).append(" ").
+                append(getString(R.string.cost)).append(": </b> ").append(Numbers.PRICE_FORMAT.format(cyberneticDevice.getCost())).append(" ").
                 append(ThinkMachineTranslator.getTranslatedText("firebirds"));
 
         return stringBuilder.toString();

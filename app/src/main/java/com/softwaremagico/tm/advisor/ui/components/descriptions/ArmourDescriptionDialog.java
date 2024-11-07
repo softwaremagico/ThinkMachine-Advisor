@@ -1,6 +1,7 @@
 package com.softwaremagico.tm.advisor.ui.components.descriptions;
 
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.ui.character.Numbers;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.ThinkMachineTranslator;
 import com.softwaremagico.tm.character.characteristics.CharacteristicName;
@@ -82,7 +83,8 @@ public class ArmourDescriptionDialog extends ElementDescriptionDialog<Armour> {
             }
         }
         stringBuilder.append("<br><b>").append(getString(R.string.cost)).append("</b> ").append(costProhibited ? "<font color=\"" + getColor(R.color.unaffordableMoney) + "\">" :
-                (costLimited ? "<font color=\"" + getColor(R.color.insufficientMoney) + "\">" : "")).append(armour.getCost()).append(costLimited || costProhibited ? "</font>" : "").append(" ").append(ThinkMachineTranslator.getTranslatedText("firebirds"));
+                (costLimited ? "<font color=\"" + getColor(R.color.insufficientMoney) + "\">" : ""))
+                .append(Numbers.PRICE_FORMAT.format(armour.getCost())).append(costLimited || costProhibited ? "</font>" : "").append(" ").append(ThinkMachineTranslator.getTranslatedText("firebirds"));
         return stringBuilder.toString();
     }
 }

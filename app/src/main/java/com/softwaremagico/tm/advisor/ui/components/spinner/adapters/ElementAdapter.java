@@ -52,7 +52,7 @@ public class ElementAdapter<T extends Element<?>> extends ArrayAdapter<T> {
         try {
             //Create null instance.
             final T instance = clazz.newInstance();
-            if (elements.isEmpty() || !getItem(0).getId().equals(Element.DEFAULT_NULL_ID)) {
+            if (elements.isEmpty() || !Element.isNull(getItem(0))) {
                 insert(instance, 0);
                 elements.add(0, instance);
             }
