@@ -20,13 +20,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.itextpdf.text.DocumentException;
-import com.softwaremagico.tm.InvalidXmlElementException;
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.R;
-import com.softwaremagico.tm.advisor.log.AdvisorLog;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.pdf.complete.CharacterSheet;
-import com.softwaremagico.tm.pdf.complete.EmptyPdfBodyException;
 
 public class CompletePdfVisualizationFragment extends PdfVisualizationFragment {
 
@@ -49,7 +45,7 @@ public class CompletePdfVisualizationFragment extends PdfVisualizationFragment {
     }
 
     @Override
-    protected void generatePdfFile(String path){
+    protected void generatePdfFile(String path) {
         final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
         characterSheet.createFile(path);
     }
