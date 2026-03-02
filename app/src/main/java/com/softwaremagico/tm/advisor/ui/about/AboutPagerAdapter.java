@@ -27,7 +27,7 @@ import com.softwaremagico.tm.advisor.R;
 public class AboutPagerAdapter extends FragmentStateAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_about, R.string.tab_license, R.string.tab_privacy};
+    protected static final int[] TAB_TITLES = new int[]{R.string.tab_about, R.string.tab_license, R.string.tab_privacy};
 
     public AboutPagerAdapter(FragmentActivity fa) {
         super(fa);

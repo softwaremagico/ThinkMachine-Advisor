@@ -48,7 +48,9 @@ public class AboutWindow extends DialogFragment {
         viewPager.setOffscreenPageLimit(aboutPagerAdapter.getItemCount());
 
         final TabLayout tabs = view.findViewById(R.id.tabs);
-        //tabs.setupWithViewPager(viewPager);
+        for (int titleIndex : AboutPagerAdapter.TAB_TITLES) {
+            tabs.addTab(tabs.newTab().setText(titleIndex));
+        }
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
