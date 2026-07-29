@@ -54,12 +54,12 @@ android {
             }
         }
     }
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.softwaremagico.tm.advisor"
         minSdk 31
-        targetSdkVersion 35
+        targetSdk 36
         versionCode 52
         versionName '3.2.0'
         setProperty("archivesBaseName", applicationId + "-v" + versionCode)
