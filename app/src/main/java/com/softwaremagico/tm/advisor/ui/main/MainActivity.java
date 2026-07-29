@@ -35,7 +35,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.softwaremagico.tm.advisor.BuildConfig;
 import com.softwaremagico.tm.advisor.R;
 import com.softwaremagico.tm.advisor.core.FileUtils;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
@@ -110,44 +109,44 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         final View parentLayout = findViewById(android.R.id.content);
-        switch (menuItem.getItemId()) {
-            case R.id.settings_load:
-                showDialog();
-                return true;
-            case R.id.settings_save:
-                saveCurrentCharacter(parentLayout);
-                return true;
-            case R.id.settings_new:
-                newCharacter();
-                return true;
-            case R.id.settings_global_settings:
-                globalSettings();
-                return true;
-            case R.id.settings_export_file:
-                try {
-                    exportJson(parentLayout);
-                } catch (IOException e) {
-                    AdvisorLog.errorMessage(this.getClass().getName(), e);
-                }
-                return true;
-            case R.id.settings_import_file:
-                importJson();
-                return true;
-            case R.id.settings_remove_character:
-                removeSelectedCharacter(parentLayout);
-                return true;
-            case R.id.settings_about:
-                new AboutWindow().show(getSupportFragmentManager(), "");
-                return super.onOptionsItemSelected(menuItem);
-            default:
-                //Select an existing character
-                if (menuItem.getItemId() >= CHARACTERS_INDEX) {
-                    CharacterManager.setSelectedCharacter(CharacterManager.getCharacters()
-                            .get(menuItem.getItemId() - CHARACTERS_INDEX));
-                    return true;
-                } else {
-                    return super.onOptionsItemSelected(menuItem);
-                }
+        final int itemId = menuItem.getItemId();
+        if (itemId == R.id.settings_load) {
+            showDialog();
+            return true;
+        } else if (itemId == R.id.settings_save) {
+            saveCurrentCharacter(parentLayout);
+            return true;
+        } else if (itemId == R.id.settings_new) {
+            newCharacter();
+            return true;
+        } else if (itemId == R.id.settings_global_settings) {
+            globalSettings();
+            return true;
+        } else if (itemId == R.id.settings_export_file) {
+            try {
+                exportJson(parentLayout);
+            } catch (IOException e) {
+                AdvisorLog.errorMessage(this.getClass().getName(), e);
+            }
+            return true;
+        } else if (itemId == R.id.settings_import_file) {
+            importJson();
+            return true;
+        } else if (itemId == R.id.settings_remove_character) {
+            removeSelectedCharacter(parentLayout);
+            return true;
+        } else if (itemId == R.id.settings_about) {
+            new AboutWindow().show(getSupportFragmentManager(), "");
+            return super.onOptionsItemSelected(menuItem);
+        }
+
+        // Select an existing character.
+        if (itemId >= CHARACTERS_INDEX) {
+            CharacterManager.setSelectedCharacter(CharacterManager.getCharacters()
+                    .get(itemId - CHARACTERS_INDEX));
+            return true;
+        } else {
+            return super.onOptionsItemSelected(menuItem);
         }
     }
 
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         File characterExport = new File(exportsPath, !CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().isEmpty() ?
                 CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet." + FileUtils.CHARACTER_FILE_EXTENSION :
                 "export_sheet." + FileUtils.CHARACTER_FILE_EXTENSION);
-        final Uri contentUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", characterExport);
+        final Uri contentUri = FileProvider.getUriForFile(getApplicationContext(), getPackageName() + ".provider", characterExport);
 
         if (contentUri != null) {
             if (exportsPath.mkdir()) {

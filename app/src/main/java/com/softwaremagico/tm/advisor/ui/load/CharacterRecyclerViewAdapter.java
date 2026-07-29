@@ -121,21 +121,16 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
             characterTitle.inflateMenu(R.menu.character_selector_menu);
             characterTitle.setOnMenuItemClickListener(item -> {
-                switch (item.getItemId()) {
-                    case R.id.character_load:
-                        CharacterManager.setSelectedCharacter(characterEntity.getCharacterPlayer());
-                        if (closePopUpListener != null) {
-                            closePopUpListener.dismiss();
-                        }
-                        break;
-                    case R.id.character_copy:
-                        duplicate(characterEntity);
-                        break;
-                    case R.id.character_delete:
-                        delete(characterEntity);
-                        break;
-                    default:
-                        break;
+                final int itemId = item.getItemId();
+                if (itemId == R.id.character_load) {
+                    CharacterManager.setSelectedCharacter(characterEntity.getCharacterPlayer());
+                    if (closePopUpListener != null) {
+                        closePopUpListener.dismiss();
+                    }
+                } else if (itemId == R.id.character_copy) {
+                    duplicate(characterEntity);
+                } else if (itemId == R.id.character_delete) {
+                    delete(characterEntity);
                 }
                 return true;
             });
