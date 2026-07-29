@@ -125,6 +125,7 @@
     <string name="preference_combatactionspreferences">Combat Actions</string>
     <string name="preference_combatactionsgrouppreferences">Combat Actions Preference</string>
     <string name="preference_genderpreferences">Gender</string>
+    <string name="preference_powerlevelpreferences">Level</string>
     <string name="preference_option_male">Male</string>
     <string name="preference_option_female">Female</string>
     <string name="preference_option_probably_male">Probably Male</string>
@@ -144,7 +145,6 @@
     <string name="preference_option_old">Old</string>
     <string name="preference_option_very_old">Very Old</string>
     <string name="preference_option_none">None</string>
-    <string name="preference_option_low">Low</string>
     <string name="preference_option_medium">Medium</string>
     <string name="preference_option_high">High</string>
     <string name="preference_option_very_high">Very High</string>
@@ -204,6 +204,13 @@
     <string name="preference_option_any">Any</string>
     <string name="preference_option_psi">Psi</string>
     <string name="preference_option_theurgy">Theurgy</string>
+    <string name="preference_option_artist">Artist</string>
+    <string name="preference_option_searcher">Searcher</string>
+    <string name="preference_option_energy">Energy Weapons</string>
+    <string name="preference_option_low">Low</string>
+    <string name="preference_option_standard">Standard</string>
+    <string name="preference_option_veteran">Veteran</string>
+    <string name="preference_option_elite">Elite</string>
     <string name="cost">Cost</string>
     <string name="close">Close</string>
     <string name="properties">Properties</string>

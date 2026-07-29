@@ -166,6 +166,8 @@
     <string name="preference_option_control">Control</string>
     <string name="message_random_character_success">Personaje finalizado aleatoriamente.</string>
     <string name="message_random_character_error">¡El personaje no ha podido finalizarse aleatoriamente!</string>
+    <string name="preference_option_energy">Armas de Energía</string>
+    <string name="preference_option_elite">Elite</string>
     <string name="cost">Coste</string>
     <string name="close">Cerrar</string>
     <string name="properties">Propiedades</string>
@@ -232,6 +234,7 @@
     <string name="npc_minorchurch_section">Ordenes Religiosas Menores</string>
     <string name="preference_option_minor_church">Ordenes Religiosas Menores</string>
     <string name="preference_genderpreferences">Género</string>
+    <string name="preference_powerlevelpreferences">Nivel</string>
     <string name="preference_option_male">Varón</string>
     <string name="preference_option_female">Mujer</string>
     <string name="preference_option_probably_male">Probablemente Hombre</string>
@@ -248,4 +251,7 @@
     <string name="remove_character_warning">¿Estás seguro de que quieres eliminar el personaje seleccionado?</string>
     <string name="accept">Acceptar</string>
     <string name="remove">Eliminar</string>
+    <string name="preference_option_artist">Artista</string>
+    <string name="preference_option_standard">Estándar</string>
+    <string name="preference_option_veteran">Veterano</string>
 </resources>

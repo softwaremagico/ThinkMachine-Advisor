@@ -1,4 +1,6 @@
-/*
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.10.0'
+}/*
  *  Copyright (C) 2020 Softwaremagico
  *
  *  This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero  <softwaremagico@gmail.com> Valencia (Spain).

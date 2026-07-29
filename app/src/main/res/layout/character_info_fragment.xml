@@ -25,6 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:divider="?android:dividerHorizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:orientation="vertical">
 
         <LinearLayout

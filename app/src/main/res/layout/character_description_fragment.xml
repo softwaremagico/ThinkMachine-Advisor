@@ -27,6 +27,8 @@
         android:layout_gravity="top"
         android:columnCount="2"
         android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:paddingTop="10dp"
         android:stretchMode="columnWidth"
         android:useDefaultMargins="true">
