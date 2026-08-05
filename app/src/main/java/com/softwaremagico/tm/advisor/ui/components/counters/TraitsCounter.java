@@ -30,7 +30,9 @@ public class TraitsCounter extends Counter {
 
     @Override
     public void setCharacter(CharacterPlayer character) {
-        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeTraitsPointsUpdatedListeners(listener);
+        if (listener != null) {
+            CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeTraitsPointsUpdatedListeners(listener);
+        }
         listener = CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addTraitsPointsUpdatedListeners(value ->
                 setValue(FreeStyleCharacterCreation.getTraitsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentTraitsPoints(), true));
         setValue(FreeStyleCharacterCreation.getTraitsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentTraitsPoints(), false);

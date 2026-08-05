@@ -30,7 +30,9 @@ public class CharacteristicsCounter extends Counter {
 
     @Override
     public void setCharacter(CharacterPlayer character) {
-        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeCharacteristicPointsUpdatedListeners(listener);
+        if (listener != null) {
+            CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeCharacteristicPointsUpdatedListeners(listener);
+        }
         listener = CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addCharacteristicPointsUpdatedListeners(value -> {
             setValue(FreeStyleCharacterCreation.getCharacteristicsPoints(character.getInfo().getAge()) - CharacterManager.getCostCalculator().getCurrentCharacteristicPoints(), true);
         });

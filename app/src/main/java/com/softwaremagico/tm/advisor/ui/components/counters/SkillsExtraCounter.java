@@ -31,7 +31,9 @@ public class SkillsExtraCounter extends SegmentCounter {
 
     @Override
     public void setCharacter(CharacterPlayer character) {
-        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeExtraPointsUpdatedListeners(listener);
+        if (listener != null) {
+            CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeExtraPointsUpdatedListeners(listener);
+        }
         listener = CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addExtraPointsUpdatedListeners(() ->
                 setValue(CharacterManager.getCostCalculator().getCurrentSkillsExtraPoints() * CostCalculator.SKILL_EXTRA_POINTS_COST,
                         FreeStyleCharacterCreation.getFreeAvailablePoints(character.getInfo().getAge(), character.getRace())

@@ -31,7 +31,9 @@ public class OccultismExtraCounter extends SegmentCounter {
 
     @Override
     public void setCharacter(CharacterPlayer character) {
-        CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeExtraPointsUpdatedListeners(listener);
+        if (listener != null) {
+            CharacterManager.getCostCalculator().getCostCharacterModificationHandler().removeExtraPointsUpdatedListeners(listener);
+        }
         listener = CharacterManager.getCostCalculator().getCostCharacterModificationHandler().addExtraPointsUpdatedListeners(() ->
                 setValue(CharacterManager.getCostCalculator().getCurrentOccultismLevelExtraPoints() * CostCalculator.PSIQUE_LEVEL_COST +
                                 CharacterManager.getCostCalculator().getCurrentOccultismPowersExtraPoints() * CostCalculator.OCCULTISM_POWER_LEVEL_COST +
