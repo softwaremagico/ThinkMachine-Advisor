@@ -24,9 +24,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
+import androidx.core.graphics.Insets;
 import androidx.core.view.MenuCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -68,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Enable edge-to-edge for Android 15+ compatibility (retro-compatible via EdgeToEdge API)
+        EdgeToEdge.enable(this);
+
         setTheme(R.style.AppTheme);
         Translator.setLanguage(Locale.getDefault().getLanguage());
         //Preload all data on splash screen
@@ -77,9 +85,25 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        // Handle system bar insets so content is not obscured by status/nav bars
+        final ConstraintLayout container = findViewById(R.id.container);
+        ViewCompat.setOnApplyWindowInsetsListener(container, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            // Apply top/left/right padding from system bars; bottom is handled by BottomNavigationView
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
+            return insets;
+        });
+
         SettingsHandler.setSettingsEntity(this.getBaseContext());
 
         final BottomNavigationView navView = findViewById(R.id.nav_view);
+
+        // Ensure BottomNavigationView extends behind the navigation bar and adds correct padding
+        ViewCompat.setOnApplyWindowInsetsListener(navView, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), systemBars.bottom);
+            return insets;
+        });
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         final AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(

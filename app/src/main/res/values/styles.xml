@@ -19,6 +19,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textSize">16sp</item>
+        <!-- Fondo blanco explícito para evitar que edge-to-edge lo cambie -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- Edge-to-edge: transparent bars so content draws behind them -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.Launcher">
