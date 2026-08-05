@@ -54,12 +54,12 @@ android {
             }
         }
     }
-    compileSdk 36
+    compileSdk 37
 
     defaultConfig {
         applicationId "com.softwaremagico.tm.advisor"
         minSdk 31
-        targetSdk 36
+        targetSdk 37
         versionCode 55
         versionName '3.2.3'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
