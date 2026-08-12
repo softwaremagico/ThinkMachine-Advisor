@@ -57,6 +57,7 @@ import com.softwaremagico.tm.character.races.Race;
 import com.softwaremagico.tm.random.exceptions.InvalidRandomElementSelectedException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,6 +75,10 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     private ElementSpinner<Faction> factionsSelector;
     private ElementSpinner<Planet> planetSelector;
     private boolean updatingCharacter = false;
+
+    static boolean matchesRestriction(Collection<?> allowedValues, Object selectedValue) {
+        return allowedValues == null || allowedValues.isEmpty() || selectedValue == null || allowedValues.contains(selectedValue);
+    }
 
     public static CharacterInfoFragmentCharacter newInstance(int index) {
         final CharacterInfoFragmentCharacter fragment = new CharacterInfoFragmentCharacter();
@@ -117,7 +122,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
         setCharacter(root, CharacterManager.getSelectedCharacter());
 
-        ImageView randomNameButton = root.findViewById(R.id.button_random_name);
+        final ImageView randomNameButton = root.findViewById(R.id.button_random_name);
         if (randomNameButton != null) {
             randomNameButton.setOnClickListener(v -> {
                 updatingCharacter = true;
@@ -138,7 +143,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
             });
         }
 
-        ImageView randomSurnameButton = root.findViewById(R.id.button_random_surname);
+        final ImageView randomSurnameButton = root.findViewById(R.id.button_random_surname);
         if (randomSurnameButton != null) {
             randomSurnameButton.setOnClickListener(v -> {
                 updatingCharacter = true;
@@ -294,7 +299,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
 
     private void createGenderSpinner(View root) {
         final EnumSpinner genderSelector = root.findViewById(R.id.character_gender);
-        List<Gender> options = new ArrayList<>(mViewModel.getAvailableGenders());
+        final List<Gender> options = new ArrayList<>(mViewModel.getAvailableGenders());
         options.add(0, null);
         genderSelector.setAdapter(new EnumAdapter<>(getActivity(), android.R.layout.simple_spinner_item, options));
         genderSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -315,20 +320,18 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createRaceSpinner(boolean nonOfficial) {
-        List<Race> options = new ArrayList<>(mViewModel.getAvailableRaces(nonOfficial));
+        final List<Race> options = new ArrayList<>(mViewModel.getAvailableRaces(nonOfficial));
         options.add(0, null);
         raceSelector.setAdapter(new ElementAdapter<Race>(getActivity(), options, false, Race.class) {
             @Override
             public boolean isEnabled(int position) {
-                //Faction limitations
-                return getItem(position) == null || !CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked() ||
-                        ((CharacterManager.getSelectedCharacter().getFaction() == null ||
-                                CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces() == null ||
-                                CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces().contains(getItem(position))) &&
-
-                                //Planet limitations
-                                getItem(position).getPlanets().isEmpty() || CharacterManager.getSelectedCharacter().getInfo().getPlanet() == null ||
-                                getItem(position).getPlanets().contains(CharacterManager.getSelectedCharacter().getInfo().getPlanet()));
+                final Race selectedRace = getItem(position);
+                if (selectedRace == null || !CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked()) {
+                    return true;
+                }
+                return matchesRestriction(CharacterManager.getSelectedCharacter().getFaction() != null
+                                ? CharacterManager.getSelectedCharacter().getFaction().getRestrictedToRaces() : null, selectedRace)
+                        && matchesRestriction(selectedRace.getPlanets(), CharacterManager.getSelectedCharacter().getInfo().getPlanet());
             }
         });
         raceSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -370,7 +373,7 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createFactionSpinner(boolean nonOfficial) {
-        List<Faction> options = new ArrayList<>(mViewModel.getAvailableFactions(nonOfficial));
+        final List<Faction> options = new ArrayList<>(mViewModel.getAvailableFactions(nonOfficial));
         options.add(0, null);
         factionsSelector.setAdapter(new ElementAdapter<Faction>(getActivity(), options, false, Faction.class) {
             @Override
@@ -419,15 +422,14 @@ public class CharacterInfoFragmentCharacter extends CharacterCustomFragment {
     }
 
     private void createPlanetSpinner(boolean nonOfficial) {
-        List<Planet> options = new ArrayList<>(mViewModel.getAvailablePlanets(nonOfficial));
+        final List<Planet> options = new ArrayList<>(mViewModel.getAvailablePlanets(nonOfficial));
         options.add(0, null);
         planetSelector.setAdapter(new ElementAdapter<Planet>(getActivity(), options, false, Planet.class) {
             @Override
             public boolean isEnabled(int position) {
-                return !CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked() ||
-                        CharacterManager.getSelectedCharacter().getRace() == null ||
-                        CharacterManager.getSelectedCharacter().getRace().getPlanets().isEmpty() ||
-                        CharacterManager.getSelectedCharacter().getRace().getPlanets().contains(getItem(position));
+                return !CharacterManager.getSelectedCharacter().getSettings().isRestrictionsChecked()
+                        || matchesRestriction(CharacterManager.getSelectedCharacter().getRace() != null
+                        ? CharacterManager.getSelectedCharacter().getRace().getPlanets() : null, getItem(position));
             }
         });
         planetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

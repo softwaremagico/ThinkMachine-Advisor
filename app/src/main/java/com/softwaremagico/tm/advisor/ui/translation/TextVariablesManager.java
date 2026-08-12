@@ -22,6 +22,9 @@ public final class TextVariablesManager {
     }
 
     public static String replace(String input) {
-        return input.replace(CHARACTER_NAME, CharacterManager.getSelectedCharacter().getCompleteNameRepresentation());
+        if (input == null) {
+            return "";
+        }
+        return input.replace(CHARACTER_NAME, CharacterManager.getSelectedCharacterNameRepresentation());
     }
 }

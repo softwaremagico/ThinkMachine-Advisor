@@ -74,6 +74,7 @@ public class RandomCharactersFragment extends CharacterCustomFragment {
             return;
         }
         linearLayout.removeAllViews();
+        optionsAvailable.clear();
 
         mViewModel.getNpcGroups(!SettingsHandler.getSettingsEntity().isOnlyOfficialAllowed()).stream().sorted().forEach(group -> {
             try {

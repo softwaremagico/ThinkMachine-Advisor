@@ -76,12 +76,12 @@ public class TextVisualizationFragment extends Fragment implements Visualization
     }
 
     protected void shareText() throws IOException {
+        final String characterName = CharacterManager.getSelectedCharacterNameRepresentation();
         final Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // temp permission for receiving app to read this file
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + (CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
-                ": " + CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() : ""));
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + (!characterName.isEmpty() ? ": " + characterName : ""));
         final CharacterSheet characterSheet = new CharacterSheet(CharacterManager.getSelectedCharacter());
         shareIntent.putExtra(Intent.EXTRA_TEXT, TextVariablesManager.replace(getString(R.string.share_body) + "\n\n" + characterSheet.toString()));
         //final Intent chooser = Intent.createChooser(shareIntent, "Share File");

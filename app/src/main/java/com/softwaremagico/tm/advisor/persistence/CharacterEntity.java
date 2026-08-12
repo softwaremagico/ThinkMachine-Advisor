@@ -16,6 +16,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
 import com.softwaremagico.tm.InvalidXmlElementException;
+import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.character.CharacterPlayer;
 import com.softwaremagico.tm.character.ThreatLevel;
@@ -60,7 +61,7 @@ public class CharacterEntity extends BaseEntity {
     public final void setCharacterPlayer(CharacterPlayer characterPlayer) {
         updateTime = new Timestamp(new Date().getTime());
         setJson(CharacterJsonManager.toJson(characterPlayer));
-        setName(characterPlayer.getCompleteNameRepresentation());
+        setName(CharacterManager.getCharacterNameRepresentation(characterPlayer));
         if (characterPlayer.getRace() != null) {
             setRace(characterPlayer.getRace().getNameRepresentation());
         }

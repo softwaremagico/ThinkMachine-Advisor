@@ -48,6 +48,13 @@ public final class FileUtils {
         return readFile(path, false);
     }
 
+    public static String sanitizeFileName(String fileName) {
+        if (fileName == null) {
+            return "";
+        }
+        return fileName.replaceAll("[\\\\/:*?\"<>|]", "_").trim();
+    }
+
     public static String readFile(String path, boolean deleteOnRead) {
         if (path == null || path.isEmpty()) {
             return "";

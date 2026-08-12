@@ -179,7 +179,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                 characterPlayer.setVisibility(View.GONE);
                 return;
             }
-            characterTitle.setTitle(characterPlayerData.getCompleteNameRepresentation());
+            characterTitle.setTitle(CharacterManager.getCharacterNameRepresentation(characterPlayerData));
             characterTitle.setSubtitle(DateUtils.formatTimestamp(characterEntity.getUpdateTime()));
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                 sortDescription.setText(Html.fromHtml(createStatusText(characterEntity), Html.FROM_HTML_MODE_LEGACY));

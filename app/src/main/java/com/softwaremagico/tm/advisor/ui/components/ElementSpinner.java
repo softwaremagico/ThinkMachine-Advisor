@@ -98,7 +98,8 @@ public class ElementSpinner<T extends Element<T>> extends HelpElement<T> {
         if (selected == null) {
             selector.setSelection(0);
         } else {
-            selector.setSelection(((ElementAdapter<T>) selector.getAdapter()).indexOf(selected));
+            final int index = ((ElementAdapter<T>) selector.getAdapter()).indexOf(selected);
+            selector.setSelection(index >= 0 ? index : 0);
         }
     }
 

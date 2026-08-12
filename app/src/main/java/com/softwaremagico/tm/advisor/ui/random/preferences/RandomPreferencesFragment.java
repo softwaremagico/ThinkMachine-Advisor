@@ -67,6 +67,8 @@ public class RandomPreferencesFragment extends CharacterCustomFragment {
         if (linearLayout == null) {
             return;
         }
+        linearLayout.removeAllViews();
+        optionsAvailable.clear();
         for (PreferenceGroup preferenceGroup : PreferenceGroup.values()) {
             try {
                 addSection(getResources().getString(getResources().getIdentifier(getGroupPreferenceStringResource(preferenceGroup), "string",

@@ -213,6 +213,17 @@ public final class CharacterManager {
         return !characters.isEmpty();
     }
 
+    public static String getCharacterNameRepresentation(CharacterPlayer characterPlayer) {
+        if (characterPlayer == null || characterPlayer.getCompleteNameRepresentation() == null) {
+            return "";
+        }
+        return characterPlayer.getCompleteNameRepresentation();
+    }
+
+    public static String getSelectedCharacterNameRepresentation() {
+        return getCharacterNameRepresentation(getSelectedCharacter());
+    }
+
 
     public synchronized static CharacterPlayer getSelectedCharacter() {
         if (characters.isEmpty()) {

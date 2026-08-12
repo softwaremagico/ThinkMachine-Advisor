@@ -34,6 +34,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.softwaremagico.tm.advisor.R;
+import com.softwaremagico.tm.advisor.core.FileUtils;
 import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.advisor.ui.translation.TextVariablesManager;
@@ -95,15 +96,15 @@ public abstract class PdfVisualizationFragment extends Fragment implements Visua
     }
 
     private void sharePdf() {
-        final File imagePath = new File(getContext().getCacheDir(), "pdf");
-        characterSheetAsPdf = new File(imagePath, !CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().isEmpty() ?
-                CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet.pdf" :
-                "pdf_sheet.pdf");
+        final String characterName = CharacterManager.getSelectedCharacterNameRepresentation();
+        final String sanitizedCharacterName = FileUtils.sanitizeFileName(characterName);
+        final File imagePath = new File(requireContext().getCacheDir(), "pdf");
+        characterSheetAsPdf = new File(imagePath, !sanitizedCharacterName.isEmpty() ? sanitizedCharacterName + "_sheet.pdf" : "pdf_sheet.pdf");
+        imagePath.mkdirs();
+        characterSheetAsPdf.getParentFile().mkdirs();
         final Uri contentUri = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".provider", characterSheetAsPdf);
 
         if (contentUri != null) {
-            imagePath.mkdirs();
-            characterSheetAsPdf.getParentFile().mkdirs();
             generatePdfFile(characterSheetAsPdf.getAbsolutePath());
 
             final Intent shareIntent = new Intent();
@@ -111,8 +112,7 @@ public abstract class PdfVisualizationFragment extends Fragment implements Visua
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // temp permission for receiving app to read this file
             shareIntent.setType(getActivity().getContentResolver().getType(contentUri));
             shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + (!CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().isEmpty() ?
-                    ": " + CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() : ""));
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + (!characterName.isEmpty() ? ": " + characterName : ""));
             shareIntent.putExtra(Intent.EXTRA_TEXT, TextVariablesManager.replace(getString(R.string.share_body)));
 
             final Intent chooser = Intent.createChooser(shareIntent, "Share File");

@@ -70,6 +70,9 @@ public class RandomProfilesFragment extends CharacterCustomFragment {
         if (linearLayout == null) {
             return;
         }
+        linearLayout.removeAllViews();
+        optionsAvailable.clear();
+        optionsAvailableByGroup.clear();
 
         RandomProfileFactory.getInstance().getGroups(Locale.getDefault().getLanguage(),
                 ModuleManager.DEFAULT_MODULE).stream().sorted().forEach(group -> {

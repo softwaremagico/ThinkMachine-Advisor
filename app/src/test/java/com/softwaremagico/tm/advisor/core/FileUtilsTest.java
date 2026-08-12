@@ -29,4 +29,9 @@ public class FileUtilsTest {
         assertEquals("hello", FileUtils.readFile(tempFile.toString(), true));
         assertFalse(Files.exists(tempFile));
     }
+
+    @Test
+    public void sanitizeFileNameReplacesReservedCharacters() {
+        assertEquals("name_with_invalid_chars", FileUtils.sanitizeFileName("name/with:invalid*chars"));
+    }
 }

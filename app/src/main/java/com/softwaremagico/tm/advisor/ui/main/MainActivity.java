@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         // Handle system bar insets so content is not obscured by status/nav bars
         final ConstraintLayout container = findViewById(R.id.container);
         ViewCompat.setOnApplyWindowInsetsListener(container, (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            final Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             // Apply top/left/right padding from system bars; bottom is handled by BottomNavigationView
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
             return insets;
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Ensure BottomNavigationView extends behind the navigation bar and adds correct padding
         ViewCompat.setOnApplyWindowInsetsListener(navView, (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            final Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), systemBars.bottom);
             return insets;
         });
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         final List<CharacterPlayer> existingCharacters = CharacterManager.getCharacters();
         menu.removeGroup(CHARACTERS_SELECTOR_GROUP);
         for (int i = 0; i < existingCharacters.size(); i++) {
-            String name = existingCharacters.get(i).getCompleteNameRepresentation();
+            String name = CharacterManager.getCharacterNameRepresentation(existingCharacters.get(i));
             if (name.isEmpty()) {
                 name = "<<" + getString(R.string.character_name_empty) + ">>";
             }
@@ -198,24 +198,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void importJson() {
-        Intent chooseFile;
-        Intent intent;
-        chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        final Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
         chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
         chooseFile.setType("*/*");
-        intent = Intent.createChooser(chooseFile, "Choose a file");
+        final Intent intent = Intent.createChooser(chooseFile, "Choose a file");
         startActivityForResult(intent, PICK_TMA_FILE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
-        View parentLayout = findViewById(android.R.id.content);
+        final View parentLayout = findViewById(android.R.id.content);
         if (requestCode == PICK_TMA_FILE && resultCode == Activity.RESULT_OK) {
             if (resultData != null) {
                 // The result data contains a URI for the document or directory that
                 // the user selected.
-                Uri uri = resultData.getData();
+                final Uri uri = resultData.getData();
                 try {
                     if (uri != null) {
                         CharacterManager.setSelectedCharacter(CharacterJsonManager.fromJson(FileUtils.readFile(this.getBaseContext(), uri)));
@@ -231,16 +229,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void exportJson(View view) throws IOException {
         final File exportsPath = new File(view.getContext().getCacheDir(), "export");
-        File characterExport = new File(exportsPath, !CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().isEmpty() ?
-                CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() + "_sheet." + FileUtils.CHARACTER_FILE_EXTENSION :
-                "export_sheet." + FileUtils.CHARACTER_FILE_EXTENSION);
+        final String characterName = CharacterManager.getSelectedCharacterNameRepresentation();
+        final String sanitizedCharacterName = FileUtils.sanitizeFileName(characterName);
+        final File characterExport = new File(exportsPath, !sanitizedCharacterName.isEmpty() ?
+                sanitizedCharacterName + "_sheet" + FileUtils.CHARACTER_FILE_EXTENSION :
+                "export_sheet" + FileUtils.CHARACTER_FILE_EXTENSION);
         final Uri contentUri = FileProvider.getUriForFile(getApplicationContext(), getPackageName() + ".provider", characterExport);
 
         if (contentUri != null) {
             if (exportsPath.mkdir()) {
                 MachineLog.debug(this.getClass().getName(), "Default folder '{}' created.", exportsPath);
             }
-            String jsonContent = CharacterJsonManager.toJson(CharacterManager.getSelectedCharacter());
+            final String jsonContent = CharacterJsonManager.toJson(CharacterManager.getSelectedCharacter());
             try (FileOutputStream stream = new FileOutputStream(characterExport)) {
                 stream.write(jsonContent.getBytes());
             }
@@ -250,8 +250,7 @@ public class MainActivity extends AppCompatActivity {
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // temp permission for receiving app to read this file
             shareIntent.setType(this.getContentResolver().getType(contentUri));
             shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + (CharacterManager.getSelectedCharacter().getCompleteNameRepresentation().length() > 0 ?
-                    ": " + CharacterManager.getSelectedCharacter().getCompleteNameRepresentation() : ""));
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + (!characterName.isEmpty() ? ": " + characterName : ""));
             shareIntent.putExtra(Intent.EXTRA_TEXT, TextVariablesManager.replace(getString(R.string.export_body)));
 
             final Intent chooser = Intent.createChooser(shareIntent, "Share File");

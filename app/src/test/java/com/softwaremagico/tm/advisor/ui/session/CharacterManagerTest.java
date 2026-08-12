@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class CharacterManagerTest {
@@ -28,6 +29,11 @@ public class CharacterManagerTest {
 
         assertNotNull(CharacterManager.getSelectedCharacter());
         assertNotNull(SettingsHandler.getSettingsEntity());
+    }
+
+    @Test
+    public void getCharacterNameRepresentationReturnsEmptyStringForNullCharacter() {
+        assertEquals("", CharacterManager.getCharacterNameRepresentation(null));
     }
 
     private static void setStaticField(Class<?> type, String fieldName, Object value) throws Exception {
