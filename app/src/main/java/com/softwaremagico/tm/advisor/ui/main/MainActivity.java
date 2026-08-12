@@ -166,8 +166,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Select an existing character.
         if (itemId >= CHARACTERS_INDEX) {
-            CharacterManager.setSelectedCharacter(CharacterManager.getCharacters()
-                    .get(itemId - CHARACTERS_INDEX));
+            final int characterIndex = itemId - CHARACTERS_INDEX;
+            final List<CharacterPlayer> existingCharacters = CharacterManager.getCharacters();
+            if (characterIndex >= 0 && characterIndex < existingCharacters.size()) {
+                CharacterManager.setSelectedCharacter(existingCharacters.get(characterIndex));
+                return true;
+            }
             return true;
         } else {
             return super.onOptionsItemSelected(menuItem);

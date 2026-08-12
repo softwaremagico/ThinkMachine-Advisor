@@ -31,8 +31,15 @@ public final class FileUtils {
 
     public static String readFile(final Context context, Uri uri) {
         //Get the text file
+        if (uri == null) {
+            return "";
+        }
         if (Objects.equals(uri.getHost(), GOOGLE_DRIVE_HOST)) {
-            return readFile(Uri.fromFile(downloadFile(context, uri)).getPath(), true);
+            final File downloadedFile = downloadFile(context, uri);
+            if (downloadedFile == null) {
+                return "";
+            }
+            return readFile(downloadedFile.getPath(), true);
         }
         return readFile(uri.getPath());
     }
@@ -42,6 +49,9 @@ public final class FileUtils {
     }
 
     public static String readFile(String path, boolean deleteOnRead) {
+        if (path == null || path.isEmpty()) {
+            return "";
+        }
         //Get the text file
         File file = new File(path);
 
@@ -81,12 +91,18 @@ public final class FileUtils {
             Cursor returnCursor =
                     contentResolver.query(uri, null, null, new String[]{
                             MimeTypeMap.getSingleton().getExtensionFromMimeType("jpg")}, null);
+            if (returnCursor == null) {
+                return null;
+            }
             int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-            int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
             returnCursor.moveToFirst();
             String fileName = returnCursor.getString(nameIndex);
             InputStream inputStream = contentResolver.openInputStream(uri);
             returnCursor.close();
+
+            if (inputStream == null || fileName == null) {
+                return null;
+            }
 
 
             File tempFile = File.createTempFile(fileName, "");

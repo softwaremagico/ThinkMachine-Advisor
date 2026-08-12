@@ -12,21 +12,24 @@
 
 package com.softwaremagico.tm.advisor.core;
 
-import android.text.format.DateFormat;
-
 import java.sql.Timestamp;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public final class DateUtils {
+    private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
 
     private DateUtils() {
 
     }
 
     public static String formatTimestamp(Timestamp timestamp) {
-        final Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(timestamp.getTime());
-        return DateFormat.format("yyyy-MM-dd hh:mm:ss", cal).toString();
+        if (timestamp == null) {
+            return "";
+        }
+        synchronized (TIMESTAMP_FORMAT) {
+            return TIMESTAMP_FORMAT.format(new Date(timestamp.getTime()));
+        }
     }
 }

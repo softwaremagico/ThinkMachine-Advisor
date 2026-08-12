@@ -123,9 +123,11 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             characterTitle.setOnMenuItemClickListener(item -> {
                 final int itemId = item.getItemId();
                 if (itemId == R.id.character_load) {
-                    CharacterManager.setSelectedCharacter(characterEntity.getCharacterPlayer());
-                    if (closePopUpListener != null) {
-                        closePopUpListener.dismiss();
+                    if (characterEntity.getCharacterPlayer() != null) {
+                        CharacterManager.setSelectedCharacter(characterEntity.getCharacterPlayer());
+                        if (closePopUpListener != null) {
+                            closePopUpListener.dismiss();
+                        }
                     }
                 } else if (itemId == R.id.character_copy) {
                     duplicate(characterEntity);
@@ -154,6 +156,9 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
         private void duplicate(CharacterEntity characterEntity) {
             try {
+                if (characterEntity.getCharacterPlayer() == null) {
+                    return;
+                }
                 CharacterEntity duplicatedCharacterEntity = new CharacterEntity(characterEntity.getCharacterPlayer().duplicate());
                 CharacterHandler.getInstance().save(cardView.getContext(), duplicatedCharacterEntity);
                 SnackbarGenerator.getInfoMessage(cardView, R.string.message_duplication_ok).show();
@@ -166,19 +171,25 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
 
         public void update(CharacterEntity characterEntity) {
             this.characterEntity = characterEntity;
-            characterTitle.setTitle(characterEntity.getCharacterPlayer().getCompleteNameRepresentation());
+            final var characterPlayerData = characterEntity.getCharacterPlayer();
+            if (characterPlayerData == null) {
+                characterTitle.setTitle("");
+                characterTitle.setSubtitle("");
+                sortDescription.setText("");
+                characterPlayer.setVisibility(View.GONE);
+                return;
+            }
+            characterTitle.setTitle(characterPlayerData.getCompleteNameRepresentation());
             characterTitle.setSubtitle(DateUtils.formatTimestamp(characterEntity.getUpdateTime()));
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                 sortDescription.setText(Html.fromHtml(createStatusText(characterEntity), Html.FROM_HTML_MODE_LEGACY));
             } else {
                 sortDescription.setText(Html.fromHtml(createStatusText(characterEntity)));
             }
-            if (characterEntity.getCharacterPlayer() != null) {
-                final ImageView factionImageView = cardView.findViewById(R.id.image_view_faction);
-                factionImageView.setMaxWidth(175);
-                factionImageView.setMaxHeight(175);
-                factionImageView.setImageResource(FactionLogoSelection.getLogo(cardView.getContext(), characterEntity.getCharacterPlayer().getFaction()));
-            }
+            final ImageView factionImageView = cardView.findViewById(R.id.image_view_faction);
+            factionImageView.setMaxWidth(175);
+            factionImageView.setMaxHeight(175);
+            factionImageView.setImageResource(FactionLogoSelection.getLogo(cardView.getContext(), characterPlayerData.getFaction()));
             if (characterEntity.getPlayer() == null || characterEntity.getPlayer().isEmpty()) {
                 characterPlayer.setVisibility(View.GONE);
             } else {
@@ -188,13 +199,17 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         }
 
         private String createStatusText(CharacterEntity characterEntity) {
-            final CostCalculator costCalculator = new CostCalculator(characterEntity.getCharacterPlayer());
-            final StringBuilder stringBuilder = new StringBuilder(100);
-            if (characterEntity.getCharacterPlayer().getFaction() != null) {
-                stringBuilder.append(characterEntity.getCharacterPlayer().getFaction().getName());
+            final var characterPlayer = characterEntity.getCharacterPlayer();
+            if (characterPlayer == null) {
+                return "";
             }
-            if (characterEntity.getCharacterPlayer().getRace() != null) {
-                stringBuilder.append(" (").append(characterEntity.getCharacterPlayer().getRace().getName()).append(")");
+            final CostCalculator costCalculator = new CostCalculator(characterPlayer);
+            final StringBuilder stringBuilder = new StringBuilder(100);
+            if (characterPlayer.getFaction() != null) {
+                stringBuilder.append(characterPlayer.getFaction().getName());
+            }
+            if (characterPlayer.getRace() != null) {
+                stringBuilder.append(" (").append(characterPlayer.getRace().getName()).append(")");
             }
             stringBuilder.append("<br>");
             //Status label.
@@ -234,6 +249,9 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         }
 
         private String getExtendedDescription(CharacterEntity characterEntity) {
+            if (characterEntity.getCharacterPlayer() == null) {
+                return "";
+            }
             if (charactersDescriptions.get(characterEntity) == null) {
                 final CharacterSheet characterSheet = new CharacterSheet(characterEntity.getCharacterPlayer());
                 CharacterJsonManager.toJson(characterEntity.getCharacterPlayer());

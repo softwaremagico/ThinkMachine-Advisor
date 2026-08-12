@@ -50,10 +50,13 @@ public final class SettingsHandler {
     }
 
     public static void save(Context context) {
-        save(context, SettingsHandler.settingsEntity);
+        save(context, getSettingsEntity());
     }
 
     public static void save(Context context, SettingsEntity settingsEntity) {
+        if (settingsEntity == null) {
+            settingsEntity = new SettingsEntity();
+        }
         launchSettingsUpdateListeners();
         if (SettingsHandler.settingsEntity == null) {
             AppDatabase.getInstance(context).getSettingsEntityDao().persist(settingsEntity);
@@ -72,6 +75,9 @@ public final class SettingsHandler {
     }
 
     public static SettingsEntity getSettingsEntity() {
+        if (settingsEntity == null) {
+            settingsEntity = new SettingsEntity();
+        }
         return settingsEntity;
     }
 

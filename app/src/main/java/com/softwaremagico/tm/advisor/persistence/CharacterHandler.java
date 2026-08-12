@@ -14,7 +14,7 @@ package com.softwaremagico.tm.advisor.persistence;
 
 import android.content.Context;
 
-import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
+import com.softwaremagico.tm.advisor.log.AdvisorLog;
 import com.softwaremagico.tm.character.CharacterPlayer;
 
 import java.util.HashMap;
@@ -40,7 +40,7 @@ public class CharacterHandler {
 
     public void save(Context context, CharacterPlayer characterPlayer) {
         if (entities.get(characterPlayer) == null) {
-            final CharacterEntity characterEntity = new CharacterEntity(CharacterManager.getSelectedCharacter());
+            final CharacterEntity characterEntity = new CharacterEntity(characterPlayer);
             AppDatabase.getInstance(context).getCharacterEntityDao().persist(characterEntity);
             entities.put(characterPlayer, characterEntity);
         } else {
@@ -65,8 +65,20 @@ public class CharacterHandler {
 
     public List<CharacterEntity> load(Context context) {
         List<CharacterEntity> loadedCharacters = AppDatabase.getInstance(context).getCharacterEntityDao().getAll();
-        entities = loadedCharacters.stream().collect(Collectors.toMap(CharacterEntity::getCharacterPlayer, c -> c));
-        return loadedCharacters;
+        List<CharacterEntity> validCharacters = loadedCharacters.stream()
+                .filter(characterEntity -> {
+                    if (characterEntity.getCharacterPlayer() == null) {
+                        AdvisorLog.warning(CharacterHandler.class.getName(), "Skipping character with invalid JSON data.");
+                        return false;
+                    }
+                    return true;
+                })
+                .collect(Collectors.toList());
+        entities = validCharacters.stream().collect(Collectors.toMap(CharacterEntity::getCharacterPlayer, c -> c, (left, right) -> {
+            AdvisorLog.warning(CharacterHandler.class.getName(), "Duplicated character entry found while loading; keeping the first one.");
+            return left;
+        }));
+        return validCharacters;
     }
 
 }
