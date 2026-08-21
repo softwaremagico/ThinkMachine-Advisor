@@ -60,8 +60,8 @@ android {
         applicationId "com.softwaremagico.tm.advisor"
         minSdk 31
         targetSdk 37
-        versionCode 57
-        versionName '3.2.5'
+        versionCode 58
+        versionName '3.2.6'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testFunctionalTest true
     }
