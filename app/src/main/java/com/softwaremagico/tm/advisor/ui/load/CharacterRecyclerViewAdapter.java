@@ -36,7 +36,6 @@ import com.softwaremagico.tm.advisor.ui.main.SnackbarGenerator;
 import com.softwaremagico.tm.advisor.ui.session.CharacterManager;
 import com.softwaremagico.tm.character.exceptions.InvalidGeneratedCharacter;
 import com.softwaremagico.tm.character.creation.CostCalculator;
-import com.softwaremagico.tm.json.CharacterJsonManager;
 import com.softwaremagico.tm.txt.CharacterSheet;
 
 import java.util.HashMap;
@@ -49,6 +48,10 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
     private final List<CharacterEntity> dataSet;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private final Map<CharacterEntity, String> charactersDescriptions;
+    //Caches the summary line (faction/race/status/threat) per entity: computing the progression
+    //status (CostCalculator) walks the whole character sheet, so it must not be recalculated on
+    //every RecyclerView rebind while scrolling.
+    private final Map<CharacterEntity, String> charactersStatusText;
     private ClosePopUpListener closePopUpListener;
 
     public interface ClosePopUpListener {
@@ -58,6 +61,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
     public CharacterRecyclerViewAdapter(List<CharacterEntity> data) {
         this.dataSet = data;
         charactersDescriptions = new HashMap<>();
+        charactersStatusText = new HashMap<>();
     }
 
     /**
@@ -102,6 +106,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
         private TextView characterPlayer;
         private TextView completeDescription;
         private final TextView sortDescription;
+        private final ImageView factionImageView;
         private final RecyclerView.Adapter adapter;
 
         @SuppressLint("NonConstantResourceId")
@@ -115,6 +120,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             characterPlayer = cardView.findViewById(R.id.character_player);
             detailLayout = cardView.findViewById(R.id.details_layout);
             imageViewExpand = cardView.findViewById(R.id.image_view_expand);
+            factionImageView = cardView.findViewById(R.id.image_view_faction);
             imageViewExpand.setImageResource(R.drawable.ic_more);
 
             imageViewExpand.setOnClickListener(this::toggleDetails);
@@ -123,8 +129,9 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             characterTitle.setOnMenuItemClickListener(item -> {
                 final int itemId = item.getItemId();
                 if (itemId == R.id.character_load) {
-                    if (characterEntity.getCharacterPlayer() != null) {
-                        CharacterManager.setSelectedCharacter(characterEntity.getCharacterPlayer());
+                    final var selected = characterEntity.getCharacterPlayer();
+                    if (selected != null) {
+                        CharacterManager.setSelectedCharacter(selected);
                         if (closePopUpListener != null) {
                             closePopUpListener.dismiss();
                         }
@@ -147,6 +154,8 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
                     adapter.notifyDataSetChanged();
                 }).show();
                 dataSet.remove(characterEntity);
+                charactersStatusText.remove(characterEntity);
+                charactersDescriptions.remove(characterEntity);
                 adapter.notifyDataSetChanged();
             } catch (Exception e) {
                 AdvisorLog.errorMessage(this.getClass().getName(), e);
@@ -181,12 +190,12 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             }
             characterTitle.setTitle(CharacterManager.getCharacterNameRepresentation(characterPlayerData));
             characterTitle.setSubtitle(DateUtils.formatTimestamp(characterEntity.getUpdateTime()));
+            final String statusText = getOrComputeStatusText(characterEntity, characterPlayerData);
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                sortDescription.setText(Html.fromHtml(createStatusText(characterEntity), Html.FROM_HTML_MODE_LEGACY));
+                sortDescription.setText(Html.fromHtml(statusText, Html.FROM_HTML_MODE_LEGACY));
             } else {
-                sortDescription.setText(Html.fromHtml(createStatusText(characterEntity)));
+                sortDescription.setText(Html.fromHtml(statusText));
             }
-            final ImageView factionImageView = cardView.findViewById(R.id.image_view_faction);
             factionImageView.setMaxWidth(175);
             factionImageView.setMaxHeight(175);
             factionImageView.setImageResource(FactionLogoSelection.getLogo(cardView.getContext(), characterPlayerData.getFaction()));
@@ -198,8 +207,17 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             }
         }
 
-        private String createStatusText(CharacterEntity characterEntity) {
-            final var characterPlayer = characterEntity.getCharacterPlayer();
+        private String getOrComputeStatusText(CharacterEntity characterEntity, com.softwaremagico.tm.character.CharacterPlayer characterPlayerData) {
+            final String cached = charactersStatusText.get(characterEntity);
+            if (cached != null) {
+                return cached;
+            }
+            final String statusText = createStatusText(characterEntity, characterPlayerData);
+            charactersStatusText.put(characterEntity, statusText);
+            return statusText;
+        }
+
+        private String createStatusText(CharacterEntity characterEntity, com.softwaremagico.tm.character.CharacterPlayer characterPlayer) {
             if (characterPlayer == null) {
                 return "";
             }
@@ -254,7 +272,6 @@ public class CharacterRecyclerViewAdapter extends RecyclerView
             }
             if (charactersDescriptions.get(characterEntity) == null) {
                 final CharacterSheet characterSheet = new CharacterSheet(characterEntity.getCharacterPlayer());
-                CharacterJsonManager.toJson(characterEntity.getCharacterPlayer());
                 charactersDescriptions.put(characterEntity, characterSheet.toString());
             }
             return charactersDescriptions.get(characterEntity);

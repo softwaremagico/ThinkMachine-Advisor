@@ -39,5 +39,14 @@
         android:layout_weight="1"
         android:scrollbars="vertical" />
 
+    <ProgressBar
+        android:id="@+id/character_loader_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttons_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="visible" />
+
 
 </RelativeLayout>

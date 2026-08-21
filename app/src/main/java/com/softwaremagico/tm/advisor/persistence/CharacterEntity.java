@@ -48,6 +48,14 @@ public class CharacterEntity extends BaseEntity {
     @ColumnInfo(name = "character_as_json")
     public String json;
 
+    //Not persisted. Caches the deserialized character to avoid re-parsing the JSON payload
+    //(an expensive reflection-based operation) on every call to getCharacterPlayer(), which
+    //happens repeatedly while scrolling the character loader list.
+    @androidx.room.Ignore
+    private transient CharacterPlayer cachedCharacterPlayer;
+    @androidx.room.Ignore
+    private transient String cachedCharacterPlayerJson;
+
     public CharacterEntity() {
         super();
         creationTime = new Timestamp(new Date().getTime());
@@ -61,6 +69,10 @@ public class CharacterEntity extends BaseEntity {
     public final void setCharacterPlayer(CharacterPlayer characterPlayer) {
         updateTime = new Timestamp(new Date().getTime());
         setJson(CharacterJsonManager.toJson(characterPlayer));
+        //Cache the character we already have in hand instead of forcing a re-parse of the JSON
+        //we just generated from it on the next getCharacterPlayer() call.
+        cachedCharacterPlayer = characterPlayer;
+        cachedCharacterPlayerJson = getJson();
         setName(CharacterManager.getCharacterNameRepresentation(characterPlayer));
         if (characterPlayer.getRace() != null) {
             setRace(characterPlayer.getRace().getNameRepresentation());
@@ -77,9 +89,17 @@ public class CharacterEntity extends BaseEntity {
     }
 
     public CharacterPlayer getCharacterPlayer() {
+        final String currentJson = getJson();
+        if (cachedCharacterPlayer != null && java.util.Objects.equals(cachedCharacterPlayerJson, currentJson)) {
+            return cachedCharacterPlayer;
+        }
         try {
-            return CharacterJsonManager.fromJson(getJson());
+            cachedCharacterPlayer = CharacterJsonManager.fromJson(currentJson);
+            cachedCharacterPlayerJson = currentJson;
+            return cachedCharacterPlayer;
         } catch (InvalidJsonException e) {
+            cachedCharacterPlayer = null;
+            cachedCharacterPlayerJson = currentJson;
             return null;
         }
     }
