@@ -48,4 +48,22 @@
         app:maxImageSize="32dp"
         android:scaleType="center" />
 
+    <FrameLayout
+        android:id="@+id/random_generation_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#66000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/random_generation_progress"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone" />
+    </FrameLayout>
+
 </FrameLayout>

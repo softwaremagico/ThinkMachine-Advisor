@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,12 +45,19 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class RandomProfilesFragment extends CharacterCustomFragment {
     private View root;
+    private final ExecutorService backgroundExecutor = Executors.newSingleThreadExecutor();
     private final Set<ElementSelector<RandomProfile>> optionsAvailable = new HashSet<>();
     private final Map<String, Set<ElementSelector<RandomProfile>>> optionsAvailableByGroup = new HashMap<>();
+    private FloatingActionButton randomButton;
+    private View generationOverlay;
+    private ProgressBar generationProgress;
+    private volatile boolean generationInProgress;
 
     public static RandomProfilesFragment newInstance(int index) {
         final RandomProfilesFragment fragment = new RandomProfilesFragment();
@@ -122,8 +130,13 @@ public class RandomProfilesFragment extends CharacterCustomFragment {
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.random_profiles_fragment, container, false);
 
-        final FloatingActionButton fab = root.findViewById(R.id.random);
-        fab.setOnClickListener(view -> {
+        randomButton = root.findViewById(R.id.random);
+        generationOverlay = root.findViewById(R.id.random_generation_overlay);
+        generationProgress = root.findViewById(R.id.random_generation_progress);
+        randomButton.setOnClickListener(view -> {
+            if (generationInProgress) {
+                return;
+            }
             if (CharacterManager.getCostCalculator().getStatus().ordinal() > CharacterProgressionStatus.IN_PROGRESS.ordinal()) {
                 SnackbarGenerator.getWarningMessage(root, R.string.message_random_character_already_finished,
                         R.string.action_new, action -> {
@@ -139,14 +152,56 @@ public class RandomProfilesFragment extends CharacterCustomFragment {
     }
 
     private void generateCharacter() {
-        try {
-            CharacterManager.randomizeCharacterUsingProfiles(getSelectedOptions());
-            SnackbarGenerator.getInfoMessage(root, R.string.message_random_character_success).show();
-        } catch (InvalidXmlElementException | InvalidRandomElementSelectedException |
-                 RestrictedElementException | UnofficialElementNotAllowedException e) {
-            SnackbarGenerator.getErrorMessage(root, R.string.message_random_character_error).show();
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        setGenerationInProgress(true);
+        backgroundExecutor.execute(() -> {
+            try {
+                CharacterManager.randomizeCharacterUsingProfiles(getSelectedOptions());
+                runOnUiThreadSafely(() -> {
+                    setGenerationInProgress(false);
+                    SnackbarGenerator.getInfoMessage(root, R.string.message_random_character_success).show();
+                });
+            } catch (InvalidXmlElementException | InvalidRandomElementSelectedException |
+                     RestrictedElementException | UnofficialElementNotAllowedException e) {
+                AdvisorLog.errorMessage(this.getClass().getName(), e);
+                runOnUiThreadSafely(() -> {
+                    setGenerationInProgress(false);
+                    SnackbarGenerator.getErrorMessage(root, R.string.message_random_character_error).show();
+                });
+            }
+        });
+    }
+
+    private void setGenerationInProgress(boolean inProgress) {
+        generationInProgress = inProgress;
+        if (randomButton != null) {
+            randomButton.setEnabled(!inProgress);
+            randomButton.setAlpha(inProgress ? 0.55f : 1.0f);
         }
+        if (generationOverlay != null) {
+            generationOverlay.setVisibility(inProgress ? View.VISIBLE : View.GONE);
+            generationOverlay.setClickable(inProgress);
+        }
+        if (generationProgress != null) {
+            generationProgress.setVisibility(inProgress ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    private void runOnUiThreadSafely(Runnable runnable) {
+        final androidx.fragment.app.FragmentActivity activity = getActivity();
+        if (activity == null || !isAdded()) {
+            return;
+        }
+        activity.runOnUiThread(() -> {
+            if (isAdded()) {
+                runnable.run();
+            }
+        });
+    }
+
+    @Override
+    public void onDestroy() {
+        backgroundExecutor.shutdownNow();
+        super.onDestroy();
     }
 
     public Set<RandomProfile> getSelectedOptions() {

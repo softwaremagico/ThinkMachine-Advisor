@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +54,8 @@ public abstract class PdfVisualizationFragment extends Fragment implements Visua
     private File characterSheetAsPdf;
     private View root;
     private LinearLayout layout;
+    private ProgressBar loadingProgress;
+    private int loadingRequestId = 0;
 
     protected abstract View getFragmentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container);
 
@@ -66,6 +69,7 @@ public abstract class PdfVisualizationFragment extends Fragment implements Visua
         root = getFragmentView(inflater, container);
         mViewModel = new ViewModelProvider(this).get(CharacterPdfViewModel.class);
         layout = root.findViewById(R.id.content);
+        loadingProgress = root.findViewById(R.id.pdf_loading_progress);
 
         final FloatingActionButton fab = root.findViewById(R.id.share);
         fab.setOnClickListener(view -> sharePdf());
@@ -74,25 +78,64 @@ public abstract class PdfVisualizationFragment extends Fragment implements Visua
     }
 
     protected void initData() {
-        try {
-            layout.removeAllViews();
-            final List<Bitmap> images = pdfRender(generatePdf(), root.getWidth());
-            for (Bitmap image : images) {
-                if (image != null) {
-                    final ImageView imageView = new ImageView(getContext());
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT));
-                    if (root.getWidth() > 0) {
-                        imageView.setImageBitmap(Bitmap.createScaledBitmap(image, root.getWidth(), root.getHeight(), false));
-                    } else {
-                        imageView.setImageBitmap(image);
+        if (layout == null || root == null) {
+            return;
+        }
+        final int requestId = ++loadingRequestId;
+        final int viewWidth = root.getWidth();
+        setPdfLoading(true);
+        layout.removeAllViews();
+        new Thread(() -> {
+            try {
+                final List<Bitmap> images = pdfRender(generatePdf(), viewWidth);
+                if (!isAdded()) {
+                    return;
+                }
+                requireActivity().runOnUiThread(() -> {
+                    if (requestId != loadingRequestId || layout == null || root == null) {
+                        return;
                     }
-                    layout.addView(imageView);
+                    for (Bitmap image : images) {
+                        if (image != null) {
+                            final ImageView imageView = new ImageView(getContext());
+                            imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT));
+                            if (root.getWidth() > 0) {
+                                imageView.setImageBitmap(Bitmap.createScaledBitmap(image, root.getWidth(), root.getHeight(), false));
+                            } else {
+                                imageView.setImageBitmap(image);
+                            }
+                            layout.addView(imageView);
+                        }
+                    }
+                    setPdfLoading(false);
+                });
+            } catch (IOException e) {
+                AdvisorLog.errorMessage(this.getClass().getName(), e);
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> {
+                        if (requestId == loadingRequestId) {
+                            setPdfLoading(false);
+                        }
+                    });
                 }
             }
-        } catch (IOException e) {
-            AdvisorLog.errorMessage(this.getClass().getName(), e);
+        }).start();
+    }
+
+    private void setPdfLoading(boolean loading) {
+        if (loadingProgress != null) {
+            loadingProgress.setVisibility(loading ? View.VISIBLE : View.GONE);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        loadingRequestId++;
+        layout = null;
+        loadingProgress = null;
+        root = null;
     }
 
     private void sharePdf() {

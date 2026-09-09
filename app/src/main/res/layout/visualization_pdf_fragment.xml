@@ -42,4 +42,11 @@
         app:maxImageSize="32dp"
         android:scaleType="center" />
 
+    <ProgressBar
+        android:id="@+id/pdf_loading_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
 </FrameLayout>
